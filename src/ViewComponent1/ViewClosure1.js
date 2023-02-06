@@ -16,10 +16,7 @@ import GeneratePDF from "./GeneratePDF";
 import GeneratePDF1 from "./GeneratePDF1";
 import ExportToExcel2 from "../ExtraComponent/ExportToExcel2";
 import Excel2 from "./Excel2";
-<<<<<<< HEAD
 import Histogram from 'react-chart-histogram';
-=======
->>>>>>> 1b6b5e39b869f6a2feaa6d1db1ceaf3592f1848f
 
 function ViewClosure1() {
 
@@ -46,7 +43,7 @@ function ViewClosure1() {
     const [isShown, setIsShown] = useState(false);
     const [isSelected, setIsSelected] = useState("Download");
 
-<<<<<<< HEAD
+
 
 
     const labels = ['Requirement', 'Submission', '1st Interview','2nd Interview','closure'];
@@ -64,8 +61,7 @@ function ViewClosure1() {
   const data = [sumA,sumB,sumC,sumD,sumE];
   const options = { fillColor: 'brown', strokeColor: '#0000FF' };
 
-=======
->>>>>>> 1b6b5e39b869f6a2feaa6d1db1ceaf3592f1848f
+
     localStorage.setItem("cate", category);
     let date1 = format(startDate, "dd-MMM-yyyy");
     let date2 = format(endDate, "dd-MMM-yyyy");
@@ -551,7 +547,6 @@ function ViewClosure1() {
                                     </>
                                 }
                             </select>
-<<<<<<< HEAD
                             </div><br></br>
                             <div className="col-8"> <br></br>
                             <Histogram 
@@ -562,10 +557,8 @@ function ViewClosure1() {
                                 options={options}
                             />
                             </div>
-                    
-=======
                         </div>
->>>>>>> 1b6b5e39b869f6a2feaa6d1db1ceaf3592f1848f
+
 
                         {/* call Calender to select date */}
                         {isShown && <Box />}
@@ -604,7 +597,7 @@ function ViewClosure1() {
                 </div>
 
             </div>
-        </div>
+  
 
         //)
     ) : (
