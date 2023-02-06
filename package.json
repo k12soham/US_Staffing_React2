@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "staffing_ui",
   "version": "0.1.0",
   "private": true,
@@ -43,6 +44,21 @@
     "web-vitals": "^2.1.4",
     "xlsx": "^0.18.5",
     "xlsx-js-style": "^1.2.0"
+=======
+  "name": "staffing_repo",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@nadavshaar/react-grid-table": "^1.1.2",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.7.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "web-vitals": "^2.1.4"
+>>>>>>> 1b6b5e39b869f6a2feaa6d1db1ceaf3592f1848f
   },
   "scripts": {
     "start": "react-scripts start",
