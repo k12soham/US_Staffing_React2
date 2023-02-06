@@ -28,8 +28,13 @@ function Header() {
         <div className="h3-heading">
             <div class="row">
                 <div class="col-10">
+<<<<<<< HEAD
+                <h2 style={{margin: '15px'}}>Welcome {empName}</h2>
+                    {/* <>{ValidateName()}</> */}
+=======
                 <h2 style={{margin: '15px'}}>Welcome Employee </h2>
                     {/* <>{ValidateName()}</>  {empName}*/}
+>>>>>>> 1b6b5e39b869f6a2feaa6d1db1ceaf3592f1848f
                 </div>
                 <div class='col-2'>
                     <ModalWithCSS />
