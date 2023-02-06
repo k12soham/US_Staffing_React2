@@ -35,13 +35,13 @@ class AddRequisition extends React.Component {
         // this.setState(this.baseState)
         let inputs = {};
         inputs["req"] = undefined;
-        inputs["id"]=undefined;
+        inputs["id"] = undefined;
         inputs["client"] = undefined;
-        inputs["jobTitle"]=undefined;
+        inputs["jobTitle"] = undefined;
         inputs["duration"] = undefined;
-        inputs["clientrate"]=undefined;
+        inputs["clientrate"] = undefined;
         inputs["location"] = undefined;
-        inputs["positionType"]=undefined;
+        inputs["positionType"] = undefined;
         inputs["skills"] = undefined;
 
         // inputs["sub"] = undefined;
@@ -131,11 +131,15 @@ class AddRequisition extends React.Component {
 
         console.log("type of input " + typeof (input["req"]));
 
-        console.log("Req " + input["req"]);
-        console.log("Sub " + input["sub"]);
-        console.log("First " + input["first"]);
-        console.log("Second " + input["second"]);
-        console.log("Closure " + input["closure"]);
+        console.log("req " + input["req"]);
+        console.log("id " + input["id"]);
+        console.log("client " + input["client"]);
+        console.log("jobTitle " + input["jobTitle"]);
+        console.log("duration " + input["duration"]);
+        console.log("clientrate " + input["sub"]);
+        console.log("location " + input["first"]);
+        console.log("positionType " + input["second"]);
+        console.log("skills " + input["closure"]);
 
         let reqNum = parseInt(input["req"]);
         let subNum = parseInt(input["sub"]);
@@ -145,108 +149,152 @@ class AddRequisition extends React.Component {
 
         console.log("type of reqNum " + typeof (reqNum));
 
-
-        if ((!reqNum)) {
+        if ((!input["req"])) {
             isValid = false;
-            errors["req"] = "This field is required";
+            errors["req"] = "This req field is required";
         }
-
-        else if (reqNum < 1) {
+        // -------------id---------------------------------------------------------------------------------------------
+        if ((!input["id"])) {
             isValid = false;
-            errors["req"] = "Atleast 1 requirement is needed";
+            errors["id"] = "This id field is required";
         }
-        else if (reqNum !== undefined) {
-
-            var pattern = new RegExp(/^(?=.*[0-9]).{1,3}$/); //new RegExp(/^[A-Za-z#+.\b]+$/);
-            if (!pattern.test(input["req"])) {
-                isValid = false;
-                errors["req"] = "Only 3 digit number is accepted!";
-            }
-        }
-        // -----------------------------------------------------------------------------------------------------------------------
-        if (!subNum) {
+        // -------------client-----------------------------------------------------------------------------------------
+        if ((!input["client"])) {
             isValid = false;
-            errors["sub"] = "This field is required";
+            errors["client"] = "This client field is required";
         }
-        else if (subNum < 0) {
+        // -------------jobTitle-----------------------------------------------------------------------------------------
+        if ((!input["jobTitle"])) {
             isValid = false;
-            errors["sub"] = "Enter positive number";
+            errors["jobTitle"] = "This jobTitle field is required";
         }
-        else if ((subNum !== undefined)) {
-
-            var pattern = new RegExp(/^(?=.*[0-9]).{1,3}$/); //new RegExp(/^[A-Za-z#+.\b]+$/);
-            if (!pattern.test(input["sub"])) {
-                isValid = false;
-                errors["sub"] = "Only 3 digit number is accepted!";
-            }
-        }
-        // ----------------------------------------------------------------------------------------------------------------------
-        if (!fNum) {
+        // -------------duration-----------------------------------------------------------------------------------------
+        if ((!input["duration"])) {
             isValid = false;
-            errors["first"] = "This field is required";
+            errors["duration"] = "This duration field is required";
         }
-        else if (fNum < 0) {
-
+        // -------------clientrate-----------------------------------------------------------------------------------------
+        if ((!input["clientrate"])) {
             isValid = false;
-            errors["first"] = "Enter positive number";
+            errors["clientrate"] = "This clientrate field is required";
         }
-        else if ((fNum !== undefined)) {
-
-            var pattern = new RegExp(/^(?=.*[0-9]).{1,3}$/); //new RegExp(/^[A-Za-z#+.\b]+$/);
-            if (!pattern.test(input["first"])) {
-                isValid = false;
-                errors["first"] = "Only 3 digit number is accepted!";
-            }
+        // -------------location-----------------------------------------------------------------------------------------
+        if ((!input["location"])) {
+            isValid = false;
+            errors["location"] = "This location field is required";
+        }
+        // -------------positionType-----------------------------------------------------------------------------------------
+        if ((!input["positionType"])) {
+            isValid = false;
+            errors["positionType"] = "This positionType field is required";
+        }
+        // -------------skills-----------------------------------------------------------------------------------------
+        if ((!input["skills"])) {
+            isValid = false;
+            errors["skills"] = "This skills field is required";
         }
 
-        if (fNum > subNum) {
-            isValid = false;
-            errors["first"] = "Enter valid number for first interview";
-        }
-        // ----------------------------------------------------------------------------------------------------------------------
-        if (!sNum) {
-            isValid = false;
-            errors["second"] = "This field is required";
-        }
-        else if (sNum < 0) {
-            isValid = false;
-            errors["second"] = "Enter positive number";
-        }
-        else if ((sNum !== undefined)) {
+        // if ((!reqNum)) {
+        //     isValid = false;
+        //     errors["req"] = "This field is required";
+        // }
 
-            var pattern = new RegExp(/^(?=.*[0-9]).{1,3}$/); //new RegExp(/^[A-Za-z#+.\b]+$/);
-            if (!pattern.test(input["second"])) {
-                isValid = false;
-                errors["second"] = "Only 3 digit number is accepted!";
-            }
-        }
+        // else if (reqNum < 1) {
+        //     isValid = false;
+        //     errors["req"] = "Atleast 1 requirement is needed";
+        // }
+        // else if (reqNum !== undefined) {
 
-        if (sNum > input["first"]) {
-            isValid = false;
-            errors["second"] = "Enter valid number for second interview";
-        }
-        // ----------------------------------------------------------------------------------------------------------------------
-        if (!clsNum) {
-            isValid = false;
-            errors["closure"] = "This field is required";
-        }
+        //     var pattern = new RegExp(/^(?=.*[0-9]).{1,3}$/); //new RegExp(/^[A-Za-z#+.\b]+$/);
+        //     if (!pattern.test(input["req"])) {
+        //         isValid = false;
+        //         errors["req"] = "Only 3 digit number is accepted!";
+        //     }
+        // }
+        // // -----------------------------------------------------------------------------------------------------------------------
+        // if (!subNum) {
+        //     isValid = false;
+        //     errors["sub"] = "This field is required";
+        // }
+        // else if (subNum < 0) {
+        //     isValid = false;
+        //     errors["sub"] = "Enter positive number";
+        // }
+        // else if ((subNum !== undefined)) {
 
-        else if (clsNum < 0) {
-            isValid = false;
-            errors["closure"] = "Enter positive number";
-        }
-        else if ((clsNum !== "undefined")) {
+        //     var pattern = new RegExp(/^(?=.*[0-9]).{1,3}$/); //new RegExp(/^[A-Za-z#+.\b]+$/);
+        //     if (!pattern.test(input["sub"])) {
+        //         isValid = false;
+        //         errors["sub"] = "Only 3 digit number is accepted!";
+        //     }
+        // }
+        // // ----------------------------------------------------------------------------------------------------------------------
+        // if (!fNum) {
+        //     isValid = false;
+        //     errors["first"] = "This field is required";
+        // }
+        // else if (fNum < 0) {
 
-            var pattern = new RegExp(/^(?=.*[0-9]).{1,3}$/); //new RegExp(/^[A-Za-z#+.\b]+$/);
-            if (!pattern.test(input["closure"])) {
-                isValid = false;
-                errors["closure"] = "Only 3 digit number is accepted!";
-            }
-        }
-        if (clsNum > sNum) {
-            isValid = false;
-            errors["closure"] = "Enter valid number for closure";
-        }
+        //     isValid = false;
+        //     errors["first"] = "Enter positive number";
+        // }
+        // else if ((fNum !== undefined)) {
+
+        //     var pattern = new RegExp(/^(?=.*[0-9]).{1,3}$/); //new RegExp(/^[A-Za-z#+.\b]+$/);
+        //     if (!pattern.test(input["first"])) {
+        //         isValid = false;
+        //         errors["first"] = "Only 3 digit number is accepted!";
+        //     }
+        // }
+
+        // if (fNum > subNum) {
+        //     isValid = false;
+        //     errors["first"] = "Enter valid number for first interview";
+        // }
+        // // ----------------------------------------------------------------------------------------------------------------------
+        // if (!sNum) {
+        //     isValid = false;
+        //     errors["second"] = "This field is required";
+        // }
+        // else if (sNum < 0) {
+        //     isValid = false;
+        //     errors["second"] = "Enter positive number";
+        // }
+        // else if ((sNum !== undefined)) {
+
+        //     var pattern = new RegExp(/^(?=.*[0-9]).{1,3}$/); //new RegExp(/^[A-Za-z#+.\b]+$/);
+        //     if (!pattern.test(input["second"])) {
+        //         isValid = false;
+        //         errors["second"] = "Only 3 digit number is accepted!";
+        //     }
+        // }
+
+        // if (sNum > input["first"]) {
+        //     isValid = false;
+        //     errors["second"] = "Enter valid number for second interview";
+        // }
+        // // ----------------------------------------------------------------------------------------------------------------------
+        // if (!clsNum) {
+        //     isValid = false;
+        //     errors["closure"] = "This field is required";
+        // }
+
+        // else if (clsNum < 0) {
+        //     isValid = false;
+        //     errors["closure"] = "Enter positive number";
+        // }
+        // else if ((clsNum !== "undefined")) {
+
+        //     var pattern = new RegExp(/^(?=.*[0-9]).{1,3}$/); //new RegExp(/^[A-Za-z#+.\b]+$/);
+        //     if (!pattern.test(input["closure"])) {
+        //         isValid = false;
+        //         errors["closure"] = "Only 3 digit number is accepted!";
+        //     }
+        // }
+        // if (clsNum > sNum) {
+        //     isValid = false;
+        //     errors["closure"] = "Enter valid number for closure";
+        // }
         // ---------------------------------------------------------------------------------------------------------------------
 
         this.setState({
@@ -289,6 +337,7 @@ class AddRequisition extends React.Component {
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerReq}
                                                     value={this.state.input.req}>
+                                                    <option value='' selected> Select Requisition </option>
 
                                                     <option value="volvo">Volvo</option>
                                                     <option value="saab">Saab</option>
@@ -304,10 +353,10 @@ class AddRequisition extends React.Component {
 
                                         <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '20px' }}>
                                             <div class="form-group">
-                                                <label for="sub"><b>ID:</b></label>
+                                                <label for="id"><b>ID:</b></label>
                                                 <input
                                                     minLength={1}
-                                                    maxLength={3}
+                                                    maxLength={10}
                                                     type="number"
                                                     name="id"
                                                     value={this.state.input.id}
@@ -322,13 +371,15 @@ class AddRequisition extends React.Component {
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="first"><b>Client:</b></label>
+                                                <label for="client"><b>Client:</b></label>
                                                 <select class="btn btn-secondary dropdown-toggle"
                                                     style={{ width: '480px' }}
-                                                    name="cars" id="cars"
+                                                    name="client" id="client"
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerReq}
                                                     value={this.state.input.client}>
+
+<option value='' selected> Select Requisition </option>
                                                     <option value="volvo">Client1</option>
                                                     <option value="saab">client2</option>
                                                     <option value="mercedes">Client3</option>
@@ -338,103 +389,106 @@ class AddRequisition extends React.Component {
                                                 <div className="text-danger">{this.state.errors.client}</div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="second"><b>Job title:</b></label>
+                                                <label for="jobTitle"><b>Job title:</b></label>
                                                 <input
                                                     minLength={1}
-                                                    maxLength={3}
-                                                    type="number"
-                                                    name="second"
-                                                    value={this.state.input.second}
+                                                    maxLength={30}
+                                                    type="text"
+                                                    name="jobTitle"
+                                                    value={this.state.input.jobTitle}
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerSecond}
                                                     placeholder="Job title"
 
                                                     class="form-control" />
 
-                                                <div className="text-danger">{this.state.errors.second}</div>
+                                                <div className="text-danger">{this.state.errors.jobTitle}</div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="closure"><b>Duration:</b></label>
+                                                <label for="duration"><b>Duration:</b></label>
                                                 <select class="btn btn-secondary dropdown-toggle"
                                                     style={{ width: '480px' }}
-                                                    name="cars" id="cars"
+                                                    name="duration" id="duration"
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerReq}
-                                                    value={this.state.input.req}>
+                                                    value={this.state.input.duration}>
+
+<option value='' selected> Select Requisition </option>
                                                     <option value="volvo">1 month</option>
                                                     <option value="saab">2 month</option>
                                                     <option value="mercedes">3 month</option>
                                                     <option value="audi">6 month</option>
                                                 </select>
-                                                <div className="text-danger">{this.state.errors.closure}</div>
+                                                <div className="text-danger">{this.state.errors.duration}</div>
                                             </div>
 
                                         </div>
                                         <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '30px' }}>
                                             <div class="form-group">
-                                                <label for="closure"><b>Client rate:</b></label>
+                                                <label for="clientrate"><b>Client rate:</b></label>
                                                 <input
-                                                    minLength={1}
-                                                    maxLength={3}
-                                                    type="number"
-                                                    name="closure"
-                                                    value={this.state.input.closure}
+                                                    minLength={2}
+                                                    maxLength={10}
+                                                    type="text"
+                                                    name="clientrate"
+                                                    value={this.state.input.clientrate}
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerClosure}
                                                     placeholder="Client rate"
 
                                                     class="form-control" />
 
-                                                <div className="text-danger">{this.state.errors.closure}</div>
+                                                <div className="text-danger">{this.state.errors.clientrate}</div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="closure"><b>Location:</b></label>
+                                                <label for="location"><b>Location:</b></label>
                                                 <input
-                                                    minLength={1}
-                                                    maxLength={3}
-                                                    type="number"
-                                                    name="closure"
-                                                    value={this.state.input.closure}
+                                                    minLength={2}
+                                                    maxLength={50}
+                                                    type="text"
+                                                    name="location"
+                                                    value={this.state.input.location}
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerClosure}
                                                     placeholder="Location"
 
                                                     class="form-control" />
 
-                                                <div className="text-danger">{this.state.errors.closure}</div>
+                                                <div className="text-danger">{this.state.errors.location}</div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="closure"><b>Position type:</b></label>
+                                                <label for="positionType"><b>Position type:</b></label>
                                                 <select class="btn btn-secondary dropdown-toggle"
                                                     style={{ width: '480px' }}
-                                                    name="cars" id="cars"
+                                                    name="positionType" id="positionType"
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerReq}
-                                                    value={this.state.input.req}>
+                                                    value={this.state.input.positionType}>
 
-                                                    <option value="volvo">On-site</option>
-                                                    <option value="saab">Remote</option>
-                                                    <option value="mercedes">Hybrid</option>
+<option value='' selected> Select Requisition </option>
+                                                    <option value="On-site">On-site</option>
+                                                    <option value="Remote">Remote</option>
+                                                    <option value="Hybrid">Hybrid</option>
                                                     <option value="audi">Remote until Pandamic</option>
                                                 </select>
 
-                                                <div className="text-danger">{this.state.errors.closure}</div>
+                                                <div className="text-danger">{this.state.errors.positionType}</div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="closure"><b>Skills:</b></label>
                                                 <input
                                                     minLength={1}
-                                                    maxLength={3}
-                                                    type="number"
-                                                    name="closure"
-                                                    value={this.state.input.closure}
+                                                    maxLength={200}
+                                                    type="text"
+                                                    name="skills"
+                                                    value={this.state.input.skills}
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerClosure}
                                                     placeholder="Skills"
 
                                                     class="form-control" />
 
-                                                <div className="text-danger">{this.state.errors.closure}</div>
+                                                <div className="text-danger">{this.state.errors.skills}</div>
                                             </div>
                                         </div>
                                     </div>
