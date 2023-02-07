@@ -21,24 +21,16 @@ import { downloadExcel } from "react-export-table-to-excel";
 import Excel from "./Excel";
 import Histogram from 'react-chart-histogram';
 import { fontSize, style } from "@mui/system";
-<<<<<<< HEAD
-=======
 import Chart1GFG from "./Chart1GFG";
 import CanvasJSReact from "../assets/canvasjs.react";
 var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
->>>>>>> 1b6b5e39b869f6a2feaa6d1db1ceaf3592f1848f
 
 const AdminDash1 = () => {
 
     let empID = localStorage.getItem('empID');
 
-<<<<<<< HEAD
-    let empMail = localStorage.getItem('empMail');
-    
-=======
     let empMail = localStorage.getItem('empMail');    
->>>>>>> 1b6b5e39b869f6a2feaa6d1db1ceaf3592f1848f
 
     const [closureList, setClosureList] = useState([]);
     const [employee, setEmployee] = useState([]);
@@ -61,24 +53,6 @@ const AdminDash1 = () => {
     const [first, setFirst] = useState(null);
     const [second, setSecond] = useState(null);
     const [closure, setClosure] = useState(null);
-<<<<<<< HEAD
-
-
-    var labels = ['Requirement', 'Submission', '1st Interview','2nd Interview','closure']
-    
- 
-    let sumA=0,sumB=0,sumC=0,sumD=0,sumE=0;
-     closureList.map(cls => {
-
-        sumA=sumA+cls.requirement;;
-        sumB=sumB+cls.submission;;
-        sumC=sumC+cls.first;
-        sumD=sumD+cls.second;
-        sumE=sumE+cls.closure;
-});
-  const data = [sumA,sumB,sumC,sumD,sumE];
-  const options = { fillColor: 'brown', strokeColor: '#0000FF' };
-=======
     const[option1, setOption1]=useState(null);
 
 
@@ -134,7 +108,6 @@ const AdminDash1 = () => {
     // console.log(option1);
 // }
 // ***************************************************************************End***************
->>>>>>> 1b6b5e39b869f6a2feaa6d1db1ceaf3592f1848f
 
     localStorage.setItem("cate", category);
     let date1 = format(startDate, "dd-MMM-yyyy");
@@ -605,12 +578,6 @@ const AdminDash1 = () => {
                     setIsShown(false);
                 }
 
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> 1b6b5e39b869f6a2feaa6d1db1ceaf3592f1848f
             },
             (error) => {
                 alert("Operation Failed Here");
@@ -790,8 +757,6 @@ const AdminDash1 = () => {
                     <EmpTeamSidebar />
                 </div>
                 <div className="col-10 scroll-bar">
-<<<<<<< HEAD
-=======
                     <div className="row">
                     
                         <div className="col-12">
@@ -803,7 +768,6 @@ const AdminDash1 = () => {
                             </>*/}
                         </div>  
                     </div>
->>>>>>> 1b6b5e39b869f6a2feaa6d1db1ceaf3592f1848f
 
              
 
@@ -839,19 +803,6 @@ const AdminDash1 = () => {
                                 }
                             </select>
                             <div> <br></br>
-<<<<<<< HEAD
-                            <Histogram 
-                                xLabels={labels}
-                                yValues={data}
-                                width='500'
-                                height='300'
-                                size='40'
-                                options={options}
-                            />
-                            </div>
-                            </div>
-                        
-=======
                             <Histogram
                                 xLabels={labels}
                                 yValues={data}
@@ -862,7 +813,6 @@ const AdminDash1 = () => {
                             />
                             </div>
                         </div>
->>>>>>> 1b6b5e39b869f6a2feaa6d1db1ceaf3592f1848f
                         <div className="col-2"></div>
                         {isShown && <Box />}
                         <div className="col-4"></div>
