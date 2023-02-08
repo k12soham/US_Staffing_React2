@@ -4,6 +4,7 @@ import base_url from "../api/bootapi";
 import Header from "../ViewComponent1/Header";
 import EmpSidebar from "../ViewComponent1/EmpSidebar";
 import { Table } from "reactstrap";
+import EmployeeHeader from "../ComponentFirst/EmployeeHeader";
 
 function ReqView() {
 
@@ -212,13 +213,10 @@ function ReqView() {
                                         {/*Delete*/}<i class="fa fa-trash"></i></button>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                 </>
-
                             )
                         }
-
                     </td>
                 </tr >
-
             );
         })
     }
@@ -232,12 +230,10 @@ function ReqView() {
             </div>
             <div className="row">
 
-                <div className="col-12 h-100 master_backgroung_heder">
-                    <Header />
+                <div className="col-12 h-100 ">
+                    <><EmployeeHeader /></>                    
                 </div>
-                {/* <div className="col-2 master_backgroung_side">
-                    <EmpSidebar />
-                </div> */}
+               
                 <div className="col-12 scroll-bar">
                     <Table bordered className="css-serial">
 

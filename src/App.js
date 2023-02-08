@@ -8,10 +8,12 @@ import Login1 from './ComponentFirst/LoginPage';
 import ReqView from './ComponentFirst/ReqView';
 import { Navbar } from 'react-bootstrap';
 import NavBar from './ComponentFirst/NavBar';
-import mobileScreen from './ComponentFirst/NavDemo1';
+// import mobileScreen from './ComponentFirst/NavDemo1';
 import SignUp from './ComponentFirst/SignUp';
 import AddRequisition from './ComponentFirst/AddRequisition';
 import AddCandidate from './ComponentFirst/AddCandidate';
+import NavBarHeader from './ComponentFirst/NavbarHeader';
+import EmployeeHeader from './ComponentFirst/EmployeeHeader';
 
 function App() {
   return (
@@ -22,10 +24,12 @@ function App() {
         <Routes>
         <Route path="/" element={<Login1 />}></Route>
         <Route path="/req_view2" element={<ReqView />}></Route>
-        <Route path="/navbar" element={<NavBar />}></Route>
+        {/* <Route path="/navbar" element={<NavBar />}></Route> */}
         <Route path="/sign-up" element={<SignUp />}></Route>
         <Route path="/addRequisition" element={<AddRequisition />}></Route>
-        <Route path="/addcandidate" element={<AddCandidate />}></Route>
+        <Route path="/addCandidate" element={<AddCandidate />}></Route>
+        <Route path="/nav_header" element={<NavBarHeader />}></Route>
+        {/* <Route path="/nav_header" element={<EmployeeHeader />}></Route> */}
         {/* <Route path="/navdemo1" element={<mobileScreen />}></Route> */}
         </Routes>
       </Router>
