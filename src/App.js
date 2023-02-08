@@ -18,6 +18,7 @@ function App() {
     <div className="container-fluid">
       <Router>
         <ToastContainer />//hello
+		//routes
         <Routes>
         <Route path="/" element={<Login1 />}></Route>
         <Route path="/req_view2" element={<ReqView />}></Route>
