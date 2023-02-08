@@ -164,11 +164,37 @@ class AddRequisition extends React.Component {
             }
 
         }
+        if ((input["req"]) != undefined) {
+
+            var pattern = new RegExp(/^[^\s][a-zA-Z\s]+[^\s]$/);
+            if (!pattern.test(input["req"])) {
+                isValid = false;
+                errors["req"] = "Please enter only characters.";
+            }
+
+        }
         // -------------id---------------------------------------------------------------------------------------------
         if ((!input["id"])) {
             isValid = false;
             errors["id"] = "This id field is required";
         }
+        let id1 = parseInt(input["id"]);
+        console.log(id1);
+        console.log("typeOf id1: " + typeof (id1));
+        if ((input["id"]) != undefined) {
+
+
+            var pattern = new RegExp(/^(?=.*[0-9]).{1,10}$/); //new RegExp(/^[A-Za-z#+.\b]+$/);
+            if (!pattern.test(id1)) {
+                isValid = false;
+                errors["id"] = "Only 10 digit number is accepted!";
+            }
+            if (id1 < 0) {
+                isValid = false;
+                errors["id"] = "Only +ve digit number is accepted!";
+            }
+        }
+
         let id1 = parseInt(input["id"]);
         console.log(id1);
         console.log("typeOf id1: " + typeof (id1));
@@ -199,10 +225,28 @@ class AddRequisition extends React.Component {
                 errors["client"] = "Please enter only characters.";
             }
         }
+        if ((input["client"]) != undefined) {
+
+            var pattern = new RegExp(/^[^\s][a-zA-Z\s]+[^\s]+[@#$%^&*,!? \b]$/);
+            if (!pattern.test(input["client"])) {
+                isValid = false;
+                errors["client"] = "Please enter only characters.";
+            }
+        }
         // -------------jobTitle-----------------------------------------------------------------------------------------
         if ((!input["jobTitle"])) {
             isValid = false;
             errors["jobTitle"] = "This jobTitle field is required";
+        }
+        if ((input["jobTitle"]) != undefined) {
+
+            var pattern = new RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]+[^\s]{2,50}$/);
+            // new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$%^&*,!? \b]).{6,15}$/); 
+
+            if (!pattern.test(input["jobTitle"])) {
+                isValid = false;
+                errors["jobTitle"] = "Please enter only characters.";
+            }
         }
         if ((input["jobTitle"]) != undefined) {
 
@@ -238,6 +282,15 @@ class AddRequisition extends React.Component {
                 errors["location"] = "Please enter valid location name.";
             }
         }
+        if ((input["location"]) != undefined) {
+
+            var pattern = new RegExp(/^[^\s][a-zA-Z0-9 &*()_;':",./\s]+[^\s]{2,50}$/);
+
+            if (!pattern.test(input["location"])) {
+                isValid = false;
+                errors["location"] = "Please enter valid location name.";
+            }
+        }
         // -------------positionType-----------------------------------------------------------------------------------------
         if ((!input["positionType"])) {
             isValid = false;
@@ -249,10 +302,18 @@ class AddRequisition extends React.Component {
             errors["skills"] = "This skills field is required";
         }
         if ((input["skills"]) != undefined) {
+        if ((input["skills"]) != undefined) {
 
             var pattern = new RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]+[^\s]{2,50}$/);
             // new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$%^&*,!? \b]).{6,15}$/); 
+            var pattern = new RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]+[^\s]{2,50}$/);
+            // new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$%^&*,!? \b]).{6,15}$/); 
 
+            if (!pattern.test(input["skills"])) {
+                isValid = false;
+                errors["skills"] = "Please enter valid skills.";
+            }
+        }
             if (!pattern.test(input["skills"])) {
                 isValid = false;
                 errors["skills"] = "Please enter valid skills.";
@@ -311,7 +372,13 @@ class AddRequisition extends React.Component {
                                                 <option value="mercedes">Mercedes</option>
                                                 <option value="audi">Audi</option>
                                             </select>
+                                                <option value="volvo">Volvo</option>
+                                                <option value="saab">Saab</option>
+                                                <option value="mercedes">Mercedes</option>
+                                                <option value="audi">Audi</option>
+                                            </select>
 
+                                            <div className="text-danger">{this.state.errors.req}</div>
                                             <div className="text-danger">{this.state.errors.req}</div>
 
                                             <div class="form-group">
@@ -354,6 +421,7 @@ class AddRequisition extends React.Component {
                                                 <label for="jobTitle"><b>Job Title:</b></label>
                                                 <input
                                                     minLength={1}
+                                                    maxLength={50}
                                                     maxLength={50}
                                                     type="text"
                                                     name="jobTitle"
@@ -438,6 +506,7 @@ class AddRequisition extends React.Component {
                                             </div>
                                             <div class="form-group">
                                                 <label for="closure"><b>Skills:</b></label>
+                                                <textarea
                                                 <textarea
                                                     minLength={1}
                                                     maxLength={200}
