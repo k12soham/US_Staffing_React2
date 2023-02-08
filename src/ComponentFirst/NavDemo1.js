@@ -1,5 +1,5 @@
 import React from "react";
-// import $ from 'jquery';
+import $ from 'jquery';
 
 // const mobileScreen = window.matchMedia("(max-width: 990px )");
 // $(document).ready(function () {
@@ -11,7 +11,7 @@ import React from "react";
 //         $(this).parent()
 //             .siblings()
 //             .removeClass("show");
-//     });
+//     }); 
 //     $(".menu-toggle").click(function () {
 //         if (mobileScreen.matches) {
 //             $(".dashboard-nav").toggleClass("mobile-show");

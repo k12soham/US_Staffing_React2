@@ -211,7 +211,7 @@ class AddCandidate extends React.Component {
             isValid = false;
             errors["phone"] = "This duration field is required";
         }
-      
+
         // -------------email-----------------------------------------------------------------------------------------
         if ((!input["email"])) {
             isValid = false;
@@ -221,10 +221,10 @@ class AddCandidate extends React.Component {
 
             var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
             if (!pattern.test(input["email"])) {
-              isValid = false;
-              errors["email"] = "Please enter valid email address (e.g.: abc@gmail.com).";
+                isValid = false;
+                errors["email"] = "Please enter valid email address (e.g.: abc@gmail.com).";
             }
-          }
+        }
         // -------------remark-----------------------------------------------------------------------------------------
         if ((!input["remark"])) {
             isValid = false;
@@ -271,21 +271,50 @@ class AddCandidate extends React.Component {
             <div className="container-fluid">
                 <div className="row">
 
-                    <div className="col-12 h-100 master_backgroung_heder">
-                        <Header />
-                        {/* <NavBarHeader /> */}
-                    </div>
-                    <div className="col-2 master_backgroung_side side">
-                        <EmpSidebar />
-                    </div>
+                    <div className="col-12">
+                        <>  <NavBarHeader />
+                        </>
+                        {/* <Header /> */}
 
-                    <div className="col-10 master_backgroung_work scroll-bar">
+                    </div>
+                    <div className="col-12">
+                        <div className="navbar-css-2">
+
+                            <ul className="nav nav-pills">
+                                <li className="nav-item">
+                                    <a className="nav-link" aria-current="page" href="#x">Active</a>
+                                </li>
+                                <li className="nav-item dropdown">
+                                    <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#a" role="button" aria-expanded="false">Dropdown</a>
+                                    <ul className="dropdown-menu">
+                                        <li><a className="dropdown-item" href="#">Action</a></li>
+                                        <li><a className="dropdown-item" href="#">Another action</a></li>
+                                        <li><a className="dropdown-item" href="#">Something else here</a></li>
+                                        <li><hr className="dropdown-divider" /></li>
+                                        <li><a className="dropdown-item" href="#">Separated link</a></li>
+                                    </ul>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link" href="#">Link</a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link disabled">Disabled</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    {/* <div className="col-2 master_backgroung_side side">
+                        <EmpSidebar />
+                    </div> */}
+
+
+                    <div className="col-12 master_backgroung_work scroll-bar">
 
                         <div className="row">
                             <form onSubmit={this.handleSubmit}>
 
                                 <div className="col-12">
-                                    <div className="row" style={{ paddingTop: '20px'}}>
+                                    <div className="row" style={{ paddingTop: '20px' }}>
 
                                         <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '20px' }}>
 
@@ -307,9 +336,9 @@ class AddCandidate extends React.Component {
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="visa_type"><b>Visa Type:</b></label>
+                                                <label for="visa_type"><b>Visa Type:</b></label><br/>
                                                 <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '475px' }}
+                                                    style={{ width: '100%' }}
                                                     name="visa_type" id="visa_type"
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerReq}
@@ -328,9 +357,9 @@ class AddCandidate extends React.Component {
                                                 <div className="text-danger">{this.state.errors.visa_type}</div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="rate_term"><b>Rate Term:</b></label>
+                                                <label for="rate_term"><b>Rate Term:</b></label><br/>
                                                 <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '475px' }}
+                                                    style={{ width: '100%' }}
                                                     name="rate_term" id="rate_term"
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerReq}

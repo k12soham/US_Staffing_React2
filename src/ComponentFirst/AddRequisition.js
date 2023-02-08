@@ -10,7 +10,10 @@ import Header from '../ViewComponent1/Header';
 import EmpSidebar from '../ViewComponent1/EmpSidebar';
 import { useRef } from 'react';
 import { getValue } from '@testing-library/user-event/dist/utils';
-import { json } from 'react-router-dom';
+
+import NavBarHeader from './NavbarHeader';
+import EmployeeHeader from './EmployeeHeader';
+
 
 class AddRequisition extends React.Component {
 
@@ -218,12 +221,38 @@ class AddRequisition extends React.Component {
             }
 
         }
+        if ((input["req"]) != undefined) {
+
+            var pattern = new RegExp(/^[^\s][a-zA-Z\s]+[^\s]$/);
+            if (!pattern.test(input["req"])) {
+                isValid = false;
+                errors["req"] = "Please enter only characters.";
+            }
+
+        }
         // -------------id---------------------------------------------------------------------------------------------
         if ((!input["id"])) {
             isValid = false;
             errors["id"] = "This id field is required";
         }
         let id1 = parseInt(input["id"]);
+        console.log(id1);
+        console.log("typeOf id1: " + typeof (id1));
+        if ((input["id"]) != undefined) {
+
+
+            var pattern = new RegExp(/^(?=.*[0-9]).{1,10}$/); //new RegExp(/^[A-Za-z#+.\b]+$/);
+            if (!pattern.test(id1)) {
+                isValid = false;
+                errors["id"] = "Only 10 digit number is accepted!";
+            }
+            if (id1 < 0) {
+                isValid = false;
+                errors["id"] = "Only +ve digit number is accepted!";
+            }
+        }
+
+        let id2 = parseInt(input["id"]);
         console.log(id1);
         console.log("typeOf id1: " + typeof (id1));
         if ((input["id"]) != undefined) {
@@ -253,10 +282,28 @@ class AddRequisition extends React.Component {
                 errors["client"] = "Please enter only characters.";
             }
         }
+        if ((input["client"]) != undefined) {
+
+            var pattern = new RegExp(/^[^\s][a-zA-Z\s]+[^\s]+[@#$%^&*,!? \b]$/);
+            if (!pattern.test(input["client"])) {
+                isValid = false;
+                errors["client"] = "Please enter only characters.";
+            }
+        }
         // -------------jobTitle-----------------------------------------------------------------------------------------
         if ((!input["jobTitle"])) {
             isValid = false;
             errors["jobTitle"] = "This jobTitle field is required";
+        }
+        if ((input["jobTitle"]) != undefined) {
+
+            var pattern = new RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]+[^\s]{2,50}$/);
+            // new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$%^&*,!? \b]).{6,15}$/); 
+
+            if (!pattern.test(input["jobTitle"])) {
+                isValid = false;
+                errors["jobTitle"] = "Please enter only characters.";
+            }
         }
         if ((input["jobTitle"]) != undefined) {
 
@@ -292,6 +339,15 @@ class AddRequisition extends React.Component {
                 errors["location"] = "Please enter valid location name.";
             }
         }
+        if ((input["location"]) != undefined) {
+
+            var pattern = new RegExp(/^[^\s][a-zA-Z0-9 &*()_;':",./\s]+[^\s]{2,50}$/);
+
+            if (!pattern.test(input["location"])) {
+                isValid = false;
+                errors["location"] = "Please enter valid location name.";
+            }
+        }
         // -------------positionType-----------------------------------------------------------------------------------------
         if ((!input["positionType"])) {
             isValid = false;
@@ -303,10 +359,18 @@ class AddRequisition extends React.Component {
             errors["skills"] = "This skills field is required";
         }
         if ((input["skills"]) != undefined) {
+        if ((input["skills"]) != undefined) {
 
             var pattern = new RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]+[^\s]{2,50}$/);
             // new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$%^&*,!? \b]).{6,15}$/); 
+            var pattern = new RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]+[^\s]{2,50}$/);
+            // new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$%^&*,!? \b]).{6,15}$/); 
 
+            if (!pattern.test(input["skills"])) {
+                isValid = false;
+                errors["skills"] = "Please enter valid skills.";
+            }
+        }
             if (!pattern.test(input["skills"])) {
                 isValid = false;
                 errors["skills"] = "Please enter valid skills.";
@@ -330,25 +394,22 @@ class AddRequisition extends React.Component {
                 <div className="row">
 
                     <div className="col-12 h-100 master_backgroung_heder">
-                        <Header />
+                        <EmployeeHeader />
                     </div>
-                    <div className="col-2 master_backgroung_side side">
-                        <EmpSidebar />
-                    </div>
-
-                    <div className="col-10 master_backgroung_work scroll-bar">
+                  
+                    <div className="col-12 master_backgroung_work scroll-bar">
 
                         <div className="row">
                             <form onSubmit={this.handleSubmit}>
 
                                 <div className="col-12">
-                                    <div className="row">
-                                        <div className="col-12">
+                                    <div className="row" style={{ paddingTop: '2%'}}>
+                                        {/* <div className="col-12">
                                             <div class="form-group" style={{ paddingLeft: '20px', paddingRight: '20px', paddingTop: '20px' }}>
                                                 {/* req field is here */}
-                                            </div>
+                                            {/* </div>
 
-                                        </div>
+                                        </div> */}
 
 
                                         <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '20px' }}>
@@ -357,11 +418,11 @@ class AddRequisition extends React.Component {
 
                                             <select class="btn btn-secondary dropdown-toggle form-group"
                                                 ref={(input) => { this.refInput = input; }}
-                                                style={{ width: '475px' }} name="req" id="req"
+                                                style={{ width: '100%' }} name="req" id="req"
                                                 onChange={this.handleChange}
                                                 onKeyUp={this.keyUpHandlerReq}
                                                 value={this.state.input.req}>
-                                                <option value='' default selected> Select Requisition </option>
+                                                <option value='' default selected> Select Requisitor </option>
 
                                                 {
                                              this.state.requisitor_fd.map((rq) => (
@@ -371,7 +432,9 @@ class AddRequisition extends React.Component {
                                                 
                                              }    
                                             </select>
+                                               
 
+                                            <div className="text-danger">{this.state.errors.req}</div>
                                             <div className="text-danger">{this.state.errors.req}</div>
 
                                             <div class="form-group">
@@ -393,13 +456,14 @@ class AddRequisition extends React.Component {
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="client"><b>Client:</b></label>
+                                                <label for="client"><b>Client:</b></label><br/>
                                                 <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '475px' }}
+                                                    style={{ width: '100%' }}
                                                     name="client" id="client"
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerReq}
                                                     value={this.state.input.client}>
+
 
                                                     <option value='' default selected> Select client name </option>
                                               {
@@ -409,21 +473,23 @@ class AddRequisition extends React.Component {
                                                ))
                                                 
                                              }    
+
                                                 </select>
 
                                                 <div className="text-danger">{this.state.errors.client}</div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="jobTitle"><b>Job title:</b></label>
+                                                <label for="jobTitle"><b>Job Title:</b></label>
                                                 <input
                                                     minLength={1}
                                                     maxLength={50}
+                                                
                                                     type="text"
                                                     name="jobTitle"
                                                     value={this.state.input.jobTitle}
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerSecond}
-                                                    placeholder="Job title"
+                                                    placeholder="Job Title"
 
                                                     class="form-control" />
 
@@ -454,7 +520,7 @@ class AddRequisition extends React.Component {
                                         </div>
                                         <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '30px' }}>
                                             <div class="form-group">
-                                                <label for="clientrate"><b>Client rate:</b></label>
+                                                <label for="clientrate"><b>Client Rate:</b></label>
                                                 <input
                                                     minLength={2}
                                                     maxLength={10}
@@ -463,7 +529,7 @@ class AddRequisition extends React.Component {
                                                     value={this.state.input.clientrate}
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerClosure}
-                                                    placeholder="Client rate"
+                                                    placeholder="Client Rate"
 
                                                     class="form-control" />
 
@@ -486,9 +552,9 @@ class AddRequisition extends React.Component {
                                                 <div className="text-danger">{this.state.errors.location}</div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="positionType"><b>Position type:</b></label>
+                                                <label for="positionType"><b>Position Type:</b></label><br/>
                                                 <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '466px' }}
+                                                    style={{ width: '100%' }}
                                                     name="positionType" id="positionType"
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerReq}
@@ -510,6 +576,7 @@ class AddRequisition extends React.Component {
                                             <div class="form-group">
                                                 <label for="closure"><b>Skills:</b></label>
                                                 <textarea
+                                          
                                                     minLength={1}
                                                     maxLength={200}
                                                     type="text"
@@ -520,7 +587,7 @@ class AddRequisition extends React.Component {
                                                     placeholder="Skills"
 
                                                     class="form-control"
-                                                    style={{height: '130px'}} />
+                                                    style={{ height: '130px' }} />
 
                                                 <div className="text-danger">{this.state.errors.skills}</div>
                                             </div>
