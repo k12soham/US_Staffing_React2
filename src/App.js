@@ -10,15 +10,15 @@ import { Navbar } from 'react-bootstrap';
 import NavBar from './ComponentFirst/NavBar';
 import mobileScreen from './ComponentFirst/NavDemo1';
 import SignUp from './ComponentFirst/SignUp';
-import AddRequisition from './ComponentFirst/AddRequisition';
+
 import AddCandidate from './ComponentFirst/AddCandidate';
+import AddRequisition from './ComponentFirst/AddRequisition';
 
 function App() {
   return (
     <div className="container-fluid">
       <Router>
-        <ToastContainer />//hello
-		//routes
+        <ToastContainer />
         <Routes>
         <Route path="/" element={<Login1 />}></Route>
         <Route path="/req_view2" element={<ReqView />}></Route>
