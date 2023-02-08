@@ -10,6 +10,8 @@ import Header from '../ViewComponent1/Header';
 import EmpSidebar from '../ViewComponent1/EmpSidebar';
 import { useRef } from 'react';
 import { getValue } from '@testing-library/user-event/dist/utils';
+import NavBarHeader from './NavbarHeader';
+import EmployeeHeader from './EmployeeHeader';
 
 class AddRequisition extends React.Component {
 
@@ -274,25 +276,22 @@ class AddRequisition extends React.Component {
                 <div className="row">
 
                     <div className="col-12 h-100 master_backgroung_heder">
-                        <Header />
+                        <EmployeeHeader />
                     </div>
-                    <div className="col-2 master_backgroung_side side">
-                        <EmpSidebar />
-                    </div>
-
-                    <div className="col-10 master_backgroung_work scroll-bar">
+                  
+                    <div className="col-12 master_backgroung_work scroll-bar">
 
                         <div className="row">
                             <form onSubmit={this.handleSubmit}>
 
                                 <div className="col-12">
-                                    <div className="row">
-                                        <div className="col-12">
+                                    <div className="row" style={{ paddingTop: '2%'}}>
+                                        {/* <div className="col-12">
                                             <div class="form-group" style={{ paddingLeft: '20px', paddingRight: '20px', paddingTop: '20px' }}>
                                                 {/* req field is here */}
-                                            </div>
+                                            {/* </div>
 
-                                        </div>
+                                        </div> */}
 
 
                                         <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '20px' }}>
@@ -301,11 +300,11 @@ class AddRequisition extends React.Component {
 
                                             <select class="btn btn-secondary dropdown-toggle form-group"
                                                 ref={(input) => { this.refInput = input; }}
-                                                style={{ width: '475px' }} name="req" id="req"
+                                                style={{ width: '100%' }} name="req" id="req"
                                                 onChange={this.handleChange}
                                                 onKeyUp={this.keyUpHandlerReq}
                                                 value={this.state.input.req}>
-                                                <option value='' default selected> Select Requisition </option>
+                                                <option value='' default selected> Select Requisitor </option>
 
                                                 <option value="volvo">Volvo</option>
                                                 <option value="saab">Saab</option>
@@ -334,15 +333,15 @@ class AddRequisition extends React.Component {
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="client"><b>Client:</b></label>
+                                                <label for="client"><b>Client:</b></label><br/>
                                                 <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '475px' }}
+                                                    style={{ width: '100%' }}
                                                     name="client" id="client"
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerReq}
                                                     value={this.state.input.client}>
 
-                                                    <option value='' default selected> Select Requisition </option>
+                                                    <option value='' default selected> Select Client </option>
                                                     <option value="volvo">Client1</option>
                                                     <option value="saab">client2</option>
                                                     <option value="mercedes">Client3</option>
@@ -352,7 +351,7 @@ class AddRequisition extends React.Component {
                                                 <div className="text-danger">{this.state.errors.client}</div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="jobTitle"><b>Job title:</b></label>
+                                                <label for="jobTitle"><b>Job Title:</b></label>
                                                 <input
                                                     minLength={1}
                                                     maxLength={50}
@@ -361,22 +360,22 @@ class AddRequisition extends React.Component {
                                                     value={this.state.input.jobTitle}
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerSecond}
-                                                    placeholder="Job title"
+                                                    placeholder="Job Title"
 
                                                     class="form-control" />
 
                                                 <div className="text-danger">{this.state.errors.jobTitle}</div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="duration"><b>Duration:</b></label>
+                                                <label for="duration"><b>Duration:</b></label><br/>
                                                 <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '475px' }}
+                                                    style={{ width: '100%' }}
                                                     name="duration" id="duration"
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerReq}
                                                     value={this.state.input.duration}>
 
-                                                    <option value='' default selected> Select Requisition </option>
+                                                    <option value='' default selected> Select Duration </option>
                                                     <option value="volvo">1 month</option>
                                                     <option value="saab">2 month</option>
                                                     <option value="mercedes">3 month</option>
@@ -388,7 +387,7 @@ class AddRequisition extends React.Component {
                                         </div>
                                         <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '30px' }}>
                                             <div class="form-group">
-                                                <label for="clientrate"><b>Client rate:</b></label>
+                                                <label for="clientrate"><b>Client Rate:</b></label>
                                                 <input
                                                     minLength={2}
                                                     maxLength={10}
@@ -397,7 +396,7 @@ class AddRequisition extends React.Component {
                                                     value={this.state.input.clientrate}
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerClosure}
-                                                    placeholder="Client rate"
+                                                    placeholder="Client Rate"
 
                                                     class="form-control" />
 
@@ -420,15 +419,15 @@ class AddRequisition extends React.Component {
                                                 <div className="text-danger">{this.state.errors.location}</div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="positionType"><b>Position type:</b></label>
+                                                <label for="positionType"><b>Position Type:</b></label><br/>
                                                 <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '466px' }}
+                                                    style={{ width: '100%' }}
                                                     name="positionType" id="positionType"
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerReq}
                                                     value={this.state.input.positionType}>
 
-                                                    <option value='' default selected> Select Requisition </option>
+                                                    <option value='' default selected> Select Position Type </option>
                                                     <option value="On-site">On-site</option>
                                                     <option value="Remote">Remote</option>
                                                     <option value="Hybrid">Hybrid</option>
@@ -450,7 +449,7 @@ class AddRequisition extends React.Component {
                                                     placeholder="Skills"
 
                                                     class="form-control"
-                                                    style={{height: '130px'}} />
+                                                    style={{ height: '130px' }} />
 
                                                 <div className="text-danger">{this.state.errors.skills}</div>
                                             </div>

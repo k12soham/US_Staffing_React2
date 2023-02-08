@@ -50,8 +50,8 @@ class ModalWithCSS extends React.Component {
     return (
 
       <div>
-        <button className="btn btn-primary w-100 theme-btn mx-auto"
-          style={{ color: 'white', margin: '15px' }} onClick={this.handleOpenModal}>View Profile</button>
+        <button className="btn btn-primary btn-sm w-100 theme-btn mx-auto"
+          style={{ color: 'white', margin: '0px' }} onClick={this.handleOpenModal}>View Profile</button>
         <div className="col-12 col-md-7 col-lg-6 auth-main-col text-center">
 
           <ReactModal

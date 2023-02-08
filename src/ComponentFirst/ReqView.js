@@ -4,6 +4,7 @@ import base_url from "../api/bootapi";
 import Header from "../ViewComponent1/Header";
 import EmpSidebar from "../ViewComponent1/EmpSidebar";
 import { Table } from "reactstrap";
+import EmployeeHeader from "./EmployeeHeader";
 
 function ReqView() {
 
@@ -227,18 +228,14 @@ function ReqView() {
         // return (
         <div className="container-fluid">
 
-        <div className="col-12 h-100 master_backgroung_heder">
-                    <Header />
-                </div>
+            <div className="col-12 h-100 master_backgroung_heder">
+                <EmployeeHeader />
+            </div>
 
-            <div className="scroll-bar-horizontal">
+            <div className="master_backgroung_work scroll-bar-horizontal">
 
-        
-          
-                <div style={{ backgroundColor: 'cyan', width: '2000px' }}  >
+                <div style={{ backgroundColor: '', width: '2000px' }}  >
                     <Table bordered>
-                    {/* className="css-serial" */}
-
                         <thead>
                             <tr>
                                 <th style={{ width: '10px' }}>Sr No.</th>
@@ -251,21 +248,15 @@ function ReqView() {
                                 <th style={{ width: '130px' }}>Location</th>
                                 <th style={{ width: '200px' }}>Skills</th>
                                 <th style={{ width: '95px' }}>Action</th>
-                                
-                                
                             </tr>
                         </thead>
                         <tbody>
                             {renderTable()}
-
                         </tbody>
                     </Table>
 
                 </div>
-
-            {/* </div> */}
-        </div>
-
+            </div>
         </div>
         //)
     );

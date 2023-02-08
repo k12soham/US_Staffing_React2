@@ -11,6 +11,8 @@ import NavBar from './ComponentFirst/NavBar';
 import SignUp from './ComponentFirst/SignUp';
 import AddRequisition from './ComponentFirst/AddRequisition';
 import AddCandidate from './ComponentFirst/AddCandidate';
+import NavBarHeader from './ComponentFirst/NavbarHeader';
+import EmployeeHeader from './ComponentFirst/EmployeeHeader';
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
         <Route path="/sign-up" element={<SignUp />}></Route>
         <Route path="/addRequisition" element={<AddRequisition />}></Route>
         <Route path="/addCandidate" element={<AddCandidate />}></Route>
+        <Route path="/nav_header" element={<NavBarHeader />}></Route>
+        {/* <Route path="/nav_header" element={<EmployeeHeader />}></Route> */}
         {/* <Route path="/navdemo1" element={<mobileScreen />}></Route> */}
         </Routes>
       </Router>
