@@ -1,3 +1,4 @@
+import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -10,6 +11,7 @@ import NavBar from './ComponentFirst/NavBar';
 import mobileScreen from './ComponentFirst/NavDemo1';
 import SignUp from './ComponentFirst/SignUp';
 import AddRequisition from './ComponentFirst/AddRequisition';
+import AddCandidate from './ComponentFirst/AddCandidate';
 
 function App() {
   return (
@@ -22,6 +24,7 @@ function App() {
         <Route path="/navbar" element={<NavBar />}></Route>
         <Route path="/sign-up" element={<SignUp />}></Route>
         <Route path="/addRequisition" element={<AddRequisition />}></Route>
+        <Route path="/addcandidate" element={<AddCandidate />}></Route>
         {/* <Route path="/navdemo1" element={<mobileScreen />}></Route> */}
         </Routes>
       </Router>
