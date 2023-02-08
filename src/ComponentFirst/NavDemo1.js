@@ -1,4 +1,5 @@
 import React from "react";
+// import $ from 'jquery';
 
 // const mobileScreen = window.matchMedia("(max-width: 990px )");
 // $(document).ready(function () {
