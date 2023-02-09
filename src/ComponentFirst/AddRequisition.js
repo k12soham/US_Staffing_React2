@@ -195,7 +195,7 @@ class AddRequisition extends React.Component {
             }
         }
 
-        let id1 = parseInt(input["id"]);
+        let id2 = parseInt(input["id"]);
         console.log(id1);
         console.log("typeOf id1: " + typeof (id1));
         if ((input["id"]) != undefined) {
@@ -372,11 +372,7 @@ class AddRequisition extends React.Component {
                                                 <option value="mercedes">Mercedes</option>
                                                 <option value="audi">Audi</option>
                                             </select>
-                                                <option value="volvo">Volvo</option>
-                                                <option value="saab">Saab</option>
-                                                <option value="mercedes">Mercedes</option>
-                                                <option value="audi">Audi</option>
-                                            </select>
+                                               
 
                                             <div className="text-danger">{this.state.errors.req}</div>
                                             <div className="text-danger">{this.state.errors.req}</div>
@@ -421,7 +417,6 @@ class AddRequisition extends React.Component {
                                                 <label for="jobTitle"><b>Job Title:</b></label>
                                                 <input
                                                     minLength={1}
-                                                    maxLength={50}
                                                     maxLength={50}
                                                     type="text"
                                                     name="jobTitle"
@@ -507,7 +502,7 @@ class AddRequisition extends React.Component {
                                             <div class="form-group">
                                                 <label for="closure"><b>Skills:</b></label>
                                                 <textarea
-                                                <textarea
+                                        
                                                     minLength={1}
                                                     maxLength={200}
                                                     type="text"

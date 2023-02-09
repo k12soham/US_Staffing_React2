@@ -14,13 +14,14 @@ import AddRequisition from './ComponentFirst/AddRequisition';
 import AddCandidate from './ComponentFirst/AddCandidate';
 import NavBarHeader from './ComponentFirst/NavbarHeader';
 import EmployeeHeader from './ComponentFirst/EmployeeHeader';
+import ViewAllRecords from './ComponentFirst/ViewAllRecords';
 
 function App() {
   return (
     <div className="container-fluid">
       <Router>
-        <ToastContainer />//hello
-		//routes
+        <ToastContainer />
+		
         <Routes>
         <Route path="/" element={<Login1 />}></Route>
         <Route path="/req_view2" element={<ReqView />}></Route>
@@ -29,7 +30,7 @@ function App() {
         <Route path="/addRequisition" element={<AddRequisition />}></Route>
         <Route path="/addCandidate" element={<AddCandidate />}></Route>
         <Route path="/nav_header" element={<NavBarHeader />}></Route>
-        {/* <Route path="/nav_header" element={<EmployeeHeader />}></Route> */}
+        <Route path="/view_all" element={<ViewAllRecords />}></Route>
         {/* <Route path="/navdemo1" element={<mobileScreen />}></Route> */}
         </Routes>
       </Router>

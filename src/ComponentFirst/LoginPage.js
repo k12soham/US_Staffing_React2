@@ -124,7 +124,7 @@ const Login1 = () => {
     // return isAuthenticated ? (
     return (
         <div className="row g-0 auth-wrapper">
-            <div className="col-12 col-md-5 col-lg-6 h-100 master_backgroung_side">
+            <div className="col-12 col-md-5 col-lg-6 h-100 master_backgroung_login">
                 <img src="usa.png" width="670" height="657"></img>
                 {/* <div className="auth-background-holder">
                 </div> */}

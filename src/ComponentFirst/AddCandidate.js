@@ -9,6 +9,7 @@ import EmpSidebar from '../ViewComponent1/EmpSidebar';
 import { useRef } from 'react';
 import { getValue } from '@testing-library/user-event/dist/utils';
 import NavBarHeader from './NavbarHeader';
+import EmployeeHeader from './EmployeeHeader';
 
 class AddCandidate extends React.Component {
 
@@ -250,41 +251,8 @@ class AddCandidate extends React.Component {
                 <div className="row">
 
                     <div className="col-12">
-                        <>  <NavBarHeader />
-                        </>
-                        {/* <Header /> */}
-
+                        <EmployeeHeader />
                     </div>
-                    <div className="col-12">
-                        <div className="navbar-css-2">
-
-                            <ul className="nav nav-pills">
-                                <li className="nav-item">
-                                    <a className="nav-link" aria-current="page" href="#x">Active</a>
-                                </li>
-                                <li className="nav-item dropdown">
-                                    <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#a" role="button" aria-expanded="false">Dropdown</a>
-                                    <ul className="dropdown-menu">
-                                        <li><a className="dropdown-item" href="#">Action</a></li>
-                                        <li><a className="dropdown-item" href="#">Another action</a></li>
-                                        <li><a className="dropdown-item" href="#">Something else here</a></li>
-                                        <li><hr className="dropdown-divider" /></li>
-                                        <li><a className="dropdown-item" href="#">Separated link</a></li>
-                                    </ul>
-                                </li>
-                                <li className="nav-item">
-                                    <a className="nav-link" href="#">Link</a>
-                                </li>
-                                <li className="nav-item">
-                                    <a className="nav-link disabled">Disabled</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    {/* <div className="col-2 master_backgroung_side side">
-                        <EmpSidebar />
-                    </div> */}
-
 
                     <div className="col-12 master_backgroung_work scroll-bar">
 
@@ -293,7 +261,6 @@ class AddCandidate extends React.Component {
 
                                 <div className="col-12">
                                     <div className="row" style={{ paddingTop: '20px' }}>
-
                                         <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '20px' }}>
 
                                             <div class="form-group">
@@ -314,7 +281,7 @@ class AddCandidate extends React.Component {
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="visa_type"><b>Visa Type:</b></label><br/>
+                                                <label for="visa_type"><b>Visa Type:</b></label><br />
                                                 <select class="btn btn-secondary dropdown-toggle"
                                                     style={{ width: '100%' }}
                                                     name="visa_type" id="visa_type"
@@ -332,7 +299,7 @@ class AddCandidate extends React.Component {
                                                 <div className="text-danger">{this.state.errors.visa_type}</div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="rate_term"><b>Rate Term:</b></label><br/>
+                                                <label for="rate_term"><b>Rate Term:</b></label><br />
                                                 <select class="btn btn-secondary dropdown-toggle"
                                                     style={{ width: '100%' }}
                                                     name="rate_term" id="rate_term"
