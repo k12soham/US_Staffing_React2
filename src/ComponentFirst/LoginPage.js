@@ -103,19 +103,19 @@ const Login1 = () => {
                     localStorage.setItem('empID', response.data.empid);
                     localStorage.setItem('empMail', response.data.username);
              
-                    navigate("/add_closure1");
+                    navigate("/addRequisition");
                     toast.success("Login successfully!",
                         { position: "top-right" })
                 } else {
                     // history.push("/login");
                     alert("Invalid Email ID or Password.");
-                    navigate("/login");
+                    navigate("/");
                 }
             },
             (error) => {
                 console.log("Error");
                 alert("Invalid username OR password.");
-                navigate("/login");
+                navigate("/");
             }
         )
     }

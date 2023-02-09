@@ -10,13 +10,62 @@ import Header from '../ViewComponent1/Header';
 import EmpSidebar from '../ViewComponent1/EmpSidebar';
 import { useRef } from 'react';
 import { getValue } from '@testing-library/user-event/dist/utils';
+
 import NavBarHeader from './NavbarHeader';
 import EmployeeHeader from './EmployeeHeader';
+
 
 class AddRequisition extends React.Component {
 
     componentDidMount() {
-        this.refInput.focus();
+       this.refInput.focus();
+    
+    axios.get(`${base_url}/getAllDuration`)
+    .then(json => 
+        this.setState({duration_fd:json.data })
+      )
+    .catch(error => {
+    alert("Error duration")
+    })
+
+   axios.get(`${base_url}/getAllPositionType`)
+    .then(json => 
+        this.setState({positionType_fd:json.data })
+      )
+    .catch(error => {
+    alert("Error position")
+    })
+
+   
+
+    axios.get(`${base_url}/getAllRequisitorFd`)
+    .then(json => 
+        this.setState({requisitor_fd:json.data })
+      )
+    .catch(error => {
+    alert("Error requisitor")
+    })
+
+    axios.get(`${base_url}/getAllStatusFd`)
+    .then(json => 
+        this.setState({status_fd:json.data })
+      )
+    .catch(error => {
+    alert("Error status")
+    })
+
+    
+
+    axios.get(`${base_url}/getAllClient`)
+    .then(json => 
+        this.setState({client_fd:json.data })
+      )
+    .catch(error => {
+    alert("Error client")
+    })
+
+
+
     }
 
     constructor(props) {
@@ -25,12 +74,20 @@ class AddRequisition extends React.Component {
         this.state = {
             input: {},
             errors: {},
-            empID: '',
+            empID: '',  
+            duration_fd:[],
+            positionType_fd:[],
+            requisitor_fd:[],
+            status_fd:[],
+            client_fd:[]
+
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+
+ 
 
     resetForm = () => {
         // alert("Clear");
@@ -367,10 +424,13 @@ class AddRequisition extends React.Component {
                                                 value={this.state.input.req}>
                                                 <option value='' default selected> Select Requisitor </option>
 
-                                                <option value="volvo">Volvo</option>
-                                                <option value="saab">Saab</option>
-                                                <option value="mercedes">Mercedes</option>
-                                                <option value="audi">Audi</option>
+                                                {
+                                             this.state.requisitor_fd.map((rq) => (
+                                       
+                                                <option value={rq.requisitor_id}>{rq.requisitor_fd}</option>
+                                               ))
+                                                
+                                             }    
                                             </select>
                                                
 
@@ -404,11 +464,16 @@ class AddRequisition extends React.Component {
                                                     onKeyUp={this.keyUpHandlerReq}
                                                     value={this.state.input.client}>
 
-                                                    <option value='' default selected> Select Client </option>
-                                                    <option value="volvo">Client1</option>
-                                                    <option value="saab">client2</option>
-                                                    <option value="mercedes">Client3</option>
-                                                    <option value="audi">client4</option>
+
+                                                    <option value='' default selected> Select client name </option>
+                                              {
+                                             this.state.client_fd.map((cl) => (
+                                       
+                                                <option value={cl.client_id}>{cl.client_name}</option>
+                                               ))
+                                                
+                                             }    
+
                                                 </select>
 
                                                 <div className="text-danger">{this.state.errors.client}</div>
@@ -418,6 +483,7 @@ class AddRequisition extends React.Component {
                                                 <input
                                                     minLength={1}
                                                     maxLength={50}
+                                                
                                                     type="text"
                                                     name="jobTitle"
                                                     value={this.state.input.jobTitle}
@@ -430,19 +496,23 @@ class AddRequisition extends React.Component {
                                                 <div className="text-danger">{this.state.errors.jobTitle}</div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="duration"><b>Duration:</b></label><br/>
-                                                <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '100%' }}
+                                                <label for="duration"><b>Duration:</b></label>
+                                               <select class="btn btn-secondary dropdown-toggle"
+                                                    style={{ width: '475px' }}
                                                     name="duration" id="duration"
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerReq}
                                                     value={this.state.input.duration}>
 
-                                                    <option value='' default selected> Select Duration </option>
-                                                    <option value="volvo">1 month</option>
-                                                    <option value="saab">2 month</option>
-                                                    <option value="mercedes">3 month</option>
-                                                    <option value="audi">6 month</option>
+                                              <option value="">Select Duration</option>
+                                               {
+                                             this.state.duration_fd.map((dr) => (
+                                       
+                                                <option value={dr.duration_id}>{dr.duration}</option>
+                                               ))
+                                                
+                                             }    
+                                       
                                                 </select>
                                                 <div className="text-danger">{this.state.errors.duration}</div>
                                             </div>
@@ -490,11 +560,15 @@ class AddRequisition extends React.Component {
                                                     onKeyUp={this.keyUpHandlerReq}
                                                     value={this.state.input.positionType}>
 
-                                                    <option value='' default selected> Select Position Type </option>
-                                                    <option value="On-site">On-site</option>
-                                                    <option value="Remote">Remote</option>
-                                                    <option value="Hybrid">Hybrid</option>
-                                                    <option value="audi">Remote until Pandamic</option>
+                                                    <option value='' default selected> Select position type </option>
+                                                    {
+                                             this.state.positionType_fd.map((pt) => (
+                                       
+                                                <option value={pt.position_type_id}>{pt.position_type}</option>
+                                               ))
+                                                
+                                             }    
+                                       
                                                 </select>
 
                                                 <div className="text-danger">{this.state.errors.positionType}</div>
@@ -502,7 +576,7 @@ class AddRequisition extends React.Component {
                                             <div class="form-group">
                                                 <label for="closure"><b>Skills:</b></label>
                                                 <textarea
-                                        
+                                          
                                                     minLength={1}
                                                     maxLength={200}
                                                     type="text"
