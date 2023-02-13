@@ -183,16 +183,13 @@ a {
 // ---------------------------------Navbar CSS-----------------------------------------------------------------
 
 .master_backgroung_work{
-  margin-top: 8%;
-  position: absolute;
-  // top: 0%;
+  margin-top: 7.9%;
+  position: fixed;
   left: 0%;
   right: 0%;
-  // bottom: 90%;
   height: 10%;
   background-color: whitesmoke;
   width: 100%;
-  // height: 100%;
   height: 547px;
 }
 // ---------------------------------Navbar CSS-----------------------------------------------------------------
@@ -201,7 +198,6 @@ a {
   top: 0%;
   left: 0%;
   right: 0%;
-  // bottom: 90%;
   margin-top: 3.5%;
   height: 9%;
   padding: 10px;
@@ -221,6 +217,16 @@ a {
   width: 100%;
   height: 100%;
 }
+.master_backgroung_login{
+  position: absolute; 
+  top: 0%;
+  left: 0%;
+  right: 50%;
+  bottom: 0%;
+  background-color:rgb(24, 116, 202);
+  width: 100%;
+  height: 100%;
+}
 
 .scroll-bar {
   max-height: 587px;
@@ -229,7 +235,7 @@ a {
 }
 
 .scroll-bar-horizontal {
-  max-height: 587px;
+  max-height: 580px;
   max-width: 1330px;
   overflow-y: scroll;
   overflow-x: scroll;

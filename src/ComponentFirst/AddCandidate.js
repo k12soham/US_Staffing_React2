@@ -9,27 +9,12 @@ import EmpSidebar from '../ViewComponent1/EmpSidebar';
 import { useRef } from 'react';
 import { getValue } from '@testing-library/user-event/dist/utils';
 import NavBarHeader from './NavbarHeader';
+import EmployeeHeader from './EmployeeHeader';
 
 class AddCandidate extends React.Component {
 
     componentDidMount() {
         this.refInput.focus();
-
-        axios.get(`${base_url}/getAllRateTerm`)
-        .then(json => 
-            this.setState({rateTerm_fd:json.data })
-          )
-        .catch(error => {
-        alert("Error rate term")
-        })
-    
-        axios.get(`${base_url}/getAllVisaType`)
-        .then(json => 
-            this.setState({visaType_fd:json.data })
-          )
-        .catch(error => {
-        alert("Error visa")
-        })
     }
 
     constructor(props) {
@@ -39,17 +24,11 @@ class AddCandidate extends React.Component {
             input: {},
             errors: {},
             empID: '',
-            rateTerm_fd:[],
-            visaType_fd:[],
-          
-
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-
-
 
     resetForm = () => {
         // alert("Clear");
@@ -272,41 +251,8 @@ class AddCandidate extends React.Component {
                 <div className="row">
 
                     <div className="col-12">
-                        <>  <NavBarHeader />
-                        </>
-                        {/* <Header /> */}
-
+                        <EmployeeHeader />
                     </div>
-                    <div className="col-12">
-                        <div className="navbar-css-2">
-
-                            <ul className="nav nav-pills">
-                                <li className="nav-item">
-                                    <a className="nav-link" aria-current="page" href="#x">Active</a>
-                                </li>
-                                <li className="nav-item dropdown">
-                                    <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#a" role="button" aria-expanded="false">Dropdown</a>
-                                    <ul className="dropdown-menu">
-                                        <li><a className="dropdown-item" href="#">Action</a></li>
-                                        <li><a className="dropdown-item" href="#">Another action</a></li>
-                                        <li><a className="dropdown-item" href="#">Something else here</a></li>
-                                        <li><hr className="dropdown-divider" /></li>
-                                        <li><a className="dropdown-item" href="#">Separated link</a></li>
-                                    </ul>
-                                </li>
-                                <li className="nav-item">
-                                    <a className="nav-link" href="#">Link</a>
-                                </li>
-                                <li className="nav-item">
-                                    <a className="nav-link disabled">Disabled</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    {/* <div className="col-2 master_backgroung_side side">
-                        <EmpSidebar />
-                    </div> */}
-
 
                     <div className="col-12 master_backgroung_work scroll-bar">
 
@@ -315,7 +261,6 @@ class AddCandidate extends React.Component {
 
                                 <div className="col-12">
                                     <div className="row" style={{ paddingTop: '20px' }}>
-
                                         <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '20px' }}>
 
                                             <div class="form-group">
@@ -336,7 +281,7 @@ class AddCandidate extends React.Component {
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="visa_type"><b>Visa Type:</b></label><br/>
+                                                <label for="visa_type"><b>Visa Type:</b></label><br />
                                                 <select class="btn btn-secondary dropdown-toggle"
                                                     style={{ width: '100%' }}
                                                     name="visa_type" id="visa_type"
@@ -345,19 +290,16 @@ class AddCandidate extends React.Component {
                                                     value={this.state.input.visa_type}>
 
                                                     <option value='' default selected> Select Visa Type </option>
-                                                    {
-                                             this.state.visaType_fd.map((vt) => (
-                                       
-                                                <option value={vt.visa_type_id}>{vt.visa_type}</option>
-                                               ))
-                                                
-                                             }    
+                                                    <option value="volvo">Visa1</option>
+                                                    <option value="saab">visa2</option>
+                                                    <option value="mercedes">visa3</option>
+                                                    <option value="v4">visa4</option>
                                                 </select>
 
                                                 <div className="text-danger">{this.state.errors.visa_type}</div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="rate_term"><b>Rate Term:</b></label><br/>
+                                                <label for="rate_term"><b>Rate Term:</b></label><br />
                                                 <select class="btn btn-secondary dropdown-toggle"
                                                     style={{ width: '100%' }}
                                                     name="rate_term" id="rate_term"
@@ -365,14 +307,11 @@ class AddCandidate extends React.Component {
                                                     onKeyUp={this.keyUpHandlerReq}
                                                     value={this.state.input.rate_term}>
 
-                                                    <option value='' default selected> Select rate term </option>
-                                                    {
-                                             this.state.rateTerm_fd.map((rt) => (
-                                       
-                                                <option value={rt.rate_term_id}>{rt.rate_term}</option>
-                                               ))
-                                                
-                                             }    
+                                                    <option value='' default selected> Select Visa Type </option>
+                                                    <option value="volvo">R1</option>
+                                                    <option value="saab">RT2</option>
+                                                    <option value="mercedes">RT3</option>
+                                                    <option value="v4">RT4</option>
                                                 </select>
 
                                                 <div className="text-danger">{this.state.errors.rate_term}</div>
