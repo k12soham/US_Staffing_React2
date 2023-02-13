@@ -217,6 +217,16 @@ a {
   width: 100%;
   height: 100%;
 }
+.master_backgroung_login{
+  position: absolute; 
+  top: 0%;
+  left: 0%;
+  right: 50%;
+  bottom: 0%;
+  background-color:rgb(24, 116, 202);
+  width: 100%;
+  height: 100%;
+}
 
 .scroll-bar {
   max-height: 587px;
@@ -268,6 +278,14 @@ a {
   // background-color: $orange-100;
 
 }
+
+.sc {
+  max-height: 200px;
+  max-width: 600px;
+  overflow-y: scroll;
+}
+
+
 
 // @media only screen and (max-width: 600px){
 //   .master_backgroung_work{
