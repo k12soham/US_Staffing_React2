@@ -15,6 +15,21 @@ class AddCandidate extends React.Component {
 
     componentDidMount() {
         this.refInput.focus();
+        axios.get(`${base_url}/getAllRateTerm`)
+        .then(json => 
+            this.setState({rateTerm_fd:json.data })
+          )
+        .catch(error => {
+      //  alert("Error rate term")
+        })
+
+        axios.get(`${base_url}/getAllVisaType`)
+        .then(json => 
+            this.setState({visaType_fd:json.data })
+          )
+        .catch(error => {
+       // alert("Error visa")
+        })
     }
 
     constructor(props) {
@@ -24,6 +39,8 @@ class AddCandidate extends React.Component {
             input: {},
             errors: {},
             empID: '',
+            rateTerm_fd:[],
+            visaType_fd:[],
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -243,8 +260,8 @@ class AddCandidate extends React.Component {
     // -------------------------------------------- End Validation Code ----------------------------------------------------------
 
     render() {
-        const isAuthenticated = localStorage.getItem('empID');
-        let empID = localStorage.getItem('empID');
+        const isAuthenticated = localStorage.getItem('recruiterId');
+        let empID = localStorage.getItem('recruiterId');
 
         return isAuthenticated ? (
             <div className="container-fluid">
@@ -290,10 +307,13 @@ class AddCandidate extends React.Component {
                                                     value={this.state.input.visa_type}>
 
                                                     <option value='' default selected> Select Visa Type </option>
-                                                    <option value="volvo">Visa1</option>
-                                                    <option value="saab">visa2</option>
-                                                    <option value="mercedes">visa3</option>
-                                                    <option value="v4">visa4</option>
+                                                    {
+                                             this.state.visaType_fd.map((vt) => (
+
+                                                <option value={vt.visa_type_id}>{vt.visa_type}</option>
+                                               ))
+
+                                             }    
                                                 </select>
 
                                                 <div className="text-danger">{this.state.errors.visa_type}</div>
@@ -307,11 +327,15 @@ class AddCandidate extends React.Component {
                                                     onKeyUp={this.keyUpHandlerReq}
                                                     value={this.state.input.rate_term}>
 
-                                                    <option value='' default selected> Select Visa Type </option>
-                                                    <option value="volvo">R1</option>
-                                                    <option value="saab">RT2</option>
-                                                    <option value="mercedes">RT3</option>
-                                                    <option value="v4">RT4</option>
+                                                    <option value='' default selected> Select Rate Term </option>
+                                                 
+                                                    {
+                                             this.state.rateTerm_fd.map((rt) => (
+
+                                                <option value={rt.rate_term_id}>{rt.rate_term}</option>
+                                               ))
+
+                                             }    
                                                 </select>
 
                                                 <div className="text-danger">{this.state.errors.rate_term}</div>
@@ -326,7 +350,7 @@ class AddCandidate extends React.Component {
                                                     value={this.state.input.submitted_rate}
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerClosure}
-                                                    placeholder="Pnone"
+                                                    placeholder="Submitted Rate"
 
                                                     class="form-control" />
 
@@ -345,7 +369,7 @@ class AddCandidate extends React.Component {
                                                     value={this.state.input.phone}
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerClosure}
-                                                    placeholder="Pnone"
+                                                    placeholder="Phone"
 
                                                     class="form-control" />
 
