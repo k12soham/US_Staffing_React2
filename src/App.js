@@ -14,6 +14,8 @@ import AddRequisition from './ComponentFirst/AddRequisition';
 import AddCandidate from './ComponentFirst/AddCandidate';
 import NavBarHeader from './ComponentFirst/NavbarHeader';
 import EmployeeHeader from './ComponentFirst/EmployeeHeader';
+import AdminStatic from './ComponentFirst/AdminStatic';
+import Demo from './ComponentFirst/demo';
 
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
         <Route path="/addRequisition" element={<AddRequisition />}></Route>
         <Route path="/addCandidate" element={<AddCandidate />}></Route>
         <Route path="/nav_header" element={<NavBarHeader />}></Route>
+        <Route path="/adminstatic" element={<AdminStatic />}></Route>
+        <Route path="/demo" element={<Demo />}></Route>
         {/* <Route path="/nav_header" element={<EmployeeHeader />}></Route> */}
         {/* <Route path="/navdemo1" element={<mobileScreen />}></Route> */}
         </Routes>

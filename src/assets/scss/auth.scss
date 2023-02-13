@@ -211,7 +211,16 @@ a {
   color: black;
 }
 // ---------------------------------Navbar CSS-----------------------------------------------------------------
-
+.master_backgroung_login{
+  position: absolute; 
+  top: 0%;
+  left: 0%;
+  right: 50%;
+  bottom: 0%;
+  background-color:rgb(24, 116, 202);
+  width: 100%;
+  height: 100%;
+}
 
 .scroll-bar {
   max-height: 587px;
@@ -264,6 +273,11 @@ a {
 
 }
 
+.sc {
+  max-height: 200px;
+  max-width: 600px;
+  overflow-y: scroll;
+}
 
 
 
