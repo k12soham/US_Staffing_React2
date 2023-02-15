@@ -52,6 +52,7 @@ const Login1 = () => {
     };
 
     const authenticate = (e) => {
+        alert("hello1");
         e.preventDefault();
         const validate = validateLogin();
 
@@ -88,10 +89,9 @@ const Login1 = () => {
                 console.log("Results:  " + response.data.username);
 
                 if (response.data.role == "Admin") {
-                    localStorage.setItem('empName', response.data.emp_name);
-                    localStorage.setItem('empMail', response.data.username);
-                    console.log("empMail: "+ response.data.username);
-                    localStorage.setItem('empID', response.data.empid);
+                    localStorage.setItem('recruiterName', response.data.recruiter_name);
+                    localStorage.setItem('recruiterId', response.data.recruiter_id);
+                    localStorage.setItem('recruiterEmail', response.data.recruiter_email);
                     // alert("Successfully Login");
                     navigate("/admin_dashboard1");
                     toast.success("Login successfully!",
@@ -99,9 +99,9 @@ const Login1 = () => {
                 }
 
                 else if (response.data.role == "TM") {
-                    localStorage.setItem('empName', response.data.emp_name);
-                    localStorage.setItem('empID', response.data.empid);
-                    localStorage.setItem('empMail', response.data.username);
+                    localStorage.setItem('recruiterName', response.data.recruiter_name);
+                    localStorage.setItem('recruiterId', response.data.recruiter_id);
+                    localStorage.setItem('recruiterEmail', response.data.recruiter_email);
              
                     navigate("/addRequisition");
                     toast.success("Login successfully!",

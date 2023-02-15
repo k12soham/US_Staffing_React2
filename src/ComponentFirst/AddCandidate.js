@@ -15,6 +15,22 @@ class AddCandidate extends React.Component {
 
     componentDidMount() {
         this.refInput.focus();
+
+        axios.get(`${base_url}/getAllRateTerm`)
+        .then(json => 
+            this.setState({rateTerm_fd:json.data })
+          )
+        .catch(error => {
+        alert("Error rate term")
+        })
+    
+        axios.get(`${base_url}/getAllVisaType`)
+        .then(json => 
+            this.setState({visaType_fd:json.data })
+          )
+        .catch(error => {
+        alert("Error visa")
+        })
     }
 
     constructor(props) {
@@ -24,11 +40,17 @@ class AddCandidate extends React.Component {
             input: {},
             errors: {},
             empID: '',
+            rateTerm_fd:[],
+            visaType_fd:[],
+          
+
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+
+
 
     resetForm = () => {
         // alert("Clear");
@@ -76,21 +98,28 @@ class AddCandidate extends React.Component {
             let add_cls = this.state.input;
             add_cls[e.target.name] = e.target.value;
 
-            this.postdata(add_cls);
+            this.postCandidate(add_cls);
         }
         // 👇️ clear all input values in the form
         e.target.reset();
     }
 
-    postdata = (data) => {
-        let z = this.state.empID = localStorage.getItem("empID")
-        let d1 = data["req"];
-        let d2 = data["sub"];
-        let d3 = data["first"];
-        let d4 = data["second"];
-        let d5 = data["closure"];
+    postCandidate = (data) => {
+        let z = this.state.empID = localStorage.getItem("recruiterId")
+        let recid = 1, rqid=2;
+        let status = 'assigned';
+        let d1 = data["cad_name"];
+        let d2 = data["visa_type"];
+        let d3 = data["rate_term"];
+        let d4 = data["submitted_rate"];
+        let d5 = data["phone"];
+        let d6 = data["email"];
+        let d7 = data["remark"];
+        let d8 = data["reason"];
 
-        axios.post(`${base_url}/add_cls?req=${d1}&sub=${d2}&first=${d3}&second=${d4}&closure=${d5}&empid=${z}`).then(
+        axios.post(`${base_url}/add_candidate?candidate_name=${d1}&visa_type=${d2}&rate_term=${d3}
+        &submitted_rate=${d4}&pnone=${d5}&email=${d6}&status=${status}&remark=${d7}
+        &reason=${d8}&recruiter_id=${recid}&requisition_id=${rqid}`).then(
 
             (response) => {
                 toast.success("Requirement added successfully!",
@@ -162,14 +191,7 @@ class AddCandidate extends React.Component {
             isValid = false;
             errors["rate_term"] = "Please select rate term type";
         }
-        // if ((input["rate_term"]) != undefined) {
-
-        //     var pattern = new RegExp(/^[^\s][a-zA-Z\s]+[^\s]+[@#$%^&*,!? \b]$/);
-        //     if (!pattern.test(input["rate_term"])) {
-        //         isValid = false;
-        //         errors["rate_term"] = "Please enter only characters.";
-        //     }
-        // }
+     
         // -------------submitted_rate-----------------------------------------------------------------------------------------
         if ((!input["submitted_rate"])) {
             isValid = false;
@@ -177,7 +199,7 @@ class AddCandidate extends React.Component {
         }
         if ((input["submitted_rate"]) != undefined) {
 
-            var pattern = new RegExp(/^[^\s][0-9 $\s]{2,4}$/);
+            var pattern = new RegExp(/^[^\s][0-9$\s]{2,4}$/);
             // new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$%^&*,!? \b]).{6,15}$/); 
 
             if (!pattern.test(input["submitted_rate"])) {
@@ -189,6 +211,16 @@ class AddCandidate extends React.Component {
         if ((!input["phone"])) {
             isValid = false;
             errors["phone"] = "This duration field is required";
+        }
+        if ((input["phone"]) != undefined) {
+
+            var pattern = new RegExp(/^[^\s][0-9 *()-\s]{4,15}$/);
+            // new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$%^&*,!? \b]).{6,15}$/); 
+
+            if (!pattern.test(input["phone"])) {
+                isValid = false;
+                errors["phone"] = "Please enter only characters.";
+            }
         }
 
         // -------------email-----------------------------------------------------------------------------------------
@@ -211,7 +243,7 @@ class AddCandidate extends React.Component {
         }
         if ((input["remark"]) != undefined) {
 
-            var pattern = new RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]{1,50}$/);
+            var pattern = new RegExp(/^[^\s][a-zA-Z0-9 @#$%&*()_\\[\]{};':"\\|,.<>\/\s]{1,50}$/);
             // RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]+[^\s]{1,50}$/);
 
             if (!pattern.test(input["remark"])) {
@@ -226,8 +258,8 @@ class AddCandidate extends React.Component {
         }
         if ((input["reason"]) != undefined) {
 
-            var pattern = new RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]{1,50}$/);
-            // new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$%^&*,!? \b]).{6,15}$/); 
+            var pattern = new RegExp(/^[^\s][a-zA-Z0-9 @#$%&*()_\\[\]{};':"\\|,.<>\/\s]{1,50}$/);
+            // RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]{1,50}$/);
 
             if (!pattern.test(input["reason"])) {
                 isValid = false;
@@ -247,7 +279,7 @@ class AddCandidate extends React.Component {
         let empID = localStorage.getItem('empID');
 
         return isAuthenticated ? (
-            <div className="container-fluid">
+            <div className="">
                 <div className="row">
 
                     <div className="col-12">
@@ -290,10 +322,13 @@ class AddCandidate extends React.Component {
                                                     value={this.state.input.visa_type}>
 
                                                     <option value='' default selected> Select Visa Type </option>
-                                                    <option value="volvo">Visa1</option>
-                                                    <option value="saab">visa2</option>
-                                                    <option value="mercedes">visa3</option>
-                                                    <option value="v4">visa4</option>
+                                                    {
+                                             this.state.visaType_fd.map((vt) => (
+                                       
+                                                <option value={vt.visa_type}>{vt.visa_type}</option>
+                                               ))
+                                                
+                                             }    
                                                 </select>
 
                                                 <div className="text-danger">{this.state.errors.visa_type}</div>
@@ -307,11 +342,14 @@ class AddCandidate extends React.Component {
                                                     onKeyUp={this.keyUpHandlerReq}
                                                     value={this.state.input.rate_term}>
 
-                                                    <option value='' default selected> Select Visa Type </option>
-                                                    <option value="volvo">R1</option>
-                                                    <option value="saab">RT2</option>
-                                                    <option value="mercedes">RT3</option>
-                                                    <option value="v4">RT4</option>
+                                                    <option value='' default selected> Select rate term </option>
+                                                    {
+                                             this.state.rateTerm_fd.map((rt) => (
+                                       
+                                                <option value={rt.rate_term}>{rt.rate_term}</option>
+                                               ))
+                                                
+                                             }    
                                                 </select>
 
                                                 <div className="text-danger">{this.state.errors.rate_term}</div>
@@ -322,11 +360,11 @@ class AddCandidate extends React.Component {
                                                     minLength={2}
                                                     maxLength={4}
                                                     type="text"
-                                                    name="phone"
+                                                    name="submitted_rate"
                                                     value={this.state.input.submitted_rate}
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerClosure}
-                                                    placeholder="Pnone"
+                                                    placeholder="Submitted Rate per hour (e.g. 80$)"
 
                                                     class="form-control" />
 
@@ -339,8 +377,8 @@ class AddCandidate extends React.Component {
                                                 <label for="phone"><b>Phone :</b></label>
                                                 <input
                                                     minLength={10}
-                                                    maxLength={10}
-                                                    type="number"
+                                                    maxLength={20}
+                                                    type="text"
                                                     name="phone"
                                                     value={this.state.input.phone}
                                                     onChange={this.handleChange}

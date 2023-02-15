@@ -1,8 +1,6 @@
 import { React, useState, useEffect } from "react";
 import axios from "axios";
 import base_url from "../api/bootapi";
-import Header from "../ViewComponent1/Header";
-import EmpSidebar from "../ViewComponent1/EmpSidebar";
 import { Table } from "reactstrap";
 import EmployeeHeader from "./EmployeeHeader";
 
@@ -226,15 +224,15 @@ function ReqView() {
 
     return (
         // return (
-        <div className="container-fluid">
+        <div className="row">
 
-            <div className="col-12 h-100 master_backgroung_heder">
+            <div className="col-12 master_backgroung_heder">
                 <EmployeeHeader />
             </div>
 
-            <div className="master_backgroung_work scroll-bar-horizontal">
+            <div className="col-12 master_backgroung_work scroll-bar">
 
-                <div style={{ backgroundColor: '', width: '2000px' }}  >
+                <div style={{ width: '2000px' }}  >
                     <Table bordered>
                         <thead>
                             <tr>
@@ -247,7 +245,7 @@ function ReqView() {
                                 <th style={{ width: '100px' }}>Client Rate</th>
                                 <th style={{ width: '130px' }}>Location</th>
                                 <th style={{ width: '200px' }}>Skills</th>
-                                <th style={{ width: '95px' }}>Action</th>
+                                <th style={{ width: '100px' }}>Action</th>
                             </tr>
                         </thead>
                         <tbody>
