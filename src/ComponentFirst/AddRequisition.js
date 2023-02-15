@@ -4,68 +4,56 @@ import base_url from '../api/bootapi';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import history from './ResponseVal';
-// import Header from './Header';
-import Header from '../ViewComponent1/Header';
-// import EmpSidebar from './EmpSidebar';
-import EmpSidebar from '../ViewComponent1/EmpSidebar';
 import { useRef } from 'react';
 import { getValue } from '@testing-library/user-event/dist/utils';
-
 import NavBarHeader from './NavbarHeader';
 import EmployeeHeader from './EmployeeHeader';
-
+import { json } from 'react-router-dom';
 
 class AddRequisition extends React.Component {
-
+    // const [reqList, setReqList] = useState([]);
     componentDidMount() {
-       this.refInput.focus();
-    
-    axios.get(`${base_url}/getAllDuration`)
-    .then(json => 
-        this.setState({duration_fd:json.data })
-      )
-    .catch(error => {
-    //alert("Error duration")
-    })
+        this.refInput.focus();
 
-   axios.get(`${base_url}/getAllPositionType`)
-    .then(json => 
-        this.setState({positionType_fd:json.data })
-      )
-    .catch(error => {
-   // alert("Error position")
-    })
+        axios.get(`${base_url}/getAllDuration`)
+            .then(json =>
+                this.setState({ duration_fd: json.data })
+            )
+            .catch(error => {
+                alert("Error duration")
+            })
 
-   
+        axios.get(`${base_url}/getAllPositionType`)
+            .then(json =>
+                this.setState({ positionType_fd: json.data })
+            )
+            .catch(error => {
+                alert("Error position")
+            })
 
-    axios.get(`${base_url}/getAllRequisitorFd`)
-    .then(json => 
-        this.setState({requisitor_fd:json.data })
-      )
-    .catch(error => {
-    //alert("Error requisitor")
-    })
+        axios.get(`${base_url}/getAllRequisitorFd`)
+            .then(json =>
+                this.setState({ requisitor_fd: json.data })
+            )
+            .catch(error => {
+                alert("Error requisitor")
+            })
 
-    axios.get(`${base_url}/getAllStatusFd`)
-    .then(json => 
-        this.setState({status_fd:json.data })
-      )
-    .catch(error => {
-    //alert("Error status")
-    })
+        axios.get(`${base_url}/getAllStatusFd`)
+            .then(json =>
+                this.setState({ status_fd: json.data })
+            )
+            .catch(error => {
+                alert("Error status")
+            })
 
-    
-
-    axios.get(`${base_url}/getAllClient`)
-    .then(json => 
-        this.setState({client_fd:json.data })
-      )
-    .catch(error => {
-   // alert("Error client")
-    })
-
-
-
+        axios.get(`${base_url}/getAllClient`)
+            .then(json =>
+                this.setState({ client_fd: json.data })
+            )
+            .catch(error => {
+                alert("Error client")
+            })
     }
 
     constructor(props) {
@@ -74,20 +62,17 @@ class AddRequisition extends React.Component {
         this.state = {
             input: {},
             errors: {},
-            empID: '',  
-            duration_fd:[],
-            positionType_fd:[],
-            requisitor_fd:[],
-            status_fd:[],
-            client_fd:[]
-
+            empID: '',
+            duration_fd: [],
+            positionType_fd: [],
+            requisitor_fd: [],
+            status_fd: [],
+            client_fd: [],
+            setReqList: [],
         };
-
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-
- 
 
     resetForm = () => {
         // alert("Clear");
@@ -102,11 +87,6 @@ class AddRequisition extends React.Component {
         inputs["location"] = undefined;
         inputs["positionType"] = undefined;
         inputs["skills"] = undefined;
-
-        // inputs["sub"] = undefined;
-        // inputs["first"] = undefined;
-        // inputs["second"] = undefined;
-        // inputs["closure"] = undefined;
 
         this.setState({ input: inputs });
 
@@ -123,11 +103,27 @@ class AddRequisition extends React.Component {
         this.setState({ errors: errors1 });
     }
 
+    addCandidate = (a, b) => {
+        console.log("recid = " + a + " rqid = " + b);
+
+        if (b != undefined) {
+            localStorage.setItem('RecId_New', a);
+            localStorage.setItem('ReqId', b)
+            // alert("Successfully Login");
+            // navigate("/addCandidate");
+            history.push("/addCandidate");
+            window.location.reload();
+            toast.success("Render  successfully!",
+                { position: "top-right" })
+        }
+
+        console.log("addCandidate");
+    }
+
     handleChange(e) {
         let add_cls = this.state.input;
         add_cls[e.target.name] = e.target.value;
         console.log(add_cls);
-
         this.setState({
             add_cls
         });
@@ -141,23 +137,58 @@ class AddRequisition extends React.Component {
             let add_cls = this.state.input;
             add_cls[e.target.name] = e.target.value;
 
-            this.postdata(add_cls);
+            this.post_requisition(add_cls);
         }
         // 👇️ clear all input values in the form
         e.target.reset();
     }
 
-    postdata = (data) => {
-        let z = this.state.empID = localStorage.getItem("empID")
+    post_requisition = (data) => {
+        let z = this.state.empID = localStorage.getItem("recruiterId");
+        console.log("recruiterId : " + z);
         let d1 = data["req"];
-        let d2 = data["sub"];
-        let d3 = data["first"];
-        let d4 = data["second"];
-        let d5 = data["closure"];
+        let d2 = data["id"];
+        let d3 = data["client"];
+        let d4 = data["jobTitle"];
+        let d5 = data["duration"];
+        let d6 = data["clientrate"];
+        let d7 = data["location"];
+        let d8 = data["positionType"];
+        let d9 = data["skills"];
 
-        axios.post(`${base_url}/add_cls?req=${d1}&sub=${d2}&first=${d3}&second=${d4}&closure=${d5}&empid=${z}`).then(
+        // const isAuthenticated = localStorage.getItem('empID');
+        // let empID = localStorage.getItem('empID');
 
+        // axios.post(`${base_url}/add_requsition?requisition_from=${d1}
+        // &id=${d2}&client=${d3}&job_title=${d4}&duration=${d5}&client_rate=${d6}&location=${d7}
+        // &position_type=${d8}&skills=${d9}&recruiter_id=${z}`).then(
+        //     json => this.state.setReqList(json.data),
+        //     // setIsDownload(true),
+        //     (response) => {
+        //         toast.success("Requirement added successfully!",
+        //             { position: "top-right" }
+        //         );
+        //         console.log
+        //     },
+        //     (error) => {
+        //         console.log(error);
+        //         console.log("Error");
+        //         alert("Please enter valid details.")
+        //     }
+        // );
+        // console.log("req list : "+this.state.setReqList);
+
+
+        // let inputs = {};
+        // inputs["req"] = undefined;
+
+        axios.post(`${base_url}/add_requsition?requisition_from=${d1}
+        &id=${d2}&client=${d3}&job_title=${d4}&duration=${d5}&client_rate=${d6}&location=${d7}
+        &position_type=${d8}&skills=${d9}&recruiter_id=${z}`).then(
             (response) => {
+
+                this.setState({ setReqList: response.data });
+
                 toast.success("Requirement added successfully!",
                     { position: "top-right",
                     autoClose: 2000,
@@ -166,6 +197,7 @@ class AddRequisition extends React.Component {
                 
                 }
                 );
+
             },
             (error) => {
                 console.log(error);
@@ -173,13 +205,37 @@ class AddRequisition extends React.Component {
                 alert("Please enter valid details.")
             }
         );
+        console.log(this.state.setReqList);
+
+        // axios.post(`${base_url}/add_requsition?requisition_from=${d1}
+        // &id=${d2}&client=${d3}&job_title=${d4}&duration=${d5}&client_rate=${d6}&location=${d7}
+        // &position_type=${d8}&skills=${d9}&recruiter_id=${z}`)
+        // .then(
+        //     json=> 
+        //     this.setState({
+        //         setReqList: (json.data)
+        //      } ),
+        //     // json => this.state.setReqList(json.data),
+        //     // setIsDownload(true),
+        // )
+        // .catch(error => {
+        //     console.log(error);
+        //     console.log("Error");
+        //     alert("Please enter valid details.")
+
+        // })
+        // console.log("req list : "+this.state.setReqList);
 
         let inputs = {};
         inputs["req"] = undefined;
-        inputs["sub"] = undefined;
-        inputs["first"] = undefined;
-        inputs["second"] = undefined;
-        inputs["closure"] = undefined;
+        inputs["id"] = undefined;
+        inputs["client"] = undefined;
+        inputs["jobTitle"] = undefined;
+        inputs["duration"] = undefined;
+        inputs["clientrate"] = undefined;
+        inputs["location"] = undefined;
+        inputs["positionType"] = undefined;
+        inputs["skills"] = undefined;
 
         this.setState({ input: inputs });
     }
@@ -200,16 +256,10 @@ class AddRequisition extends React.Component {
         console.log("client " + input["client"]);
         console.log("jobTitle " + input["jobTitle"]);
         console.log("duration " + input["duration"]);
-        console.log("clientrate " + input["sub"]);
-        console.log("location " + input["first"]);
-        console.log("positionType " + input["second"]);
-        console.log("skills " + input["closure"]);
-
-        let reqNum = parseInt(input["req"]);
-        let subNum = parseInt(input["sub"]);
-        let fNum = parseInt(input["first"]);
-        let sNum = parseInt(input["second"]);
-        let clsNum = parseInt(input["closure"]);
+        console.log("clientrate " + input["clientrate"]);
+        console.log("location " + input["location"]);
+        console.log("positionType " + input["positionType"]);
+        console.log("skills " + input["skills"]);
 
         console.log("type of reqNum " + typeof (reqNum));
 
@@ -257,44 +307,20 @@ class AddRequisition extends React.Component {
             }
         }
 
-        let id2 = parseInt(input["id"]);
-        console.log(id1);
-        console.log("typeOf id1: " + typeof (id1));
-        if ((input["id"]) != undefined) {
-
-
-            var pattern = new RegExp(/^(?=.*[0-9]).{1,10}$/); //new RegExp(/^[A-Za-z#+.\b]+$/);
-            if (!pattern.test(id1)) {
-                isValid = false;
-                errors["id"] = "Only 10 digit number is accepted!";
-            }
-            if (id1 < 0) {
-                isValid = false;
-                errors["id"] = "Only +ve digit number is accepted!";
-            }
-        }
-
         // -------------client-----------------------------------------------------------------------------------------
         if ((!input["client"])) {
             isValid = false;
             errors["client"] = "This client field is required";
         }
-        if ((input["client"]) != undefined) {
+        // if ((input["client"]) != undefined) {
 
-            var pattern = new RegExp(/^[^\s][a-zA-Z\s]+[^\s]+[@#$%^&*,!? \b]$/);
-            if (!pattern.test(input["client"])) {
-                isValid = false;
-                errors["client"] = "Please enter only characters.";
-            }
-        }
-        if ((input["client"]) != undefined) {
-
-            var pattern = new RegExp(/^[^\s][a-zA-Z\s]+[^\s]+[@#$%^&*,!? \b]$/);
-            if (!pattern.test(input["client"])) {
-                isValid = false;
-                errors["client"] = "Please enter only characters.";
-            }
-        }
+        //     var pattern = new new RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]+[^\s]$/);
+        //     // RegExp(/^[^\s][a-zA-Z\s]+[^\s]+[@#$%^&*,!? \b]$/);
+        //     if (!pattern.test(input["client"])) {
+        //         isValid = false;
+        //         errors["client"] = "Please enter only characters.";
+        //     }
+        // }
         // -------------jobTitle-----------------------------------------------------------------------------------------
         if ((!input["jobTitle"])) {
             isValid = false;
@@ -310,16 +336,7 @@ class AddRequisition extends React.Component {
                 errors["jobTitle"] = "Please enter only characters.";
             }
         }
-        if ((input["jobTitle"]) != undefined) {
 
-            var pattern = new RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]+[^\s]{2,50}$/);
-            // new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$%^&*,!? \b]).{6,15}$/); 
-
-            if (!pattern.test(input["jobTitle"])) {
-                isValid = false;
-                errors["jobTitle"] = "Please enter only characters.";
-            }
-        }
         // -------------duration-----------------------------------------------------------------------------------------
         if ((!input["duration"])) {
             isValid = false;
@@ -344,15 +361,7 @@ class AddRequisition extends React.Component {
                 errors["location"] = "Please enter valid location name.";
             }
         }
-        if ((input["location"]) != undefined) {
 
-            var pattern = new RegExp(/^[^\s][a-zA-Z0-9 &*()_;':",./\s]+[^\s]{2,50}$/);
-
-            if (!pattern.test(input["location"])) {
-                isValid = false;
-                errors["location"] = "Please enter valid location name.";
-            }
-        }
         // -------------positionType-----------------------------------------------------------------------------------------
         if ((!input["positionType"])) {
             isValid = false;
@@ -364,18 +373,16 @@ class AddRequisition extends React.Component {
             errors["skills"] = "This skills field is required";
         }
         if ((input["skills"]) != undefined) {
-        if ((input["skills"]) != undefined) {
+            if ((input["skills"]) != undefined) {
 
-            var pattern = new RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]+[^\s]{2,50}$/);
-            // new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$%^&*,!? \b]).{6,15}$/); 
-            var pattern = new RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]+[^\s]{2,50}$/);
-            // new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$%^&*,!? \b]).{6,15}$/); 
+                var pattern = new RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]+[^\s]{2,50}$/);
+                // new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$%^&*,!? \b]).{6,15}$/); 
 
-            if (!pattern.test(input["skills"])) {
-                isValid = false;
-                errors["skills"] = "Please enter valid skills.";
+                if (!pattern.test(input["skills"])) {
+                    isValid = false;
+                    errors["skills"] = "Please enter valid skills.";
+                }
             }
-        }
             if (!pattern.test(input["skills"])) {
                 isValid = false;
                 errors["skills"] = "Please enter valid skills.";
@@ -392,30 +399,24 @@ class AddRequisition extends React.Component {
 
     render() {
         const isAuthenticated = localStorage.getItem('recruiterId');
-        let empID = localStorage.getItem('empID');
+        // let z = this.state.empID = localStorage.getItem("recruiterId");
+        let empID = localStorage.getItem('recruiterId');
 
         return isAuthenticated ? (
-            <div className="container-fluid">
+            <div className="">
                 <div className="row">
 
                     <div className="col-12 h-100 master_backgroung_heder">
                         <EmployeeHeader />
                     </div>
-                  
+
                     <div className="col-12 master_backgroung_work scroll-bar">
 
                         <div className="row">
                             <form onSubmit={this.handleSubmit}>
 
                                 <div className="col-12">
-                                    <div className="row" style={{ paddingTop: '2%'}}>
-                                        {/* <div className="col-12">
-                                            <div class="form-group" style={{ paddingLeft: '20px', paddingRight: '20px', paddingTop: '20px' }}>
-                                                {/* req field is here */}
-                                            {/* </div>
-
-                                        </div> */}
-
+                                    <div className="row" style={{ paddingTop: '2%' }}>
 
                                         <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '20px' }}>
 
@@ -430,14 +431,14 @@ class AddRequisition extends React.Component {
                                                 <option value='' default selected> Select Requisitor </option>
 
                                                 {
-                                             this.state.requisitor_fd.map((rq) => (
-                                       
-                                                <option value={rq.requisitor_id}>{rq.requisitor_fd}</option>
-                                               ))
-                                                
-                                             }    
+                                                    this.state.requisitor_fd.map((rq) => (
+
+                                                        <option value={rq.requisitor_fd}>{rq.requisitor_fd}</option>
+                                                    ))
+
+                                                }
                                             </select>
-                                               
+
 
                                             <div className="text-danger">{this.state.errors.req}</div>
                                             <div className="text-danger">{this.state.errors.req}</div>
@@ -461,7 +462,7 @@ class AddRequisition extends React.Component {
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="client"><b>Client:</b></label><br/>
+                                                <label for="client"><b>Client:</b></label><br />
                                                 <select class="btn btn-secondary dropdown-toggle"
                                                     style={{ width: '100%' }}
                                                     name="client" id="client"
@@ -469,15 +470,13 @@ class AddRequisition extends React.Component {
                                                     onKeyUp={this.keyUpHandlerReq}
                                                     value={this.state.input.client}>
 
-
                                                     <option value='' default selected> Select client name </option>
-                                              {
-                                             this.state.client_fd.map((cl) => (
-                                       
-                                                <option value={cl.client_id}>{cl.client_name}</option>
-                                               ))
-                                                
-                                             }    
+                                                    {
+                                                        this.state.client_fd.map((cl) => (
+
+                                                            <option value={cl.client_name}>{cl.client_name}</option>
+                                                        ))
+                                                    }
 
                                                 </select>
 
@@ -488,36 +487,34 @@ class AddRequisition extends React.Component {
                                                 <input
                                                     minLength={1}
                                                     maxLength={50}
-                                                
                                                     type="text"
                                                     name="jobTitle"
                                                     value={this.state.input.jobTitle}
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerSecond}
                                                     placeholder="Job Title"
-
                                                     class="form-control" />
 
                                                 <div className="text-danger">{this.state.errors.jobTitle}</div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="duration"><b>Duration:</b></label><br/>
-                                               <select class="btn btn-secondary dropdown-toggle"
-                                                   style={{ width: '100%' }}
+                                                <label for="duration"><b>Duration:</b></label><br />
+                                                <select class="btn btn-secondary dropdown-toggle"
+                                                    style={{ width: '100%' }}
                                                     name="duration" id="duration"
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerReq}
                                                     value={this.state.input.duration}>
 
-                                              <option value="">Select Duration</option>
-                                               {
-                                             this.state.duration_fd.map((dr) => (
-                                       
-                                                <option value={dr.duration_id}>{dr.duration}</option>
-                                               ))
-                                                
-                                             }    
-                                       
+                                                    <option value="">Select Duration</option>
+                                                    {
+                                                        this.state.duration_fd.map((dr) => (
+
+                                                            <option value={dr.duration}>{dr.duration}</option>
+                                                        ))
+
+                                                    }
+
                                                 </select>
                                                 <div className="text-danger">{this.state.errors.duration}</div>
                                             </div>
@@ -528,12 +525,13 @@ class AddRequisition extends React.Component {
                                                 <label for="clientrate"><b>Client Rate:</b></label>
                                                 <input
                                                     minLength={2}
-                                                    maxLength={10}
+                                                    maxLength={5}
                                                     type="text"
                                                     name="clientrate"
                                                     value={this.state.input.clientrate}
+
                                                     onChange={this.handleChange}
-                                                    onKeyUp={this.keyUpHandlerClosure}
+                                                    onKeyUp={this.keyUpHandlerSub}
                                                     placeholder="Client Rate"
 
                                                     class="form-control" />
@@ -557,7 +555,7 @@ class AddRequisition extends React.Component {
                                                 <div className="text-danger">{this.state.errors.location}</div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="positionType"><b>Position Type:</b></label><br/>
+                                                <label for="positionType"><b>Position Type:</b></label><br />
                                                 <select class="btn btn-secondary dropdown-toggle"
                                                     style={{ width: '100%' }}
                                                     name="positionType" id="positionType"
@@ -567,13 +565,13 @@ class AddRequisition extends React.Component {
 
                                                     <option value='' default selected> Select position type </option>
                                                     {
-                                             this.state.positionType_fd.map((pt) => (
-                                       
-                                                <option value={pt.position_type_id}>{pt.position_type}</option>
-                                               ))
-                                                
-                                             }    
-                                       
+                                                        this.state.positionType_fd.map((pt) => (
+
+                                                            <option value={pt.position_type}>{pt.position_type}</option>
+                                                        ))
+
+                                                    }
+
                                                 </select>
 
                                                 <div className="text-danger">{this.state.errors.positionType}</div>
@@ -581,7 +579,7 @@ class AddRequisition extends React.Component {
                                             <div class="form-group">
                                                 <label for="closure"><b>Skills:</b></label>
                                                 <textarea
-                                          
+
                                                     minLength={1}
                                                     maxLength={200}
                                                     type="text"
@@ -617,14 +615,25 @@ class AddRequisition extends React.Component {
                                             <div className='col-2'>
                                                 <button
                                                     type="reset"
-                                                    className="btn btn-warning w-100 theme-btn mx-auto"
+                                                    className="btn btn-success w-100 theme-btn mx-auto"
                                                     onClick={this.resetForm}
+                                                >
+                                                    Next
+                                                </button>
+
+                                            </div>
+                                            <div className='col-2'>
+                                                <button
+                                                    type="reset"
+                                                    className="btn btn-warning w-100 theme-btn mx-auto"
+                                                    onClick={this.addCandidate}
                                                 >
                                                     Reset
                                                 </button>
 
                                             </div>
-                                            <div className='col-4'></div>
+
+                                            <div className='col-2'></div>
                                         </div>
                                     </div>
                                 </div>

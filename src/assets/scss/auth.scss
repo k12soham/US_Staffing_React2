@@ -23,7 +23,11 @@
 
 @import "~@fortawesome/fontawesome-free/css/all.css";
 @import "~bootstrap/scss/bootstrap.scss";
+*{
+  margin: 0;
+  padding: 0;
 
+}
 html,
 body,
 #root {
@@ -166,7 +170,7 @@ a {
   height: 547px;
 }
 
-// ---------------------------------Navbar CSS-----------------------------------------------------------------
+// ---------------------------------Navbar CSS1-----------------------------------------------------------------
 .navbar-css-1 {
   position: fixed;
   top: 0%;

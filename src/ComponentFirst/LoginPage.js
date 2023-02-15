@@ -52,6 +52,7 @@ const Login1 = () => {
     };
 
     const authenticate = (e) => {
+        alert("hello1");
         e.preventDefault();
         const validate = validateLogin();
 

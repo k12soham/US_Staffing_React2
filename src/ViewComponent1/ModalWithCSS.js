@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+// import { useNavigate } from "react-router-dom";
 import ReactModal from 'react-modal';
 import history from './ResponseVal';
 import { toast } from "react-toastify";
@@ -44,9 +44,9 @@ class ModalWithCSS extends React.Component {
   }
 
   render() {
-    let empID = localStorage.getItem('empID');
-    let empName = localStorage.getItem('empName');
-    let empMail = localStorage.getItem('empMail');
+    let empID = localStorage.getItem('recruiterId');
+    let empName = localStorage.getItem('recruiterName');
+    let empMail = localStorage.getItem('recruiterEmail');
     return (
 
       <div>
