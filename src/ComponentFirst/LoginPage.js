@@ -105,7 +105,9 @@ const Login1 = () => {
              
                     navigate("/addRequisition");
                     toast.success("Login successfully!",
-                        { position: "top-right" })
+                        { position: "top-right" , autoClose: 2000,
+                        style: { position: "absolute", top: "5px", width: "300px" }
+                       })
                 } else {
                     // history.push("/login");
                     alert("Invalid Email ID or Password.");

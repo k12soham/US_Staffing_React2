@@ -1,7 +1,8 @@
 import React from "react"
 import { ReactDOM } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ModalWithCSS from "../ViewComponent1/ModalWithCSS";
+import ModalWithCSS from "./ModalWithCSS";
+
 
 function EmployeeHeader() {
 
@@ -12,11 +13,11 @@ function EmployeeHeader() {
     <div>
       <div className="navbar-css-1">
         <div class="row">
-          <div class="col-10">
+          <div class="col-11">
           <lable className="navbar-brand" href="#" style={{color:"GrayText"}}>US STAFFING APP</lable>
           </div>
-          <div class='col-2'>
-            <ModalWithCSS />
+          <div class='col-1'>
+            <ModalWithCSS />  
           </div>
         </div>
       </div>
@@ -26,9 +27,12 @@ function EmployeeHeader() {
         <ul className="nav nav-pills">
             
           <li className="nav-item">
-            <a className="nav-link" aria-current="page" href="#x">Active</a>
+            <a className="nav-link" aria-current="page" href="/addRequisition">Add Requisition</a>
           </li>
-          <li className="nav-item dropdown">
+          <li className="nav-item">
+            <a className="nav-link" aria-current="page" href="/addCandidate">Add Candidate</a>
+          </li>
+          {/* <li className="nav-item dropdown">
             <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#a" role="button" aria-expanded="false">Dropdown</a>
             <ul className="dropdown-menu">
               <li><a className="dropdown-item" href="#">Action</a></li>
@@ -37,13 +41,11 @@ function EmployeeHeader() {
               <li><hr className="dropdown-divider" /></li>
               <li><a className="dropdown-item" href="#">Separated link</a></li>
             </ul>
-          </li>
+          </li> */}
           <li className="nav-item">
-            <a className="nav-link" href="#">Link</a>
+            <a className="nav-link" href="view_all">View all records</a>
           </li>
-          <li className="nav-item">
-            <a className="nav-link disabled">Disabled</a>
-          </li>
+          
         </ul>
       </div>
 

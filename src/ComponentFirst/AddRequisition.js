@@ -190,7 +190,12 @@ class AddRequisition extends React.Component {
                 this.setState({ setReqList: response.data });
 
                 toast.success("Requirement added successfully!",
-                    { position: "top-right" }
+                    { position: "top-right",
+                    autoClose: 2000,
+                    style: { position: "absolute", top: "5px", width: "300px" }
+                   
+                
+                }
                 );
 
             },

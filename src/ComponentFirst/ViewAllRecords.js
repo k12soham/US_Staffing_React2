@@ -5,11 +5,16 @@ import Header from "../ViewComponent1/Header";
 import EmpSidebar from "../ViewComponent1/EmpSidebar";
 import { Table } from "reactstrap";
 import EmployeeHeader from "./EmployeeHeader";
-
+import { toast } from "react-toastify";
 function ViewAllRecords() {
 
     const [closureList, setClosureList] = useState([]);
+    const [statusList, setstatusList] = useState([]);
 
+    const [statusFD, setstatusFD] = useState([]);
+    const [updatestatus, setUpdateStatus] = useState(null);
+
+    const [reqid, setReqid] = useState(null);
     const [reqFrom, setReqFrom] = useState(null);
     const [id, setId] = useState(null);
     const [client, setClient] = useState(null);
@@ -18,6 +23,7 @@ function ViewAllRecords() {
     const [clientRate, setClientRate] = useState(null);
     const [location, setLocation] = useState(null);
     const [skills, setSkills] = useState(null);
+    const [status, setStatus] = useState(null);
 
     const [inEditMode, setInEditMode,] = useState({
         status: true,
@@ -27,6 +33,10 @@ function ViewAllRecords() {
     useEffect(() => {
         axios.get(`${base_url}/getAllRequisition`).then(json => setClosureList(json.data))
         // axios.get(`${base_url}/getEmpList_TM`).then(json => setEmployee(json.data))
+        axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
+        axios.get(`${base_url}/getAllStatusFd`).then(json =>setstatusFD(json.data))
+      
+       
     }, []);
 
     const deleteBook = (id) => { }
@@ -45,10 +55,56 @@ function ViewAllRecords() {
             newClientRate, newLocation, newSkills
         });
     }
+    const handleChange= (e)=> {
+
+       let a= e.rrid;
+       let b= e.sstt
+       setReqid(a)
+       setUpdateStatus(b)
+       console.log(a);
+       console.log(b);
+    //console.log(updatestatus);
+        
+    }
+
+    const handleSubmit=(e)=> {
+        e.preventDefault();
+
+          let a= reqid;
+          let b= updatestatus;
+
+            postdata(a,b);
+        
+        // 👇️ clear all input values in the form
+       // e.target.reset();
+    }
+
+   const postdata = (a,b) => {
+        let recruiter_id = 2;
+        let candidate_id= 3;
+       console.log("sucesssssssssss")
+
+        axios.post(`${base_url}/update_status?recruiter_id=${recruiter_id}&requisition_id=${a}&candidate_id=${candidate_id}&status=${b}`).then(
+
+            (response) => {
+                toast.success("Requirement added successfully!",
+                    { position: "top-right" }
+                );
+            },
+            (error) => {
+                console.log(error);
+                console.log("Error");
+                alert("Please enter valid details.")
+            }
+        );
+
+       
+    }
 
     // ----------------------------------------------------------------------------------------------------------
     const onEdit = ({ crrReqid, crrReqFrom, crrId, crrClient, crrJobTitle, crrDuration,
-        crrClientRate, crrLocation, crrSkills }) => {
+        crrClientRate, crrLocation, crrSkills}) => {
+           
         setInEditMode({
             status: true,
             rowKey: crrReqid,
@@ -61,6 +117,7 @@ function ViewAllRecords() {
         setClientRate(crrClientRate);
         setLocation(crrLocation);
         setSkills(crrSkills);
+        
     }
 
     const onCancel = () => {
@@ -80,6 +137,7 @@ function ViewAllRecords() {
             return (
                 <tr key={cls.requisition_id}>
                     <td></td>
+                    <td hidden>{cls.requisition_id}</td>
                     <td style={{ width: '50px' }}>
                         {
                             inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
@@ -154,7 +212,56 @@ function ViewAllRecords() {
                     <td>{cls.client_rate}</td>
                     <td>{cls.location}</td>
                     <td>{cls.skills}</td>
+                    <td>
+                
+                        {
+                                
+                            statusList.map(st => {
+                                if(st.requisition.requisition_id==cls.requisition_id && st.flag==1)
+                                {
+                                    return (
+                                        <>
+                                        <td>{st.status}</td>
+                                        <td>{st.status_date}</td>
+                                        <td>
+                        {
+                           
+                        <select class="btn btn-secondary dropdown-toggle"
+                                                    style={{ width: '100%' }}
+                                                    name="status" id="status"
+                                                    // onChange={(evt)=>setUpdateStatus(evt.target.value)}>
+                                                         onChange={(evt)=>handleChange({rrid: cls.requisition_id, sstt:evt.target.value})}>
+                                                    
+                                                     {/*onKeyUp={this.keyUpHandlerReq}
+                                                    value={this.state.input.rate_term}> */}
 
+                                                    <option value='' default selected> Select Status</option>
+                                                 
+                                                    {
+                                             statusFD.map((stfd) => (
+
+                                                <option value={stfd.status_fd}>{stfd.status_fd}</option>
+                                               ))
+
+                                             }  
+                                               
+                                                </select>
+                                              
+
+                        }
+                        
+                           <button onClick={handleSubmit}>Change Status</button> 
+                    </td>
+                                        
+                                        </>
+                                            )
+                                        
+                                       }
+                                })
+                                
+                                
+                        }
+                    </td>
                     <td>
                         {
                             inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
@@ -166,9 +273,10 @@ function ViewAllRecords() {
 
                                             onSave(
                                                 {
-                                                    newReqid: cls.requirement_id, newReqFrom: reqFrom, newId: id,
+                                                    newReqid: cls.requisition_id, newReqFrom: reqFrom, newId: id,
                                                     newClient: client, newJobTitle: jobTitle, newDuration: duration,
-                                                    newClientRate: clientRate, newLocation: location, newSkills: skills
+                                                    newClientRate: clientRate, newLocation: location, newSkills: skills,
+                                                 
                                                 })
                                         }
                                         }
@@ -193,9 +301,10 @@ function ViewAllRecords() {
 
                                         onClick={() => onEdit({
                                            
-                                            crrReqid: cls.requirement_id, crrReqFrom: reqFrom, crrId: id,
-                                            crrClient: client, crrJobTitle: jobTitle, crrDuration: duration,
-                                            crrClientRate: clientRate, crrLocation: location, crrSkills: skills
+                                            crrReqid: cls.requisition_id, crrReqFrom: cls.requisition_from, crrId: cls.id,
+                                            crrClient: cls.client, crrJobTitle: cls.job_title, crrDuration: cls.duration,
+                                            crrClientRate: cls.client_rate, crrLocation: cls.location, crrSkills: cls.skills,
+                                           
                                         })}
                                     >
                                         <i class="fa fa-edit"></i>
@@ -212,11 +321,18 @@ function ViewAllRecords() {
                         }
 
                     </td>
+                    
+                   
+                   
                 </tr >
+
+                
 
             );
         })
     }
+
+   
 
     return (
         // return (
@@ -228,7 +344,7 @@ function ViewAllRecords() {
 
             <div className="master_backgroung_work scroll-bar-horizontal">
 
-                <div style={{ backgroundColor: '', width: '2000px' }}  >
+                <div style={{ backgroundColor: '', width: '2100px' }}  >
                     <Table bordered>
                         <thead>
                             <tr>
@@ -241,11 +357,16 @@ function ViewAllRecords() {
                                 <th style={{ width: '100px' }}>Client Rate</th>
                                 <th style={{ width: '130px' }}>Location</th>
                                 <th style={{ width: '200px' }}>Skills</th>
+                                <th style={{ width: '10px' }}>Status & Date</th>
                                 <th style={{ width: '95px' }}>Action</th>
+                               
                             </tr>
                         </thead>
                         <tbody>
-                            {renderTable()}
+                     
+                        {renderTable()}
+                       
+                           
                         </tbody>
                     </Table>
 

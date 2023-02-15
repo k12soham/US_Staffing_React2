@@ -184,7 +184,20 @@ a {
   font-size: medium;
   color: black;
 }
-// ---------------------------------Navbar CSS2-----------------------------------------------------------------
+// ---------------------------------Navbar CSS-----------------------------------------------------------------
+
+.master_backgroung_work{
+  margin-top: 7.9%;
+  position: fixed;
+  left: 0%;
+  right: 0%;
+  height: 10%;
+ // background-color: rgb(226, 238, 241);
+ background-color: white;
+  width: 100%;
+  height: 547px;
+}
+// ---------------------------------Navbar CSS-----------------------------------------------------------------
 .navbar-css-2 {
   position: fixed;
   top: 0%;
@@ -198,17 +211,16 @@ a {
   font-size: medium;
   color: black;
 }
-// ---------------------------------work CSS2-----------------------------------------------------------------
-
-.master_backgroung_work{
-  margin-top: 7.9%;
-  position: fixed;
+// ---------------------------------Navbar CSS-----------------------------------------------------------------
+.master_backgroung_login{
+  position: absolute; 
+  top: 0%;
   left: 0%;
-  right: 0%;
-  height: 10%;
-  background-color: whitesmoke;
+  right: 50%;
+  bottom: 0%;
+  background-color:rgb(24, 116, 202);
   width: 100%;
-  height: 547px;
+  height: 100%;
 }
 .master_backgroung_login{
   position: absolute; 
@@ -271,6 +283,15 @@ a {
   // background-color: $orange-100;
 
 }
+
+.sc {
+  max-height: 200px;
+  max-width: 600px;
+  overflow-y: auto;
+  padding-left: 0px;
+}
+
+
 
 // @media only screen and (max-width: 600px){
 //   .master_backgroung_work{
