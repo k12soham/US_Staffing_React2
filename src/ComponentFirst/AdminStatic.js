@@ -880,7 +880,8 @@ postdata2(d)
         this.componentDidMount()
         this.setState({client:''})
          toast.success("Client added successfully!",
-             { position: "top-right"}
+             { position: "top-right", autoClose: 1000,
+             style: { position: "absolute", top: "5px", width: "300px" }}
          );
      },
      (error) => {
@@ -914,7 +915,8 @@ postdata3(d)
         this.componentDidMount()
         this.setState({status:''})
          toast.success("Status added successfully!",
-             { position: "top-right"}
+             { position: "top-right", autoClose: 1000,
+             style: { position: "absolute", top: "5px", width: "300px" }}
          );
      },
      (error) => {
@@ -947,7 +949,8 @@ postdata4(d)
         this.componentDidMount()
         this.setState({position:''})
          toast.success("Position added successfully!",
-             { position: "top-right"}
+             { position: "top-right", autoClose: 1000,
+             style: { position: "absolute", top: "5px", width: "300px" }}
          );
      },
      (error) => {
@@ -978,7 +981,8 @@ postdata5(d)
         this.componentDidMount()
         this.setState({duration:''})
          toast.success("Duration added successfully!",
-             { position: "top-right"}
+             { position: "top-right", autoClose: 1000,
+             style: { position: "absolute", top: "5px", width: "300px" }}
          );
      },
      (error) => {
@@ -1011,7 +1015,8 @@ postdata6(d)
         this.componentDidMount()
         this.setState({visatype:''})
          toast.success("Visa Type added successfully!",
-             { position: "top-right"}
+             { position: "top-right", autoClose: 1000,
+             style: { position: "absolute", top: "5px", width: "300px" }}
          );
      },
      (error) => {
@@ -1045,7 +1050,8 @@ postdata7(d)
         this.componentDidMount()
         this.setState({rateterm:''})
          toast.success("Rate Term added successfully!",
-             { position: "top-right"}
+             { position: "top-right", autoClose: 1000,
+             style: { position: "absolute", top: "5px", width: "300px" }}
          );
      },
      (error) => {
