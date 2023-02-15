@@ -188,7 +188,8 @@ a {
   left: 0%;
   right: 0%;
   height: 10%;
-  background-color: whitesmoke;
+ // background-color: rgb(226, 238, 241);
+ background-color: white;
   width: 100%;
   height: 547px;
 }
@@ -282,7 +283,8 @@ a {
 .sc {
   max-height: 200px;
   max-width: 600px;
-  overflow-y: scroll;
+  overflow-y: auto;
+  padding-left: 0px;
 }
 
 

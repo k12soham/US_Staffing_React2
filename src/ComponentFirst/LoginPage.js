@@ -88,10 +88,9 @@ const Login1 = () => {
                 console.log("Results:  " + response.data.username);
 
                 if (response.data.role == "Admin") {
-                    localStorage.setItem('empName', response.data.emp_name);
-                    localStorage.setItem('empMail', response.data.username);
-                    console.log("empMail: "+ response.data.username);
-                    localStorage.setItem('empID', response.data.empid);
+                    localStorage.setItem('recruiterName', response.data.recruiter_name);
+                    localStorage.setItem('recruiterId', response.data.recruiter_id);
+                    localStorage.setItem('recruiterEmail', response.data.recruiter_email);
                     // alert("Successfully Login");
                     navigate("/admin_dashboard1");
                     toast.success("Login successfully!",
@@ -99,13 +98,15 @@ const Login1 = () => {
                 }
 
                 else if (response.data.role == "TM") {
-                    localStorage.setItem('empName', response.data.emp_name);
-                    localStorage.setItem('empID', response.data.empid);
-                    localStorage.setItem('empMail', response.data.username);
+                    localStorage.setItem('recruiterName', response.data.recruiter_name);
+                    localStorage.setItem('recruiterId', response.data.recruiter_id);
+                    localStorage.setItem('recruiterEmail', response.data.recruiter_email);
              
                     navigate("/addRequisition");
                     toast.success("Login successfully!",
-                        { position: "top-right" })
+                        { position: "top-right" , autoClose: 2000,
+                        style: { position: "absolute", top: "5px", width: "300px" }
+                       })
                 } else {
                     // history.push("/login");
                     alert("Invalid Email ID or Password.");

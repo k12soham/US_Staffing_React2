@@ -17,14 +17,34 @@ import { List } from 'reactstrap';
 import { Table,Button } from "reactstrap";
 import { json } from 'react-router-dom';
 
+
 class AdminStatic extends React.Component {
 
+    abc()
+    {
+        axios.get(`${base_url}/getAllDuration`)
+        .then(json => 
+            this.setState({duration_fd:json.data,  
+               })
+        
+             
+         
+          )
+        .catch(error => {
+       // alert("Error duration")
+        })
+    }
     componentDidMount() {
-       this.refInput.focus();
+    //   this.refInput.focus();
     
     axios.get(`${base_url}/getAllDuration`)
     .then(json => 
-        this.setState({duration_fd:json.data })
+        this.setState({duration_fd:json.data,  
+             editstatus: false,
+            editrowKey: null })
+    
+         
+     
       )
     .catch(error => {
    // alert("Error duration")
@@ -146,7 +166,7 @@ class AdminStatic extends React.Component {
 
 
            
-          //  isShown:true
+            isShown:true
 
 
 
@@ -206,8 +226,9 @@ class AdminStatic extends React.Component {
 
            
         }).then(response => {
-          
-
+            this.onCancel1();
+            this.componentDidMount();
+           
             toast.success("Record updated successfully!", {
                 position: "top-right",
                 autoClose: 1000,
@@ -245,7 +266,8 @@ class AdminStatic extends React.Component {
    
            
        }).then(response => {
-         
+        this.onCancel1();
+        this.componentDidMount();
          // window.location.reload()
            toast.success("Record deleted successfully!", {
                position: "top-right",
@@ -275,7 +297,8 @@ onEdit2 = ({ stid, currentst }) => {
            
         }).then(response => {
           
-
+            this.onCancel2();
+            this.componentDidMount();
             toast.success("Record updated successfully!", {
                 position: "top-right",
                 autoClose: 1000,
@@ -316,7 +339,8 @@ onEdit2 = ({ stid, currentst }) => {
    
            
        }).then(response => {
-         
+        this.onCancel2();
+        this.componentDidMount();
          // window.location.reload()
            toast.success("Record deleted successfully!", {
                position: "top-right",
@@ -349,9 +373,10 @@ onEdit3 = ({ durationid, currentduration }) => {
 
         
      }).then(response => {
-       // this.componentDidMount()
-       
-        //this.getallduration()
+      
+        this.onCancel3();
+        this.componentDidMount();
+      
          toast.success("Record updated successfully!", {
              position: "top-right",
              autoClose: 1000,
@@ -393,7 +418,8 @@ onEdit3 = ({ durationid, currentduration }) => {
 
         
     }).then(response => {
-      
+        this.onCancel3();
+        this.componentDidMount();
       // window.location.reload()
         toast.success("Record deleted successfully!", {
             position: "top-right",
@@ -427,7 +453,8 @@ onEdit4 = ({ clientid, currentclient }) => {
 
         
      }).then(response => {
-       
+        this.onCancel4();
+        this.componentDidMount();
        // window.location.reload()
          toast.success("Record updated successfully!", {
              position: "top-right",
@@ -469,7 +496,8 @@ onEdit4 = ({ clientid, currentclient }) => {
 
         
     }).then(response => {
-      
+        this.onCancel4();
+        this.componentDidMount();
       // window.location.reload()
         toast.success("Record deleted successfully!", {
             position: "top-right",
@@ -500,7 +528,8 @@ onEdit5 = ({ positionid, currentposition }) => {
 
         
      }).then(response => {
-       
+        this.onCancel5();
+        this.componentDidMount();
        // window.location.reload()
          toast.success("Record updated successfully!", {
              position: "top-right",
@@ -542,7 +571,8 @@ onEdit5 = ({ positionid, currentposition }) => {
 
         
     }).then(response => {
-      
+        this.onCancel5();
+        this.componentDidMount();
       // window.location.reload()
         toast.success("Record deleted successfully!", {
             position: "top-right",
@@ -572,7 +602,8 @@ onEdit6 = ({ visatypeid, currentvisatype }) => {
 
         
      }).then(response => {
-       
+        this.onCancel6();
+        this.componentDidMount();
        // window.location.reload()
          toast.success("Record updated successfully!", {
              position: "top-right",
@@ -614,7 +645,8 @@ onEdit6 = ({ visatypeid, currentvisatype }) => {
 
         
     }).then(response => {
-      
+        this.onCancel6();
+        this.componentDidMount();
       // window.location.reload()
         toast.success("Record deleted successfully!", {
             position: "top-right",
@@ -645,7 +677,8 @@ onEdit7 = ({ ratetermid, currentrateterm }) => {
 
         
      }).then(response => {
-       
+        this.onCancel7();
+        this.componentDidMount();
        // window.location.reload()
          toast.success("Record updated successfully!", {
              position: "top-right",
@@ -659,8 +692,7 @@ onEdit7 = ({ ratetermid, currentrateterm }) => {
 
 
   onSave7 = ({ ratetermid, newrateterm}) => {
-     console.log("sss");
-     console.log(ratetermid)
+    
      this.updateInventory7({ ratetermid, newrateterm });
  }
 
@@ -686,8 +718,9 @@ onEdit7 = ({ ratetermid, currentrateterm }) => {
 
         
     }).then(response => {
-      
-      // window.location.reload()
+        this.onCancel7();
+        this.componentDidMount();
+ 
         toast.success("Record deleted successfully!", {
             position: "top-right",
             autoClose: 1000,
@@ -808,6 +841,8 @@ postdata1(d)
     axios.post(`${base_url}/AddRequisitorFd?requisitor_fd=${d}`).then(
 
         (response) => {
+            this.componentDidMount()
+            this.setState({req:''})
             toast.success("Requisitor added successfully!", {
                 position: "top-right",
                 autoClose: 1000,
@@ -842,6 +877,8 @@ postdata2(d)
  axios.post(`${base_url}/AddClient?client_name=${d}`).then(
 
      (response) => {
+        this.componentDidMount()
+        this.setState({client:''})
          toast.success("Client added successfully!",
              { position: "top-right"}
          );
@@ -874,6 +911,8 @@ postdata3(d)
  axios.post(`${base_url}/AddStatusFd?status_fd=${d}`).then(
 
      (response) => {
+        this.componentDidMount()
+        this.setState({status:''})
          toast.success("Status added successfully!",
              { position: "top-right"}
          );
@@ -905,13 +944,13 @@ postdata4(d)
  axios.post(`${base_url}/AddPositionType?position_type=${d}`).then(
 
      (response) => {
+        this.componentDidMount()
+        this.setState({position:''})
          toast.success("Position added successfully!",
              { position: "top-right"}
          );
      },
      (error) => {
-         console.log(error);
-         console.log("Error");
          alert("Please enter valid details.")
      }
  );
@@ -936,6 +975,8 @@ postdata5(d)
  axios.post(`${base_url}/AddDuration?duration=${d}`).then(
 
      (response) => {
+        this.componentDidMount()
+        this.setState({duration:''})
          toast.success("Duration added successfully!",
              { position: "top-right"}
          );
@@ -967,6 +1008,8 @@ postdata6(d)
  axios.post(`${base_url}/AddVisaType?visa_type=${d}`).then(
 
      (response) => {
+        this.componentDidMount()
+        this.setState({visatype:''})
          toast.success("Visa Type added successfully!",
              { position: "top-right"}
          );
@@ -999,6 +1042,8 @@ postdata7(d)
  axios.post(`${base_url}/AddRateTerm?rate_term=${d}`).then(
 
      (response) => {
+        this.componentDidMount()
+        this.setState({rateterm:''})
          toast.success("Rate Term added successfully!",
              { position: "top-right"}
          );
@@ -1011,7 +1056,7 @@ postdata7(d)
  );
 }
 
-
+/////////////// 
 reqlist()
 {
     
@@ -1031,7 +1076,7 @@ reqlist()
                            this.state.editstatus&&  this.state.editrowKey === rq.requisitor_id ? ( 
                                     <input required value={this.state.req1}
                                     onChange={this.handleupdate1}
-                                    style={{ width: "150px" }}
+                                    style={{ width: "100px" }}
                                    
                                 />
                             ) : (
@@ -1045,7 +1090,7 @@ reqlist()
                                 <>
                                     <button
 
-                                        className={"btn btn-outline-success"}
+                                        className={"btn btn-sm btn-outline-success"}
                                         onClick={() => {
 
                                             this.onSave1(
@@ -1061,7 +1106,7 @@ reqlist()
 
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <button
-                                        className={"btn btn-outline-warning"}
+                                        className={"btn btn-sm btn-outline-warning"}
 
                                         onClick={() => this.onCancel1()}
                                     >
@@ -1072,17 +1117,18 @@ reqlist()
                             ) : (
                                 <>
                                     <button
-                                        className="btn btn-outline-success"
+                                        className="btn btn-sm btn-outline-success"
 
                                         onClick={() => this.onEdit1({
                                             reqid: rq.requisitor_id, currentreq: rq.requisitor_fd
                                         })}
                                     >
-                                        <i class="fa fa-edit"></i>
+                                      <i class="fas fa-edit"></i>
+                                      
 
                                     </button>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <button className="btn btn-outline-danger"
+                                    <button className="btn btn-sm btn-outline-danger"
                                         onClick={() => { if (window.confirm('Are you sure to delete?')) this.delete1(rq.requisitor_id) }}><i class="fa fa-trash"></i></button>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                 </>
@@ -1121,7 +1167,7 @@ statuslist()
                            this.state.editstatus2&&  this.state.editrowKey2 === st.status_fd_id ? ( 
                                     <input required value={this.state.st1}
                                     onChange={this.handleupdate2}
-                                    style={{ width: "150px" }}
+                                    style={{ width: "100px" }}
                                    
                                 />
                             ) : (
@@ -1135,7 +1181,7 @@ statuslist()
                                 <>
                                     <button
 
-                                        className={"btn btn-outline-success"}
+                                        className={"btn btn-sm btn-outline-success"}
                                         onClick={() => {
 
                                             this.onSave2(
@@ -1151,7 +1197,7 @@ statuslist()
 
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <button
-                                        className={"btn btn-outline-warning"}
+                                        className={"btn btn-sm btn-outline-warning"}
 
                                         onClick={() => this.onCancel2()}
                                     >
@@ -1162,7 +1208,7 @@ statuslist()
                             ) : (
                                 <>
                                     <button
-                                        className="btn btn-outline-success"
+                                        className="btn btn-sm btn-outline-success"
 
                                         onClick={() => this.onEdit2({
                                             stid: st.status_fd_id, currentst: st.status_fd
@@ -1172,7 +1218,7 @@ statuslist()
 
                                     </button>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <button className="btn btn-outline-danger"
+                                    <button className="btn btn-sm btn-outline-danger"
                                         onClick={() => { if (window.confirm('Are you sure to delete?')) this.delete2(st.status_fd_id) }}><i class="fa fa-trash"></i></button>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                 </>
@@ -1212,7 +1258,7 @@ durationlist()
                            this.state.editstatus3&&  this.state.editrowKey3 === dr.duration_id ? ( 
                                     <input required value={this.state.duration1}
                                     onChange={this.handleupdate3}
-                                    style={{ width: "150px" }}
+                                    style={{ width: "100px" }}
                                    
                                 />
                             ) : (
@@ -1226,7 +1272,7 @@ durationlist()
                                 <>
                                     <button
 
-                                        className={"btn btn-outline-success"}
+                                        className={"btn btn-sm btn-outline-success"}
                                         onClick={() => {
 
                                             this.onSave3(
@@ -1242,7 +1288,7 @@ durationlist()
 
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <button
-                                        className={"btn btn-outline-warning"}
+                                        className={"btn btn-sm btn-outline-warning"}
 
                                         onClick={() => this.onCancel3()}
                                     >
@@ -1253,7 +1299,7 @@ durationlist()
                             ) : (
                                 <>
                                     <button
-                                        className="btn btn-outline-success"
+                                        className="btn btn-sm btn-outline-success"
 
                                         onClick={() => this.onEdit3({
                                             durationid: dr.duration_id, currentduration: dr.duration
@@ -1263,7 +1309,7 @@ durationlist()
 
                                     </button>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <button className="btn btn-outline-danger"
+                                    <button className="btn btn-sm btn-outline-danger"
                                         onClick={() => { if (window.confirm('Are you sure to delete?')) this.delete3(dr.duration_id) }}><i class="fa fa-trash"></i></button>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                 </>
@@ -1303,7 +1349,7 @@ clientlist()
                            this.state.editstatus4&&  this.state.editrowKey4 === cl.client_id ? ( 
                                     <input required value={this.state.client1}
                                     onChange={this.handleupdate4}
-                                    style={{ width: "150px" }}
+                                    style={{ width: "100px" }}
                                    
                                 />
                             ) : (
@@ -1317,7 +1363,7 @@ clientlist()
                                 <>
                                     <button
 
-                                        className={"btn btn-outline-success"}
+                                        className={"btn btn-sm btn-outline-success"}
                                         onClick={() => {
 
                                             this.onSave4(
@@ -1333,7 +1379,7 @@ clientlist()
 
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <button
-                                        className={"btn btn-outline-warning"}
+                                        className={"btn btn-sm btn-outline-warning"}
 
                                         onClick={() => this.onCancel4()}
                                     >
@@ -1344,7 +1390,7 @@ clientlist()
                             ) : (
                                 <>
                                     <button
-                                        className="btn btn-outline-success"
+                                        className="btn btn-sm btn-outline-success"
 
                                         onClick={() => this.onEdit4({
                                             clientid: cl.client_id, currentclient: cl.client_name
@@ -1354,7 +1400,7 @@ clientlist()
 
                                     </button>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <button className="btn btn-outline-danger"
+                                    <button className="btn btn-sm btn-outline-danger"
                                         onClick={() => { if (window.confirm('Are you sure to delete?')) this.delete4(cl.client_id) }}><i class="fa fa-trash"></i></button>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                 </>
@@ -1392,7 +1438,7 @@ positionlist()
                            this.state.editstatus5&&  this.state.editrowKey5 === pt.position_type_id ? ( 
                                     <input required value={this.state.position1}
                                     onChange={this.handleupdate5}
-                                    style={{ width: "150px" }}
+                                    style={{ width: "100px" }}
                                    
                                 />
                             ) : (
@@ -1406,7 +1452,7 @@ positionlist()
                                 <>
                                     <button
 
-                                        className={"btn btn-outline-success"}
+                                        className={"btn btn-sm btn-outline-success"}
                                         onClick={() => {
 
                                             this.onSave5(
@@ -1422,7 +1468,7 @@ positionlist()
 
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <button
-                                        className={"btn btn-outline-warning"}
+                                        className={"btn btn-sm btn-outline-warning"}
 
                                         onClick={() => this.onCancel5()}
                                     >
@@ -1433,7 +1479,7 @@ positionlist()
                             ) : (
                                 <>
                                     <button
-                                        className="btn btn-outline-success"
+                                        className="btn btn-sm btn-outline-success"
 
                                         onClick={() => this.onEdit5({
                                             positionid: pt.position_type_id, currentposition: pt.position_type
@@ -1443,7 +1489,7 @@ positionlist()
 
                                     </button>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <button className="btn btn-outline-danger"
+                                    <button className="btn btn-sm btn-outline-danger"
                                         onClick={() => { if (window.confirm('Are you sure to delete?')) this.delete5(pt.position_type_id) }}><i class="fa fa-trash"></i></button>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                 </>
@@ -1483,7 +1529,7 @@ visalist()
                            this.state.editstatus6&&  this.state.editrowKey6 === vt.visa_type_id ? ( 
                                     <input required value={this.state.visatype1}
                                     onChange={this.handleupdate6}
-                                    style={{ width: "150px" }}
+                                    style={{ width: "100px" }}
                                    
                                 />
                             ) : (
@@ -1497,7 +1543,7 @@ visalist()
                                 <>
                                     <button
 
-                                        className={"btn btn-outline-success"}
+                                        className={"btn btn-sm btn-outline-success"}
                                         onClick={() => {
 
                                             this.onSave6(
@@ -1513,7 +1559,7 @@ visalist()
 
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <button
-                                        className={"btn btn-outline-warning"}
+                                        className={"btn btn-sm btn-outline-warning"}
 
                                         onClick={() => this.onCancel6()}
                                     >
@@ -1524,7 +1570,7 @@ visalist()
                             ) : (
                                 <>
                                     <button
-                                        className="btn btn-outline-success"
+                                        className="btn btn-sm btn-outline-success"
 
                                         onClick={() => this.onEdit6({
                                             visatypeid: vt.visa_type_id, currentvisatype: vt.visa_type
@@ -1534,7 +1580,7 @@ visalist()
 
                                     </button>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <button className="btn btn-outline-danger"
+                                    <button className="btn btn-sm btn-outline-danger"
                                         onClick={() => { if (window.confirm('Are you sure to delete?')) this.delete6(vt.visa_type_id) }}><i class="fa fa-trash"></i></button>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                 </>
@@ -1574,7 +1620,7 @@ ratelist()
                            this.state.editstatus7&&  this.state.editrowKey7 === rt.rate_term_id ? ( 
                                     <input required value={this.state.rateterm1}
                                     onChange={this.handleupdate7}
-                                    style={{ width: "150px" }}
+                                    style={{ width: "100px" }}
                                    
                                 />
                             ) : (
@@ -1588,7 +1634,7 @@ ratelist()
                                 <>
                                     <button
 
-                                        className={"btn btn-outline-success"}
+                                        className={"btn btn-sm btn-outline-success"}
                                         onClick={() => {
 
                                             this.onSave7(
@@ -1604,9 +1650,9 @@ ratelist()
 
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <button
-                                        className={"btn btn-outline-warning"}
+                                        className={"btn btn-sm btn-outline-warning"}
 
-                                        onClick={() => this.onCance7()}
+                                        onClick={() => this.onCancel7()}
                                     >
                                         <i class="fa fa-close"></i>
                                     </button>
@@ -1615,7 +1661,7 @@ ratelist()
                             ) : (
                                 <>
                                     <button
-                                        className="btn btn-outline-success"
+                                        className="btn btn-sm btn-outline-success"
 
                                         onClick={() => this.onEdit7({
                                             ratetermid:rt.rate_term_id, currentrateterm: rt.rate_term
@@ -1625,7 +1671,7 @@ ratelist()
 
                                     </button>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <button className="btn btn-outline-danger"
+                                    <button className="btn btn-sm btn-outline-danger"
                                         onClick={() => { if (window.confirm('Are you sure to delete?')) this.delete7(rt.rate_term_id) }}><i class="fa fa-trash"></i></button>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                 </>
@@ -1645,37 +1691,48 @@ ratelist()
                                             </List>
     )
 }
-// boxshow()
+//  Boxshow()
 // {
   
 //     console.log("abcd")
-//     this.setState({isShown:true})
+//     //this.setState({isShown:true})
 
 // }
-//  box()
+//  Box()
 // {
-// alert("ss");
+
 //         return(
 //             <div>
-//     <form onSubmit={this.handleSubmit1}>
+//                 {
+//                     alert(this.isShown)
+//                 }
+            
+//      <form onSubmit={this.handleSubmit1}>
 //                                             <label>Add new requisitor</label><br></br>
 //                                                <input type="text"   value={this.state.req} onChange={this.handleChange1}></input>
 //                                                 <button >Save</button>
 //                                             <div className="text-danger">{this.state.errors.req}</div>
 //                                             </form><br></br><br></br>
-//                                             </div>
+//                                             {
+//                                             this.setState({isShown:false})
+//                                             } 
+                                         
+//                                             </div> 
+                                         
                                     
 //         )
+       
 // }
 
 
     
 
     render() {
-        const isAuthenticated = localStorage.getItem('empID');
-        let empID = localStorage.getItem('empID');
+        //const isAuthenticated = localStorage.getItem('empID');
+       // let empID = localStorage.getItem('empID');
 
-        return isAuthenticated ? (
+       // return isAuthenticated ? (
+        return(
             <div className="container-fluid">
                 <div className="row">
 
@@ -1691,36 +1748,38 @@ ratelist()
                                 <div className="col-12">
                                     <div className="row" style={{ paddingTop: '2%'}}>
                                        
-                                     <div className="col-4" >
+                                     <div className="col-3" >
                                     
                                       
                                             <label for="req"><b>Requisitiors name:</b></label><br />
 
 
-                                            <Table>
+                                            <Table >
                                                
                                                 <tbody>
                                                     <td>{this.reqlist()}</td>
+                                                   
                                                 </tbody>
+                                               
                                             </Table>
-                                             {/* <Button onSubmit={this.boxshow()}>Add new requisitor</Button>  */}
-
-                                             {/* <button onClick={()=>this.box()}>Add new requisitor</button> 
-                                            <div>
+                                             {/* <form onSubmit={this.Boxshow()}> */}
+                                              {/* <button  onClick={this.Boxshow()}>Add new requisitor</button>  */}
+                                            
+                                            {/* </form> */}
+                                            
                                                 
-                                                {
-                                                    this.state.isShown==true && this.box
-                                                }
+                                                {/* {this.state.isShown=='true' && <this.Box/> } */}
+                                                    
+                                               
                                                 
                                          
-                                            </div> */}
-
-                                        <form onSubmit={this.handleSubmit1}>
+                                            
+                                         <form onSubmit={this.handleSubmit1}>
                                             <label>Add new requisitor</label><br></br>
                                                <input type="text"  name="req" value={this.state.req} onChange={this.handleChange1}></input>
-                                                <button >Save</button>
+                                               <button class= "btn  btn-success"> <i class=" fa fa-save"></i>&nbsp;Add</button>
                                             <div className="text-danger">{this.state.errors.req}</div>
-                                            </form><br></br><br></br>
+                                            </form><br></br><br></br> 
          
                                             
                                            <div class="form-group">
@@ -1741,7 +1800,7 @@ ratelist()
                                            </div>
                                               
 
-                                           <div className="col-4">
+                                           <div className="col-3">
 
                                             <label for="status"><b>Status:</b></label><br />
 
@@ -1777,7 +1836,7 @@ ratelist()
                                            </div>
 
 
-                                             <div className="col-4">
+                                             <div className="col-3">
 
                                             <label for="duration"><b>Duration:</b></label><br />
 
@@ -1813,7 +1872,7 @@ ratelist()
                                            </div>
                                              
 
-                                         <div className="col-4">
+                                         <div className="col-3">
 
                                                 <label for="rateterm"><b>Rate Term:</b></label><br />
 
@@ -1849,10 +1908,12 @@ ratelist()
 
                                             </div >
             </div >
-        ) : (
-            history.push("/"),
-            window.location.reload()
-        );
+        ) 
+        
+        // : (
+        //     history.push("/"),
+        //     window.location.reload()
+        // );
     }
 }
 

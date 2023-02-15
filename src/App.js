@@ -2,6 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/3.3.7/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import Login1 from './ComponentFirst/LoginPage';
@@ -17,6 +18,7 @@ import EmployeeHeader from './ComponentFirst/EmployeeHeader';
 import AdminStatic from './ComponentFirst/AdminStatic';
 import Demo from './ComponentFirst/demo';
 import ViewAllRecords from './ComponentFirst/ViewAllRecords';
+import UpdateProfile from './ComponentFirst/UpdateProfile';
 
 function App() {
   return (
@@ -36,6 +38,7 @@ function App() {
         <Route path="/demo" element={<Demo />}></Route>
         {/* <Route path="/nav_header" element={<EmployeeHeader />}></Route> */}
         <Route path="/view_all" element={<ViewAllRecords />}></Route>
+        <Route path="/updateProfile" element={<UpdateProfile />}></Route>
         {/* <Route path="/navdemo1" element={<mobileScreen />}></Route> */}
         </Routes>
       </Router>
