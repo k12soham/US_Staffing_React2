@@ -47,8 +47,6 @@ class AddCandidate extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-
-
     resetForm = () => {
         // alert("Clear");
         // this.setState(this.baseState)
@@ -102,7 +100,10 @@ class AddCandidate extends React.Component {
     }
 
     postCandidate = (data) => {
-        let z = this.state.empID = localStorage.getItem("recruiterId")
+        // let z = this.state.empID = localStorage.getItem("recruiterId")
+        let RecId_New = localStorage.getItem('recruiterID');
+        let ReqId = localStorage.getItem('ReqId');
+        console.log("RecId_New : "+RecId_New+ " ReqId "+ReqId);
         let recid = 1, rqid=2;
         let status = 'assigned';
         let d1 = data["cad_name"];
@@ -116,7 +117,7 @@ class AddCandidate extends React.Component {
 
         axios.post(`${base_url}/add_candidate?candidate_name=${d1}&visa_type=${d2}&rate_term=${d3}
         &submitted_rate=${d4}&pnone=${d5}&email=${d6}&status=${status}&remark=${d7}
-        &reason=${d8}&recruiter_id=${recid}&requisition_id=${rqid}`).then(
+        &reason=${d8}&recruiter_id=${RecId_New}&requisition_id=${ReqId}`).then(
 
             (response) => {
                 toast.success("Requirement added successfully!",
@@ -272,8 +273,8 @@ class AddCandidate extends React.Component {
     // -------------------------------------------- End Validation Code ----------------------------------------------------------
 
     render() {
-        const isAuthenticated = localStorage.getItem('recruiterId');
-        let empID = localStorage.getItem('recruiterId');
+        const isAuthenticated = localStorage.getItem('recruiterID');
+        // let empID = localStorage.getItem('recruiterID');
 
         return isAuthenticated ? (
             <div className="">
@@ -322,7 +323,7 @@ class AddCandidate extends React.Component {
                                                     {
                                              this.state.visaType_fd.map((vt) => (
 
-                                                <option value={vt.visa_type_id}>{vt.visa_type}</option>
+                                                <option value={vt.visa_type}>{vt.visa_type}</option>
                                                ))
 
                                              }    
@@ -344,7 +345,7 @@ class AddCandidate extends React.Component {
                                                     {
                                              this.state.rateTerm_fd.map((rt) => (
 
-                                                <option value={rt.rate_term_id}>{rt.rate_term}</option>
+                                                <option value={rt.rate_term}>{rt.rate_term}</option>
                                                ))
 
                                              }    
@@ -362,7 +363,7 @@ class AddCandidate extends React.Component {
                                                     value={this.state.input.submitted_rate}
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerClosure}
-                                                    placeholder="Submitted Rate"
+                                                    placeholder="Submitted Rate in $/hr"
 
                                                     class="form-control" />
 

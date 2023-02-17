@@ -18,7 +18,10 @@ import EmployeeHeader from './ComponentFirst/EmployeeHeader';
 import AdminStatic from './ComponentFirst/AdminStatic';
 import Demo from './ComponentFirst/demo';
 import ViewAllRecords from './ComponentFirst/ViewAllRecords';
-import UpdateProfile from './ComponentFirst/UpdateProfile';
+import UpdateProfile from './ComponentFirst/ViewAllReq';
+import UpdateReq from './ComponentFirst/UpdateReq';
+import ViewCadByReq from './ComponentFirst/ViewCadByReq';
+import ViewAllReq from './ComponentFirst/ViewAllReq';
 
 function App() {
   return (
@@ -39,6 +42,10 @@ function App() {
         {/* <Route path="/nav_header" element={<EmployeeHeader />}></Route> */}
         <Route path="/view_all" element={<ViewAllRecords />}></Route>
         <Route path="/updateProfile" element={<UpdateProfile />}></Route>
+        <Route path="/view_all_req" element={<ViewAllReq />}></Route>
+        <Route path="/view_candidate1" element={<ViewCadByReq />}></Route>
+
+        <Route path="/updateRequisition" element={<UpdateReq />}></Route>
         {/* <Route path="/navdemo1" element={<mobileScreen />}></Route> */}
         </Routes>
       </Router>

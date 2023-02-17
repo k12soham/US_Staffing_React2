@@ -6,24 +6,32 @@ import EmpSidebar from "../ViewComponent1/EmpSidebar";
 import { Table } from "reactstrap";
 import EmployeeHeader from "./EmployeeHeader";
 import { toast } from "react-toastify";
-function ViewAllRecords() {
+function ViewCadByReq() {
+
+
+    // const [duration, setDuration] = useState(null);
+
+    // const [location, setLocation] = useState(null);
+    // const [skills, setSkills] = useState(null);
 
     const [closureList, setClosureList] = useState([]);
     const [statusList, setstatusList] = useState([]);
+    const [candidateList, setCandidateList] = useState([]);
 
     const [statusFD, setstatusFD] = useState([]);
     const [updatestatus, setUpdateStatus] = useState(null);
-
+    const [candidateId, setCadidateId] = useState(null);
     const [reqid, setReqid] = useState(null);
     const [reqFrom, setReqFrom] = useState(null);
     const [id, setId] = useState(null);
     const [client, setClient] = useState(null);
     const [jobTitle, setJobTitle] = useState(null);
-    const [duration, setDuration] = useState(null);
     const [clientRate, setClientRate] = useState(null);
-    const [location, setLocation] = useState(null);
-    const [skills, setSkills] = useState(null);
-    const [status, setStatus] = useState(null);
+
+    const [candidate_name, setCandidate_name] = useState(null);
+    const [submitted_rate, setSubmitted_rate] = useState(null);
+    const [phone, setPhone] = useState(null);
+
 
     const [inEditMode, setInEditMode,] = useState({
         status: true,
@@ -34,11 +42,16 @@ function ViewAllRecords() {
         axios.get(`${base_url}/getAllRequisition`).then(json => setClosureList(json.data))
         // axios.get(`${base_url}/getEmpList_TM`).then(json => setEmployee(json.data))
         axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
-        axios.get(`${base_url}/getAllStatusFd`).then(json =>setstatusFD(json.data))
-      
-       
+        axios.get(`${base_url}/getAllCandidate`).then(json => setCandidateList(json.data))
+        axios.get(`${base_url}/getAllStatusFd`).then(json => setstatusFD(json.data))
+
+
     }, []);
 
+    let sessionreq = localStorage.getItem("requisitionid")
+    let empID = localStorage.getItem("recruiterId")
+    console.log(sessionreq)
+    console.log(empID)
     const deleteBook = (id) => { }
 
     const updateInventory = ({ newReqid, newReqFrom, newId, newClient, newJobTitle, newDuration,
@@ -55,39 +68,34 @@ function ViewAllRecords() {
             newClientRate, newLocation, newSkills
         });
     }
-    const handleChange= (e)=> {
+    const handleChange = (e) => {
 
-       let a= e.rrid;
-       let b= e.sstt
-       setReqid(a)
-       setUpdateStatus(b)
-       console.log(a);
-       console.log(b);
-    //console.log(updatestatus);
-        
+        let a = e.rrid;
+        let b = e.sstt
+        let c = e.canid;
+        setReqid(a)
+        setUpdateStatus(b)
+        setCadidateId(c)
     }
 
-    const handleSubmit=(e)=> {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
-          let a= reqid;
-          let b= updatestatus;
+        let a = reqid;
+        let b = updatestatus;
+        let c = candidateId;
+        postdata(a, b, c);
 
-            postdata(a,b);
-        
         // 👇️ clear all input values in the form
-       // e.target.reset();
+        // e.target.reset();
     }
 
-   const postdata = (a,b) => {
-        let recruiter_id = 2;
-        let candidate_id= 3;
-       console.log("sucesssssssssss")
+    const postdata = (a, b, c) => {
 
-        axios.post(`${base_url}/update_status?recruiter_id=${recruiter_id}&requisition_id=${a}&candidate_id=${candidate_id}&status=${b}`).then(
+        axios.post(`${base_url}/update_status2?recruiter_id=${empID}&requisition_id=${a}&candidate_id=${c}&status=${b}`).then(
 
             (response) => {
-                toast.success("Requirement added successfully!",
+                toast.success("Status update successfully!",
                     { position: "top-right" }
                 );
             },
@@ -98,13 +106,13 @@ function ViewAllRecords() {
             }
         );
 
-       
+
     }
 
     // ----------------------------------------------------------------------------------------------------------
     const onEdit = ({ crrReqid, crrReqFrom, crrId, crrClient, crrJobTitle, crrDuration,
-        crrClientRate, crrLocation, crrSkills}) => {
-           
+        crrClientRate, crrLocation, crrSkills }) => {
+
         setInEditMode({
             status: true,
             rowKey: crrReqid,
@@ -113,11 +121,7 @@ function ViewAllRecords() {
         setId(crrId);
         setClient(crrClient);
         setJobTitle(crrJobTitle);
-        setDuration(crrDuration);
-        setClientRate(crrClientRate);
-        setLocation(crrLocation);
-        setSkills(crrSkills);
-        
+
     }
 
     const onCancel = () => {
@@ -133,12 +137,21 @@ function ViewAllRecords() {
     }
 
     const renderTable = () => {
-        return closureList.map(cls => {
-            return (
-                <tr key={cls.requisition_id}>
-                    <td></td>
-                    <td hidden>{cls.requisition_id}</td>
-                    <td style={{ width: '50px' }}>
+        return candidateList.map(can => {
+            if (can.requisition.requisition_id == sessionreq && can.recruiter.recruiter_id == empID) {
+                console.log(candidateList);
+                return (
+                    <tr key={can.candidate_id}>
+                        <td></td>
+                        <td>{can.candidate_name}</td>
+                        <td>{can.visa_type}</td>
+                        <td>{can.rate_term}</td>
+                        <td>{can.submitted_rate}</td>
+                        <td>{can.phone}</td>
+                        <td>{can.email}</td>
+                        {/* <td>{can.remark}</td>
+                <td>{can.reason}</td> */}
+                        {/* <td style={{ width: '50px' }}>
                         {
                             inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
                                 <input required value={reqFrom}
@@ -195,77 +208,127 @@ function ViewAllRecords() {
                             )
                         }
                     </td>
-                    <td>
-                        {
-                            inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
-                                <input required value={duration}
-                                    onChange={(event) => setDuration(event.target.value)}
-                                    style={{ width: "100px" }}
-                                    minLength={1}
-                                    maxLength={3}
-                                />
-                            ) : (
-                                cls.duration
-                            )
-                        }
-                    </td>
+                    
                     <td>{cls.client_rate}</td>
-                    <td>{cls.location}</td>
-                    <td>{cls.skills}</td>
-                    <td>
-                
-                        {
-                                
-                            statusList.map(st => {
-                                console.log("status rq id : " +st.requisition.requisition_id);                                
-                                console.log("requisition rq id : " +cls.requisition_id);
-
-                                if(st.requisition.requisition_id==cls.requisition_id && st.flag==1)
-                                {
-                                    return (
-                                        <>
-                                        <td>{st.status}</td>
-                                        <td>{st.status_date}</td>
-                                        <td>
-                        {
-                           
-                        <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '100%' }}
-                                                    name="status" id="status"
-                                                    // onChange={(evt)=>setUpdateStatus(evt.target.value)}>
-                                                         onChange={(evt)=>handleChange({rrid: cls.requisition_id, sstt:evt.target.value})}>
-                                                    
-                                                     {/*onKeyUp={this.keyUpHandlerReq}
-                                                    value={this.state.input.rate_term}> */}
-
-                                                    <option value='' default selected> Select Status</option>
-                                                 
-                                                    {
-                                             statusFD.map((stfd) => (
-
-                                                <option value={stfd.status_fd}>{stfd.status_fd}</option>
-                                               ))
-
-                                             }  
-                                               
-                                                </select>
-                                              
-
-                        }
+                    */}
+                        {/* 
+                   <td>
+                    {
+                   candidateList.map(can =>{
+                    if(can.requisition.requisition_id==cls.requisition_id )
+                    {
                         
-                           <button onClick={handleSubmit}>Change Status</button> 
-                    </td>
-                                        
-                                        </>
+                        return(
+                            <>
+        
+                            <td>{can.candidate_name}</td>
+                             <td>{can.submitted_rate}</td>
+                            <td>{can.phone}</td>
+                            </>
+                        )
+                    }
+                    }
+                    )
+                }
+                   </td> */}
+                        <td>
+
+                            {
+
+                                statusList.map(st => {
+
+
+                                    console.log(st.status_id);
+                                    console.log(st.candidate.candidate_id);
+                                    // console.log(st.requisition.requisition_id)
+                                    // console.log(can.requisition.requisition_id)
+                                    if (st.requisition.requisition_id == can.requisition.requisition_id
+                                        && st.recruiter.recruiter_id == empID && st.flag == 1)
+                                    // ||(st.requisition.requisition_id==can.requisition.requisition_id && st.flag==1 && can.candidate_id==''))
+                                    {
+
+                                        // ------------------------------------updated-------------
+                                        if (st.candidate.candidate_id == can.candidate_id
+                                            && st.recruiter.recruiter_id == empID && st.flag == 1) {
+                                            console.log(st.status_id);
+                                            return (
+                                                <>
+                                                    <td>{st.status}</td>
+                                                    <td>{st.status_date}</td>
+                                                </>
                                             )
-                                        
-                                       }
+                                        }
+
+                                        // ------------------------------------updated-------------
+                                        return (
+                                            <>
+                                                <td>{st.status}</td>
+                                                <td>{st.status_date}</td>
+                                                <td>
+                                                    {
+                                                        <select class="btn btn-secondary dropdown-toggle"
+                                                            style={{ width: '100%' }}
+                                                            name="status" id="status"
+                                                            // onChange={(evt)=>setUpdateStatus(evt.target.value)}>
+                                                            onChange={(evt) => handleChange({ canid: can.candidate_id, rrid: sessionreq, sstt: evt.target.value })}>
+                                                            {/* > */}
+                                                            {/*onKeyUp={this.keyUpHandlerReq}
+                                             value={this.state.input.rate_term}> */}
+
+                                                            <option value='' default selected> Select Status</option>
+
+                                                            {
+                                                                statusFD.map((stfd) => (
+                                                                    <option value={stfd.status_fd}>{stfd.status_fd}</option>
+                                                                ))
+                                                            }
+                                                        </select>
+
+                                                    }
+
+                                                    <button onClick={handleSubmit}>Change Status</button>
+                                                </td>
+
+                                            </>
+                                        )
+
+                                    }
                                 })
-                                
-                                
-                        }
-                    </td>
-                    <td>
+                            }
+                        </td>
+
+                        {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++ */}
+
+                        <td>
+
+                            {
+
+                                statusList.map(st => {
+                                    
+                                    if(st.requisition.requisition_id == can.requisition.requisition_id
+                                        && st.recruiter.recruiter_id == empID && st.flag == 1
+                                        && st.candidate.candidate_id == can.candidate_id){
+
+                                        console.log("show status"+st.status_id);
+                                        return(
+                                            <>
+                                                <td>{st.status}</td>
+                                                <td>{st.status_date}</td>
+                                            </>
+                                        )
+                                    }
+                                    else{
+                                        console.log("skip status"+st.status_id);
+                                    }
+                                    console.log(st.status_id);
+                                    console.log(st.candidate.candidate_id);
+                                    
+                                   
+                                })
+                            }
+                        </td>
+                        {/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */}
+                        {/* <td>
                         {
                             inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
                                 <>
@@ -277,8 +340,7 @@ function ViewAllRecords() {
                                             onSave(
                                                 {
                                                     newReqid: cls.requisition_id, newReqFrom: reqFrom, newId: id,
-                                                    newClient: client, newJobTitle: jobTitle, newDuration: duration,
-                                                    newClientRate: clientRate, newLocation: location, newSkills: skills,
+                                                    newClient: client, newJobTitle: jobTitle
                                                  
                                                 })
                                         }
@@ -316,26 +378,29 @@ function ViewAllRecords() {
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <button className="btn btn-outline-danger"
                                         onClick={() => { if (window.confirm('Are you sure to delete this requirement?')) deleteBook(cls.closureid) }}>
-                                        {/*Delete*/}<i class="fa fa-trash"></i></button>
+                                       <i class="fa fa-trash"></i></button>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                 </>
 
                             )
                         }
 
-                    </td>
-                    
-                   
-                   
-                </tr >
+                    </td> */}
 
-                
 
-            );
+
+                    </tr >
+
+
+
+                );
+
+            }
         })
+
     }
 
-   
+
 
     return (
         // return (
@@ -352,24 +417,24 @@ function ViewAllRecords() {
                         <thead>
                             <tr>
                                 <th style={{ width: '10px' }}>Sr No.</th>
-                                <th style={{ width: '150px' }}>Requisition From</th>
-                                <th style={{ width: '90px' }}>ID</th>
-                                <th style={{ width: '150px' }}>Client</th>
-                                <th style={{ width: '160px' }}>Job Title</th>
-                                <th style={{ width: '70px' }}>Duration</th>
-                                <th style={{ width: '100px' }}>Client Rate</th>
-                                <th style={{ width: '130px' }}>Location</th>
-                                <th style={{ width: '200px' }}>Skills</th>
-                                <th style={{ width: '10px' }}>Status & Date</th>
+                                <th style={{ width: '150px' }}>Candidate Name</th>
+                                <th style={{ width: '90px' }}>Visa Type</th>
+                                <th style={{ width: '150px' }}>Rate term</th>
+                                <th style={{ width: '160px' }}>Submitted Rate</th>
+                                <th style={{ width: '90px' }}>Phone</th>
+                                <th style={{ width: '200px' }}>Email</th>
+                                {/* <th style={{ width: '200px' }}>Remark</th>
+                                <th style={{ width: '200px' }}>Reason</th> */}
+                                <th style={{ width: '100px' }}>Status & Date</th>
                                 <th style={{ width: '95px' }}>Action</th>
-                               
+
                             </tr>
                         </thead>
                         <tbody>
-                     
-                        {renderTable()}
-                       
-                           
+
+                            {renderTable()}
+
+
                         </tbody>
                     </Table>
 
@@ -379,4 +444,4 @@ function ViewAllRecords() {
         //)
     );
 }
-export default ViewAllRecords;
+export default ViewCadByReq;
