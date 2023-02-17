@@ -19,6 +19,9 @@ import AdminStatic from './ComponentFirst/AdminStatic';
 import Demo from './ComponentFirst/demo';
 import ViewAllRecords from './ComponentFirst/ViewAllRecords';
 import UpdateProfile from './ComponentFirst/UpdateProfile';
+import ViewAllRecords2 from './ComponentFirst/viewAllRecords2';
+import View3 from './ComponentFirst/View3';
+
 
 function App() {
   return (
@@ -38,7 +41,9 @@ function App() {
         <Route path="/demo" element={<Demo />}></Route>
         {/* <Route path="/nav_header" element={<EmployeeHeader />}></Route> */}
         <Route path="/view_all" element={<ViewAllRecords />}></Route>
+        <Route path="/view_all2" element={<ViewAllRecords2 />}></Route>
         <Route path="/updateProfile" element={<UpdateProfile />}></Route>
+        <Route path="/view3" element={<View3 />}></Route>
         {/* <Route path="/navdemo1" element={<mobileScreen />}></Route> */}
         </Routes>
       </Router>

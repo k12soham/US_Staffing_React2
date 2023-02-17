@@ -16,6 +16,7 @@ import EmployeeHeader from './EmployeeHeader';
 import { List } from 'reactstrap';
 import { Table,Button } from "reactstrap";
 import { json } from 'react-router-dom';
+import AdminHeader from './AdminHeader';
 
 
 class AdminStatic extends React.Component {
@@ -1734,16 +1735,15 @@ ratelist()
     
 
     render() {
-        //const isAuthenticated = localStorage.getItem('empID');
-       // let empID = localStorage.getItem('empID');
-
-       // return isAuthenticated ? (
-        return(
+        const isAuthenticated = localStorage.getItem('recruiterIDAdmin');
+    
+        return isAuthenticated ? (
+      
             <div className="container-fluid">
                 <div className="row">
 
                     <div className="col-12 h-100 master_backgroung_heder">
-                        <EmployeeHeader />
+                        <AdminHeader/>
                     </div>
                   
                     <div className="col-12 master_backgroung_work scroll-bar">
@@ -1916,10 +1916,10 @@ ratelist()
             </div >
         ) 
         
-        // : (
-        //     history.push("/"),
-        //     window.location.reload()
-        // );
+        : (
+            history.push("/"),
+            window.location.reload()
+        );
     }
 }
 

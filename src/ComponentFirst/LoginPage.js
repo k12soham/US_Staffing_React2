@@ -52,7 +52,7 @@ const Login1 = () => {
     };
 
     const authenticate = (e) => {
-        alert("hello1");
+      
         e.preventDefault();
         const validate = validateLogin();
 
@@ -90,17 +90,18 @@ const Login1 = () => {
 
                 if (response.data.role == "Admin") {
                     localStorage.setItem('recruiterName', response.data.recruiter_name);
-                    localStorage.setItem('recruiterId', response.data.recruiter_id);
+                    localStorage.setItem('recruiterIDAdmin', response.data.recruiter_id);
                     localStorage.setItem('recruiterEmail', response.data.recruiter_email);
                     // alert("Successfully Login");
-                    navigate("/admin_dashboard1");
+                    navigate("/adminstatic");
                     toast.success("Login successfully!",
-                        { position: "top-right" })
+                        { position: "top-right",autoClose: 2000,
+                        style: { position: "absolute", top: "5px", width: "300px" } })
                 }
 
                 else if (response.data.role == "TM") {
                     localStorage.setItem('recruiterName', response.data.recruiter_name);
-                    localStorage.setItem('recruiterId', response.data.recruiter_id);
+                    localStorage.setItem('recruiterID', response.data.recruiter_id);
                     localStorage.setItem('recruiterEmail', response.data.recruiter_email);
              
                     navigate("/addRequisition");
