@@ -26,6 +26,7 @@ function ReqView() {
         axios.get(`${base_url}/getAllRequisition`).then(json => setClosureList(json.data))
         // axios.get(`${base_url}/getEmpList_TM`).then(json => setEmployee(json.data))
     }, []);
+    console.log(closureList);
 
     const deleteBook = (id) => { }
 
