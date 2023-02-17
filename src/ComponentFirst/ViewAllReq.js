@@ -394,7 +394,7 @@ function ViewAllReq() {
             <div className="master_backgroung_work scroll-bar-horizontal">
 
                 <div style={{ backgroundColor: '', width: '2100px' }}  >
-                    <Table bordered>
+                    <Table bordered class="table table-sm" style={{fontFamily:'arial'}}>
                         <thead>
                             <tr>
                                 <th style={{ width: '10px' }}>Sr No.</th>
