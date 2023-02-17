@@ -48,6 +48,7 @@ function EmployeeHeader() {
           <li className="nav-item">
             <a className="nav-link" href="view_all_req">View all records</a>
           </li>
+         
           
         </ul>
       </div>

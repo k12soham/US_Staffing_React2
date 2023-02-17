@@ -274,7 +274,7 @@ class AddCandidate extends React.Component {
 
     render() {
         const isAuthenticated = localStorage.getItem('recruiterID');
-        // let empID = localStorage.getItem('recruiterID');
+
 
         return isAuthenticated ? (
             <div className="">
