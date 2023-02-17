@@ -6,7 +6,10 @@ import EmpSidebar from "../ViewComponent1/EmpSidebar";
 import { Table } from "reactstrap";
 import EmployeeHeader from "./EmployeeHeader";
 import { toast } from "react-toastify";
-function ViewAllRecords() {
+import { useNavigate } from "react-router-dom";
+function ViewAllReq() {
+
+    const recruiterID = localStorage.getItem('recruiterID');
 
     const [closureList, setClosureList] = useState([]);
     const [statusList, setstatusList] = useState([]);
@@ -21,6 +24,7 @@ function ViewAllRecords() {
     const [jobTitle, setJobTitle] = useState(null);
     const [duration, setDuration] = useState(null);
     const [clientRate, setClientRate] = useState(null);
+    const [ptype,setPType] = useState(null);
     const [location, setLocation] = useState(null);
     const [skills, setSkills] = useState(null);
     const [status, setStatus] = useState(null);
@@ -29,6 +33,8 @@ function ViewAllRecords() {
         status: true,
         rowKey: null
     });
+    let navigate = useNavigate();
+
 
     useEffect(() => {
         axios.get(`${base_url}/getAllRequisition`).then(json => setClosureList(json.data))
@@ -41,19 +47,30 @@ function ViewAllRecords() {
 
     const deleteBook = (id) => { }
 
-    const updateInventory = ({ newReqid, newReqFrom, newId, newClient, newJobTitle, newDuration,
-        newClientRate, newLocation, newSkills }) => {
-        alert("update val successfully")
-    }
+    // const updateRequisition = ({ newReqid, newReqFrom, newId, newClient, newJobTitle, newDuration,
+    //     newClientRate, newLocation, newPType, newSkills }) => {
+
+    //         axios.post(`${base_url}/update_requsition?requisition_id=${newReqid}&requisition_from=${newReqFrom}
+    //         &id=${newId}&client=${newClient}&job_title=${newJobTitle}&duration=${newDuration}&client_rate=${newClientRate}&location=${newLocation}&
+    //         position_type=${newPType}&skills=${newSkills}`).then(
+    //             (response)=>{
+    //                 toast.success("Record updated successfully!", {position: 'top-right'});
+    //             },
+    //             (error)=>{
+    //                 alert("Please enter valid details.");
+    //             }
+    //         )
+    //     alert("update val successfully")
+    // }
 
     const onSave = ({ newReqid, newReqFrom, newId, newClient, newJobTitle, newDuration,
-        newClientRate, newLocation, newSkills }) => {
+        newClientRate, newLocation, newPType, newSkills }) => {
 
         // console.log("clsid,"+clsid+" newReq,"+newReq+ "newSub,"+newSub+" newFirst,"+newFirst+" newSecond,"+newSecond+" newClosure,"+newClosure+" y "+y);
-        updateInventory({
-            newReqid, newReqFrom, newId, newClient, newJobTitle, newDuration,
-            newClientRate, newLocation, newSkills
-        });
+        // updateRequisition({
+        //     newReqid, newReqFrom, newId, newClient, newJobTitle, newDuration,
+        //     newClientRate, newLocation, newSkills
+        // });
     }
     const handleChange= (e)=> {
 
@@ -103,7 +120,15 @@ function ViewAllRecords() {
 
     // ----------------------------------------------------------------------------------------------------------
     const onEdit = ({ crrReqid, crrReqFrom, crrId, crrClient, crrJobTitle, crrDuration,
-        crrClientRate, crrLocation, crrSkills}) => {
+        crrClientRate, crrLocation, crrPType, crrSkills}) => {
+
+
+            console.log(crrReqid);
+            localStorage.setItem('recruiterID', recruiterID);
+            localStorage.setItem('requisitionID', crrReqid);
+
+            navigate("/updateRequisition");
+            // window.location.reload();
            
         setInEditMode({
             status: true,
@@ -116,6 +141,7 @@ function ViewAllRecords() {
         setDuration(crrDuration);
         setClientRate(crrClientRate);
         setLocation(crrLocation);
+        setPType(crrPType);
         setSkills(crrSkills);
         
     }
@@ -133,7 +159,7 @@ function ViewAllRecords() {
     }
     const getnewID = (e)=>{
         let rq= e.rq
-        localStorage.setItem("requisitionID",rq)
+        localStorage.setItem("requisitionid",rq)
         //console.log(rq)
     }
 
@@ -148,17 +174,17 @@ function ViewAllRecords() {
                     <td style={{ width: '50px' }}>
                         {
                             inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
-                                <input required value={reqFrom}
+                                <input required 
+                                    type='text'    
+                                value={reqFrom}
                                     onChange={(event) => setReqFrom(event.target.value)}
                                     style={{ width: "100px" }}
-                                    minLength={1}
-                                    maxLength={3}
+                                    minLength={2}
+                                    maxLength={50}
                                 />
                             ) : (
-                                //  cls.requisition_from
-                                // <a href="view_all2/${abc}" >{cls.requisition_from}</a>
                             
-                                <a href="view3" onClick={(evt)=>getnewID({rq: cls.requisition_id})}>{cls.requisition_from}</a>
+                                <a href="/view_candidate1" onClick={(evt)=>getnewID({rq: cls.requisition_id})}>{cls.requisition_from}</a>
                             )
                             
                         }
@@ -168,11 +194,13 @@ function ViewAllRecords() {
                     <td>
                         {
                             inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
-                                <input required value={id}
+                                <input required 
+                                type='number'
+                                value={id}
                                     onChange={(event) => setId(event.target.value)}
                                     style={{ width: "100px" }}
-                                    minLength={1}
-                                    maxLength={3}
+                                    minLength={2}
+                                    maxLength={10}
                                 />
                             ) : (
                                 cls.id
@@ -183,11 +211,13 @@ function ViewAllRecords() {
                     <td>
                         {
                             inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
-                                <input required value={client}
+                                <input required 
+                                type='text'
+                                value={client}
                                     onChange={(event) => setClient(event.target.value)}
                                     style={{ width: "100px" }}
-                                    minLength={1}
-                                    maxLength={3}
+                                    minLength={2}
+                                    maxLength={50}
                                 />
                             ) : (
                                 cls.client
@@ -197,11 +227,13 @@ function ViewAllRecords() {
                     <td>
                         {
                             inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
-                                <input required value={jobTitle}
+                                <input required 
+                                type='text'
+                                value={jobTitle}
                                     onChange={(event) => setJobTitle(event.target.value)}
                                     style={{ width: "100px" }}
-                                    minLength={1}
-                                    maxLength={3}
+                                    minLength={2}
+                                    maxLength={50}
                                 />
                             ) : (
                                 cls.job_title
@@ -211,73 +243,79 @@ function ViewAllRecords() {
                    <td>
                         {
                             inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
-                                <input required value={duration}
+                                <input required 
+                                    type='text'
+                                value={duration}
                                     onChange={(event) => setDuration(event.target.value)}
                                     style={{ width: "100px" }}
-                                    minLength={1}
-                                    maxLength={3}
+                                    minLength={2}
+                                    maxLength={20}
                                 />
                             ) : (
                                 cls.duration
                             )
                         }
                     </td>
-                    <td>{cls.client_rate}</td>
-                    <td>{cls.location}</td>
-                    <td>{cls.skills}</td>
-                    {/*  <td>
-                
+                    <td>
                         {
-                                
-                            statusList.map(st => {
-                                console.log("status rq id : " +st.requisition.requisition_id);                                
-                                console.log("requisition rq id : " +cls.requisition_id);
-
-                                if(st.requisition.requisition_id==cls.requisition_id && st.flag==1)
-                                {
-                                    return (
-                                        <>
-                                        <td>{st.status}</td>
-                                        <td>{st.status_date}</td>
-                                        <td>
-                        {
-                           
-                        <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '100%' }}
-                                                    name="status" id="status"
-                                                    // onChange={(evt)=>setUpdateStatus(evt.target.value)}>
-                                                         onChange={(evt)=>handleChange({rrid: cls.requisition_id, sstt:evt.target.value})}>
-                                                    
-                                                     {/*onKeyUp={this.keyUpHandlerReq}
-                                                    value={this.state.input.rate_term}> 
-
-                                                    <option value='' default selected> Select Status</option>
-                                                 
-                                                    {
-                                             statusFD.map((stfd) => (
-
-                                                <option value={stfd.status_fd}>{stfd.status_fd}</option>
-                                               ))
-
-                                             }  
-                                               
-                                                </select>
-                                              
-
+                            inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
+                                <input required value={clientRate}
+                                    onChange={(event) => setDuration(event.target.value)}
+                                    style={{ width: "100px" }}
+                                    minLength={1}
+                                    maxLength={3}
+                                />
+                            ) : (
+                                cls.client_rate
+                            )
                         }
-                        
-                           <button onClick={handleSubmit}>Change Status</button> 
                     </td>
-                                        
-                                        </>
-                                            )
-                                        
-                                       }
-                                })
-                                
-                                
+                    {/* <td>{cls.client_rate}</td> */}
+                    <td>
+                        {
+                            inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
+                                <input required value={location}
+                                    onChange={(event) => setDuration(event.target.value)}
+                                    style={{ width: "100px" }}
+                                    minLength={1}
+                                    maxLength={3}
+                                />
+                            ) : (
+                                cls.location
+                            )
                         }
-                    </td> */}
+                    </td>
+                    {/* <td>{cls.location}</td> */}
+                    <td>
+                        {
+                            inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
+                                <input required value={ptype}
+                                    onChange={(event) => setDuration(event.target.value)}
+                                    style={{ width: "100px" }}
+                                    minLength={1}
+                                    maxLength={3}
+                                />
+                            ) : (
+                                cls.position_type
+                            )
+                        }
+                    </td>
+                    <td>
+                        {
+                            inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
+                                <input required value={skills}
+                                    onChange={(event) => setDuration(event.target.value)}
+                                    style={{ width: "100px" }}
+                                    minLength={1}
+                                    maxLength={3}
+                                />
+                            ) : (
+                                cls.skills
+                            )
+                        }
+                    </td>
+                    {/* <td>{cls.skills}</td> */}
+                   
                     <td>
                         {
                             inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
@@ -291,7 +329,7 @@ function ViewAllRecords() {
                                                 {
                                                     newReqid: cls.requisition_id, newReqFrom: reqFrom, newId: id,
                                                     newClient: client, newJobTitle: jobTitle, newDuration: duration,
-                                                    newClientRate: clientRate, newLocation: location, newSkills: skills,
+                                                    newClientRate: clientRate, newLocation: location, newPType: ptype, newSkills: skills,
                                                  
                                                 })
                                         }
@@ -319,7 +357,8 @@ function ViewAllRecords() {
                                            
                                             crrReqid: cls.requisition_id, crrReqFrom: cls.requisition_from, crrId: cls.id,
                                             crrClient: cls.client, crrJobTitle: cls.job_title, crrDuration: cls.duration,
-                                            crrClientRate: cls.client_rate, crrLocation: cls.location, crrSkills: cls.skills,
+                                            crrClientRate: cls.client_rate, crrLocation: cls.location, crrPType: cls.position_type,
+                                            crrSkills: cls.skills,
                                            
                                         })}
                                     >
@@ -337,13 +376,7 @@ function ViewAllRecords() {
                         }
 
                     </td>
-                    
-                   
-                   
                 </tr >
-
-                
-
             );
         })
     }
@@ -372,6 +405,7 @@ function ViewAllRecords() {
                                 <th style={{ width: '70px' }}>Duration</th>
                                 <th style={{ width: '100px' }}>Client Rate</th>
                                 <th style={{ width: '130px' }}>Location</th>
+                                <th style={{ width: '130px' }}>Position Type</th>
                                 <th style={{ width: '200px' }}>Skills</th>
                                 
                                 <th style={{ width: '95px' }}>Action</th>
@@ -392,4 +426,4 @@ function ViewAllRecords() {
         //)
     );
 }
-export default ViewAllRecords;
+export default ViewAllReq;

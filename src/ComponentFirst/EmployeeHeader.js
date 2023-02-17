@@ -6,8 +6,11 @@ import ModalWithCSS from "./ModalWithCSS";
 
 function EmployeeHeader() {
 
-  let empName = localStorage.getItem('empName');
-  let empID = localStorage.getItem('empID');
+  const recruiterName = localStorage.getItem('recruiterName');
+  const recruiterID = localStorage.getItem('recruiterID');
+
+  console.log(recruiterID);
+  console.log(recruiterName);
 
   return (
     <div>
@@ -43,7 +46,7 @@ function EmployeeHeader() {
             </ul>
           </li> */}
           <li className="nav-item">
-            <a className="nav-link" href="view_all">View all records</a>
+            <a className="nav-link" href="view_all_req">View all records</a>
           </li>
          
           

@@ -22,6 +22,10 @@ import UpdateProfile from './ComponentFirst/UpdateProfile';
 import ViewAllRecords2 from './ComponentFirst/viewAllRecords2';
 import View3 from './ComponentFirst/View3';
 
+import UpdateProfile from './ComponentFirst/ViewAllReq';
+import UpdateReq from './ComponentFirst/UpdateReq';
+import ViewCadByReq from './ComponentFirst/ViewCadByReq';
+import ViewAllReq from './ComponentFirst/ViewAllReq';
 
 function App() {
   return (
@@ -44,6 +48,10 @@ function App() {
         <Route path="/view_all2" element={<ViewAllRecords2 />}></Route>
         <Route path="/updateProfile" element={<UpdateProfile />}></Route>
         <Route path="/view3" element={<View3 />}></Route>
+        <Route path="/view_all_req" element={<ViewAllReq />}></Route>
+        <Route path="/view_candidate1" element={<ViewCadByReq />}></Route>
+
+        <Route path="/updateRequisition" element={<UpdateReq />}></Route>
         {/* <Route path="/navdemo1" element={<mobileScreen />}></Route> */}
         </Routes>
       </Router>
