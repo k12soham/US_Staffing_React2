@@ -16,6 +16,7 @@ import EmployeeHeader from './EmployeeHeader';
 import { List } from 'reactstrap';
 import { Table,Button } from "reactstrap";
 import { json } from 'react-router-dom';
+import AdminHeader from './AdminHeader';
 
 
 class AdminStatic extends React.Component {
@@ -880,7 +881,8 @@ postdata2(d)
         this.componentDidMount()
         this.setState({client:''})
          toast.success("Client added successfully!",
-             { position: "top-right"}
+             { position: "top-right", autoClose: 1000,
+             style: { position: "absolute", top: "5px", width: "300px" }}
          );
      },
      (error) => {
@@ -914,7 +916,8 @@ postdata3(d)
         this.componentDidMount()
         this.setState({status:''})
          toast.success("Status added successfully!",
-             { position: "top-right"}
+             { position: "top-right", autoClose: 1000,
+             style: { position: "absolute", top: "5px", width: "300px" }}
          );
      },
      (error) => {
@@ -947,7 +950,8 @@ postdata4(d)
         this.componentDidMount()
         this.setState({position:''})
          toast.success("Position added successfully!",
-             { position: "top-right"}
+             { position: "top-right", autoClose: 1000,
+             style: { position: "absolute", top: "5px", width: "300px" }}
          );
      },
      (error) => {
@@ -978,7 +982,8 @@ postdata5(d)
         this.componentDidMount()
         this.setState({duration:''})
          toast.success("Duration added successfully!",
-             { position: "top-right"}
+             { position: "top-right", autoClose: 1000,
+             style: { position: "absolute", top: "5px", width: "300px" }}
          );
      },
      (error) => {
@@ -1011,7 +1016,8 @@ postdata6(d)
         this.componentDidMount()
         this.setState({visatype:''})
          toast.success("Visa Type added successfully!",
-             { position: "top-right"}
+             { position: "top-right", autoClose: 1000,
+             style: { position: "absolute", top: "5px", width: "300px" }}
          );
      },
      (error) => {
@@ -1045,7 +1051,8 @@ postdata7(d)
         this.componentDidMount()
         this.setState({rateterm:''})
          toast.success("Rate Term added successfully!",
-             { position: "top-right"}
+             { position: "top-right", autoClose: 1000,
+             style: { position: "absolute", top: "5px", width: "300px" }}
          );
      },
      (error) => {
@@ -1728,16 +1735,15 @@ ratelist()
     
 
     render() {
-        //const isAuthenticated = localStorage.getItem('empID');
-       // let empID = localStorage.getItem('empID');
-
-       // return isAuthenticated ? (
-        return(
+        const isAuthenticated = localStorage.getItem('recruiterIDAdmin');
+    
+        return isAuthenticated ? (
+      
             <div className="container-fluid">
                 <div className="row">
 
                     <div className="col-12 h-100 master_backgroung_heder">
-                        <EmployeeHeader />
+                        <AdminHeader/>
                     </div>
                   
                     <div className="col-12 master_backgroung_work scroll-bar">
@@ -1910,10 +1916,10 @@ ratelist()
             </div >
         ) 
         
-        // : (
-        //     history.push("/"),
-        //     window.location.reload()
-        // );
+        : (
+            history.push("/"),
+            window.location.reload()
+        );
     }
 }
 

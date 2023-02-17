@@ -28,7 +28,7 @@ class AddRequisition extends React.Component {
                 this.setState({ duration_fd: json.data })
             )
             .catch(error => {
-                alert("Error duration")
+               // alert("Error duration")
             })
 
         axios.get(`${base_url}/getAllPositionType`)
@@ -36,7 +36,7 @@ class AddRequisition extends React.Component {
                 this.setState({ positionType_fd: json.data })
             )
             .catch(error => {
-                alert("Error position")
+               // alert("Error position")
             })
 
         axios.get(`${base_url}/getAllRequisitorFd`)
@@ -44,7 +44,7 @@ class AddRequisition extends React.Component {
                 this.setState({ requisitor_fd: json.data })
             )
             .catch(error => {
-                alert("Error requisitor")
+               // alert("Error requisitor")
             })
 
         axios.get(`${base_url}/getAllStatusFd`)
@@ -52,7 +52,7 @@ class AddRequisition extends React.Component {
                 this.setState({ status_fd: json.data })
             )
             .catch(error => {
-                alert("Error status")
+               // alert("Error status")
             })
 
         axios.get(`${base_url}/getAllClient`)
@@ -60,7 +60,7 @@ class AddRequisition extends React.Component {
                 this.setState({ client_fd: json.data })
             )
             .catch(error => {
-                alert("Error client")
+               // alert("Error client")
             })
     }
 
