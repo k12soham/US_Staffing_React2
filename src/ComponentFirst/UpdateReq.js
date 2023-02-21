@@ -551,7 +551,7 @@ class UpdateReq extends React.Component {
                                                     onKeyUp={this.keyUpHandlerReq}
                                                     value={this.state.input.positionType}>
 
-                                                    <option value='' default selected> Select position type </option>
+                                                    {/* <option value='' default selected> Select position type </option> */}
                                                     {
                                                         this.state.positionType_fd.map((pt) => (
 

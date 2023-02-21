@@ -1782,8 +1782,9 @@ ratelist()
                                             
                                          <form onSubmit={this.handleSubmit1}>
                                             <label>Add new requisitor</label><br></br>
-                                               <input type="text"  name="req" value={this.state.req} onChange={this.handleChange1}></input>
-                                               <button class= "btn  btn-success"> <i class=" fa fa-save"></i>&nbsp;Add</button>
+                                               <input type="text"  name="req" style={{height:23}}
+                                               value={this.state.req} onChange={this.handleChange1}></input>
+                                               <button class= "btn btn-sm  btn-success"> <i class=" fa fa-save"></i>&nbsp;Add</button>
                                             <div className="text-danger">{this.state.errors.req}</div>
                                             </form><br></br><br></br> 
          
@@ -1798,8 +1799,8 @@ ratelist()
                                            </Table>
                                             <form onSubmit={this.handleSubmit2}>
                                             <label>Add new client</label><br></br>
-                                               <input type="text"  name="client" value={this.state.client} onChange={this.handleChange2}></input>
-                                                <button >Save</button>
+                                               <input type="text"  name="client"  style={{height:23}} value={this.state.client} onChange={this.handleChange2}></input>
+                                               <button class= "btn btn-sm  btn-success"> <i class=" fa fa-save"></i>&nbsp;Add</button>
                                             <div className="text-danger">{this.state.errors.client}</div>
                                             </form>
                                             </div>
@@ -1818,8 +1819,8 @@ ratelist()
                                             </Table>
                                             <form onSubmit={this.handleSubmit3}>
                                             <label>Add new status</label><br></br>
-                                               <input type="text"  name="status" value={this.state.status} onChange={this.handleChange3}></input>
-                                                <button >Save</button>
+                                               <input type="text"  name="status"  style={{height:23}} value={this.state.status} onChange={this.handleChange3}></input>
+                                               <button class= "btn btn-sm  btn-success"> <i class=" fa fa-save"></i>&nbsp;Add</button>
                                             <div className="text-danger">{this.state.errors.status}</div>
                                             </form><br></br><br></br>
 
@@ -1834,8 +1835,8 @@ ratelist()
                                            </Table>
                                             <form onSubmit={this.handleSubmit4}>
                                             <label>Add new position</label><br></br>
-                                               <input type="text"  name="position" value={this.state.position} onChange={this.handleChange4}></input>
-                                                <button >Save</button>
+                                               <input type="text"  name="position"  style={{height:23}} value={this.state.position} onChange={this.handleChange4}></input>
+                                               <button class= "btn btn-sm  btn-success"> <i class=" fa fa-save"></i>&nbsp;Add</button>
                                             <div className="text-danger">{this.state.errors.position}</div>
                                             </form>
                                             </div>
@@ -1854,8 +1855,8 @@ ratelist()
                                            </Table>
                                             <form onSubmit={this.handleSubmit5}>
                                             <label>Add new duration</label><br></br>
-                                               <input type="text"  name="duration" value={this.state.duration} onChange={this.handleChange5}></input>
-                                                <button >Save</button>
+                                               <input type="text"  name="duration"  style={{height:23}} value={this.state.duration} onChange={this.handleChange5}></input>
+                                               <button class= "btn btn-sm  btn-success"> <i class=" fa fa-save"></i>&nbsp;Add</button>
                                             <div className="text-danger">{this.state.errors.duration}</div>
                                             </form><br></br><br></br>
 
@@ -1870,8 +1871,8 @@ ratelist()
                                            </Table>
                                             <form onSubmit={this.handleSubmit6}>
                                             <label>Add new visa type</label><br></br>
-                                               <input type="text"  name="visatype" value={this.state.visatype} onChange={this.handleChange6}></input>
-                                                <button >Save</button>
+                                               <input type="text"  name="visatype"  style={{height:23}} value={this.state.visatype} onChange={this.handleChange6}></input>
+                                               <button class= "btn btn-sm  btn-success"> <i class=" fa fa-save"></i>&nbsp;Add</button>
                                             <div className="text-danger">{this.state.errors.visatype}</div>
                                             </form>
                                             </div>
@@ -1890,8 +1891,8 @@ ratelist()
                                            </Table>
                                                 <form onSubmit={this.handleSubmit7}>
                                                 <label>Add new rate term</label><br></br>
-                                                <input type="text"  name="rateterm" value={this.state.rateterm} onChange={this.handleChange7}></input>
-                                                    <button >Save</button>
+                                                <input type="text"  name="rateterm"  style={{height:23}} value={this.state.rateterm} onChange={this.handleChange7}></input>
+                                                <button class= "btn btn-sm  btn-success"> <i class=" fa fa-save"></i>&nbsp;Add</button>
                                                 <div className="text-danger">{this.state.errors.rateterm}</div>
                                                 </form><br></br><br></br>
 
