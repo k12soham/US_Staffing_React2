@@ -4,33 +4,78 @@ import base_url from '../api/bootapi';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import history from './ResponseVal';
-import Header from '../ViewComponent1/Header';
-import EmpSidebar from '../ViewComponent1/EmpSidebar';
 import { useRef } from 'react';
 import { getValue } from '@testing-library/user-event/dist/utils';
 import NavBarHeader from './NavbarHeader';
 import EmployeeHeader from './EmployeeHeader';
+import { json } from 'react-router-dom';
 
-class AddCandidate extends React.Component {
+const empID = localStorage.getItem('recruiterID');
+console.log("recruiterId : " + empID);
+let reqID = '';
+
+class UpdateCandidate extends React.Component {
 
     componentDidMount() {
         this.refInput.focus();
+
+        const recruiterID = localStorage.getItem('recruiterID');
+        const requisitionID = localStorage.getItem('requisitionID');
+        const candidateID2 = localStorage.getItem('candidateID');
+        this.setState({ candidateID: candidateID2 });
+        // this.setState({ empID: recruiterID });
+        this.setState({ requisitionId1: requisitionID });
+
+        console.log("recruiterID : " + recruiterID);
+        console.log("requisitionID : " + requisitionID);
+        console.log("candidateID2 : " + candidateID2);
+
+        axios.get(`${base_url}/getCandidateByID?candidateID=${candidateID2}`).then(
+
+            (response) => {
+                console.log(typeof (response));
+                console.log(response.data)
+                console.log(response.data.candidate_id);
+                console.log(response.data.rate_term);
+
+                let inputs = {};
+                inputs["cad_name"] = response.data.candidate_name;
+                inputs["visa_type"] = response.data.visa_type;
+                inputs["rate_term"] = response.data.rate_term;
+                inputs["submitted_rate"] = response.data.submitted_rate;
+                inputs["phone"] = response.data.phone;
+                inputs["email"] = response.data.email;
+                inputs["remark"] = response.data.remark;
+                inputs["reason"] = response.data.reason;
+
+                this.setState({ input: inputs });
+
+            },
+            (error) => {
+                console.log(error);
+                console.log("Error");
+                alert("Please enter valid details.")
+            }
+        );
+
         axios.get(`${base_url}/getAllRateTerm`)
-        .then(json => 
-            this.setState({rateTerm_fd:json.data })
-          )
-        .catch(error => {
-      //  alert("Error rate term")
-        })
+            .then(json =>
+                this.setState({ rateTerm_fd: json.data })
+            )
+            .catch(error => {
+                //  alert("Error rate term")
+            })
 
         axios.get(`${base_url}/getAllVisaType`)
-        .then(json => 
-            this.setState({visaType_fd:json.data })
-          )
-        .catch(error => {
-       // alert("Error visa")
-        })
+            .then(json =>
+                this.setState({ visaType_fd: json.data })
+            )
+            .catch(error => {
+                // alert("Error visa")
+            })
     }
+
+
 
     constructor(props) {
         super(props);
@@ -38,18 +83,19 @@ class AddCandidate extends React.Component {
         this.state = {
             input: {},
             errors: {},
-            empID: '',
-            rateTerm_fd:[],
-            visaType_fd:[],
+            // empID: '',
+            candidateID: 0,
+            rateTerm_fd: [],
+            visaType_fd: [],
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+
     }
 
     resetForm = () => {
-        // alert("Clear");
-        // this.setState(this.baseState)
+
         let inputs = {};
         inputs["cad_name"] = undefined;
         inputs["visa_type"] = undefined;
@@ -75,13 +121,34 @@ class AddCandidate extends React.Component {
         this.setState({ errors: errors1 });
     }
 
+    // addCandidate = () => {
+    //     console.log(reqID);
+
+    //     // let a = this.state.empID
+    //     let b = this.state.requisitionId1;
+    //     console.log("recid = " + a + " rqid = " + b);
+    //     // console.log("recid = " + this.state.empID + " rqid = " + this.state.requisitionId1);
+    //     // onClick={this.addCandidate(this.state.empID, this.state.requisitionId1)}                                       
+
+    //     if (b != undefined) {
+    //         localStorage.setItem('recruiterId', a);
+    //         localStorage.setItem('ReqId', b)
+
+    //         history.push("/addCandidate");
+    //         window.location.reload();
+    //         toast.success("Render  successfully!",
+    //             { position: "top-right" })
+    //     }
+
+    //     console.log("addCandidate");
+    // }
+
     handleChange(e) {
         let add_cls = this.state.input;
         add_cls[e.target.name] = e.target.value;
         console.log(add_cls);
-
         this.setState({
-            add_cls
+            input: add_cls,
         });
     }
 
@@ -92,36 +159,46 @@ class AddCandidate extends React.Component {
 
             let add_cls = this.state.input;
             add_cls[e.target.name] = e.target.value;
-
-            this.postCandidate(add_cls);
+           
+            this.put_UpdateCandidate(add_cls);
+      
         }
         // 👇️ clear all input values in the form
         e.target.reset();
     }
 
-    postCandidate = (data) => {
-        // let z = this.state.empID = localStorage.getItem("recruiterId")
-        let recruiterID = localStorage.getItem('recruiterID');
-        let requisitionID = localStorage.getItem('requisitionID');
-        console.log("RecId_New : "+recruiterID+ " requisitionID "+requisitionID);
-       
-        let status = 'assigned';
-        let d1 = data["cad_name"];
-        let d2 = data["visa_type"];
-        let d3 = data["rate_term"];
-        let d4 = data["submitted_rate"];
-        let d5 = data["phone"];
-        let d6 = data["email"];
-        let d7 = data["remark"];
-        let d8 = data["reason"];
+    put_UpdateCandidate = (data) => {
+        console.log(this.state.candidateID);
+        // let recId = this.state.empID = localStorage.getItem("recruiterId");
+        // console.log("recruiterId : " + recId);
+        let d = this.state.requisitionId1;
+        let cad_name = data["cad_name"];
+        let visa_type = data["visa_type"];
+        let rate_term = data["rate_term"];
+        let submitted_rate = data["submitted_rate"];
+        let phone = data["phone"];
+        let email = data["email"];
+        let remark = data["remark"];
+        let reason = data["reason"];
 
-        axios.post(`${base_url}/add_candidate?candidate_name=${d1}&visa_type=${d2}&rate_term=${d3}
-        &submitted_rate=${d4}&phone=${d5}&email=${d6}&status=${status}&remark=${d7}
-        &reason=${d8}&recruiter_id=${recruiterID}&requisition_id=${requisitionID}`).then(
+        axios.put(`${base_url}/update_candidate?candidate_id=${this.state.candidateID}&candidate_name=${cad_name}
+        &visa_type=${visa_type}&rate_term=${rate_term}&submitted_rate=${submitted_rate}
+        &phone=${phone}&email=${email}&remark=${remark}&reason=${reason}`).then(
 
+            // update_candidate?candidate_id=15&candidate_name=Varad Sutar&visa_type=aaaa&rate_term=56$
+            // &submitted_rate=89$&phone=7878787878&email=varad@gmail.com&status=submitted&remark=NA&reason=NA
             (response) => {
-                
-                toast.success("Candidate added successfully!",
+                console.log(response.data)
+
+                console.log(response.data.candidate_id);
+                let a = response.data.candidate_id;
+                console.log(typeof (response));
+
+
+                history.push("/view3");
+                window.location.reload();
+
+                toast.success("Candidate updated successfully!",
                     { position: "top-right" }
                 );
             },
@@ -133,13 +210,17 @@ class AddCandidate extends React.Component {
         );
 
         let inputs = {};
-        inputs["req"] = undefined;
-        inputs["sub"] = undefined;
-        inputs["first"] = undefined;
-        inputs["second"] = undefined;
-        inputs["closure"] = undefined;
+        inputs["cad_name"] = undefined;
+        inputs["visa_type"] = undefined;
+        inputs["rate_term"] = undefined;
+        inputs["submitted_rate"] = undefined;
+        inputs["phone"] = undefined;
+        inputs["email"] = undefined;
+        inputs["remark"] = undefined;
+        inputs["reason"] = undefined;
 
         this.setState({ input: inputs });
+
     }
     // --------------------------------------------Validation Code ----------------------------------------------------------
 
@@ -190,7 +271,7 @@ class AddCandidate extends React.Component {
             isValid = false;
             errors["rate_term"] = "Please select rate term type";
         }
-     
+
         // -------------submitted_rate-----------------------------------------------------------------------------------------
         if ((!input["submitted_rate"])) {
             isValid = false;
@@ -273,15 +354,19 @@ class AddCandidate extends React.Component {
     }
     // -------------------------------------------- End Validation Code ----------------------------------------------------------
 
+
+    // -------------------------------------------- render ----------------------------------------------------
     render() {
         const isAuthenticated = localStorage.getItem('recruiterID');
+        console.log(this.state.input.rate_term);
 
 
         return isAuthenticated ? (
+
             <div className="">
                 <div className="row">
 
-                    <div className="col-12">
+                    <div className="col-12 h-100 master_backgroung_heder">
                         <EmployeeHeader />
                     </div>
 
@@ -317,43 +402,54 @@ class AddCandidate extends React.Component {
                                                     style={{ width: '100%' }}
                                                     name="visa_type" id="visa_type"
                                                     onChange={this.handleChange}
-                                                    onKeyUp={this.keyUpHandlerReq}
                                                     value={this.state.input.visa_type}>
 
-                                                    <option value='' default selected> Select Visa Type </option>
+                                                    <option hidden value='' default selected> Select Visa Type </option>
                                                     {
-                                             this.state.visaType_fd.map((vt) => (
-
-                                                <option value={vt.visa_type}>{vt.visa_type}</option>
-                                               ))
-
-                                             }    
+                                                        this.state.visaType_fd.map((vt) => (
+                                                            <option value={vt.visa_type}>{vt.visa_type}</option>
+                                                        ))
+                                                    }
                                                 </select>
-
                                                 <div className="text-danger">{this.state.errors.visa_type}</div>
                                             </div>
+
+                                            {/* <div class="form-group">
+                                                <label for="rate_term"><b>Rate Term:</b></label><br />
+                                                <select class="btn btn-secondary dropdown-toggle"
+                                                    style={{ width: '100%' }}
+                                                    name="rate_term" id="rate_term"
+                                                    onChange={this.handleChange}
+                                                    value={this.state.input.rate_term}>
+
+                                                    <option hidden value='' default selected> Select Rate Term </option>
+
+                                                    {
+                                                        this.state.rateTerm_fd.map((rt) => (
+                                                            <option value={rt.rate_term}>{rt.rate_term}</option>
+                                                        ))
+                                                    }
+                                                </select>
+                                                <div className="text-danger">{this.state.errors.rate_term}</div>
+                                            </div> */}
+
                                             <div class="form-group">
                                                 <label for="rate_term"><b>Rate Term:</b></label><br />
                                                 <select class="btn btn-secondary dropdown-toggle"
                                                     style={{ width: '100%' }}
                                                     name="rate_term" id="rate_term"
                                                     onChange={this.handleChange}
-                                                    onKeyUp={this.keyUpHandlerReq}
                                                     value={this.state.input.rate_term}>
-
-                                                    <option value='' default selected> Select Rate Term </option>
-                                                 
+                                                    {/* <option hidden value="">Select Rate Term</option> */}
                                                     {
-                                             this.state.rateTerm_fd.map((rt) => (
-
-                                                <option value={rt.rate_term}>{rt.rate_term}</option>
-                                               ))
-
-                                             }    
+                                                        this.state.rateTerm_fd.map((rt) => (
+                                                            <option value={rt.rate_term}>{rt.rate_term}</option>
+                                                        ))
+                                                    }
                                                 </select>
-
                                                 <div className="text-danger">{this.state.errors.rate_term}</div>
                                             </div>
+
                                             <div class="form-group">
                                                 <label for="submitted_rate"><b>Submitted Rate:</b></label>
                                                 <input
@@ -452,7 +548,7 @@ class AddCandidate extends React.Component {
                                                     type="submit"
                                                     className="btn btn-primary w-100 theme-btn mx-auto"
                                                 >
-                                                    Add
+                                                    Update
                                                 </button>
                                             </div>
                                             <div className='col-2'>
@@ -484,4 +580,4 @@ class AddCandidate extends React.Component {
     }
 }
 
-export default AddCandidate;
+export default UpdateCandidate;
