@@ -258,7 +258,6 @@ class UpdateCandidate extends React.Component {
                 isValid = false;
                 errors["cad_name"] = "Please enter only characters.";
             }
-
         }
         // -------------visa_type---------------------------------------------------------------------------------------------
         if ((!input["visa_type"])) {
