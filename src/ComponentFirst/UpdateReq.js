@@ -121,9 +121,6 @@ class UpdateReq extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-
- 
-
     resetForm = () => {
    
         let inputs = {};
@@ -153,27 +150,27 @@ class UpdateReq extends React.Component {
         this.setState({ errors: errors1 });
     }
 
-    addCandidate = () => {
-        console.log(reqID);
+    // addCandidate = () => {
+    //     console.log(reqID);
 
-        let a = this.state.empID
-        let b = this.state.requisitionId1;
-        console.log("recid = " + a + " rqid = " + b);
-        console.log("recid = " + this.state.empID + " rqid = " + this.state.requisitionId1);
-        // onClick={this.addCandidate(this.state.empID, this.state.requisitionId1)}                                       
+    //     let a = this.state.empID
+    //     let b = this.state.requisitionId1;
+    //     console.log("recid = " + a + " rqid = " + b);
+    //     console.log("recid = " + this.state.empID + " rqid = " + this.state.requisitionId1);
+    //     // onClick={this.addCandidate(this.state.empID, this.state.requisitionId1)}                                       
 
-        if (b != undefined) {
-            localStorage.setItem('recruiterId', a);
-            localStorage.setItem('ReqId', b)
+    //     if (b != undefined) {
+    //         localStorage.setItem('recruiterId', a);
+    //         localStorage.setItem('ReqId', b)
 
-            history.push("/addCandidate");
-            window.location.reload();
-            toast.success("Render  successfully!",
-                { position: "top-right" })
-        }
+    //         history.push("/addCandidate");
+    //         window.location.reload();
+    //         toast.success("Render  successfully!",
+    //             { position: "top-right" })
+    //     }
 
-        console.log("addCandidate");
-    }
+    //     console.log("addCandidate");
+    // }
 
     handleChange(e) {
         let add_cls = this.state.input;
@@ -191,20 +188,17 @@ class UpdateReq extends React.Component {
 
             let add_cls = this.state.input;
             add_cls[e.target.name] = e.target.value;
-            // if ((this.state.requisitionId1) != undefined) {
-            //     alert("This Requisition is already exist. To submit candidate click to next.");
-            // }
-            // else {
+          
                 this.post_requisition(add_cls);
-            // }
+         
         }
         // 👇️ clear all input values in the form
         e.target.reset();
     }
 
     post_requisition = (data) => {
-        let recId = this.state.empID = localStorage.getItem("recruiterId");
-        console.log("recruiterId : " + recId);
+        let recId = this.state.empID = localStorage.getItem("recruiterID");
+        console.log("recruiterID : " + recId);
         let d = this.state.requisitionId1;
         let d1 = data["req"];
         let d2 = data["id"];
@@ -230,10 +224,10 @@ class UpdateReq extends React.Component {
 
                 this.setState({ requisitionId1: a });
                 // console.log("rqid="+response.data.requisition.requisition_id);
-                history.push("/addCandidate");
+                history.push("/view_all_req");
                 window.location.reload();
 
-                toast.success("Requirement added successfully!",
+                toast.success("Requisition updated successfully!",
                     { position: "top-right" }
                 );
             },
@@ -269,17 +263,6 @@ class UpdateReq extends React.Component {
         let addNew2 = true;
 
         console.log("type of input " + typeof (input["req"]));
-
-        console.log("req " + input["req"]);
-        console.log("id " + input["id"]);
-        console.log("client " + input["client"]);
-        console.log("jobTitle " + input["jobTitle"]);
-        console.log("duration " + input["duration"]);
-        console.log("clientrate " + input["clientrate"]);
-        console.log("location " + input["location"]);
-        console.log("positionType " + input["positionType"]);
-        console.log("skills " + input["skills"]);
-
         console.log("type of reqNum " + typeof (reqNum));
 
         if ((!input["req"])) {
@@ -405,57 +388,6 @@ class UpdateReq extends React.Component {
     }
     // -------------------------------------------- End Validation Code ----------------------------------------------------------
 
-    // -------------------------------------------- If Requisition Exist --------------------------------------
-    // // keyUpHandlerID = (e) => {
-    // updateReq1 = (e) => {
-
-    //     this.setState({
-    //         requisitionId1: undefined
-    //     });
-    //     let reqID = e.target.value;
-    //     console.log(reqID);
-
-    //     // http://localhost:8085/getRequisitionByID?ID=3344
-    //     axios.get(`${base_url}/getRequisitionByID?ID=${reqID}`).then(
-
-    //         (response) => {
-    //             console.log(typeof (response));
-    //             console.log(response.data)
-    //             console.log(response.data[0].requisition_id);
-    //             console.log(response.data[0].id);
-
-    //             let inputs = this.state.input;
-
-    //             inputs["req"] = response.data[0].requisition_from;
-    //             inputs["id"] = response.data[0].id;
-    //             inputs["client"] = response.data[0].client;
-    //             inputs["jobTitle"] = response.data[0].job_title;
-    //             inputs["duration"] = response.data[0].duration;
-    //             inputs["clientrate"] = response.data[0].client_rate;
-    //             inputs["location"] = response.data[0].location;
-    //             inputs["positionType"] = response.data[0].position_type;
-    //             inputs["skills"] = response.data[0].skills;
-
-    //             this.setState({
-    //                 input: inputs,
-    //             });
-
-    //             let a3 = response.data[0].requisition_id;
-
-    //             this.setState({
-    //                 requisitionId1: a3
-    //             });
-    //             console.log(this.state.requisitionId1);
-
-    //         },
-    //         (error) => {
-    //             console.log(error);
-    //             console.log("Error");
-    //             alert("Please enter valid details.")
-    //         }
-    //     );
-
-    // }
     // -------------------------------------------- render ----------------------------------------------------
     render() {
         const isAuthenticated = localStorage.getItem('recruiterID');
@@ -491,8 +423,7 @@ class UpdateReq extends React.Component {
                                                 value={this.state.input.req}
                                                 >
 
-                                                <option value='' default selected> Select Requisitor </option>
-
+                                                {/* <option value='' default selected> Select Requisitor </option> */}
                                                 {
                                                     this.state.requisitor_fd.map((rq) => (
 
@@ -532,7 +463,7 @@ class UpdateReq extends React.Component {
                                                     onKeyUp={this.keyUpHandlerReq}
                                                     value={this.state.input.client}>
 
-                                                    <option value='' default selected> Select client name </option>
+                                                    {/* <option value='' default selected> Select client name </option> */}
                                                     {
                                                         this.state.client_fd.map((cl) => (
 
@@ -567,7 +498,7 @@ class UpdateReq extends React.Component {
                                                     onKeyUp={this.keyUpHandlerReq}
                                                     value={this.state.input.duration}>
 
-                                                    <option value="">Select Duration</option>
+                                                    {/* <option value="">Select Duration</option> */}
                                                     {
                                                         this.state.duration_fd.map((dr) => (
 
@@ -589,11 +520,9 @@ class UpdateReq extends React.Component {
                                                     type="text"
                                                     name="clientrate"
                                                     value={this.state.input.clientrate}
-
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerSub}
                                                     placeholder="Client Rate"
-
                                                     class="form-control" />
 
                                                 <div className="text-danger">{this.state.errors.clientrate}</div>
@@ -609,7 +538,6 @@ class UpdateReq extends React.Component {
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerClosure}
                                                     placeholder="Location"
-
                                                     class="form-control" />
 
                                                 <div className="text-danger">{this.state.errors.location}</div>
@@ -672,18 +600,7 @@ class UpdateReq extends React.Component {
                                                     Update
                                                 </button>
                                             </div>
-                                            {/* <div className='col-2'>
-                                                <button
-                                                    // type="reset"
-                                                    type='button'
-                                                    className="btn btn-success w-100 theme-btn mx-auto"
-                                                    onClick={this.addCandidate}
-                                                // onClick={this.addCandidate(this.state.empID, this.state.requisitionId1)}
-                                                >
-                                                    Next
-                                                </button>
-
-                                            </div> */}
+                                           
                                             <div className='col-2'>
                                                 <button
                                                     type="reset"

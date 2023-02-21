@@ -24,7 +24,7 @@ function ViewAllReq() {
     const [jobTitle, setJobTitle] = useState(null);
     const [duration, setDuration] = useState(null);
     const [clientRate, setClientRate] = useState(null);
-    const [ptype,setPType] = useState(null);
+    const [ptype, setPType] = useState(null);
     const [location, setLocation] = useState(null);
     const [skills, setSkills] = useState(null);
     const [status, setStatus] = useState(null);
@@ -40,9 +40,9 @@ function ViewAllReq() {
         axios.get(`${base_url}/getAllRequisition`).then(json => setClosureList(json.data))
         // axios.get(`${base_url}/getEmpList_TM`).then(json => setEmployee(json.data))
         axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
-        axios.get(`${base_url}/getAllStatusFd`).then(json =>setstatusFD(json.data))
-      
-       
+        axios.get(`${base_url}/getAllStatusFd`).then(json => setstatusFD(json.data))
+
+
     }, []);
 
     const deleteBook = (id) => { }
@@ -72,34 +72,34 @@ function ViewAllReq() {
         //     newClientRate, newLocation, newSkills
         // });
     }
-    const handleChange= (e)=> {
+    const handleChange = (e) => {
 
-       let a= e.rrid;
-       let b= e.sstt
-       setReqid(a)
-       setUpdateStatus(b)
-       console.log(a);
-       console.log(b);
-    //console.log(updatestatus);
-        
+        let a = e.rrid;
+        let b = e.sstt
+        setReqid(a)
+        setUpdateStatus(b)
+        console.log(a);
+        console.log(b);
+        //console.log(updatestatus);
+
     }
 
-    const handleSubmit=(e)=> {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
-          let a= reqid;
-          let b= updatestatus;
+        let a = reqid;
+        let b = updatestatus;
 
-            postdata(a,b);
-        
+        postdata(a, b);
+
         // 👇️ clear all input values in the form
-       // e.target.reset();
+        // e.target.reset();
     }
 
-   const postdata = (a,b) => {
+    const postdata = (a, b) => {
         let recruiter_id = 2;
-        let candidate_id= 0;
-      
+        let candidate_id = 0;
+
 
         axios.post(`${base_url}/update_status?recruiter_id=${recruiter_id}&requisition_id=${a}&candidate_id=${candidate_id}&status=${b}`).then(
 
@@ -115,35 +115,35 @@ function ViewAllReq() {
             }
         );
 
-       
+
     }
 
     // ----------------------------------------------------------------------------------------------------------
-    const onEdit = ({ crrReqid, crrReqFrom, crrId, crrClient, crrJobTitle, crrDuration,
-        crrClientRate, crrLocation, crrPType, crrSkills}) => {
+    const onEdit = ({ requisitionID }) => {
+        // ({ crrReqid, crrReqFrom, crrId, crrClient, crrJobTitle, crrDuration,
+        // crrClientRate, crrLocation, crrPType, crrSkills}) => {
 
 
-            console.log(crrReqid);
-            localStorage.setItem('recruiterID', recruiterID);
-            localStorage.setItem('requisitionID', crrReqid);
+        console.log(requisitionID);
+        localStorage.setItem('recruiterID', recruiterID);
+        localStorage.setItem('requisitionID', requisitionID);
 
-            navigate("/updateRequisition");
-            // window.location.reload();
-           
+        navigate("/updateRequisition");
+
         setInEditMode({
             status: true,
-            rowKey: crrReqid,
+            rowKey: requisitionID,
         })
-        setReqFrom(crrReqFrom);
-        setId(crrId);
-        setClient(crrClient);
-        setJobTitle(crrJobTitle);
-        setDuration(crrDuration);
-        setClientRate(crrClientRate);
-        setLocation(crrLocation);
-        setPType(crrPType);
-        setSkills(crrSkills);
-        
+        // setReqFrom(crrReqFrom);
+        // setId(crrId);
+        // setClient(crrClient);
+        // setJobTitle(crrJobTitle);
+        // setDuration(crrDuration);
+        // setClientRate(crrClientRate);
+        // setLocation(crrLocation);
+        // setPType(crrPType);
+        // setSkills(crrSkills);
+
     }
 
     const onCancel = () => {
@@ -157,46 +157,46 @@ function ViewAllReq() {
         axios.get(`${base_url}/CurMonthAll`).then(json => setClosureList(json.data))
 
     }
-    const getnewID = (e)=>{
-        let rq= e.rq
-        localStorage.setItem("requisitionid",rq)
+    const getnewID = (e) => {
+        let rq = e.rq
+        localStorage.setItem("requisitionID", rq)
         //console.log(rq)
     }
 
     const renderTable = () => {
         return closureList.map(cls => {
-           
+
             return (
-                
+
                 <tr key={cls.requisition_id}>
                     <td></td>
                     <td hidden>{cls.requisition_id}</td>
                     <td style={{ width: '50px' }}>
                         {
                             inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
-                                <input required 
-                                    type='text'    
-                                value={reqFrom}
+                                <input required
+                                    type='text'
+                                    value={reqFrom}
                                     onChange={(event) => setReqFrom(event.target.value)}
                                     style={{ width: "100px" }}
                                     minLength={2}
                                     maxLength={50}
                                 />
                             ) : (
-                            
-                                <a href="/view_candidate1" onClick={(evt)=>getnewID({rq: cls.requisition_id})}>{cls.requisition_from}</a>
+
+                                <a href="/view3" onClick={(evt) => getnewID({ rq: cls.requisition_id })}>{cls.requisition_from}</a>
                             )
-                            
+
                         }
-                       
-                         
+
+
                     </td>
                     <td>
                         {
                             inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
-                                <input required 
-                                type='number'
-                                value={id}
+                                <input required
+                                    type='number'
+                                    value={id}
                                     onChange={(event) => setId(event.target.value)}
                                     style={{ width: "100px" }}
                                     minLength={2}
@@ -211,9 +211,9 @@ function ViewAllReq() {
                     <td>
                         {
                             inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
-                                <input required 
-                                type='text'
-                                value={client}
+                                <input required
+                                    type='text'
+                                    value={client}
                                     onChange={(event) => setClient(event.target.value)}
                                     style={{ width: "100px" }}
                                     minLength={2}
@@ -227,9 +227,9 @@ function ViewAllReq() {
                     <td>
                         {
                             inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
-                                <input required 
-                                type='text'
-                                value={jobTitle}
+                                <input required
+                                    type='text'
+                                    value={jobTitle}
                                     onChange={(event) => setJobTitle(event.target.value)}
                                     style={{ width: "100px" }}
                                     minLength={2}
@@ -240,12 +240,12 @@ function ViewAllReq() {
                             )
                         }
                     </td>
-                   <td>
+                    <td>
                         {
                             inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
-                                <input required 
+                                <input required
                                     type='text'
-                                value={duration}
+                                    value={duration}
                                     onChange={(event) => setDuration(event.target.value)}
                                     style={{ width: "100px" }}
                                     minLength={2}
@@ -315,7 +315,7 @@ function ViewAllReq() {
                         }
                     </td>
                     {/* <td>{cls.skills}</td> */}
-                   
+
                     <td>
                         {
                             inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
@@ -330,7 +330,7 @@ function ViewAllReq() {
                                                     newReqid: cls.requisition_id, newReqFrom: reqFrom, newId: id,
                                                     newClient: client, newJobTitle: jobTitle, newDuration: duration,
                                                     newClientRate: clientRate, newLocation: location, newPType: ptype, newSkills: skills,
-                                                 
+
                                                 })
                                         }
                                         }
@@ -354,12 +354,14 @@ function ViewAllReq() {
                                         className="btn btn-outline-success"
 
                                         onClick={() => onEdit({
-                                           
-                                            crrReqid: cls.requisition_id, crrReqFrom: cls.requisition_from, crrId: cls.id,
-                                            crrClient: cls.client, crrJobTitle: cls.job_title, crrDuration: cls.duration,
-                                            crrClientRate: cls.client_rate, crrLocation: cls.location, crrPType: cls.position_type,
-                                            crrSkills: cls.skills,
-                                           
+
+                                            requisitionID: cls.requisition_id,
+
+                                            // crrReqid: cls.requisition_id, crrReqFrom: cls.requisition_from, crrId: cls.id,
+                                            // crrClient: cls.client, crrJobTitle: cls.job_title, crrDuration: cls.duration,
+                                            // crrClientRate: cls.client_rate, crrLocation: cls.location, crrPType: cls.position_type,
+                                            // crrSkills: cls.skills,
+
                                         })}
                                     >
                                         <i class="fa fa-edit"></i>
@@ -381,7 +383,7 @@ function ViewAllReq() {
         })
     }
 
-   
+
 
     return (
         // return (
@@ -394,7 +396,7 @@ function ViewAllReq() {
             <div className="master_backgroung_work scroll-bar-horizontal">
 
                 <div style={{ backgroundColor: '', width: '2100px' }}  >
-                    <Table bordered class="table table-sm" style={{fontFamily:'arial'}}>
+                    <Table bordered class="table table-sm" style={{ fontFamily: 'arial' }}>
                         <thead>
                             <tr>
                                 <th style={{ width: '10px' }}>Sr No.</th>
@@ -407,16 +409,16 @@ function ViewAllReq() {
                                 <th style={{ width: '130px' }}>Location</th>
                                 <th style={{ width: '130px' }}>Position Type</th>
                                 <th style={{ width: '200px' }}>Skills</th>
-                                
+
                                 <th style={{ width: '95px' }}>Action</th>
-                               
+
                             </tr>
                         </thead>
                         <tbody>
-                     
-                        {renderTable()}
-                       
-                           
+
+                            {renderTable()}
+
+
                         </tbody>
                     </Table>
 
