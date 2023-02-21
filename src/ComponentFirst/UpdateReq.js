@@ -230,10 +230,10 @@ class UpdateReq extends React.Component {
 
                 this.setState({ requisitionId1: a });
                 // console.log("rqid="+response.data.requisition.requisition_id);
-                history.push("/addCandidate");
+                history.push("/view_all_req");
                 window.location.reload();
 
-                toast.success("Requirement added successfully!",
+                toast.success("Requirement updated successfully!",
                     { position: "top-right" }
                 );
             },
@@ -532,7 +532,7 @@ class UpdateReq extends React.Component {
                                                     onKeyUp={this.keyUpHandlerReq}
                                                     value={this.state.input.client}>
 
-                                                    <option value='' default selected> Select client name </option>
+                                                    {/* <option value={this.state.input.client}  selected> Select client name </option> */}
                                                     {
                                                         this.state.client_fd.map((cl) => (
 
@@ -567,7 +567,7 @@ class UpdateReq extends React.Component {
                                                     onKeyUp={this.keyUpHandlerReq}
                                                     value={this.state.input.duration}>
 
-                                                    <option value="">Select Duration</option>
+                                                    {/* <option value="">Select Duration</option> */}
                                                     {
                                                         this.state.duration_fd.map((dr) => (
 
@@ -623,7 +623,7 @@ class UpdateReq extends React.Component {
                                                     onKeyUp={this.keyUpHandlerReq}
                                                     value={this.state.input.positionType}>
 
-                                                    <option value='' default selected> Select position type </option>
+                                                    {/* <option value='' default selected> Select position type </option> */}
                                                     {
                                                         this.state.positionType_fd.map((pt) => (
 

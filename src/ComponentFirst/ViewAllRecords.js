@@ -157,7 +157,7 @@ function ViewAllRecords() {
                             ) : (
                                 //  cls.requisition_from
                                 // <a href="view_all2/${abc}" >{cls.requisition_from}</a>
-                            
+                         
                                 <a href="view3" onClick={(evt)=>getnewID({rq: cls.requisition_id})}>{cls.requisition_from}</a>
                             )
                             

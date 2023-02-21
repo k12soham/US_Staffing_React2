@@ -18,7 +18,7 @@ import EmployeeHeader from './ComponentFirst/EmployeeHeader';
 import AdminStatic from './ComponentFirst/AdminStatic';
 import Demo from './ComponentFirst/demo';
 import ViewAllRecords from './ComponentFirst/ViewAllRecords';
-import UpdateProfile from './ComponentFirst/UpdateProfile';
+// import UpdateProfile from './ComponentFirst/UpdateProfile';
 import ViewAllRecords2 from './ComponentFirst/viewAllRecords2';
 import View3 from './ComponentFirst/View3';
 

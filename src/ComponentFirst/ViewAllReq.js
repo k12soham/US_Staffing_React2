@@ -35,7 +35,7 @@ function ViewAllReq() {
     });
     let navigate = useNavigate();
 
-
+    let empID= localStorage.getItem("recruiterID")
     useEffect(() => {
         axios.get(`${base_url}/getAllRequisition`).then(json => setClosureList(json.data))
         // axios.get(`${base_url}/getEmpList_TM`).then(json => setEmployee(json.data))
@@ -159,21 +159,22 @@ function ViewAllReq() {
     }
     const getnewID = (e)=>{
         let rq= e.rq
-        localStorage.setItem("requisitionid",rq)
+        localStorage.setItem("requisitionID",rq)
         //console.log(rq)
     }
 
     const renderTable = () => {
-        return closureList.map(cls => {
-           
+        return statusList.map(cls => {
+             if(cls.requisitionflag==1 && cls.recruiter.recruiter_id==empID
+               )
             return (
                 
-                <tr key={cls.requisition_id}>
+                <tr key={cls.requisition.requisition_id}>
                     <td></td>
-                    <td hidden>{cls.requisition_id}</td>
+                    <td hidden>{cls.requisition.requisition_id}</td>
                     <td style={{ width: '50px' }}>
                         {
-                            inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
+                            inEditMode.status && inEditMode.rowKey === cls.requisition.requisition_id ? (
                                 <input required 
                                     type='text'    
                                 value={reqFrom}
@@ -184,7 +185,7 @@ function ViewAllReq() {
                                 />
                             ) : (
                             
-                                <a href="/view_candidate1" onClick={(evt)=>getnewID({rq: cls.requisition_id})}>{cls.requisition_from}</a>
+                                <a href="/view3" onClick={(evt)=>getnewID({rq: cls.requisition.requisition_id})}>{cls.requisition.requisition_from}</a>
                             )
                             
                         }
@@ -193,7 +194,7 @@ function ViewAllReq() {
                     </td>
                     <td>
                         {
-                            inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
+                            inEditMode.status && inEditMode.rowKey === cls.requisition.requisition_id ? (
                                 <input required 
                                 type='number'
                                 value={id}
@@ -203,14 +204,14 @@ function ViewAllReq() {
                                     maxLength={10}
                                 />
                             ) : (
-                                cls.id
+                                cls.requisition.id
                             )
                         }
 
                     </td>
                     <td>
                         {
-                            inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
+                            inEditMode.status && inEditMode.rowKey === cls.requisition.requisition_id ? (
                                 <input required 
                                 type='text'
                                 value={client}
@@ -220,13 +221,13 @@ function ViewAllReq() {
                                     maxLength={50}
                                 />
                             ) : (
-                                cls.client
+                                cls.requisition.client
                             )
                         }
                     </td>
                     <td>
                         {
-                            inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
+                            inEditMode.status && inEditMode.rowKey === cls.requisition.requisition_id ? (
                                 <input required 
                                 type='text'
                                 value={jobTitle}
@@ -236,13 +237,13 @@ function ViewAllReq() {
                                     maxLength={50}
                                 />
                             ) : (
-                                cls.job_title
+                                cls.requisition.job_title
                             )
                         }
                     </td>
                    <td>
                         {
-                            inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
+                            inEditMode.status && inEditMode.rowKey === cls.requisition.requisition_id ? (
                                 <input required 
                                     type='text'
                                 value={duration}
@@ -252,13 +253,13 @@ function ViewAllReq() {
                                     maxLength={20}
                                 />
                             ) : (
-                                cls.duration
+                                cls.requisition.duration
                             )
                         }
                     </td>
                     <td>
                         {
-                            inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
+                            inEditMode.status && inEditMode.rowKey === cls.requisition.requisition_id ? (
                                 <input required value={clientRate}
                                     onChange={(event) => setDuration(event.target.value)}
                                     style={{ width: "100px" }}
@@ -266,14 +267,14 @@ function ViewAllReq() {
                                     maxLength={3}
                                 />
                             ) : (
-                                cls.client_rate
+                                cls.requisition.client_rate
                             )
                         }
                     </td>
                     {/* <td>{cls.client_rate}</td> */}
                     <td>
                         {
-                            inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
+                            inEditMode.status && inEditMode.rowKey === cls.requisition.requisition_id ? (
                                 <input required value={location}
                                     onChange={(event) => setDuration(event.target.value)}
                                     style={{ width: "100px" }}
@@ -281,14 +282,14 @@ function ViewAllReq() {
                                     maxLength={3}
                                 />
                             ) : (
-                                cls.location
+                                cls.requisition.location
                             )
                         }
                     </td>
                     {/* <td>{cls.location}</td> */}
                     <td>
                         {
-                            inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
+                            inEditMode.status && inEditMode.rowKey === cls.requisition.requisition_id ? (
                                 <input required value={ptype}
                                     onChange={(event) => setDuration(event.target.value)}
                                     style={{ width: "100px" }}
@@ -296,13 +297,13 @@ function ViewAllReq() {
                                     maxLength={3}
                                 />
                             ) : (
-                                cls.position_type
+                                cls.requisition.position_type
                             )
                         }
                     </td>
                     <td>
                         {
-                            inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
+                            inEditMode.status && inEditMode.rowKey === cls.requisition.requisition_id ? (
                                 <input required value={skills}
                                     onChange={(event) => setDuration(event.target.value)}
                                     style={{ width: "100px" }}
@@ -310,7 +311,7 @@ function ViewAllReq() {
                                     maxLength={3}
                                 />
                             ) : (
-                                cls.skills
+                                cls.requisition.skills
                             )
                         }
                     </td>
@@ -318,7 +319,7 @@ function ViewAllReq() {
                    
                     <td>
                         {
-                            inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
+                            inEditMode.status && inEditMode.rowKey === cls.requisition.requisition_id ? (
                                 <>
                                     <button
 
@@ -355,10 +356,10 @@ function ViewAllReq() {
 
                                         onClick={() => onEdit({
                                            
-                                            crrReqid: cls.requisition_id, crrReqFrom: cls.requisition_from, crrId: cls.id,
-                                            crrClient: cls.client, crrJobTitle: cls.job_title, crrDuration: cls.duration,
+                                            crrReqid: cls.requisition.requisition_id, crrReqFrom: cls.requisition.requisition_from, crrId: cls.requisition.id,
+                                            crrClient: cls.requisition.client, crrJobTitle: cls.requisition.job_title, crrDuration: cls.requisition.duration,
                                             crrClientRate: cls.client_rate, crrLocation: cls.location, crrPType: cls.position_type,
-                                            crrSkills: cls.skills,
+                                            crrSkills: cls.requisition.skills,
                                            
                                         })}
                                     >
@@ -367,7 +368,7 @@ function ViewAllReq() {
                                     </button>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <button className="btn btn-outline-danger"
-                                        onClick={() => { if (window.confirm('Are you sure to delete this requirement?')) deleteBook(cls.closureid) }}>
+                                        onClick={() => { if (window.confirm('Are you sure to delete this requirement?')) deleteBook(cls.requisition.requisition_id) }}>
                                         {/*Delete*/}<i class="fa fa-trash"></i></button>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                 </>
@@ -393,20 +394,20 @@ function ViewAllReq() {
 
             <div className="master_backgroung_work scroll-bar-horizontal">
 
-                <div style={{ backgroundColor: '', width: '2100px' }}  >
+                <div style={{ backgroundColor: '', width: '1500px' }}  >
                     <Table bordered>
                         <thead>
                             <tr>
                                 <th style={{ width: '10px' }}>Sr No.</th>
-                                <th style={{ width: '150px' }}>Requisition From</th>
-                                <th style={{ width: '90px' }}>ID</th>
-                                <th style={{ width: '150px' }}>Client</th>
-                                <th style={{ width: '160px' }}>Job Title</th>
-                                <th style={{ width: '70px' }}>Duration</th>
-                                <th style={{ width: '100px' }}>Client Rate</th>
-                                <th style={{ width: '130px' }}>Location</th>
-                                <th style={{ width: '130px' }}>Position Type</th>
-                                <th style={{ width: '200px' }}>Skills</th>
+                                <th style={{ width: '100px' }}>Requisition From</th>
+                                <th style={{ width: '40px' }}>ID</th>
+                                <th style={{ width: '80px' }}>Client</th>
+                                <th style={{ width: '100px' }}>Job Title</th>
+                                <th style={{ width: '40px' }}>Duration</th>
+                                <th style={{ width: '10px' }}>Client Rate</th>
+                                <th style={{ width: '50px' }}>Location</th>
+                                <th style={{ width: '50px' }}>Position Type</th>
+                                <th style={{ width: '100px' }}>Skills</th>
                                 
                                 <th style={{ width: '95px' }}>Action</th>
                                

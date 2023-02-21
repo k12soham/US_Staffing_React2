@@ -164,7 +164,7 @@ class AddRequisition extends React.Component {
     }
 
     post_requisition = (data) => {
-        let recId = this.state.empID = localStorage.getItem("recruiterId");
+        let recId = this.state.empID = localStorage.getItem("recruiterID");
         console.log("recruiterId : " + recId);
         let d1 = data["req"];
         let d2 = data["id"];

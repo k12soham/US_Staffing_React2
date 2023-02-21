@@ -195,9 +195,12 @@ let empID= localStorage.getItem("recruiterID")
     const renderTable = () => {
 
        return  statusList.map(st => {
-                
+       // console.log(st.requisition.requisition_id)
+      //  console.log(sessionreq)
             if(st.requisition.requisition_id==sessionreq
               && st.recruiter.recruiter_id==empID && st.flag==1)
+             // console.log(st.requisition.requisition_id)
+             // console.log(sessionreq)
            // ||(st.requisition.requisition_id==can.requisition.requisition_id && st.flag==1 && can.candidate_id==''))
             
                 return(
@@ -209,7 +212,7 @@ let empID= localStorage.getItem("recruiterID")
     {
        
     <select class="btn btn-secondary dropdown-toggle"
-                                style={{ width: '100%' }}
+                                style={{ width: '155px' }}
                                 name="status" id="status"
                              
                             onChange={(evt)=>handleChange({rrid:sessionreq, sstt:evt.target.value
@@ -217,11 +220,8 @@ let empID= localStorage.getItem("recruiterID")
                             {/* ,setCandi(st.candidate.candidate_id))}> */}
                          
 
-
-                      
-   
                        
-                                <option value='' default selected> Select Status</option>
+                                <option hidden  default selected> Select Status</option>
                              
                                 {
                          statusFD.map((stfd) => (
@@ -235,15 +235,16 @@ let empID= localStorage.getItem("recruiterID")
                           
                         
     }
+    &nbsp;&nbsp;&nbsp;
       {/* <button onClick={handleSubmit}>Change Status</button>  */}
 
  {
      st.candidate==null?
     (
-        <button onClick={handleSubmit}>Change Status</button> 
+        <button onClick={handleSubmit}  class="btn btn-primary fa fa-save"></button> 
     ):
     (
-        <button class="btn btn-sm btn-primary" onClick={()=>handleSubmit2({canid:st.candidate.candidate_id})}>Change Status</button> 
+        <button class="btn btn-primary fa fa-save" onClick={()=>handleSubmit2({canid:st.candidate.candidate_id})}></button> 
         
     )
     } 
@@ -403,7 +404,7 @@ let empID= localStorage.getItem("recruiterID")
                                 <th style={{ width: '10px' }}>Sr No.</th>
                                 <th style={{ width: '80px' }}>Current Status </th>
                                 <th style={{ width: '100px' }}>Date </th>
-                                <th style={{ width: '150px' }}>Status </th>
+                                <th style={{ width: '160px' }}>Status </th>
                                 <th style={{ width: '100px' }}>Candidate Name</th>
                                 <th style={{ width: '90px' }}>Visa Type</th>
                                 <th style={{ width: '60px' }}>Rate term</th>
