@@ -101,13 +101,11 @@ const Login1 = () => {
 
                 else if (response.data.role == "TM") {
                     localStorage.setItem('recruiterName', response.data.recruiter_name);
-                    localStorage.setItem('recruiterID', response.data.recruiter_id);
+                    // localStorage.setItem('recruiterID', response.data.recruiter_id);
                     localStorage.setItem('recruiterID', response.data.recruiter_id);
                     localStorage.setItem('recruiterEmail', response.data.recruiter_email);
              
                     navigate("/addRequisition");
-                    alert("hello!!!!!!!!!!");
-                    // navigate("/GetSet");
                     toast.success("Login successfully!",
                         { position: "top-right" , autoClose: 2000,
                         style: { position: "absolute", top: "5px", width: "300px" }

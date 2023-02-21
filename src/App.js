@@ -17,15 +17,13 @@ import NavBarHeader from './ComponentFirst/NavbarHeader';
 import EmployeeHeader from './ComponentFirst/EmployeeHeader';
 import AdminStatic from './ComponentFirst/AdminStatic';
 import Demo from './ComponentFirst/demo';
-import ViewAllRecords from './ComponentFirst/ViewAllRecords';
-import UpdateProfile from './ComponentFirst/UpdateProfile';
-import ViewAllRecords2 from './ComponentFirst/viewAllRecords2';
 import View3 from './ComponentFirst/View3';
 
 import UpdateProfile from './ComponentFirst/ViewAllReq';
 import UpdateReq from './ComponentFirst/UpdateReq';
 import ViewCadByReq from './ComponentFirst/ViewCadByReq';
 import ViewAllReq from './ComponentFirst/ViewAllReq';
+import UpdateCandidate from './ComponentFirst/UpdateCandidate';
 
 function App() {
   return (
@@ -44,14 +42,16 @@ function App() {
         <Route path="/adminstatic" element={<AdminStatic />}></Route>
         <Route path="/demo" element={<Demo />}></Route>
         {/* <Route path="/nav_header" element={<EmployeeHeader />}></Route> */}
-        <Route path="/view_all" element={<ViewAllRecords />}></Route>
-        <Route path="/view_all2" element={<ViewAllRecords2 />}></Route>
+        {/* <Route path="/view_all" element={<ViewAllRecords />}></Route>
+        <Route path="/view_all2" element={<ViewAllRecords2 />}></Route> */}
         <Route path="/updateProfile" element={<UpdateProfile />}></Route>
         <Route path="/view3" element={<View3 />}></Route>
         <Route path="/view_all_req" element={<ViewAllReq />}></Route>
         <Route path="/view_candidate1" element={<ViewCadByReq />}></Route>
 
         <Route path="/updateRequisition" element={<UpdateReq />}></Route>
+        <Route path="/updateCandidate" element={<UpdateCandidate />}></Route>
+        
         {/* <Route path="/navdemo1" element={<mobileScreen />}></Route> */}
         </Routes>
       </Router>
