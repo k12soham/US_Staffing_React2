@@ -105,7 +105,7 @@ class AddCandidate extends React.Component {
         let requisitionID = localStorage.getItem('requisitionID');
         console.log("RecId_New : "+recruiterID+ " requisitionID "+requisitionID);
        
-        let status = 'assigned';
+       
         let d1 = data["cad_name"];
         let d2 = data["visa_type"];
         let d3 = data["rate_term"];
@@ -116,7 +116,7 @@ class AddCandidate extends React.Component {
         let d8 = data["reason"];
 
         axios.post(`${base_url}/add_candidate?candidate_name=${d1}&visa_type=${d2}&rate_term=${d3}
-        &submitted_rate=${d4}&phone=${d5}&email=${d6}&status=${status}&remark=${d7}
+        &submitted_rate=${d4}&phone=${d5}&email=${d6}&remark=${d7}
         &reason=${d8}&recruiter_id=${recruiterID}&requisition_id=${requisitionID}`).then(
 
             (response) => {

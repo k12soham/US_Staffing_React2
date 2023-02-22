@@ -33,6 +33,7 @@ function App() {
 		
         <Routes>
         <Route path="/" element={<Login1 />}></Route>
+        <Route path="/signup" element={<SignUp />}></Route>
         <Route path="/req_view2" element={<ReqView />}></Route>
         {/* <Route path="/navbar" element={<NavBar />}></Route> */}
         <Route path="/sign-up" element={<SignUp />}></Route>
