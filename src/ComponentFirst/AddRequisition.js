@@ -154,13 +154,14 @@ class AddRequisition extends React.Component {
 
         console.log(add_cls);
         console.log(this.state.requisitionId1);
-
+        console.log(this.state.requisitionId1);
         if (this.validate()) {
 
             let add_cls = this.state.input;
             add_cls[e.target.name] = e.target.value;
             if ((this.state.requisitionId1) != undefined) {
                 alert("This Requisition is already exist. To submit candidate click to next.");
+                this.post_requisition(add_cls);
             }
             else {
                 this.post_requisition(add_cls);

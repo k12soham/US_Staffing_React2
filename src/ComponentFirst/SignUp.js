@@ -64,10 +64,10 @@ class SignUp extends React.Component {
     let d2 = data["email"];
     let d3 = data["password"];
 
-    axios.post(`${base_url}/addEmp/?empName=${d1}&Username=${d2}&Password=${d3}`).then(
+    axios.post(`${base_url}/addRecruiter?recruiter_name=${d1}&recruiter_email=${d2}&password=${d3}`).then(
       // addEmp?empName=Admin&Username=admin@gmail.com&Password=Admin@1234
       (response) => {
-        toast.success("Employee registered successfully!",
+        toast.success("Recruiter registered successfully!",
           { position: "top-right" }
         );
 
@@ -163,7 +163,7 @@ class SignUp extends React.Component {
   render() {
     return (
       <div className="row g-0 auth-wrapper">
-        <div className="col-12 col-md-5 col-lg-6 h-100 master_backgroung_side">
+        <div className="col-12 col-md-5 col-lg-6 h-100 master_backgroung_login">
           <img src="usa.png" width="670" height="657" alt="US staffing app"></img>
         </div>
 
@@ -280,7 +280,7 @@ class SignUp extends React.Component {
               <hr />
               <div className="auth-option text-center pt-2">
                 Already have an account?{" "}
-                <Link className="text-link" to="/login">
+                <Link className="text-link" to="/">
                   Sign In
                 </Link>
               </div>
