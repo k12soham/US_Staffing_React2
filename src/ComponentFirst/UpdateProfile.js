@@ -32,12 +32,14 @@ class UpdateProfile extends React.Component {
 
     handleFetchedData() {
 
-        let empID = localStorage.getItem('empID');
+        let recruiterID = localStorage.getItem('recruiterID');
+        
 
-        axios.get(`${base_url}/get_EmpById?empid=${empID}`).then((json) => {
-            console.log(json.data[0].username)
+        axios.get(`${base_url}/getRecruiterbyID?recruiterID=${recruiterID}`).then((json) => {
+            console.log(json.data)
+            console.log(json.data.recruiter_name)
             this.setState({
-                input: json.data[0],
+                input: json.data
             });
             console.log("input: " + JSON.stringify(json.data[0]));
 
@@ -90,7 +92,7 @@ class UpdateProfile extends React.Component {
                 let emp_reg = this.state.input;
                 emp_reg[e.target.name] = e.target.value;
 
-                this.state.input["emp_name"] = this.state.input["emp_name"].trim(" ");
+                this.state.input["recruiter_name"] = this.state.input["recruiter_name"].trim(" ");
 
                 // console.log("Current pass: " + this.state.currentPassword + " newPass : " + this.state.newPassword + "  confirmPass: " + this.state.confirmPassword);
                 // console.log("Submiting data are : " + JSON.stringify(this.state.input));
@@ -107,78 +109,72 @@ class UpdateProfile extends React.Component {
 
     postdata = (data) => {
 
-        let empid = data["empid"];
-        let emp_name = data["emp_name"].trim(" ");
-        let username = data["username"];
+        let recruiter_id = data["recruiter_id"];
+        let recruiter_name = data["recruiter_name"].trim(" ");
+        let recruiter_email = data["recruiter_email"];
         let currentPass = data["currentPass"];
         let newPass = data["newPass"];
         let confirmPass = data["confirmPass"];
 
-        axios.post(`${base_url}/updateProfile/?empID=${empid}&currentPass=${currentPass}&empName=${emp_name}&email=${username}&newPass=${confirmPass}`).then(
-            // updateProfile?empID=37&currentPass=North@1234&empName=East&email=east@gmail.com&newPass=East@1234
+
+        console.log(recruiter_id,recruiter_name,recruiter_email,currentPass,confirmPass)
+
+        axios.put(`${base_url}/UpdateRecruiterProfileAdmin/?recruiterId=${recruiter_id}&recruiterName=${recruiter_name}&recruiterEmail=${recruiter_email}&currentPass=${currentPass}&newPass=${confirmPass}`).then(
+           
+        
+  
+          
             (response) => {
                 toast.success("Profile updated successfully!",
                     { position: "top-right" }
                 );
 
-                console.log(JSON.stringify(response.data));
-                console.log(response.data.role);
-                if ((response.data.role) == "TM") {
-                    history.push("/add_closure1");
-                    window.location.reload();
-                }else{
-                    history.push("/admin_dashboard1");
-                    window.location.reload();
-                }
-                // history.push("/add_closure1");
-                // window.location.reload();
-                localStorage.setItem('empName', emp_name);
-                localStorage.setItem('empMail', username);
-                localStorage.setItem('empID', empid);
-                // let empName = localStorage.getItem('empName');
+                history.push("/addRequisition");
+                window.location.reload();
+
+          
             },
             (error) => {
-                alert("Please enter correct current password!");
+                alert("Please enter correct details!");
                 window.location.reload();
             }
         )
     }
     // ------------------------------------- VALIADATION CODE---------------------------------------------------------------
     validate() {
-        console.log("Current pass: " + this.state.currentPassword + " newPass : " + this.state.newPassword + "  confirmPass: " + this.state.confirmPassword);
+      
 
         let input = this.state.input;
         let errors = {};
         let isValid = true;
 
-        console.log("Email : " + input["username"]);
-        console.log("Current Pass : " + this.state.currentPassword);
+       
         // --------------------------------------- emp_name validation-------------------------------------------------------
-        if ((!input["emp_name"])) {
+        if ((!input["recruiter_name"])) {
             isValid = false;
-            errors["emp_name"] = "Please enter name.";
+            errors["recruiter_name"] = "Please enter name.";
         }
 
-        if (typeof input["emp_name"] !== undefined) {
+        if (typeof input["recruiter_name"] !== undefined) {
 
             var pattern = new RegExp(/^[^\s][a-zA-Z\s]+[^\s]$/);
-            if (!pattern.test(input["name"])) {
+            if (!pattern.test(input["recruiter_name"])) {
                 isValid = false;
-                errors["emp_name"] = "Please enter only characters.";
+                errors["recruiter_name"] = "Please enter only characters.";
             }
         }
         // -----------------------------------------Username/ email validation------------------------------------------------------------------
-        if (!input["username"]) {
+        if (!input["recruiter_email"]) {
             isValid = false;
-            errors["username"] = "Please enter email address.";
+            errors["recruiter_email"] = "Please enter email address.";
         }
 
-        if (typeof input["username"] !== undefined) {
+        if (typeof input["recruiter_email"] !== undefined) {
 
             var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
-            if (!pattern.test(input["username"])) {
+            if (!pattern.test(input["recruiter_email"])) {
                 isValid = false;
-                errors["username"] = "Please enter valid email address (e.g.: abc@gmail.com).";
+                errors["recruiter_email"] = "Please enter valid email address (e.g.: abc@gmail.com).";
             }
         }
 
@@ -290,7 +286,7 @@ class UpdateProfile extends React.Component {
 
         return (
             <div className="row g-0 auth-wrapper">
-                <div className="col-12 col-md-5 col-lg-6 h-100 master_backgroung_side">
+                <div className="col-12 col-md-5 col-lg-6 h-100 master_backgroung_login">
                     <img src="usa.png" width="670" height="657" alt="US staffing app"></img>
                 </div>
 
@@ -311,25 +307,25 @@ class UpdateProfile extends React.Component {
                                     <label for="name"><b>Enter Name:</b></label>
                                     <input
                                         type="text"
-                                        name="emp_name"
+                                        name="recruiter_name"
                                         // value={Object.values(empData)[3]}
-                                        value={this.state.input.emp_name}
+                                        value={this.state.input.recruiter_name}
                                         onChange={this.handleChange}
                                         style={{ width: '360px', height: '37px' }}
                                         placeholder="Name"
                                         minLength={3}
                                         maxLength={50}
-                                        id="emp_name" />
+                                        id="recruiter_name" />
 
-                                    <div className="text-danger">{this.state.errors.emp_name}</div>
+                                    <div className="text-danger">{this.state.errors.recruiter_name}</div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="email"><b>Enter Email:</b></label>
                                     <input
                                         // name="email"
-                                        name='username'
-                                        value={this.state.input.username}
+                                        name='recruiter_email'
+                                        value={this.state.input.recruiter_email}
                                         onChange={this.handleChange}
                                         placeholder="Email"
                                         minLength={11}
@@ -337,7 +333,7 @@ class UpdateProfile extends React.Component {
                                         style={{ width: '360px', height: '37px' }}
                                     />
 
-                                    <div className="text-danger">{this.state.errors.username}</div>
+                                    <div className="text-danger">{this.state.errors.recruiter_email}</div>
                                 </div>
 
                                 <hr></hr>

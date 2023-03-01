@@ -218,9 +218,9 @@ const Login1 = () => {
                                                 : ""}
                                         </div>
                                     </div>
-                                    <Link className="text-link" to="/forgetpass2" params={{ testvalue: "hello" }} >
+                                    {/* <Link className="text-link" to="/forgetpass2" params={{ testvalue: "hello" }} >
                                     Forget Password{" "}
-                                </Link>
+                                </Link> */}
                                 </div>
                                 <div className="text-center">
                                     <button
