@@ -1,7 +1,7 @@
 import React from "react"
 import { ReactDOM } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ModalWithCSS from "../ViewComponent1/ModalWithCSS";
+import ModalWithCSS from "./ModalWithCSS";
 
 function NavBarHeader() {
 

@@ -4,25 +4,16 @@ import base_url from '../api/bootapi';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import history from './ResponseVal';
+
+import { useRef } from 'react';
+import { getValue } from '@testing-library/user-event/dist/utils';
+import NavBarHeader from './NavbarHeader';
 import EmployeeHeader from './EmployeeHeader';
 
 class AddCandidate extends React.Component {
 
     componentDidMount() {
-
-        let recruiterID1 = localStorage.getItem('recruiterID');
-        let requisitionID1 = localStorage.getItem('requisitionID');
-        let RID1 = localStorage.getItem('RID');
-
-        console.log("RecId_New : "+recruiterID1+ " requisitionID "+requisitionID1+" RID : "+RID1);
-
-        this.setState({ 
-            requisitionID: requisitionID1,
-            recruiterID : recruiterID1,
-            RID : RID1
-        });
-
-        this.refInput.focus();
+   //     this.refInput.focus();
         axios.get(`${base_url}/getAllRateTerm`)
         .then(json => 
             this.setState({rateTerm_fd:json.data })
@@ -53,12 +44,14 @@ class AddCandidate extends React.Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    
     }
 
     resetForm = () => {
         // alert("Clear");
         // this.setState(this.baseState)
         let inputs = {};
+        inputs["reqid"] = undefined;
         inputs["cad_name"] = undefined;
         inputs["visa_type"] = undefined;
         inputs["rate_term"] = undefined;
@@ -71,6 +64,7 @@ class AddCandidate extends React.Component {
         this.setState({ input: inputs });
 
         let errors1 = {};
+        inputs["reqid"] = "";
         errors1["cad_name"] = "";
         errors1["visa_type"] = "";
         errors1["rate_term"] = "";
@@ -84,6 +78,7 @@ class AddCandidate extends React.Component {
     }
 
     handleChange(e) {
+
         let add_cls = this.state.input;
         add_cls[e.target.name] = e.target.value;
         console.log(add_cls);
@@ -93,6 +88,34 @@ class AddCandidate extends React.Component {
         });
     }
 
+
+   
+
+    CheckRequisiton = (e) => {
+
+       let requisition_id = this.state.input;
+        requisition_id[e.target.name] = e.target.value;
+        let a= this.state.input.reqid
+        console.log(a);
+    
+        axios.get(`${base_url}/getRequisitionByID?ID=${a}`).then(
+
+            (response) => {
+              
+                console.log( response.data.requisition_id);
+                let requid= response.data.requisition_id
+                localStorage.setItem('requisitionID',requid);
+               //alert("found")
+            },
+            (error) => {
+               alert("Requisiton not found of this ID")
+            
+             //  this.refInput.focus();
+             // focus(this.state.input.reqid)
+            }
+        );
+    }
+
     handleSubmit(e) {
         e.preventDefault();
 
@@ -100,7 +123,7 @@ class AddCandidate extends React.Component {
 
             let add_cls = this.state.input;
             add_cls[e.target.name] = e.target.value;
-
+        
             this.postCandidate(add_cls);
         }
         // 👇️ clear all input values in the form
@@ -108,12 +131,13 @@ class AddCandidate extends React.Component {
     }
 
     postCandidate = (data) => {
+     
         // let z = this.state.empID = localStorage.getItem("recruiterId")
         let recruiterID = localStorage.getItem('recruiterID');
         let requisitionID = localStorage.getItem('requisitionID');
         console.log("RecId_New : "+recruiterID+ " requisitionID "+requisitionID);
        
-        let status = 'assigned';
+        console.log(data)
         let d1 = data["cad_name"];
         let d2 = data["visa_type"];
         let d3 = data["rate_term"];
@@ -123,14 +147,16 @@ class AddCandidate extends React.Component {
         let d7 = data["remark"];
         let d8 = data["reason"];
 
-        axios.post(`${base_url}/add_candidate?candidate_name=${d1}&visa_type=${d2}&rate_term=${d3}
-        &submitted_rate=${d4}&phone=${d5}&email=${d6}&status=${status}&remark=${d7}
+       axios.post(`${base_url}/add_candidate?candidate_name=${d1}&visa_type=${d2}&rate_term=${d3}
+        &submitted_rate=${d4}&phone=${d5}&email=${d6}&remark=${d7}
         &reason=${d8}&recruiter_id=${recruiterID}&requisition_id=${requisitionID}`).then(
 
             (response) => {
                 
                 toast.success("Candidate added successfully!",
-                    { position: "top-right" }
+                    { 
+                    position: "top-right", autoClose: 2000,
+                    style: { position: "absolute", top: "5px", width: "300px" } }
                 );
             },
             (error) => {
@@ -170,9 +196,13 @@ class AddCandidate extends React.Component {
 
         console.log("type of reqNum " + typeof (reqNum));
 
+        if ((!input["reqid"])) {
+            isValid = false;
+            errors["reqid"] = "This field is required";
+        }
         if ((!input["cad_name"])) {
             isValid = false;
-            errors["cad_name"] = "This cad_name field is required";
+            errors["cad_name"] = "This field is required";
         }
         if ((input["cad_name"]) !== undefined) {
 
@@ -194,7 +224,7 @@ class AddCandidate extends React.Component {
         // -------------rate_term-----------------------------------------------------------------------------------------
         if ((!input["rate_term"])) {
             isValid = false;
-            errors["rate_term"] = "Please select rate term type";
+            errors["rate_term"] = "Please select rate term";
         }
      
         // -------------submitted_rate-----------------------------------------------------------------------------------------
@@ -215,7 +245,7 @@ class AddCandidate extends React.Component {
         // -------------phone-----------------------------------------------------------------------------------------
         if ((!input["phone"])) {
             isValid = false;
-            errors["phone"] = "This duration field is required";
+            errors["phone"] = "This field is required";
         }
         if ((input["phone"]) !== undefined) {
 
@@ -231,7 +261,7 @@ class AddCandidate extends React.Component {
         // -------------email-----------------------------------------------------------------------------------------
         if ((!input["email"])) {
             isValid = false;
-            errors["email"] = "This email field is required";
+            errors["email"] = "This field is required";
         }
         if (typeof input["email"] !== "undefined") {
 
@@ -242,7 +272,7 @@ class AddCandidate extends React.Component {
             }
         }
         // -------------remark-----------------------------------------------------------------------------------------
-        if ((!input["remark"])) {
+      /*  if ((!input["remark"])) {
             isValid = false;
             errors["remark"] = "This remark field is required";
         }
@@ -270,7 +300,7 @@ class AddCandidate extends React.Component {
                 isValid = false;
                 errors["reason"] = "Please enter valid reason.";
             }
-        }
+        }*/
 
         this.setState({
             errors: errors
@@ -298,12 +328,32 @@ class AddCandidate extends React.Component {
 
                                 <div className="col-12">
                                     <div className="row" style={{ paddingTop: '20px' }}>
+                                    <div className="col-12" style={{ paddingLeft: '35px', paddingRight: '20px' }}>
+                                        <div class="form-group">
+                                                <label for="reqid"><b>Requisition ID:</b></label>
+                                                <input
+                                                    style={{width: '30%'}}
+                                                    //ref={(input) => { this.refInput = input; }}
+                                                    minLength={1}
+                                                    maxLength={50}
+                                                    type="text"
+                                                    name="reqid"
+                                                    value={this.state.input.reqid}
+                                               
+                                                 onBlur={this.CheckRequisiton}
+                                              
+                                                    placeholder="Requisition ID"
+                                                    class="form-control" />
+
+                                                <div className="text-danger">{this.state.errors.reqid}</div>
+                                            </div>
+                                        </div>
                                         <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '20px' }}>
 
                                             <div class="form-group">
                                                 <label for="cad_name"><b>Candidate Name:</b></label>
-                                                <input
-                                                    ref={(input) => { this.refInput = input; }}
+                                                <input 
+                                                   // ref={(input) => { this.refInput = input; }}
                                                     minLength={1}
                                                     maxLength={50}
                                                     type="text"

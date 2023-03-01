@@ -1,14 +1,12 @@
 import { React, useState, useEffect } from "react";
 import axios from "axios";
 import base_url from "../api/bootapi";
-import Header from "../ViewComponent1/Header";
-import EmpSidebar from "../ViewComponent1/EmpSidebar";
 import { Table } from "reactstrap";
 import EmployeeHeader from "./EmployeeHeader";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-function View3() {
+function ViewCandidate() {
 
 
     // const [duration, setDuration] = useState(null);
@@ -444,24 +442,24 @@ function View3() {
 
             <div className="master_backgroung_work scroll-bar-horizontal">
 
-                <div style={{ backgroundColor: '', width: '1800px' }}  >
+                <div style={{ backgroundColor: '', width: '1900px' }}  >
                     <Table bordered>
                         <thead>
                             <tr>
                                 <th style={{ width: '10px' }}>Sr No.</th>
-                                <th style={{ width: '80px' }}>Current Status </th>
+                                <th style={{ width: '120px' }}>Current Status </th>
                                 <th style={{ width: '100px' }}>Date </th>
-                                <th style={{ width: '160px' }}>Status </th>
-                                <th style={{ width: '100px' }}>Candidate Name</th>
-                                <th style={{ width: '90px' }}>Visa Type</th>
+                                <th style={{ width: '200px' }}>Status </th>
+                                <th style={{ width: '150px' }}>Candidate Name</th>
+                                <th style={{ width: '50px' }}>Visa Type</th>
                                 <th style={{ width: '60px' }}>Rate term</th>
-                                <th style={{ width: '60px' }}>Submitted Rate</th>
-                                <th style={{ width: '90px' }}>Phone</th>
+                                <th style={{ width: '20px' }}>Submitted Rate</th>
+                                <th style={{ width: '70px' }}>Phone</th>
                                 <th style={{ width: '150px' }}>Email</th>
                                 <th style={{ width: '100px' }}>Remark</th>
                                 <th style={{ width: '100px' }}>Reason</th>
 
-                                <th style={{ width: '95px' }}>Action</th>
+                                <th style={{ width: '140px' }}>Action</th>
 
                             </tr>
                         </thead>
@@ -478,4 +476,4 @@ function View3() {
         //)
     );
 }
-export default View3;
+export default ViewCandidate;

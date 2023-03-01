@@ -5,9 +5,8 @@ import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import history from './ResponseVal';
 // import Header from './Header';
-import Header from '../ViewComponent1/Header';
 // import EmpSidebar from './EmpSidebar';
-import EmpSidebar from '../ViewComponent1/EmpSidebar';
+
 import { useRef } from 'react';
 import { getValue } from '@testing-library/user-event/dist/utils';
 
@@ -15,9 +14,10 @@ import NavBarHeader from './NavbarHeader';
 import EmployeeHeader from './EmployeeHeader';
 import { List } from 'reactstrap';
 import { Table,Button } from "reactstrap";
-import { json } from 'react-router-dom';
+import { json, Link } from 'react-router-dom';
 import AdminHeader from './AdminHeader';
-
+// import 'reactjs-popup/dist/index.css';
+import Popup from 'reactjs-popup';
 
 class AdminStatic extends React.Component {
 
@@ -140,6 +140,16 @@ class AdminStatic extends React.Component {
             visatype:"",
             rateterm:"",
 
+            reqerr:"",
+            clienterr:"",
+            statuserr:"",
+            positionerr:"",
+            durationerr:"",
+            visatypeerr:"",
+            ratetermerr:"",
+
+
+
             req1:"",
             st1:"",
             duration1:"",
@@ -167,7 +177,9 @@ class AdminStatic extends React.Component {
 
 
            
-            isShown:true
+            isShown:true,
+
+            reqidclient:""
 
 
 
@@ -208,11 +220,8 @@ class AdminStatic extends React.Component {
 
      onEdit1 = ({ reqid, currentreq }) => {
        
-        console.log("Aaa")
-        console.log(reqid)
-        console.log(currentreq)
-        this.setState({
-            editstatus: true,
+       this.setState({
+        editstatus: true,
             editrowKey: reqid
         })
         this.setState({ req1: currentreq })
@@ -243,7 +252,15 @@ class AdminStatic extends React.Component {
 
      onSave1 = ({ reqid, newReq}) => {
 
-        this.updateInventory1({ reqid, newReq });
+        if(!newReq)
+        {
+            alert("Enter valid details")
+           
+        }
+        else{
+            this.updateInventory1({ reqid, newReq });
+        }
+        
     }
 
      onCancel1 = () => {
@@ -275,8 +292,14 @@ class AdminStatic extends React.Component {
                autoClose: 1000,
                style: { position: "absolute", top: "5px", width: "300px" }
            });
-       })
-    }
+       },
+
+
+       (error) =>
+       {
+        alert("This requisition has one or more clients. Please delete all clients of this requisition")
+       }
+    )}
 ////////////// Edit status
 
 onEdit2 = ({ stid, currentst }) => {
@@ -312,9 +335,15 @@ onEdit2 = ({ stid, currentst }) => {
 
 
      onSave2 = ({ stid, newst}) => {
-        console.log("sss");
-
+      if(!newst)
+      {
+        alert("Enter valid details")
+      }
+      else{
         this.updateInventory2({ stid, newst });
+      }
+
+       
     }
 
     onCancel2 = () => {
@@ -390,9 +419,15 @@ onEdit3 = ({ durationid, currentduration }) => {
 
 
   onSave3 = ({ durationid, newduration}) => {
-     console.log("sss");
+    if(!newduration)
+    {
+        alert("Enter valid details")
+       
+    }
+    else{
 
      this.updateInventory3({ durationid, newduration });
+    }
  }
 
  onCancel3 = () => {
@@ -469,9 +504,15 @@ onEdit4 = ({ clientid, currentclient }) => {
 
 
   onSave4 = ({ clientid, newclient}) => {
-     console.log("sss");
+    if(!newclient)
+    {
+        alert("Enter valid details")
+       
+    }
+    else{
 
      this.updateInventory4({ clientid, newclient });
+    }
  }
 
  onCancel4 = () => {
@@ -544,9 +585,15 @@ onEdit5 = ({ positionid, currentposition }) => {
 
 
   onSave5 = ({ positionid, newposition}) => {
-     console.log("sss");
+    if(!newposition)
+    {
+        alert("Enter valid details")
+       
+    }
+    else{
 
      this.updateInventory5({ positionid, newposition });
+    }
  }
 
  onCancel5 = () => {
@@ -618,9 +665,14 @@ onEdit6 = ({ visatypeid, currentvisatype }) => {
 
 
   onSave6 = ({ visatypeid, newvisatype}) => {
-     console.log("sss");
-
+    if(!newvisatype)
+    {
+        alert("Enter valid details")
+       
+    }
+    else{
      this.updateInventory6({ visatypeid, newvisatype });
+    }
  }
 
  onCancel6 = () => {
@@ -693,8 +745,14 @@ onEdit7 = ({ ratetermid, currentrateterm }) => {
 
 
   onSave7 = ({ ratetermid, newrateterm}) => {
-    
+    if(!newrateterm)
+    {
+        alert("Enter valid details")
+       
+    }
+    else{
      this.updateInventory7({ ratetermid, newrateterm });
+    }
  }
 
     onCancel7 = () => {
@@ -732,29 +790,65 @@ onEdit7 = ({ ratetermid, currentrateterm }) => {
 
 
 /////////////////////
-
-/*validate() {
+validate() {
 
     let reqval = this.state.req;
+
     let clientval =this.state.client;
     let statusval=this.state.status;
     let positionval=this.state.position
-    // let durationval=this.state.duration
-    // let visatypeval=this.state.visatype
-    // let ratetermval=this.state.rateterm
+     let durationval=this.state.duration
+     let visatypeval=this.state.visatype
+     let ratetermval=this.state.rateterm
+
+     let clerror =  this.state.clienterr
+     let sterror = this.state.statuserr;
+     let poserror =  this.state.positionerr;
+     let durerror=  this.state.durationerr;
+     let visaerror=  this.state.visatypeerr;
+     let reteerror=  this.state.ratetermerr;
+
+     let isValid = true;
 
 
-    let errors = {};
-    let isValid = true;
-
-
-    if ((!reqval)) {
+     if ((!clientval)){
         isValid = false;
-        errors["req"] = "This field is required";
+        clerror = "This field is required";
     }
 
 
-    if (reqval != undefined) {
+    if ((!statusval)){
+        isValid = false;
+        sterror = "This field is required";
+    }
+
+    if ((!positionval)){
+        isValid = false;
+        poserror = "This field is required";
+    }
+
+    if ((!durationval)){
+        isValid = false;
+        durerror = "This field is required";
+    }
+
+    if ((!visatypeval)){
+        isValid = false;
+        visaerror = "This field is required";
+    }
+
+    if ((!ratetermval)){
+        isValid = false;
+        reteerror = "This field is required";
+    }
+
+   
+
+
+
+    return isValid;
+}
+   /* if (reqval != undefined) {
         var pattern = new RegExp(/^[^\s][a-zA-Z\s]+[^\s]$/);
         if (!pattern.test(reqval)) {
             isValid = false;
@@ -827,15 +921,23 @@ onEdit7 = ({ ratetermid, currentrateterm }) => {
     handleSubmit1(e) {
         e.preventDefault();
 
-        // if (this.validate()) {
-
+         if (this.validate()) {
            
-        // }
+          
+         let a = this.state.req;
+         this.postdata1(a)
+           
+         }
+         else{
+            alert("Enter Valid details")
+         }
+
         
-        let a = this.state.req;
-        this.postdata1(a)
+        
+      
       
     }
+
 
 postdata1(d)
 {
@@ -868,14 +970,34 @@ handleChange2(e) {
 
  handleSubmit2(e) {
      e.preventDefault();
+
+     let a= this.state.reqidclient
+     let b = this.state.client;
+
+     if (this.validate()) {
+        
+        this.postdata2(a,b)
+       
+     }
+     else{
+        alert("Enter valid details")
+     }
+
      
-     let a = this.state.client;
-     this.postdata2(a)
  }
 
-postdata2(d)
+
+  getnewID = (e) => {
+    let rq = e.reqid
+    this.setState({
+        reqidclient:rq
+    })
+
+}
+
+postdata2(d1,d2)
 {
- axios.post(`${base_url}/AddClient?client_name=${d}`).then(
+ axios.post(`${base_url}/AddClient?requisitor_id=${d1}&client_name=${d2}`).then(
 
      (response) => {
         this.componentDidMount()
@@ -902,9 +1024,18 @@ handleChange3(e) {
 
  handleSubmit3(e) {
      e.preventDefault();
-     
-     let a = this.state.status;
+
+     if (this.validate()) {
+        let a = this.state.status;
      this.postdata3(a)
+       
+     }
+     else{
+        alert("Enter valid details")
+     }
+    
+     
+    
  }
 
 postdata3(d)
@@ -937,9 +1068,16 @@ handleChange4(e) {
 
  handleSubmit4(e) {
      e.preventDefault();
+     if (this.validate()) {
+        let a = this.state.position;
+        this.postdata4(a)
+       
+     }
+     else{
+        alert("Enter valid details")
+     }
      
-     let a = this.state.position;
-     this.postdata4(a)
+    
  }
 
 postdata4(d)
@@ -967,12 +1105,18 @@ handleChange5(e) {
       } );
  }
 
-    handleSubmit5(e) {
-        e.preventDefault();
-
+ handleSubmit5(e) {
+     e.preventDefault();
+     
+     if (this.validate()) {
         let a = this.state.duration;
         this.postdata5(a)
-    }
+     }
+     else{
+        alert("Enter valid details")
+     }
+ 
+ }
 
     postdata5(d) {
         axios.post(`${base_url}/AddDuration?duration=${d}`).then(
@@ -1002,12 +1146,17 @@ handleChange5(e) {
         });
     }
 
-    handleSubmit6(e) {
-        e.preventDefault();
-
+ handleSubmit6(e) {
+     e.preventDefault();
+     if (this.validate()) {
         let a = this.state.visatype;
-        this.postdata6(a)
-    }
+     this.postdata6(a)
+     }
+     else{
+        alert("Enter valid details")
+     }
+    
+ }
 
     postdata6(d) {
         axios.post(`${base_url}/AddVisaType?visa_type=${d}`).then(
@@ -1038,12 +1187,17 @@ handleChange5(e) {
         });
     }
 
-    handleSubmit7(e) {
-        e.preventDefault();
-
+ handleSubmit7(e) {
+     e.preventDefault();
+     if (this.validate()) {
         let a = this.state.rateterm;
-        this.postdata7(a)
-    }
+     this.postdata7(a)
+     }
+     else{
+        alert("Enter valid details")
+     }
+   
+ }
 
     postdata7(d) {
         axios.post(`${base_url}/AddRateTerm?rate_term=${d}`).then(
@@ -1080,24 +1234,65 @@ handleChange5(e) {
                         <tbody  >
 
 
-                            <td>
-                                {
-                                    this.state.editstatus && this.state.editrowKey === rq.requisitor_id ? (
-                                        <input required value={this.state.req1}
-                                            onChange={this.handleupdate1}
-                                            style={{ width: "100px" }}
+                                               <td>
+                        {
+                           this.state.editstatus&&  this.state.editrowKey === rq.requisitor_id ? ( 
+                                    <input required value={this.state.req1}
+                                    onChange={this.handleupdate1}
+                                    style={{ width: "100px" }}
+                                   
+                                />
+                            ) : (
+                                   
+                                
 
-                                        />
-                                    ) : (
-                                        rq.requisitor_fd
+
+                                <Popup  contentStyle={{width: "300px"}} trigger=
+                                
+                                {<Link  onClickCapture={() => this.getnewID({reqid: rq.requisitor_id})}>{rq.requisitor_fd}</Link> }
+                             >
+                                <th>Existing Clients:</th>
+                                {
+                                    
+                                    
+                                    this.state.client_fd.map((cl)=>
+                                    
+                                
+                                        cl.requisitor_fd.requisitor_id==rq.requisitor_id?
+                                        (   <>
+                                            {cl.client_name}<br></br>
+                                            </>
+                                        ):
+                                        (
+                                            null
+                                        )
+                                       
+                                       
                                     )
                                 }
-                            </td>
-                            <td>
-                                {
-                                    this.state.editstatus && this.state.editrowKey === rq.requisitor_id ? (
-                                        <>
-                                            <button
+                                {/* <Link onClick={() => this.getnewID({rqid: rq.requisitor_id })}>{rq.requisitor_fd}</Link> */}
+                                <form onSubmit={this.handleSubmit2}>
+                                            <label><b>Add new client:</b></label><br></br>
+                                               <input type="text"  name="client"  style={{height:23}} value={this.state.client} onChange={this.handleChange2}></input>
+                                               &nbsp;&nbsp;
+                                               <button class= "btn btn-sm  btn-success"> <i class=" fa fa-save"></i>&nbsp;Add</button>
+                                            <div className="text-danger">{this.state.errors.client}</div>
+                                            </form> 
+                                    
+                                     
+                                
+                              
+                            </Popup>
+                         
+                              
+                            )
+                        }
+                    </td>
+                    <td>
+                        {
+                            this.state.editstatus && this.state.editrowKey === rq.requisitor_id ? (
+                                <>
+                                    <button
 
                                                 className={"btn btn-sm btn-outline-success"}
                                                 onClick={() => {
@@ -1123,10 +1318,12 @@ handleChange5(e) {
                                             </button>
                                         </>
 
-                                    ) : (
-                                        <>
-                                            <button
-                                                className="btn btn-sm btn-outline-success"
+                            ) : (
+                                <>
+
+                                      
+                                    <button
+                                        className="btn btn-sm btn-outline-success"
 
                                                 onClick={() => this.onEdit1({
                                                     reqid: rq.requisitor_id, currentreq: rq.requisitor_fd
@@ -1742,54 +1939,53 @@ handleChange5(e) {
                     <div className="col-12 master_backgroung_work scroll-bar">
 
                         <div className="row">
+                    
 
-                            <div className="col-12">
-                                <div className="row" style={{ paddingTop: '2%' }}>
-                                    <div className="col-3" >
-
-                                        <label for="req"><b>Requisitiors name:</b></label><br />
-
-                                        <Table >
-
-                                            <tbody>
-                                                <td>{this.reqlist()}</td>
-                                            </tbody>
-
-                                        </Table>
-                                        {/* <form onSubmit={this.Boxshow()}> */}
-                                        {/* <button  onClick={this.Boxshow()}>Add new requisitor</button>  */}
-
-                                        {/* </form> */}
-
-                                        {/* {this.state.isShown=='true' && <this.Box/> } */}
-
-                                        <form onSubmit={this.handleSubmit1}>
-                                            <label>Add new requisitor</label><br></br>
-                                            <input type="text" name="req" style={{ height: 23 }}
-                                                value={this.state.req} onChange={this.handleChange1}></input>
-                                            <button class="btn btn-sm  btn-success"> <i class=" fa fa-save"></i>&nbsp;Add</button>
-                                            <div className="text-danger">{this.state.errors.req}</div>
-                                        </form><br></br><br></br>
-
-
-                                        <div class="form-group">
-                                            <label ><b>Client name:</b></label><br />
-                                            <Table>
-
-                                                <tbody>
-                                                    <td>{this.clientlist()}</td>
-                                                </tbody>
-                                            </Table>
-                                            <form onSubmit={this.handleSubmit2}>
-                                                <label>Add new client</label><br></br>
-                                                <input type="text" name="client" style={{ height: 23 }} value={this.state.client} onChange={this.handleChange2}></input>
-                                                <button class="btn btn-sm  btn-success"> <i class=" fa fa-save"></i>&nbsp;Add</button>
-                                                <div className="text-danger">{this.state.errors.client}</div>
+                                <div className="col-12">
+                                    <div className="row" style={{ paddingTop: '2%'}}>
+                                       
+                                     <div className="col-3" >
+                                    
+                          
+                                     <div class="form-group">
+                                                <label ><b>Position type:</b></label><br/>
+                                                <Table>
+                                               
+                                               <tbody>
+                                                   <td>{this.positionlist()}</td>
+                                               </tbody>
+                                           </Table>
+                                            <form onSubmit={this.handleSubmit4}>
+                                            <label>Add new position</label><br></br>
+                                               <input type="text"  name="position"  style={{height:23}} value={this.state.position} onChange={this.handleChange4}></input>
+                                               <button class= "btn btn-sm  btn-success"> <i class=" fa fa-save"></i>&nbsp;Add</button>
+                                            <div className="text-danger">{this.state.errors.position}</div>
                                             </form>
-                                        </div>
-                                    </div>
+                                            <br></br><br></br>
 
-                                    <div className="col-3">
+                                          
+                                                <label ><b>Visa type:</b></label><br/>
+                                                <Table>
+                                               
+                                               <tbody>
+                                                   <td>{this.visalist()}</td>
+                                               </tbody>
+                                           </Table>
+                                            <form onSubmit={this.handleSubmit6}>
+                                            <label>Add new visa type</label><br></br>
+                                               <input type="text"  name="visatype"  style={{height:23}} value={this.state.visatype} onChange={this.handleChange6}></input>
+                                               <button class= "btn btn-sm  btn-success"> <i class=" fa fa-save"></i>&nbsp;Add</button>
+                                            <div className="text-danger">{this.state.errors.visatype}</div>
+                                            </form>
+                                            </div>
+                                      
+                                          
+         
+                                          
+                                           </div>
+                                              
+
+                                           <div className="col-3">
 
                                         <label for="status"><b>Status:</b></label><br />
 
@@ -1801,27 +1997,46 @@ handleChange5(e) {
                                         </Table>
                                         <form onSubmit={this.handleSubmit3}>
                                             <label>Add new status</label><br></br>
-                                            <input type="text" name="status" style={{ height: 23 }} value={this.state.status} onChange={this.handleChange3}></input>
-                                            <button class="btn btn-sm  btn-success"> <i class=" fa fa-save"></i>&nbsp;Add</button>
-                                            <div className="text-danger">{this.state.errors.status}</div>
-                                        </form><br></br><br></br>
+                                               <input type="text"  name="status"  style={{height:23}} value={this.state.status} onChange={this.handleChange3}></input>
+                                               <button class= "btn btn-sm  btn-success"> <i class=" fa fa-save"></i>&nbsp;Add</button>
+                                            <div className="text-danger">{this.state.statuserr}</div>
+                                            </form><br></br><br></br>
 
-                                        <div class="form-group">
-                                            <label ><b>Position type:</b></label><br />
-                                            <Table>
+                                            <label for="req"><b>Requisitiors name:</b></label><br />
 
+
+                                            <Table >
+                                               
                                                 <tbody>
-                                                    <td>{this.positionlist()}</td>
+                                                    <td>{this.reqlist()}</td>
+                                                   
                                                 </tbody>
+                                               
                                             </Table>
-                                            <form onSubmit={this.handleSubmit4}>
-                                                <label>Add new position</label><br></br>
-                                                <input type="text" name="position" style={{ height: 23 }} value={this.state.position} onChange={this.handleChange4}></input>
-                                                <button class="btn btn-sm  btn-success"> <i class=" fa fa-save"></i>&nbsp;Add</button>
-                                                <div className="text-danger">{this.state.errors.position}</div>
-                                            </form>
-                                        </div>
-                                    </div>
+                                             {/* <form onSubmit={this.Boxshow()}> */}
+                                              {/* <button  onClick={this.Boxshow()}>Add new requisitor</button>  */}
+                                            
+                                            {/* </form> */}
+                                            
+                                                
+                                                {/* {this.state.isShown=='true' && <this.Box/> } */}
+                                                    
+                                               
+                                                
+                                         
+                                            
+                                         <form onSubmit={this.handleSubmit1}>
+                                            <label>Add new requisitor</label><br></br>
+                                               <input type="text"  name="req" style={{height:23}}
+                                               value={this.state.req} onChange={this.handleChange1}></input>
+                                               <button class= "btn btn-sm  btn-success"> <i class=" fa fa-save"></i>&nbsp;Add</button>
+                                            <div className="text-danger">{this.state.errors.req}</div>
+                                            </form><br></br><br></br> 
+
+
+
+                                           </div>
+
 
                                     <div className="col-3">
 
@@ -1838,25 +2053,29 @@ handleChange5(e) {
                                             <input type="text" name="duration" style={{ height: 23 }} value={this.state.duration} onChange={this.handleChange5}></input>
                                             <button class="btn btn-sm  btn-success"> <i class=" fa fa-save"></i>&nbsp;Add</button>
                                             <div className="text-danger">{this.state.errors.duration}</div>
-                                        </form><br></br><br></br>
+                                            </form><br></br><br></br>
 
-                                        <div class="form-group">
-                                            <label ><b>Visa type:</b></label><br />
-                                            <Table>
-                                                <tbody>
-                                                    <td>{this.visalist()}</td>
-                                                </tbody>
-                                            </Table>
-                                            <form onSubmit={this.handleSubmit6}>
-                                                <label>Add new visa type</label><br></br>
-                                                <input type="text" name="visatype" style={{ height: 23 }} value={this.state.visatype} onChange={this.handleChange6}></input>
-                                                <button class="btn btn-sm  btn-success"> <i class=" fa fa-save"></i>&nbsp;Add</button>
-                                                <div className="text-danger">{this.state.errors.visatype}</div>
-                                            </form>
-                                        </div>
-                                    </div>
+                                              
+                                           <div class="form-group">
+                                                <label ><b>Client name:</b></label><br/>
+                                                <Table>
+                                               
+                                               <tbody>
+                                                   <td>{this.clientlist()}</td>
+                                               </tbody>
+                                           </Table>
+                                            {/* <form onSubmit={this.handleSubmit2}>
+                                            <label>Add new client</label><br></br>
+                                               <input type="text"  name="client"  style={{height:23}} value={this.state.client} onChange={this.handleChange2}></input>
+                                               <button class= "btn btn-sm  btn-success"> <i class=" fa fa-save"></i>&nbsp;Add</button>
+                                            <div className="text-danger">{this.state.errors.client}</div>
+                                            </form> */}
+                                            </div>
+                                          
+                                           </div>
+                                             
 
-                                    <div className="col-3">
+                                         <div className="col-3">
 
                                         <label for="rateterm"><b>Rate Term:</b></label><br />
 

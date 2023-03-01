@@ -33,7 +33,7 @@ function EmployeeHeader() {
             <a className="nav-link" aria-current="page" href="/addRequisition">Add Requisition</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" aria-current="page" href="/addCandidate">Add Candidate</a>
+            <a className="nav-link" aria-current="page" href="/addCandidate">Submit Candidate</a>
           </li>
           {/* <li className="nav-item dropdown">
             <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#a" role="button" aria-expanded="false">Dropdown</a>

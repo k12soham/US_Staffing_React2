@@ -1,8 +1,7 @@
 import { React, useState, useEffect } from "react";
 import axios from "axios";
 import base_url from "../api/bootapi";
-import Header from "../ViewComponent1/Header";
-import EmpSidebar from "../ViewComponent1/EmpSidebar";
+
 import { Table } from "reactstrap";
 import EmployeeHeader from "./EmployeeHeader";
 import { toast } from "react-toastify";
@@ -35,7 +34,8 @@ function ViewAllReq() {
     });
     let navigate = useNavigate();
 
-    let empID= localStorage.getItem("recruiterID")
+    let empID= localStorage.getItem("recruiterID");
+    let sessionreq = localStorage.getItem("requisitionID");
     useEffect(() => {
         axios.get(`${base_url}/getAllRequisition`).then(json => setClosureList(json.data))
         // axios.get(`${base_url}/getEmpList_TM`).then(json => setEmployee(json.data))
@@ -171,11 +171,13 @@ function ViewAllReq() {
             return (
 
                 <tr key={cls.requisition.requisition_id}>
+           
                     <td></td>
                     <td hidden>{cls.requisition.requisition_id}</td>
                     <td style={{ width: '50px' }}>
                         {
                             inEditMode.status && inEditMode.rowKey === cls.requisition.requisition_id ? (
+                           
                                 <input required
                                     type='text'
                                     value={reqFrom}
@@ -186,14 +188,14 @@ function ViewAllReq() {
                                 />
                             ) : (
 
-                                <a href="/view3" onClick={(evt) => getnewID({ rq: cls.requisition.requisition_id })}>{cls.requisition.requisition_from}</a>
+                                <a href="/viewCandidate" onClick={(evt) => getnewID({ rq: cls.requisition.requisition_id })}>{cls.requisition.requisition_from}</a>
                             )
                         }
-
+                    
                     </td>
                     <td>
                         {
-                            inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
+                            inEditMode.status && inEditMode.rowKey === cls.requisition.requisition_id ? (
                                 <input required
                                     type='number'
                                     value={id}
@@ -211,6 +213,7 @@ function ViewAllReq() {
                     <td>
                         {
                             inEditMode.status && inEditMode.rowKey === cls.requisition.requisition_id ? (
+                          
                                 <input required
                                     type='text'
                                     value={client}
@@ -226,7 +229,7 @@ function ViewAllReq() {
                     </td>
                     <td>
                         {
-                            inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
+                            inEditMode.status && inEditMode.rowKey === cls.requisition.requisition_id ? (
                                 <input required
                                     type='text'
                                     value={jobTitle}
@@ -242,7 +245,7 @@ function ViewAllReq() {
                     </td>
                     <td>
                         {
-                            inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
+                            inEditMode.status && inEditMode.rowKey === cls.requisition.requisition_id ? (
                                 <input required
                                     type='text'
                                     value={duration}
@@ -374,6 +377,7 @@ function ViewAllReq() {
 
                     </td>
                 </tr >
+                    
             );
         })
     }
@@ -390,7 +394,7 @@ function ViewAllReq() {
 
             <div className="master_backgroung_work scroll-bar-horizontal">
 
-                <div style={{ backgroundColor: '', width: '2100px' }}  >
+                <div style={{ backgroundColor: '', width: '1500px' }}  >
                     <Table bordered class="table table-sm" style={{ fontFamily: 'arial' }}>
                         <thead>
                             <tr>
@@ -401,11 +405,11 @@ function ViewAllReq() {
                                 <th style={{ width: '160px' }}>Job Title</th>
                                 <th style={{ width: '70px' }}>Duration</th>
                                 <th style={{ width: '100px' }}>Client Rate</th>
-                                <th style={{ width: '130px' }}>Location</th>
-                                <th style={{ width: '130px' }}>Position Type</th>
-                                <th style={{ width: '200px' }}>Skills</th>
+                                <th style={{ width: '100px' }}>Location</th>
+                                <th style={{ width: '120px' }}>Position Type</th>
+                                <th style={{ width: '150px' }}>Skills</th>
 
-                                <th style={{ width: '95px' }}>Action</th>
+                                <th style={{ width: '125px' }}>Action</th>
 
                             </tr>
                         </thead>

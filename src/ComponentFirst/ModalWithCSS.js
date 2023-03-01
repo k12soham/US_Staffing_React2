@@ -21,8 +21,18 @@ class ModalWithCSS extends React.Component {
   }
 
   handleUpdateProfile() {
-    history.push("/update_profile");
-    window.location.reload();
+    let recruiterID = localStorage.getItem('recruiterID');
+    let recruiterIDAdmin = localStorage.getItem('recruiterIDAdmin');
+    if(recruiterIDAdmin==null)
+    {
+      history.push("/update_profile");
+      window.location.reload();
+    }
+    else{
+      history.push("/update_profile_Admin");
+      window.location.reload();
+    }
+   
   }
 
   handleClose() {
