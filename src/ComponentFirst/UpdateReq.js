@@ -10,20 +10,25 @@ import NavBarHeader from './NavbarHeader';
 import EmployeeHeader from './EmployeeHeader';
 import { json } from 'react-router-dom';
 
-const empID = localStorage.getItem('recruiterID');
-console.log("recruiterId : " + empID);
-let reqID = '';
+// const empID = localStorage.getItem('recruiterID');
+// console.log("recruiterId : " + empID);
+// let reqID = '';
 
 class UpdateReq extends React.Component {
 
     componentDidMount() {
         this.refInput.focus();
 
+        const recruiterIDAdmin = localStorage.getItem('recruiterIDAdmin');
+        this.setState({ recruiterIDAdmin: recruiterIDAdmin });
         const recruiterID = localStorage.getItem('recruiterID');
+        this.setState({ recruiterID: recruiterID });
         const requisitionID = localStorage.getItem('requisitionID');
         // this.setState({ empID: recruiterID });
+
         this.setState({ requisitionId1: requisitionID });
 
+        console.log("recruiterIDAdmin : " + recruiterIDAdmin);
         console.log("recruiterID : " + recruiterID);
         console.log("requisitionID : " + requisitionID);
 
@@ -106,7 +111,7 @@ class UpdateReq extends React.Component {
         this.state = {
             input: {},
             errors: {},
-            empID: '',
+            // empID: '',
             duration_fd: [],
             positionType_fd: [],
             requisitor_fd: [],
@@ -115,14 +120,16 @@ class UpdateReq extends React.Component {
             setReqList: [],
             requisitionData: {},
             requisitionId1: undefined,
-        
+            recruiterID: undefined,
+            recruiterIDAdmin: undefined
+
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     resetForm = () => {
-   
+
         let inputs = {};
         inputs["req"] = undefined;
         inputs["id"] = undefined;
@@ -177,7 +184,7 @@ class UpdateReq extends React.Component {
         add_cls[e.target.name] = e.target.value;
         console.log(add_cls);
         this.setState({
-            input : add_cls,
+            input: add_cls,
         });
     }
 
@@ -188,9 +195,9 @@ class UpdateReq extends React.Component {
 
             let add_cls = this.state.input;
             add_cls[e.target.name] = e.target.value;
-          
-                this.post_requisition(add_cls);
-         
+
+            this.post_requisition(add_cls);
+
         }
         // 👇️ clear all input values in the form
         e.target.reset();
@@ -199,6 +206,7 @@ class UpdateReq extends React.Component {
     post_requisition = (data) => {
         let recId = this.state.empID = localStorage.getItem("recruiterID");
         console.log("recruiterID : " + recId);
+        console.log("recruiterIDAdmin: " + this.state.recruiterIDAdmin);
         let d = this.state.requisitionId1;
         let d1 = data["req"];
         let d2 = data["id"];
@@ -214,22 +222,26 @@ class UpdateReq extends React.Component {
         &duration=${d5}&client_rate=${d6}&location=${d7}&position_type=${d8}&skills=${d9}`).then(
 
             // requisition_id, requisition_from, id, client, job_title, duration, client_rate, location,
-			// 	position_type, skills
+            // 	position_type, skills
             (response) => {
                 console.log(response.data)
-                // console.log("recid="+response.data.recruiter.recruiter_id);
                 console.log(response.data.requisition_id);
                 let a = response.data.requisition_id;
                 console.log(typeof (response));
 
                 this.setState({ requisitionId1: a });
                 // console.log("rqid="+response.data.requisition.requisition_id);
-                history.push("/view_all_req");
-                window.location.reload();
 
                 toast.success("Requisition updated successfully!",
                     { position: "top-right" }
                 );
+                if (this.state.recruiterIDAdmin !== null) {
+                    history.push("/viewReqForAdmin");
+                    window.location.reload();
+                } else {
+                    history.push("/view_all_req");
+                    window.location.reload();
+                }
             },
             (error) => {
                 console.log(error);
@@ -390,10 +402,11 @@ class UpdateReq extends React.Component {
 
     // -------------------------------------------- render ----------------------------------------------------
     render() {
-        const isAuthenticated = localStorage.getItem('recruiterID');
+        const isAuthenticated = localStorage.getItem('recruiterIDAdmin');
+        const isAuthenticated2 = localStorage.getItem('recruiterID');
 
-        return isAuthenticated ? (
-            
+        return isAuthenticated || isAuthenticated2 ? (
+
             <div className="">
                 <div className="row">
 
@@ -421,7 +434,7 @@ class UpdateReq extends React.Component {
 
                                                 // value={this.state.requisitionData.req}
                                                 value={this.state.input.req}
-                                                >
+                                            >
 
                                                 {/* <option value='' default selected> Select Requisitor </option> */}
                                                 {
@@ -600,7 +613,7 @@ class UpdateReq extends React.Component {
                                                     Update
                                                 </button>
                                             </div>
-                                           
+
                                             <div className='col-2'>
                                                 <button
                                                     type="reset"

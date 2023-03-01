@@ -19,6 +19,8 @@ class UpdateCandidate extends React.Component {
     componentDidMount() {
         this.refInput.focus();
 
+        const recruiterIDAdmin1 = localStorage.getItem('recruiterIDAdmin');
+        this.setState({ recruiterIDAdmin: recruiterIDAdmin1 });
         const recruiterID = localStorage.getItem('recruiterID');
         const requisitionID = localStorage.getItem('requisitionID');
         const candidateID2 = localStorage.getItem('candidateID');
@@ -87,6 +89,7 @@ class UpdateCandidate extends React.Component {
             candidateID: 0,
             rateTerm_fd: [],
             visaType_fd: [],
+            recruiterIDAdmin: undefined
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -195,12 +198,20 @@ class UpdateCandidate extends React.Component {
                 console.log(typeof (response));
 
 
-                history.push("/view3");
-                window.location.reload();
+                // history.push("/view3");
+                // window.location.reload();
 
                 toast.success("Candidate updated successfully!",
                     { position: "top-right" }
                 );
+
+                if (this.state.recruiterIDAdmin !== null) {
+                    history.push("/viewCandForAdmin");
+                    window.location.reload();
+                } else {
+                    history.push("/view3");
+                    window.location.reload();
+                }
             },
             (error) => {
                 console.log(error);
@@ -356,11 +367,10 @@ class UpdateCandidate extends React.Component {
 
     // -------------------------------------------- render ----------------------------------------------------
     render() {
-        const isAuthenticated = localStorage.getItem('recruiterID');
-        console.log(this.state.input.rate_term);
+        const isAuthenticated = localStorage.getItem('recruiterIDAdmin');
+        const isAuthenticated2 = localStorage.getItem('recruiterID');
 
-
-        return isAuthenticated ? (
+        return isAuthenticated || isAuthenticated2 ? (
 
             <div className="">
                 <div className="row">

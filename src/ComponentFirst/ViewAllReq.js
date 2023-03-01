@@ -164,16 +164,18 @@ function ViewAllReq() {
     }
 
     const renderTable = () => {
-        return closureList.map(cls => {
+        return statusList.map(cls => {
+
+            if(cls.recruiter.recruiter_id == empID && cls.requisitionflag == 1)            
 
             return (
 
-                <tr key={cls.requisition_id}>
+                <tr key={cls.requisition.requisition_id}>
                     <td></td>
                     <td hidden>{cls.requisition.requisition_id}</td>
                     <td style={{ width: '50px' }}>
                         {
-                            inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
+                            inEditMode.status && inEditMode.rowKey === cls.requisition.requisition_id ? (
                                 <input required
                                     type='text'
                                     value={reqFrom}
@@ -184,11 +186,9 @@ function ViewAllReq() {
                                 />
                             ) : (
 
-                                <a href="/view3" onClick={(evt) => getnewID({ rq: cls.requisition_id })}>{cls.requisition_from}</a>
+                                <a href="/view3" onClick={(evt) => getnewID({ rq: cls.requisition.requisition_id })}>{cls.requisition.requisition_from}</a>
                             )
-
                         }
-
 
                     </td>
                     <td>
@@ -210,7 +210,7 @@ function ViewAllReq() {
                     </td>
                     <td>
                         {
-                            inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
+                            inEditMode.status && inEditMode.rowKey === cls.requisition.requisition_id ? (
                                 <input required
                                     type='text'
                                     value={client}
@@ -355,12 +355,7 @@ function ViewAllReq() {
 
                                         onClick={() => onEdit({
 
-                                            requisitionID: cls.requisition_id,
-
-                                            // crrReqid: cls.requisition_id, crrReqFrom: cls.requisition_from, crrId: cls.id,
-                                            // crrClient: cls.client, crrJobTitle: cls.job_title, crrDuration: cls.duration,
-                                            // crrClientRate: cls.client_rate, crrLocation: cls.location, crrPType: cls.position_type,
-                                            // crrSkills: cls.skills,
+                                            requisitionID: cls.requisition.requisition_id,
 
                                         })}
                                     >

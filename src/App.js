@@ -8,7 +8,6 @@ import { ToastContainer } from 'react-toastify';
 import Login1 from './ComponentFirst/LoginPage';
 import ReqView from './ComponentFirst/ReqView';
 import { Navbar } from 'react-bootstrap';
-import NavBar from './ComponentFirst/NavBar';
 // import mobileScreen from './ComponentFirst/NavDemo1';
 import SignUp from './ComponentFirst/SignUp';
 import AddRequisition from './ComponentFirst/AddRequisition';
@@ -21,9 +20,12 @@ import View3 from './ComponentFirst/View3';
 
 import UpdateProfile from './ComponentFirst/ViewAllReq';
 import UpdateReq from './ComponentFirst/UpdateReq';
-import ViewCadByReq from './ComponentFirst/ViewCadByReq';
 import ViewAllReq from './ComponentFirst/ViewAllReq';
 import UpdateCandidate from './ComponentFirst/UpdateCandidate';
+import ViewReqForAdmin from './ComponentFirst/ViewReqForAdmin';
+import ViewCandForAdmin from './ComponentFirst/ViewCandForAdmin';
+import ViewAllStatusAdmin from './ComponentFirst/ViewAllStatusAdmin';
+import "react-datepicker/dist/react-datepicker.css";
 
 function App() {
   return (
@@ -47,10 +49,13 @@ function App() {
         <Route path="/updateProfile" element={<UpdateProfile />}></Route>
         <Route path="/view3" element={<View3 />}></Route>
         <Route path="/view_all_req" element={<ViewAllReq />}></Route>
-        <Route path="/view_candidate1" element={<ViewCadByReq />}></Route>
 
         <Route path="/updateRequisition" element={<UpdateReq />}></Route>
         <Route path="/updateCandidate" element={<UpdateCandidate />}></Route>
+
+        <Route path="/viewReqForAdmin" element={<ViewReqForAdmin />}></Route>
+        <Route path="/viewCandForAdmin" element={<ViewCandForAdmin />}></Route>
+        <Route path="/viewAllStatusAdmin" element={<ViewAllStatusAdmin />}></Route>
         
         {/* <Route path="/navdemo1" element={<mobileScreen />}></Route> */}
         </Routes>

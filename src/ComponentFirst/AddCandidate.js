@@ -4,16 +4,24 @@ import base_url from '../api/bootapi';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import history from './ResponseVal';
-import Header from '../ViewComponent1/Header';
-import EmpSidebar from '../ViewComponent1/EmpSidebar';
-import { useRef } from 'react';
-import { getValue } from '@testing-library/user-event/dist/utils';
-import NavBarHeader from './NavbarHeader';
 import EmployeeHeader from './EmployeeHeader';
 
 class AddCandidate extends React.Component {
 
     componentDidMount() {
+
+        let recruiterID1 = localStorage.getItem('recruiterID');
+        let requisitionID1 = localStorage.getItem('requisitionID');
+        let RID1 = localStorage.getItem('RID');
+
+        console.log("RecId_New : "+recruiterID1+ " requisitionID "+requisitionID1+" RID : "+RID1);
+
+        this.setState({ 
+            requisitionID: requisitionID1,
+            recruiterID : recruiterID1,
+            RID : RID1
+        });
+
         this.refInput.focus();
         axios.get(`${base_url}/getAllRateTerm`)
         .then(json => 
@@ -148,8 +156,6 @@ class AddCandidate extends React.Component {
         let input = this.state.input;
         let errors = {};
         let isValid = true;
-        let addNew1 = true;
-        let addNew2 = true;
 
         console.log("type of input " + typeof (input["cad_name"]));
 
@@ -168,7 +174,7 @@ class AddCandidate extends React.Component {
             isValid = false;
             errors["cad_name"] = "This cad_name field is required";
         }
-        if ((input["cad_name"]) != undefined) {
+        if ((input["cad_name"]) !== undefined) {
 
             var pattern = new RegExp(/^[^\s][a-zA-Z\s]{3,50}$/);
             // RegExp(/^[a-zA-Z]{2,10}$/);
@@ -196,7 +202,7 @@ class AddCandidate extends React.Component {
             isValid = false;
             errors["submitted_rate"] = "This field is required";
         }
-        if ((input["submitted_rate"]) != undefined) {
+        if ((input["submitted_rate"]) !== undefined) {
 
             var pattern = new RegExp(/^[^\s][0-9$\s]{2,4}$/);
             // new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$%^&*,!? \b]).{6,15}$/); 
@@ -211,7 +217,7 @@ class AddCandidate extends React.Component {
             isValid = false;
             errors["phone"] = "This duration field is required";
         }
-        if ((input["phone"]) != undefined) {
+        if ((input["phone"]) !== undefined) {
 
             var pattern = new RegExp(/^[^\s][0-9 *()-\s]{4,15}$/);
             // new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$%^&*,!? \b]).{6,15}$/); 
@@ -240,7 +246,7 @@ class AddCandidate extends React.Component {
             isValid = false;
             errors["remark"] = "This remark field is required";
         }
-        if ((input["remark"]) != undefined) {
+        if ((input["remark"]) !== undefined) {
 
             var pattern = new RegExp(/^[^\s][a-zA-Z0-9 @#$%&*()_\\[\]{};':"\\|,.<>\/\s]{1,50}$/);
             // RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]+[^\s]{1,50}$/);
@@ -255,7 +261,7 @@ class AddCandidate extends React.Component {
             isValid = false;
             errors["reason"] = "This reason field is required";
         }
-        if ((input["reason"]) != undefined) {
+        if ((input["reason"]) !== undefined) {
 
             var pattern = new RegExp(/^[^\s][a-zA-Z0-9 @#$%&*()_\\[\]{};':"\\|,.<>\/\s]{1,50}$/);
             // RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]{1,50}$/);
