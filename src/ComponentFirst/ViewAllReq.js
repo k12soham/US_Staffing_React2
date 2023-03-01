@@ -1,8 +1,7 @@
 import { React, useState, useEffect } from "react";
 import axios from "axios";
 import base_url from "../api/bootapi";
-import Header from "../ViewComponent1/Header";
-import EmpSidebar from "../ViewComponent1/EmpSidebar";
+
 import { Table } from "reactstrap";
 import EmployeeHeader from "./EmployeeHeader";
 import { toast } from "react-toastify";
@@ -185,7 +184,7 @@ function ViewAllReq() {
                                 />
                             ) : (
 
-                                <a href="/view3" onClick={(evt) => getnewID({ rq: cls.requisition.requisition_id })}>{cls.requisition.requisition_from}</a>
+                                <a href="/viewCandidate" onClick={(evt) => getnewID({ rq: cls.requisition.requisition_id })}>{cls.requisition.requisition_from}</a>
                             )
 
                         }
@@ -396,7 +395,7 @@ function ViewAllReq() {
 
             <div className="master_backgroung_work scroll-bar-horizontal">
 
-                <div style={{ backgroundColor: '', width: '2100px' }}  >
+                <div style={{ backgroundColor: '', width: '1500px' }}  >
                     <Table bordered class="table table-sm" style={{ fontFamily: 'arial' }}>
                         <thead>
                             <tr>
@@ -407,11 +406,11 @@ function ViewAllReq() {
                                 <th style={{ width: '160px' }}>Job Title</th>
                                 <th style={{ width: '70px' }}>Duration</th>
                                 <th style={{ width: '100px' }}>Client Rate</th>
-                                <th style={{ width: '130px' }}>Location</th>
-                                <th style={{ width: '130px' }}>Position Type</th>
-                                <th style={{ width: '200px' }}>Skills</th>
+                                <th style={{ width: '100px' }}>Location</th>
+                                <th style={{ width: '120px' }}>Position Type</th>
+                                <th style={{ width: '150px' }}>Skills</th>
 
-                                <th style={{ width: '95px' }}>Action</th>
+                                <th style={{ width: '125px' }}>Action</th>
 
                             </tr>
                         </thead>

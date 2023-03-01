@@ -18,7 +18,7 @@ class AddRequisition extends React.Component {
         const isAuthenticated = localStorage.getItem('recruiterID');
         localStorage.setItem('recruiterID', isAuthenticated)
         this.setState({ empID: isAuthenticated })
-        console.log("recruiterID : " + isAuthenticated)
+       
 
         axios.get(`${base_url}/getAllDuration`)
             .then(json =>
@@ -160,6 +160,7 @@ class AddRequisition extends React.Component {
             let add_cls = this.state.input;
             add_cls[e.target.name] = e.target.value;
             if ((this.state.requisitionId1) != undefined) {
+                localStorage.setItem("requisitionID",this.state.requisitionId1)
                 alert("This Requisition is already exist. To submit candidate click to next.");
                 this.post_requisition(add_cls);
             }
@@ -427,12 +428,21 @@ class AddRequisition extends React.Component {
                 this.setState({ input: inputs });
             }
         );
+
+        
     }
+
+
+    
     // -------------------------------------------- render ----------------------------------------------------
     render() {
+
+    
+        
         const isAuthenticated = localStorage.getItem('recruiterID');
 
         return isAuthenticated ? (
+
             <div className="">
                 <div className="row">
 
@@ -496,10 +506,24 @@ class AddRequisition extends React.Component {
 
                                                     <option hidden value='' default selected> Select client name </option>
                                                     {
+                                                            
                                                         this.state.client_fd.map((cl) => (
+                                                        
+                                                            cl.requisitor_fd.requisitor_fd==this.state.input.req?
+                                                           (
                                                             <option value={cl.client_name}>{cl.client_name}</option>
+                                                           
+                                                           )
+                                                            :
+                                                            (
+                                                                null
+                                                            
+                                                            )
+                                                            
                                                         ))
                                                     }
+                                                    
+                                                     
                                                 </select>
 
                                                 <div className="text-danger">{this.state.errors.client}</div>
