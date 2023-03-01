@@ -223,10 +223,10 @@ class AdminStatic extends React.Component {
        this.setState({
         editstatus: true,
             editrowKey: reqid
-     })
-        this.setState({req1:currentreq})
-        
-       
+        })
+        this.setState({ req1: currentreq })
+
+
     }
 
     updateInventory1 = ({ reqid, newReq }) => {
@@ -755,13 +755,13 @@ onEdit7 = ({ ratetermid, currentrateterm }) => {
     }
  }
 
- onCancel7 = () => {
-     // reset the inEditMode state value
-     this.setState({
-         editstatus7: false,
-         editrowKey7: null
-     })
- }
+    onCancel7 = () => {
+        // reset the inEditMode state value
+        this.setState({
+            editstatus7: false,
+            editrowKey7: null
+        })
+    }
 
  handleupdate7(e) {
      let a= e.target.value;
@@ -1118,32 +1118,33 @@ handleChange5(e) {
  
  }
 
-postdata5(d)
-{
- axios.post(`${base_url}/AddDuration?duration=${d}`).then(
+    postdata5(d) {
+        axios.post(`${base_url}/AddDuration?duration=${d}`).then(
 
-     (response) => {
-        this.componentDidMount()
-        this.setState({duration:''})
-         toast.success("Duration added successfully!",
-             { position: "top-right", autoClose: 1000,
-             style: { position: "absolute", top: "5px", width: "300px" }}
-         );
-     },
-     (error) => {
-         console.log(error);
-         console.log("Error");
-         alert("Please enter valid details.")
-     }
- );
-}
+            (response) => {
+                this.componentDidMount()
+                this.setState({ duration: '' })
+                toast.success("Duration added successfully!",
+                    {
+                        position: "top-right", autoClose: 1000,
+                        style: { position: "absolute", top: "5px", width: "300px" }
+                    }
+                );
+            },
+            (error) => {
+                console.log(error);
+                console.log("Error");
+                alert("Please enter valid details.")
+            }
+        );
+    }
 
-handleChange6(e) {
-    let a= e.target.value;
-     this.setState({
-         visatype:a
-      } );
- }
+    handleChange6(e) {
+        let a = e.target.value;
+        this.setState({
+            visatype: a
+        });
+    }
 
  handleSubmit6(e) {
      e.preventDefault();
@@ -1157,33 +1158,34 @@ handleChange6(e) {
     
  }
 
-postdata6(d)
-{
- axios.post(`${base_url}/AddVisaType?visa_type=${d}`).then(
+    postdata6(d) {
+        axios.post(`${base_url}/AddVisaType?visa_type=${d}`).then(
 
-     (response) => {
-        this.componentDidMount()
-        this.setState({visatype:''})
-         toast.success("Visa Type added successfully!",
-             { position: "top-right", autoClose: 1000,
-             style: { position: "absolute", top: "5px", width: "300px" }}
-         );
-     },
-     (error) => {
-         console.log(error);
-         console.log("Error");
-         alert("Please enter valid details.")
-     }
- );
-}
+            (response) => {
+                this.componentDidMount()
+                this.setState({ visatype: '' })
+                toast.success("Visa Type added successfully!",
+                    {
+                        position: "top-right", autoClose: 1000,
+                        style: { position: "absolute", top: "5px", width: "300px" }
+                    }
+                );
+            },
+            (error) => {
+                console.log(error);
+                console.log("Error");
+                alert("Please enter valid details.")
+            }
+        );
+    }
 
 
-handleChange7(e) {
-    let a= e.target.value;
-     this.setState({
-         rateterm:a
-      } );
- }
+    handleChange7(e) {
+        let a = e.target.value;
+        this.setState({
+            rateterm: a
+        });
+    }
 
  handleSubmit7(e) {
      e.preventDefault();
@@ -1197,40 +1199,40 @@ handleChange7(e) {
    
  }
 
-postdata7(d)
-{
- axios.post(`${base_url}/AddRateTerm?rate_term=${d}`).then(
+    postdata7(d) {
+        axios.post(`${base_url}/AddRateTerm?rate_term=${d}`).then(
 
-     (response) => {
-        this.componentDidMount()
-        this.setState({rateterm:''})
-         toast.success("Rate Term added successfully!",
-             { position: "top-right", autoClose: 1000,
-             style: { position: "absolute", top: "5px", width: "300px" }}
-         );
-     },
-     (error) => {
-         console.log(error);
-         console.log("Error");
-         alert("Please enter valid details.")
-     }
- );
-}
+            (response) => {
+                this.componentDidMount()
+                this.setState({ rateterm: '' })
+                toast.success("Rate Term added successfully!",
+                    {
+                        position: "top-right", autoClose: 1000,
+                        style: { position: "absolute", top: "5px", width: "300px" }
+                    }
+                );
+            },
+            (error) => {
+                console.log(error);
+                console.log("Error");
+                alert("Please enter valid details.")
+            }
+        );
+    }
 
-/////////////// 
-reqlist()
-{
-    
-    return(
-     
-        
-     <List className='sc' ref={(input1) => { this.refInput = input1; }}> 
-                                                {
-                                             this.state.requisitor_fd.map((rq) => (
+    /////////////// 
+    reqlist() {
 
-                                            
-                                                     <tbody  >
-                                           
+        return (
+
+
+            <List className='sc' ref={(input1) => { this.refInput = input1; }}>
+                {
+                    this.state.requisitor_fd.map((rq) => (
+
+
+                        <tbody  >
+
 
                                                <td>
                         {
@@ -1292,29 +1294,29 @@ reqlist()
                                 <>
                                     <button
 
-                                        className={"btn btn-sm btn-outline-success"}
-                                        onClick={() => {
+                                                className={"btn btn-sm btn-outline-success"}
+                                                onClick={() => {
 
-                                            this.onSave1(
-                                                {
-                                                    reqid: rq.requisitor_id, newReq: this.state.req1,
-                                                })
-                                        }
-                                        }
-                                    >
-                                        <i class="fa fa-save"></i>
+                                                    this.onSave1(
+                                                        {
+                                                            reqid: rq.requisitor_id, newReq: this.state.req1,
+                                                        })
+                                                }
+                                                }
+                                            >
+                                                <i class="fa fa-save"></i>
 
-                                    </button>
+                                            </button>
 
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <button
-                                        className={"btn btn-sm btn-outline-warning"}
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <button
+                                                className={"btn btn-sm btn-outline-warning"}
 
-                                        onClick={() => this.onCancel1()}
-                                    >
-                                        <i class="fa fa-close"></i>
-                                    </button>
-                                </>
+                                                onClick={() => this.onCancel1()}
+                                            >
+                                                <i class="fa fa-close"></i>
+                                            </button>
+                                        </>
 
                             ) : (
                                 <>
@@ -1323,626 +1325,617 @@ reqlist()
                                     <button
                                         className="btn btn-sm btn-outline-success"
 
-                                        onClick={() => this.onEdit1({
-                                            reqid: rq.requisitor_id, currentreq: rq.requisitor_fd
-                                        })}
-                                    >
-                                      <i class="fas fa-edit"></i>
-                                      
-
-                                    </button>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <button className="btn btn-sm btn-outline-danger"
-                                        onClick={() => { if (window.confirm('Are you sure to delete?')) this.delete1(rq.requisitor_id) }}><i class="fa fa-trash"></i></button>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                </>
-
-                            )
-                        }
-
-                    </td>
-
-                                               </tbody>
-                                            
-                                              
-                                               ))   
-                                             }    
-                                            </List>
-    )
-}
-
-
-statuslist()
-{
-    
-    return(
-     
-        
-     <List className='sc' ref={(input2) => { this.refInput = input2; }}> 
-                                                {
-                                             this.state.status_fd.map((st) => (
-
-                                            
-                                                     <tbody  >
-                                           
-
-                                               <td>
-                        {
-                           this.state.editstatus2&&  this.state.editrowKey2 === st.status_fd_id ? ( 
-                                    <input required value={this.state.st1}
-                                    onChange={this.handleupdate2}
-                                    style={{ width: "100px" }}
-                                   
-                                />
-                            ) : (
-                              st.status_fd
-                            )
-                        }
-                    </td>
-                    <td>
-                        {
-                            this.state.editstatus2 && this.state.editrowKey2 === st.status_fd_id ? (
-                                <>
-                                    <button
-
-                                        className={"btn btn-sm btn-outline-success"}
-                                        onClick={() => {
-
-                                            this.onSave2(
-                                                {
-                                                    stid:st.status_fd_id, newst: this.state.st1,
-                                                })
-                                        }
-                                        }
-                                    >
-                                        <i class="fa fa-save"></i>
-
-                                    </button>
-
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <button
-                                        className={"btn btn-sm btn-outline-warning"}
-
-                                        onClick={() => this.onCancel2()}
-                                    >
-                                        <i class="fa fa-close"></i>
-                                    </button>
-                                </>
-
-                            ) : (
-                                <>
-                                    <button
-                                        className="btn btn-sm btn-outline-success"
-
-                                        onClick={() => this.onEdit2({
-                                            stid: st.status_fd_id, currentst: st.status_fd
-                                        })}
-                                    >
-                                        <i class="fa fa-edit"></i>
-
-                                    </button>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <button className="btn btn-sm btn-outline-danger"
-                                        onClick={() => { if (window.confirm('Are you sure to delete?')) this.delete2(st.status_fd_id) }}><i class="fa fa-trash"></i></button>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                </>
-
-                            )
-                        }
-
-                    </td>
-
-
-
-                                               </tbody>
-                                            
-                                              
-                                               ))   
-                                             }    
-                                            </List>
-    )
-}
-
-durationlist()
-{
-    
-    return(
-     
-        
-     <List className='sc' ref={(input3) => { this.refInput = input3; }}> 
-                                                {
-                                             this.state.duration_fd.map((dr) => (
-
-                                            
-                                                     <tbody  >
-                                           
-
-                                               <td>
-                        {
-                           this.state.editstatus3&&  this.state.editrowKey3 === dr.duration_id ? ( 
-                                    <input required value={this.state.duration1}
-                                    onChange={this.handleupdate3}
-                                    style={{ width: "100px" }}
-                                   
-                                />
-                            ) : (
-                              dr.duration
-                            )
-                        }
-                    </td>
-                    <td>
-                        {
-                            this.state.editstatus3 && this.state.editrowKey3 === dr.duration_id ? (
-                                <>
-                                    <button
-
-                                        className={"btn btn-sm btn-outline-success"}
-                                        onClick={() => {
-
-                                            this.onSave3(
-                                                {
-                                                    durationid:dr.duration_id, newduration: this.state.duration1,
-                                                })
-                                        }
-                                        }
-                                    >
-                                        <i class="fa fa-save"></i>
-
-                                    </button>
-
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <button
-                                        className={"btn btn-sm btn-outline-warning"}
-
-                                        onClick={() => this.onCancel3()}
-                                    >
-                                        <i class="fa fa-close"></i>
-                                    </button>
-                                </>
-
-                            ) : (
-                                <>
-                                    <button
-                                        className="btn btn-sm btn-outline-success"
-
-                                        onClick={() => this.onEdit3({
-                                            durationid: dr.duration_id, currentduration: dr.duration
-                                        })}
-                                    >
-                                        <i class="fa fa-edit"></i>
-
-                                    </button>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <button className="btn btn-sm btn-outline-danger"
-                                        onClick={() => { if (window.confirm('Are you sure to delete?')) this.delete3(dr.duration_id) }}><i class="fa fa-trash"></i></button>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                </>
-
-                            )
-                        }
-
-                    </td>
-
-
-
-                                               </tbody>
-                                            
-                                              
-                                               ))   
-                                             }    
-                                            </List>
-    )
-}
-
-clientlist()
-{
-    
-    return(
-     
-        
-     <List className='sc' ref={(input4) => { this.refInput = input4; }}> 
-                                                {
-                                             this.state.client_fd.map((cl) => (
-
-                                            
-                                                     <tbody  >
-                                           
-
-                                               <td>
-                        {
-                           this.state.editstatus4&&  this.state.editrowKey4 === cl.client_id ? ( 
-                                    <input required value={this.state.client1}
-                                    onChange={this.handleupdate4}
-                                    style={{ width: "100px" }}
-                                   
-                                />
-                            ) : (
-                               cl.client_name
-                            )
-                        }
-                    </td>
-                    <td>
-                        {
-                            this.state.editstatus4 && this.state.editrowKey4 === cl.client_id ? (
-                                <>
-                                    <button
-
-                                        className={"btn btn-sm btn-outline-success"}
-                                        onClick={() => {
-
-                                            this.onSave4(
-                                                {
-                                                    clientid:cl.client_id, newclient: this.state.client1,
-                                                })
-                                        }
-                                        }
-                                    >
-                                        <i class="fa fa-save"></i>
-
-                                    </button>
-
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <button
-                                        className={"btn btn-sm btn-outline-warning"}
-
-                                        onClick={() => this.onCancel4()}
-                                    >
-                                        <i class="fa fa-close"></i>
-                                    </button>
-                                </>
-
-                            ) : (
-                                <>
-                                    <button
-                                        className="btn btn-sm btn-outline-success"
-
-                                        onClick={() => this.onEdit4({
-                                            clientid: cl.client_id, currentclient: cl.client_name
-                                        })}
-                                    >
-                                        <i class="fa fa-edit"></i>
-
-                                    </button>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <button className="btn btn-sm btn-outline-danger"
-                                        onClick={() => { if (window.confirm('Are you sure to delete?')) this.delete4(cl.client_id) }}><i class="fa fa-trash"></i></button>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                </>
-
-                            )
-                        }
-
-                    </td>
-
-                                               </tbody>
-                                            
-                                              
-                                               ))   
-                                             }    
-                                            </List>
-    )
-}
-
-positionlist()
-{
-    
-    return(
-     
-        
-     <List className='sc' ref={(input5) => { this.refInput = input5; }}> 
-                                                {
-                                             this.state.positionType_fd.map((pt) => (
-
-                                            
-                                                     <tbody  >
-                                           
-
-                                               <td>
-                        {
-                           this.state.editstatus5&&  this.state.editrowKey5 === pt.position_type_id ? ( 
-                                    <input required value={this.state.position1}
-                                    onChange={this.handleupdate5}
-                                    style={{ width: "100px" }}
-                                   
-                                />
-                            ) : (
-                                pt.position_type
-                            )
-                        }
-                    </td>
-                    <td>
-                        {
-                            this.state.editstatus5 && this.state.editrowKey5 === pt.position_type_id ? (
-                                <>
-                                    <button
-
-                                        className={"btn btn-sm btn-outline-success"}
-                                        onClick={() => {
-
-                                            this.onSave5(
-                                                {
-                                                   positionid:pt.position_type_id, newposition: this.state.position1,
-                                                })
-                                        }
-                                        }
-                                    >
-                                        <i class="fa fa-save"></i>
-
-                                    </button>
-
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <button
-                                        className={"btn btn-sm btn-outline-warning"}
-
-                                        onClick={() => this.onCancel5()}
-                                    >
-                                        <i class="fa fa-close"></i>
-                                    </button>
-                                </>
-
-                            ) : (
-                                <>
-                                    <button
-                                        className="btn btn-sm btn-outline-success"
-
-                                        onClick={() => this.onEdit5({
-                                            positionid: pt.position_type_id, currentposition: pt.position_type
-                                        })}
-                                    >
-                                        <i class="fa fa-edit"></i>
-
-                                    </button>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <button className="btn btn-sm btn-outline-danger"
-                                        onClick={() => { if (window.confirm('Are you sure to delete?')) this.delete5(pt.position_type_id) }}><i class="fa fa-trash"></i></button>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                </>
-
-                            )
-                        }
-
-                    </td>
-
-                                               </tbody>
-                                            
-                                              
-                                               ))   
-                                             }    
-                                            </List>
-    )
-}
-
-
-
-visalist()
-{
-    
-    return(
-     
-        
-     <List className='sc' ref={(input6) => { this.refInput = input6; }}> 
-                                                {
-                                             this.state.visaType_fd.map((vt) => (
-
-                                            
-                                                     <tbody  >
-                                           
-
-                                               <td>
-                        {
-                           this.state.editstatus6&&  this.state.editrowKey6 === vt.visa_type_id ? ( 
-                                    <input required value={this.state.visatype1}
-                                    onChange={this.handleupdate6}
-                                    style={{ width: "100px" }}
-                                   
-                                />
-                            ) : (
-                                vt.visa_type
-                            )
-                        }
-                    </td>
-                    <td>
-                        {
-                            this.state.editstatus6 && this.state.editrowKey6 === vt.visa_type_id ? (
-                                <>
-                                    <button
-
-                                        className={"btn btn-sm btn-outline-success"}
-                                        onClick={() => {
-
-                                            this.onSave6(
-                                                {
-                                                   visatypeid:vt.visa_type_id, newvisatype: this.state.visatype1,
-                                                })
-                                        }
-                                        }
-                                    >
-                                        <i class="fa fa-save"></i>
-
-                                    </button>
-
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <button
-                                        className={"btn btn-sm btn-outline-warning"}
-
-                                        onClick={() => this.onCancel6()}
-                                    >
-                                        <i class="fa fa-close"></i>
-                                    </button>
-                                </>
-
-                            ) : (
-                                <>
-                                    <button
-                                        className="btn btn-sm btn-outline-success"
-
-                                        onClick={() => this.onEdit6({
-                                            visatypeid: vt.visa_type_id, currentvisatype: vt.visa_type
-                                        })}
-                                    >
-                                        <i class="fa fa-edit"></i>
-
-                                    </button>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <button className="btn btn-sm btn-outline-danger"
-                                        onClick={() => { if (window.confirm('Are you sure to delete?')) this.delete6(vt.visa_type_id) }}><i class="fa fa-trash"></i></button>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                </>
-
-                            )
-                        }
-
-                    </td>
-
-                                               </tbody>
-                                            
-                                              
-                                               ))   
-                                             }    
-                                            </List>
-    )
-}
-
-
-//// edit rate term
-ratelist()
-{
-    
-    return(
-     
-        
-     <List className='sc' ref={(input7) => { this.refInput = input7; }}> 
-                                                {
-                                             this.state.rateTerm_fd.map((rt) => (
-
-                                            
-                                                     <tbody  >
-                                           
-
-                                               <td>
-                        {
-                           this.state.editstatus7&&  this.state.editrowKey7 === rt.rate_term_id ? ( 
-                                    <input required value={this.state.rateterm1}
-                                    onChange={this.handleupdate7}
-                                    style={{ width: "100px" }}
-                                   
-                                />
-                            ) : (
-                              rt.rate_term
-                            )
-                        }
-                    </td>
-                    <td>
-                        {
-                            this.state.editstatus7 && this.state.editrowKey7 === rt.rate_term_id ? (
-                                <>
-                                    <button
-
-                                        className={"btn btn-sm btn-outline-success"}
-                                        onClick={() => {
-
-                                            this.onSave7(
-                                                {
-                                                    ratetermid:rt.rate_term_id, newrateterm: this.state.rateterm1,
-                                                })
-                                        }
-                                        }
-                                    >
-                                        <i class="fa fa-save"></i>
-
-                                    </button>
-
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <button
-                                        className={"btn btn-sm btn-outline-warning"}
-
-                                        onClick={() => this.onCancel7()}
-                                    >
-                                        <i class="fa fa-close"></i>
-                                    </button>
-                                </>
-
-                            ) : (
-                                <>
-                                    <button
-                                        className="btn btn-sm btn-outline-success"
-
-                                        onClick={() => this.onEdit7({
-                                            ratetermid:rt.rate_term_id, currentrateterm: rt.rate_term
-                                        })}
-                                    >
-                                        <i class="fa fa-edit"></i>
-
-                                    </button>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <button className="btn btn-sm btn-outline-danger"
-                                        onClick={() => { if (window.confirm('Are you sure to delete?')) this.delete7(rt.rate_term_id) }}><i class="fa fa-trash"></i></button>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                </>
-
-                            )
-                        }
-
-                    </td>
-
-
-
-                                               </tbody>
-                                            
-                                              
-                                               ))   
-                                             }    
-                                            </List>
-    )
-}
-//  Boxshow()
-// {
-  
-//     console.log("abcd")
-//     //this.setState({isShown:true})
-
-// }
-//  Box()
-// {
-
-//         return(
-//             <div>
-//                 {
-//                     alert(this.isShown)
-//                 }
-            
-//      <form onSubmit={this.handleSubmit1}>
-//                                             <label>Add new requisitor</label><br></br>
-//                                                <input type="text"   value={this.state.req} onChange={this.handleChange1}></input>
-//                                                 <button >Save</button>
-//                                             <div className="text-danger">{this.state.errors.req}</div>
-//                                             </form><br></br><br></br>
-//                                             {
-//                                             this.setState({isShown:false})
-//                                             } 
-                                         
-//                                             </div> 
-                                         
-                                    
-//         )
-       
-// }
-
-
-    
+                                                onClick={() => this.onEdit1({
+                                                    reqid: rq.requisitor_id, currentreq: rq.requisitor_fd
+                                                })}
+                                            >
+                                                <i class="fas fa-edit"></i>
+
+
+                                            </button>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <button className="btn btn-sm btn-outline-danger"
+                                                onClick={() => { if (window.confirm('Are you sure to delete?')) this.delete1(rq.requisitor_id) }}><i class="fa fa-trash"></i></button>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                        </>
+
+                                    )
+                                }
+
+                            </td>
+
+                        </tbody>
+
+
+                    ))
+                }
+            </List>
+        )
+    }
+
+
+    statuslist() {
+
+        return (
+
+
+            <List className='sc' ref={(input2) => { this.refInput = input2; }}>
+                {
+                    this.state.status_fd.map((st) => (
+
+
+                        <tbody  >
+
+
+                            <td>
+                                {
+                                    this.state.editstatus2 && this.state.editrowKey2 === st.status_fd_id ? (
+                                        <input required value={this.state.st1}
+                                            onChange={this.handleupdate2}
+                                            style={{ width: "100px" }}
+
+                                        />
+                                    ) : (
+                                        st.status_fd
+                                    )
+                                }
+                            </td>
+                            <td>
+                                {
+                                    this.state.editstatus2 && this.state.editrowKey2 === st.status_fd_id ? (
+                                        <>
+                                            <button
+
+                                                className={"btn btn-sm btn-outline-success"}
+                                                onClick={() => {
+
+                                                    this.onSave2(
+                                                        {
+                                                            stid: st.status_fd_id, newst: this.state.st1,
+                                                        })
+                                                }
+                                                }
+                                            >
+                                                <i class="fa fa-save"></i>
+
+                                            </button>
+
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <button
+                                                className={"btn btn-sm btn-outline-warning"}
+
+                                                onClick={() => this.onCancel2()}
+                                            >
+                                                <i class="fa fa-close"></i>
+                                            </button>
+                                        </>
+
+                                    ) : (
+                                        <>
+                                            <button
+                                                className="btn btn-sm btn-outline-success"
+
+                                                onClick={() => this.onEdit2({
+                                                    stid: st.status_fd_id, currentst: st.status_fd
+                                                })}
+                                            >
+                                                <i class="fa fa-edit"></i>
+
+                                            </button>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <button className="btn btn-sm btn-outline-danger"
+                                                onClick={() => { if (window.confirm('Are you sure to delete?')) this.delete2(st.status_fd_id) }}><i class="fa fa-trash"></i></button>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                        </>
+
+                                    )
+                                }
+
+                            </td>
+
+
+
+                        </tbody>
+
+
+                    ))
+                }
+            </List>
+        )
+    }
+
+    durationlist() {
+
+        return (
+
+
+            <List className='sc' ref={(input3) => { this.refInput = input3; }}>
+                {
+                    this.state.duration_fd.map((dr) => (
+
+
+                        <tbody  >
+
+
+                            <td>
+                                {
+                                    this.state.editstatus3 && this.state.editrowKey3 === dr.duration_id ? (
+                                        <input required value={this.state.duration1}
+                                            onChange={this.handleupdate3}
+                                            style={{ width: "100px" }}
+
+                                        />
+                                    ) : (
+                                        dr.duration
+                                    )
+                                }
+                            </td>
+                            <td>
+                                {
+                                    this.state.editstatus3 && this.state.editrowKey3 === dr.duration_id ? (
+                                        <>
+                                            <button
+
+                                                className={"btn btn-sm btn-outline-success"}
+                                                onClick={() => {
+
+                                                    this.onSave3(
+                                                        {
+                                                            durationid: dr.duration_id, newduration: this.state.duration1,
+                                                        })
+                                                }
+                                                }
+                                            >
+                                                <i class="fa fa-save"></i>
+
+                                            </button>
+
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <button
+                                                className={"btn btn-sm btn-outline-warning"}
+
+                                                onClick={() => this.onCancel3()}
+                                            >
+                                                <i class="fa fa-close"></i>
+                                            </button>
+                                        </>
+
+                                    ) : (
+                                        <>
+                                            <button
+                                                className="btn btn-sm btn-outline-success"
+
+                                                onClick={() => this.onEdit3({
+                                                    durationid: dr.duration_id, currentduration: dr.duration
+                                                })}
+                                            >
+                                                <i class="fa fa-edit"></i>
+
+                                            </button>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <button className="btn btn-sm btn-outline-danger"
+                                                onClick={() => { if (window.confirm('Are you sure to delete?')) this.delete3(dr.duration_id) }}><i class="fa fa-trash"></i></button>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                        </>
+
+                                    )
+                                }
+
+                            </td>
+
+
+
+                        </tbody>
+
+
+                    ))
+                }
+            </List>
+        )
+    }
+
+    clientlist() {
+
+        return (
+
+
+            <List className='sc' ref={(input4) => { this.refInput = input4; }}>
+                {
+                    this.state.client_fd.map((cl) => (
+
+
+                        <tbody  >
+
+
+                            <td>
+                                {
+                                    this.state.editstatus4 && this.state.editrowKey4 === cl.client_id ? (
+                                        <input required value={this.state.client1}
+                                            onChange={this.handleupdate4}
+                                            style={{ width: "100px" }}
+
+                                        />
+                                    ) : (
+                                        cl.client_name
+                                    )
+                                }
+                            </td>
+                            <td>
+                                {
+                                    this.state.editstatus4 && this.state.editrowKey4 === cl.client_id ? (
+                                        <>
+                                            <button
+
+                                                className={"btn btn-sm btn-outline-success"}
+                                                onClick={() => {
+
+                                                    this.onSave4(
+                                                        {
+                                                            clientid: cl.client_id, newclient: this.state.client1,
+                                                        })
+                                                }
+                                                }
+                                            >
+                                                <i class="fa fa-save"></i>
+
+                                            </button>
+
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <button
+                                                className={"btn btn-sm btn-outline-warning"}
+
+                                                onClick={() => this.onCancel4()}
+                                            >
+                                                <i class="fa fa-close"></i>
+                                            </button>
+                                        </>
+
+                                    ) : (
+                                        <>
+                                            <button
+                                                className="btn btn-sm btn-outline-success"
+
+                                                onClick={() => this.onEdit4({
+                                                    clientid: cl.client_id, currentclient: cl.client_name
+                                                })}
+                                            >
+                                                <i class="fa fa-edit"></i>
+
+                                            </button>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <button className="btn btn-sm btn-outline-danger"
+                                                onClick={() => { if (window.confirm('Are you sure to delete?')) this.delete4(cl.client_id) }}><i class="fa fa-trash"></i></button>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                        </>
+
+                                    )
+                                }
+
+                            </td>
+
+                        </tbody>
+
+
+                    ))
+                }
+            </List>
+        )
+    }
+
+    positionlist() {
+
+        return (
+
+
+            <List className='sc' ref={(input5) => { this.refInput = input5; }}>
+                {
+                    this.state.positionType_fd.map((pt) => (
+
+
+                        <tbody  >
+
+
+                            <td>
+                                {
+                                    this.state.editstatus5 && this.state.editrowKey5 === pt.position_type_id ? (
+                                        <input required value={this.state.position1}
+                                            onChange={this.handleupdate5}
+                                            style={{ width: "100px" }}
+
+                                        />
+                                    ) : (
+                                        pt.position_type
+                                    )
+                                }
+                            </td>
+                            <td>
+                                {
+                                    this.state.editstatus5 && this.state.editrowKey5 === pt.position_type_id ? (
+                                        <>
+                                            <button
+
+                                                className={"btn btn-sm btn-outline-success"}
+                                                onClick={() => {
+
+                                                    this.onSave5(
+                                                        {
+                                                            positionid: pt.position_type_id, newposition: this.state.position1,
+                                                        })
+                                                }
+                                                }
+                                            >
+                                                <i class="fa fa-save"></i>
+
+                                            </button>
+
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <button
+                                                className={"btn btn-sm btn-outline-warning"}
+
+                                                onClick={() => this.onCancel5()}
+                                            >
+                                                <i class="fa fa-close"></i>
+                                            </button>
+                                        </>
+
+                                    ) : (
+                                        <>
+                                            <button
+                                                className="btn btn-sm btn-outline-success"
+
+                                                onClick={() => this.onEdit5({
+                                                    positionid: pt.position_type_id, currentposition: pt.position_type
+                                                })}
+                                            >
+                                                <i class="fa fa-edit"></i>
+
+                                            </button>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <button className="btn btn-sm btn-outline-danger"
+                                                onClick={() => { if (window.confirm('Are you sure to delete?')) this.delete5(pt.position_type_id) }}><i class="fa fa-trash"></i></button>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                        </>
+
+                                    )
+                                }
+
+                            </td>
+
+                        </tbody>
+
+
+                    ))
+                }
+            </List>
+        )
+    }
+
+
+
+    visalist() {
+
+        return (
+
+
+            <List className='sc' ref={(input6) => { this.refInput = input6; }}>
+                {
+                    this.state.visaType_fd.map((vt) => (
+
+
+                        <tbody  >
+
+
+                            <td>
+                                {
+                                    this.state.editstatus6 && this.state.editrowKey6 === vt.visa_type_id ? (
+                                        <input required value={this.state.visatype1}
+                                            onChange={this.handleupdate6}
+                                            style={{ width: "100px" }}
+
+                                        />
+                                    ) : (
+                                        vt.visa_type
+                                    )
+                                }
+                            </td>
+                            <td>
+                                {
+                                    this.state.editstatus6 && this.state.editrowKey6 === vt.visa_type_id ? (
+                                        <>
+                                            <button
+
+                                                className={"btn btn-sm btn-outline-success"}
+                                                onClick={() => {
+
+                                                    this.onSave6(
+                                                        {
+                                                            visatypeid: vt.visa_type_id, newvisatype: this.state.visatype1,
+                                                        })
+                                                }
+                                                }
+                                            >
+                                                <i class="fa fa-save"></i>
+
+                                            </button>
+
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <button
+                                                className={"btn btn-sm btn-outline-warning"}
+
+                                                onClick={() => this.onCancel6()}
+                                            >
+                                                <i class="fa fa-close"></i>
+                                            </button>
+                                        </>
+
+                                    ) : (
+                                        <>
+                                            <button
+                                                className="btn btn-sm btn-outline-success"
+
+                                                onClick={() => this.onEdit6({
+                                                    visatypeid: vt.visa_type_id, currentvisatype: vt.visa_type
+                                                })}
+                                            >
+                                                <i class="fa fa-edit"></i>
+
+                                            </button>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <button className="btn btn-sm btn-outline-danger"
+                                                onClick={() => { if (window.confirm('Are you sure to delete?')) this.delete6(vt.visa_type_id) }}><i class="fa fa-trash"></i></button>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                        </>
+
+                                    )
+                                }
+
+                            </td>
+
+                        </tbody>
+
+
+                    ))
+                }
+            </List>
+        )
+    }
+
+
+    //// edit rate term
+    ratelist() {
+
+        return (
+
+
+            <List className='sc' ref={(input7) => { this.refInput = input7; }}>
+                {
+                    this.state.rateTerm_fd.map((rt) => (
+
+
+                        <tbody  >
+
+
+                            <td>
+                                {
+                                    this.state.editstatus7 && this.state.editrowKey7 === rt.rate_term_id ? (
+                                        <input required value={this.state.rateterm1}
+                                            onChange={this.handleupdate7}
+                                            style={{ width: "100px" }}
+
+                                        />
+                                    ) : (
+                                        rt.rate_term
+                                    )
+                                }
+                            </td>
+                            <td>
+                                {
+                                    this.state.editstatus7 && this.state.editrowKey7 === rt.rate_term_id ? (
+                                        <>
+                                            <button
+
+                                                className={"btn btn-sm btn-outline-success"}
+                                                onClick={() => {
+
+                                                    this.onSave7(
+                                                        {
+                                                            ratetermid: rt.rate_term_id, newrateterm: this.state.rateterm1,
+                                                        })
+                                                }
+                                                }
+                                            >
+                                                <i class="fa fa-save"></i>
+
+                                            </button>
+
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <button
+                                                className={"btn btn-sm btn-outline-warning"}
+
+                                                onClick={() => this.onCancel7()}
+                                            >
+                                                <i class="fa fa-close"></i>
+                                            </button>
+                                        </>
+
+                                    ) : (
+                                        <>
+                                            <button
+                                                className="btn btn-sm btn-outline-success"
+
+                                                onClick={() => this.onEdit7({
+                                                    ratetermid: rt.rate_term_id, currentrateterm: rt.rate_term
+                                                })}
+                                            >
+                                                <i class="fa fa-edit"></i>
+
+                                            </button>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <button className="btn btn-sm btn-outline-danger"
+                                                onClick={() => { if (window.confirm('Are you sure to delete?')) this.delete7(rt.rate_term_id) }}><i class="fa fa-trash"></i></button>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                        </>
+
+                                    )
+                                }
+
+                            </td>
+
+
+
+                        </tbody>
+
+
+                    ))
+                }
+            </List>
+        )
+    }
+    //  Boxshow()
+    // {
+
+    //     console.log("abcd")
+    //     //this.setState({isShown:true})
+
+    // }
+    //  Box()
+    // {
+
+    //         return(
+    //             <div>
+    //                 {
+    //                     alert(this.isShown)
+    //                 }
+
+    //      <form onSubmit={this.handleSubmit1}>
+    //                                             <label>Add new requisitor</label><br></br>
+    //                                                <input type="text"   value={this.state.req} onChange={this.handleChange1}></input>
+    //                                                 <button >Save</button>
+    //                                             <div className="text-danger">{this.state.errors.req}</div>
+    //                                             </form><br></br><br></br>
+    //                                             {
+    //                                             this.setState({isShown:false})
+    //                                             } 
+
+    //                                             </div> 
+
+
+    //         )
+
+    // }
 
     render() {
         const isAuthenticated = localStorage.getItem('recruiterIDAdmin');
-    
+
         return isAuthenticated ? (
-      
+
             <div className="container-fluid">
                 <div className="row">
 
                     <div className="col-12 h-100 master_backgroung_heder">
-                        <AdminHeader/>
+                        <AdminHeader />
                     </div>
-                  
+
                     <div className="col-12 master_backgroung_work scroll-bar">
 
                         <div className="row">
@@ -1994,15 +1987,15 @@ ratelist()
 
                                            <div className="col-3">
 
-                                            <label for="status"><b>Status:</b></label><br />
+                                        <label for="status"><b>Status:</b></label><br />
 
-                                            <Table>
-                                               
-                                                <tbody>
-                                                    <td>{this.statuslist()}</td>
-                                                </tbody>
-                                            </Table>
-                                            <form onSubmit={this.handleSubmit3}>
+                                        <Table>
+
+                                            <tbody>
+                                                <td>{this.statuslist()}</td>
+                                            </tbody>
+                                        </Table>
+                                        <form onSubmit={this.handleSubmit3}>
                                             <label>Add new status</label><br></br>
                                                <input type="text"  name="status"  style={{height:23}} value={this.state.status} onChange={this.handleChange3}></input>
                                                <button class= "btn btn-sm  btn-success"> <i class=" fa fa-save"></i>&nbsp;Add</button>
@@ -2045,20 +2038,20 @@ ratelist()
                                            </div>
 
 
-                                             <div className="col-3">
+                                    <div className="col-3">
 
-                                            <label for="duration"><b>Duration:</b></label><br />
+                                        <label for="duration"><b>Duration:</b></label><br />
 
-                                            <Table>
-                                               
-                                               <tbody>
-                                                   <td>{this.durationlist()}</td>
-                                               </tbody>
-                                           </Table>
-                                            <form onSubmit={this.handleSubmit5}>
+                                        <Table>
+
+                                            <tbody>
+                                                <td>{this.durationlist()}</td>
+                                            </tbody>
+                                        </Table>
+                                        <form onSubmit={this.handleSubmit5}>
                                             <label>Add new duration</label><br></br>
-                                               <input type="text"  name="duration"  style={{height:23}} value={this.state.duration} onChange={this.handleChange5}></input>
-                                               <button class= "btn btn-sm  btn-success"> <i class=" fa fa-save"></i>&nbsp;Add</button>
+                                            <input type="text" name="duration" style={{ height: 23 }} value={this.state.duration} onChange={this.handleChange5}></input>
+                                            <button class="btn btn-sm  btn-success"> <i class=" fa fa-save"></i>&nbsp;Add</button>
                                             <div className="text-danger">{this.state.errors.duration}</div>
                                             </form><br></br><br></br>
 
@@ -2084,46 +2077,33 @@ ratelist()
 
                                          <div className="col-3">
 
-                                                <label for="rateterm"><b>Rate Term:</b></label><br />
+                                        <label for="rateterm"><b>Rate Term:</b></label><br />
 
-                                                <Table>
-                                               
-                                               <tbody>
-                                                   <td>{this.ratelist()}</td>
-                                               </tbody>
-                                           </Table>
-                                                <form onSubmit={this.handleSubmit7}>
-                                                <label>Add new rate term</label><br></br>
-                                                <input type="text"  name="rateterm"  style={{height:23}} value={this.state.rateterm} onChange={this.handleChange7}></input>
-                                                <button class= "btn btn-sm  btn-success"> <i class=" fa fa-save"></i>&nbsp;Add</button>
-                                                <div className="text-danger">{this.state.errors.rateterm}</div>
-                                                </form><br></br><br></br>
+                                        <Table>
+                                            <tbody>
+                                                <td>{this.ratelist()}</td>
+                                            </tbody>
+                                        </Table>
+                                        <form onSubmit={this.handleSubmit7}>
+                                            <label>Add new rate term</label><br></br>
+                                            <input type="text" name="rateterm" style={{ height: 23 }} value={this.state.rateterm} onChange={this.handleChange7}></input>
+                                            <button class="btn btn-sm  btn-success"> <i class=" fa fa-save"></i>&nbsp;Add</button>
+                                            <div className="text-danger">{this.state.errors.rateterm}</div>
+                                        </form><br></br><br></br>
 
-
-
-                                                </div>
- 
-
-
-
-
-
+                                    </div>
                                 </div>
-                        </div>  
-                                            
-                        
+                            </div>
                         </div>
-
                     </div>
+                </div>
+            </div>
+        )
 
-                                            </div >
-            </div >
-        ) 
-        
-        : (
-            history.push("/"),
-            window.location.reload()
-        );
+            : (
+                history.push("/"),
+                window.location.reload()
+            );
     }
 }
 

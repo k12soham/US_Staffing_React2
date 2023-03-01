@@ -9,8 +9,8 @@ function EmployeeHeader() {
   const recruiterName = localStorage.getItem('recruiterName');
   const recruiterID = localStorage.getItem('recruiterID');
 
-  console.log(recruiterID);
-  console.log(recruiterName);
+  // console.log(recruiterID);
+  // console.log(recruiterName);
 
   return (
     <div>

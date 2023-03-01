@@ -29,13 +29,9 @@ function AdminHeader() {
           <li className="nav-item">
             <a className="nav-link" aria-current="page" href="/adminstatic">Static data</a>
           </li>
-          {/* <li className="nav-item">
-            <a className="nav-link" aria-current="page" href="/addCandidate">Add Candidate</a>
-          </li>
-         
           <li className="nav-item">
-            <a className="nav-link" href="view_all">View all records</a>
-          </li> */}
+            <a className="nav-link" href="viewReqForAdmin">View Requisition</a>
+          </li>
           
         </ul>
       </div>

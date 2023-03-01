@@ -49,26 +49,6 @@ function NavBarHeader() {
 
     </div>
 
-
-    // <div className="navbar-css-1">
-    //   <nav className="navbar navbar-light">
-    //     <div className="container-fluid">
-    //       <div className="navbar-header">
-    //         <a className="navbar-brand" href="#" style={{color:"GrayText"}}>US STAFFING APP</a>
-    //       </div>
-    //       <ul className="nav navbar-nav">
-    //         <li className="active"><a href="#">Home</a></li>
-    //         <li><a href="#">Page 1</a></li>
-    //         <li><a href="#">Page 2</a></li>
-    //       </ul>
-    //       <ul className="nav navbar-nav navbar-right">
-    //          <ModalWithCSS />
-    //       </ul>
-    //     </div>
-    //   </nav>
-
-    // </div>
-
   )
 }
 
