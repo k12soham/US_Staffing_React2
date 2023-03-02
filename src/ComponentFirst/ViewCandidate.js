@@ -50,11 +50,36 @@ function ViewCandidate() {
 
     }, []);
 
+    // const getStatusData = ()=>{
+    //     axios.get(`${base_url}/getAllRequisition`).then(json => setClosureList(json.data))
+    //     axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
+    // }
+
     let sessionreq = localStorage.getItem("requisitionID")
     let empID = localStorage.getItem("recruiterID")
     console.log(sessionreq)
     console.log(empID)
-    const deleteBook = (id) => { }
+
+    const deleteBook = (candidateID) => {
+
+
+        console.log(candidateID);
+        axios.delete(`${base_url}/deleteCadByAdmin?candidate_id=${candidateID}`)
+        .then(response => {
+
+            toast.success("Record deleted successfully!", {
+                position: "top-right",
+                autoClose: 1000,
+                style: { position: "absolute", top: "5px", width: "300px" }
+            });
+
+            axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
+         
+        },
+            (error) => {
+                // alert("Enter valid data");
+            });
+     }
 
     const updateInventory = ({ newReqid, newReqFrom, newId, newClient, newJobTitle, newDuration,
         newClientRate, newLocation, newSkills }) => {
@@ -196,8 +221,8 @@ function ViewCandidate() {
         return statusList.map(st => {
             // console.log(st.requisition.requisition_id)
             //  console.log(sessionreq)
-            if (st.requisition.requisition_id == sessionreq
-                && st.recruiter.recruiter_id == empID && st.flag == 1)
+            if (st.requisition.requisition_id == sessionreq && st.recruiter.recruiter_id == empID 
+                && st.flag == 1 && (st.candidate==null||st.candidate.deleted==1)) 
                 // console.log(st.requisition.requisition_id)
                 // console.log(sessionreq)
                 // ||(st.requisition.requisition_id==can.requisition.requisition_id && st.flag==1 && can.candidate_id==''))
@@ -417,7 +442,7 @@ function ViewCandidate() {
                                         </button>
                                         &nbsp;&nbsp;&nbsp;&nbsp;
                                         <button className="btn btn-outline-danger"
-                                            onClick={() => { if (window.confirm('Are you sure to delete this requirement?')) deleteBook(st.candidate_id) }}>
+                                            onClick={() => { if (window.confirm('Are you sure to delete this requirement?')) deleteBook(st.candidate.candidate_id) }}>
                                             {/*Delete*/}<i class="fa fa-trash"></i></button>
                                         &nbsp;&nbsp;&nbsp;&nbsp;
                                     </>
@@ -442,7 +467,7 @@ function ViewCandidate() {
 
             <div className="master_backgroung_work scroll-bar-horizontal">
 
-                <div style={{ backgroundColor: '', width: '1900px' }}  >
+                <div style={{ backgroundColor: '', width: '1800px' }}  >
                     <Table bordered>
                         <thead>
                             <tr>

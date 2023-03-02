@@ -9,9 +9,9 @@ import AdminHeader from "./AdminHeader";
 function ViewCandForAdmin() {
 
     const recruiterIDAdmin = localStorage.getItem('recruiterIDAdmin');
-    localStorage.setItem('recruiterIDAdmin', recruiterIDAdmin)
+  //  localStorage.setItem('recruiterIDAdmin', recruiterIDAdmin)
     const requisitionID = localStorage.getItem('requisitionID');
-    localStorage.setItem('requisitionID', requisitionID)
+   // localStorage.setItem('requisitionID', requisitionID)
 
 
     const [requisitionList, setRequisitionList] = useState([]);
@@ -33,10 +33,10 @@ function ViewCandForAdmin() {
 
     }, []);
 
-    const getStatusData = ()=>{
-        axios.get(`${base_url}/getAllRequisition`).then(json => setRequisitionList(json.data))
-        axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
-    }
+    // const getStatusData = ()=>{
+    //     axios.get(`${base_url}/getAllRequisition`).then(json => setRequisitionList(json.data))
+    //     axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
+    // }
     
     const deleteBook = (candidateID) => { 
         console.log(candidateID);
@@ -49,7 +49,7 @@ function ViewCandForAdmin() {
                 style: { position: "absolute", top: "5px", width: "300px" }
             });
 
-            getStatusData();
+            axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
          
         },
             (error) => {
@@ -176,8 +176,8 @@ function ViewCandForAdmin() {
     const renderTable = () => {
         return statusList.map(st => {
 
-            if (st.requisition.requisition_id == requisitionID && st.flag == 1)
-            if (st.requisition.requisition_id == requisitionID)
+            if (st.requisition.requisition_id == requisitionID && st.flag == 1 && (st.candidate==null||st.candidate.deleted==1))
+           // if (st.requisition.requisition_id == requisitionID)
                 // && st.recruiter.recruiter_id==empID 
 
                 return (

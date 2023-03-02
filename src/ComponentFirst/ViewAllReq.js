@@ -45,7 +45,11 @@ function ViewAllReq() {
 
     }, []);
 
-    const deleteBook = (id) => { }
+    
+        const deleteBook = (requisitionID) => {
+            
+    
+    }
 
     // const updateRequisition = ({ newReqid, newReqFrom, newId, newClient, newJobTitle, newDuration,
     //     newClientRate, newLocation, newPType, newSkills }) => {
@@ -166,7 +170,7 @@ function ViewAllReq() {
     const renderTable = () => {
         return statusList.map(cls => {
 
-            if(cls.recruiter.recruiter_id == empID && cls.requisitionflag == 1)            
+            if(cls.recruiter.recruiter_id == empID && cls.requisitionflag == 1 && cls.requisition.deleted==1)            
 
             return (
 
@@ -187,8 +191,8 @@ function ViewAllReq() {
                                     maxLength={50}
                                 />
                             ) : (
-
-                                <a href="/viewCandidate" onClick={(evt) => getnewID({ rq: cls.requisition.requisition_id })}>{cls.requisition.requisition_from}</a>
+                                cls.requisition.requisition_from
+                                // <a href="/viewCandidate" onClick={(evt) => getnewID({ rq: cls.requisition.requisition_id })}>{cls.requisition.requisition_from}</a>
                             )
                         }
                     
@@ -205,7 +209,8 @@ function ViewAllReq() {
                                     maxLength={10}
                                 />
                             ) : (
-                                cls.requisition.id
+                                <a href="/viewCandidate" onClick={(evt) => getnewID({ rq: cls.requisition.requisition_id })}>{ cls.requisition.id}</a>
+                               
                             )
                         }
 
@@ -365,11 +370,11 @@ function ViewAllReq() {
                                         <i class="fa fa-edit"></i>
 
                                     </button>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    {/* &nbsp;&nbsp;&nbsp;&nbsp;
                                     <button className="btn btn-outline-danger"
                                         onClick={() => { if (window.confirm('Are you sure to delete this requirement?')) deleteBook(cls.requisition.requisition_id) }}>
-                                        {/*Delete*/}<i class="fa fa-trash"></i></button>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <i class="fa fa-trash"></i></button>
+                                    &nbsp;&nbsp;&nbsp;&nbsp; */}
                                 </>
 
                             )
@@ -409,7 +414,7 @@ function ViewAllReq() {
                                 <th style={{ width: '120px' }}>Position Type</th>
                                 <th style={{ width: '150px' }}>Skills</th>
 
-                                <th style={{ width: '125px' }}>Action</th>
+                                <th style={{ width: '80px' }}>Action</th>
 
                             </tr>
                         </thead>

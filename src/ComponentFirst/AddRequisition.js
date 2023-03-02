@@ -161,12 +161,10 @@ class AddRequisition extends React.Component {
             let add_cls = this.state.input;
             add_cls[e.target.name] = e.target.value;
             if ((this.state.requisitionId1) != undefined) {
-                localStorage.setItem("requisitionID",this.state.requisitionId1);
-                alert("This Requisition is already exist.");
-                this.post_requisition(add_cls);
                 localStorage.setItem("requisitionID",this.state.requisitionId1)
-                alert("This Requisition is already exist. To submit candidate click to next.");
-                this.post_requisition(add_cls);
+                alert("This Requisition is already exist. Please submit candidate");
+              
+               this.post_requisition(add_cls);
             }
             else {
                 this.post_requisition(add_cls);
@@ -222,8 +220,11 @@ class AddRequisition extends React.Component {
                 // history.push("/addRequisition");
                 // window.location.reload();
 
-                toast.success("Requirement added successfully!",
-                    { position: "top-right" }
+                toast.success("Requisition added successfully!",
+                    { position: "top-right" ,
+                    autoClose: 1000,
+                    style: { position: "absolute", top: "5px", width: "300px" }
+                }
                 );
             },
             (error) => {
