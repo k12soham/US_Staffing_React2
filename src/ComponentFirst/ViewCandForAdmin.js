@@ -207,7 +207,6 @@ function ViewCandForAdmin() {
 
                         </td>
 
-
                         <td>
                             {
                                 st.candidate == null ?
@@ -216,7 +215,6 @@ function ViewCandForAdmin() {
                                     ) :
                                     (
                                         st.candidate.visa_type
-
                                     )
                             }
 

@@ -32,6 +32,7 @@ function ViewCandidate() {
     const [candidate_name, setCandidate_name] = useState(null);
     const [submitted_rate, setSubmitted_rate] = useState(null);
     const [phone, setPhone] = useState(null);
+    const [searchTerm, setSearchTerm] = useState("");
     let navigate = useNavigate();
 
 
@@ -218,6 +219,274 @@ function ViewCandidate() {
 
     const renderTable = () => {
 
+        return (
+
+            statusList.filter((st) => {
+
+                if (searchTerm === "") {
+                    return st;
+                }   
+                else if ( st.candidate == null || st.candidate != null) {
+                    if ( st.status.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        return st;
+                    }
+                }             
+                else if ( st.candidate != null) {
+                    if ( st.candidate.candidate_name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        return st;
+                    }
+                }
+                else if ( st.candidate != null) {
+                    if ( st.candidate.visa_type.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        return st;
+                    }
+                }
+                else if ( st.candidate != null) {
+                    if ( st.candidate.rate_term.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        return st;
+                    }
+                }
+                else if ( st.candidate != null) {
+                    if ( st.candidate.submitted_rate.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        return st;
+                    }
+                }
+                else if ( st.candidate != null) {
+                    if ( st.candidate.phone.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        return st;
+                    }
+                }
+                else if ( st.candidate != null) {
+                    if ( st.candidate.email.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        return st;
+                    }
+                }
+            }
+            ).map(st => {
+                if (st.requisition.requisition_id == sessionreq
+                    && st.recruiter.recruiter_id == empID && st.flag == 1 && (st.candidate==null||st.candidate.deleted==1))
+
+                    return (
+                        <tr key={st.status_id}>
+                            <td></td>
+                            <td>{st.status}</td>
+                            <td>{st.status_date}</td>
+                            <td>
+                                {
+
+                                    <select class="btn btn-sm btn-secondary dropdown-toggle"
+                                        style={{ width: '155px' }}
+                                        name="status" id="status"
+
+                                        onChange={(evt) => handleChange({
+                                            rrid: sessionreq, sstt: evt.target.value
+                                        })}>
+                                        {/* ,setCandi(st.candidate.candidate_id))}> */}
+                                        <option hidden default selected> Select Status</option>
+
+                                        {
+                                            statusFD.map((stfd) => (
+
+                                                <option value={stfd.status_fd}>{stfd.status_fd}</option>
+                                            ))
+                                        }
+                                    </select>
+                                }
+                                &nbsp;&nbsp;&nbsp;
+                                {/* <button onClick={handleSubmit}>Change Status</button>  */}
+
+                                {
+                                    st.candidate == null ?
+                                        (
+                                            <button onClick={handleSubmit} class="btn btn-sm btn-primary fa fa-save"></button>
+                                        ) :
+                                        (
+                                            <button class="btn btn-sm btn-primary fa fa-save" onClick={() => handleSubmit2({ canid: st.candidate.candidate_id })}></button>
+
+                                        )
+                                }
+
+                            </td>
+                            <td>
+
+                            {
+                                st.candidate == null ?
+                                    (
+                                        console.log("null")
+                                    ) :
+                                    (
+                                        st.candidate.candidate_name
+
+                                    )
+                            }
+
+                        </td>
+
+                        <td>
+                            {
+                                st.candidate == null ?
+                                    (
+                                        console.log("null")
+                                    ) :
+                                    (
+                                        st.candidate.visa_type
+
+                                    )
+                            }
+
+                        </td>
+
+                        <td>
+                            {
+                                st.candidate == null ?
+                                    (
+                                        console.log("null")
+                                    ) :
+                                    (
+                                        st.candidate.rate_term
+
+                                    )
+                            }
+
+                        </td>
+
+                        <td>
+                            {
+                                st.candidate == null ?
+                                    (
+                                        console.log("null")
+                                    ) :
+                                    (
+                                        st.candidate.submitted_rate
+
+                                    )
+                            }
+
+                        </td>
+
+                        <td>
+                            {
+                                st.candidate == null ?
+                                    (
+                                        console.log("null")
+                                    ) :
+                                    (
+                                        st.candidate.phone
+
+                                    )
+                            }
+
+                        </td>
+
+                        <td>
+                            {
+                                st.candidate == null ?
+                                    (
+                                        console.log("null")
+                                    ) :
+                                    (
+                                        st.candidate.email
+
+                                    )
+                            }
+
+                        </td>
+
+                        <td>
+                            {
+                                st.candidate == null ?
+                                    (
+                                        console.log("null")
+                                    ) :
+                                    (
+                                        st.candidate.remark
+
+                                    )
+                            }
+
+                        </td>
+
+                        <td>
+                            {
+                                st.candidate == null ?
+                                    (
+                                        console.log("null")
+                                    ) :
+                                    (
+                                        st.candidate.reason
+
+                                    )
+                            }
+
+                        </td>
+                        <td>
+                            {
+                                inEditMode.status && inEditMode.rowKey === st.candidate_id ? (
+                                    <>
+                                        <button
+
+                                            className={"btn btn-sm btn-outline-success"}
+                                            onClick={() => {
+
+                                                onSave(
+                                                    {
+                                                        candidateID: st.candidate_id
+                                                        // newReqid: cls.requisition_id, newReqFrom: reqFrom, newId: id,
+                                                        // newClient: client, newJobTitle: jobTitle, newDuration: duration,
+                                                        // newClientRate: clientRate, newLocation: location, newPType: ptype, newSkills: skills,
+
+                                                    })
+                                            }
+                                            }
+                                        >
+                                            <i class="fa fa-save"></i>
+                                        </button>
+
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <button
+                                            className={"btn btn-sm btn-outline-warning"}
+
+                                            onClick={() => onCancel()}
+                                        >
+                                            <i class="fa fa-close"></i>
+                                        </button>
+                                    </>
+
+                                ) : (
+                                    <>
+                                        <button
+                                            className="btn btn-sm btn-outline-success"
+
+                                            onClick={() => onEdit({
+
+                                                candidateID: st.candidate.candidate_id
+
+                                                //     crrReqid: cls.requisition_id, crrReqFrom: cls.requisition_from, crrId: cls.id,
+                                                //     crrClient: cls.client, crrJobTitle: cls.job_title, crrDuration: cls.duration,
+                                                //     crrClientRate: cls.client_rate, crrLocation: cls.location, crrPType: cls.position_type,
+                                                //     crrSkills: cls.skills,
+
+                                            })}
+                                        >
+                                            <i class="fa fa-edit"></i>
+
+                                        </button>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <button className="btn btn-sm btn-outline-danger"
+                                            onClick={() => { if (window.confirm('Are you sure to delete this requirement?')) deleteBook(st.candidate_id) }}>
+                                            {/*Delete*/}<i class="fa fa-trash"></i></button>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                    </>
+
+                                )
+                            }
+
+                        </td>
+                        </tr>
+                    )
+
+            }))
+
         return statusList.map(st => {
             // console.log(st.requisition.requisition_id)
             //  console.log(sessionreq)
@@ -235,7 +504,7 @@ function ViewCandidate() {
                         <td>
                             {
 
-                                <select class="btn btn-secondary dropdown-toggle"
+                                <select class="btn btn-sm btn-secondary dropdown-toggle"
                                     style={{ width: '155px' }}
                                     name="status" id="status"
 
@@ -266,10 +535,10 @@ function ViewCandidate() {
                             {
                                 st.candidate == null ?
                                     (
-                                        <button onClick={handleSubmit} class="btn btn-primary fa fa-save"></button>
+                                        <button onClick={handleSubmit} class="btn btn-sm btn-primary fa fa-save"></button>
                                     ) :
                                     (
-                                        <button class="btn btn-primary fa fa-save" onClick={() => handleSubmit2({ canid: st.candidate.candidate_id })}></button>
+                                        <button class="btn btn-sm btn-primary fa fa-save" onClick={() => handleSubmit2({ canid: st.candidate.candidate_id })}></button>
 
                                     )
                             }
@@ -394,7 +663,7 @@ function ViewCandidate() {
                                     <>
                                         <button
 
-                                            className={"btn btn-outline-success"}
+                                            className={"btn btn-sm btn-outline-success"}
                                             onClick={() => {
 
                                                 onSave(
@@ -413,7 +682,7 @@ function ViewCandidate() {
 
                                         &nbsp;&nbsp;&nbsp;&nbsp;
                                         <button
-                                            className={"btn btn-outline-warning"}
+                                            className={"btn btn-sm btn-outline-warning"}
 
                                             onClick={() => onCancel()}
                                         >
@@ -424,7 +693,7 @@ function ViewCandidate() {
                                 ) : (
                                     <>
                                         <button
-                                            className="btn btn-outline-success"
+                                            className="btn btn-sm btn-outline-success"
 
                                             onClick={() => onEdit({
 
@@ -441,8 +710,8 @@ function ViewCandidate() {
 
                                         </button>
                                         &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <button className="btn btn-outline-danger"
-                                            onClick={() => { if (window.confirm('Are you sure to delete this requirement?')) deleteBook(st.candidate.candidate_id) }}>
+                                        <button className="btn btn-sm btn-outline-danger"
+                                            onClick={() => { if (window.confirm('Are you sure to delete this requirement?')) deleteBook(st.candidate_id) }}>
                                             {/*Delete*/}<i class="fa fa-trash"></i></button>
                                         &nbsp;&nbsp;&nbsp;&nbsp;
                                     </>
@@ -459,13 +728,28 @@ function ViewCandidate() {
 
     return (
         // return (
-        <div className="container-fluid">
+        <div className="">
+            <div className="row">
 
-            <div className="col-12 h-100 master_backgroung_heder">
-                <EmployeeHeader />
-            </div>
+                <div className="col-12 h-100 master_backgroung_heder">
+                    <EmployeeHeader />
+                </div>
 
-            <div className="master_backgroung_work scroll-bar-horizontal">
+                <div className="col-12 master_backgroung_work scroll-bar-horizontal">
+                    <div className="row">
+                        <div className="col-12 input-icons"
+                            style={{ padding: '5px', margin: '10px' }}>
+                            <i className="fa fa-search icon"></i>
+                            <input
+                                type="search"
+                                className="form-control"
+                                placeholder="Search"
+                                onChange={event => { setSearchTerm(event.target.value) }}
+                                style={{ width: '500px', borderRadius: '100px', paddingLeft: '30px' }}
+                            />
+
+                        </div>
+                    </div>
 
                 <div style={{ backgroundColor: '', width: '1800px' }}  >
                     <Table bordered>
@@ -484,17 +768,18 @@ function ViewCandidate() {
                                 <th style={{ width: '100px' }}>Remark</th>
                                 <th style={{ width: '100px' }}>Reason</th>
 
-                                <th style={{ width: '140px' }}>Action</th>
+                                    <th style={{ width: '140px' }}>Action</th>
 
-                            </tr>
-                        </thead>
-                        <tbody>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                            {renderTable()}
+                                {renderTable()}
 
-                        </tbody>
-                    </Table>
+                            </tbody>
+                        </Table>
 
+                    </div>
                 </div>
             </div>
         </div>
