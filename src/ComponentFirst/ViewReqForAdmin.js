@@ -74,8 +74,6 @@ function ViewReqForAdmin() {
 
             requisitionList.filter((cls) => {
                 if (searchTerm === "") {
-                    // console.log(cls.requisition_from);
-                    // console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
                     return cls;
                 } else if (cls.requisition_from.toLowerCase().includes(searchTerm.toLowerCase())) {
                     return cls;

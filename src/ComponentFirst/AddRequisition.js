@@ -42,6 +42,7 @@ class AddRequisition extends React.Component {
             )
             .catch(error => {
                 // alert("Error requisitor")
+                console.log("getAllRequisitorFd can't get")
             })
 
         axios.get(`${base_url}/getAllStatusFd`)
@@ -196,8 +197,7 @@ class AddRequisition extends React.Component {
         &duration=${d5}&client_rate=${d6}&location=${d7}&position_type=${d8}&skills=${d9}&recruiter_id=${z}`).then(
 
             (response) => {
-                console.log(response.data)
-             
+                console.log(response.data)             
                 
                  let a = response.data.requisition_id;
                 // let b = response.data.id;
@@ -458,17 +458,13 @@ class AddRequisition extends React.Component {
 
                 this.setState({ input: inputs });
             }
-        );
-
-        
+        );        
     }
 
 
     
     // -------------------------------------------- render ----------------------------------------------------
     render() {
-
-    
         
         const isAuthenticated = localStorage.getItem('recruiterID');
 
@@ -547,8 +543,7 @@ class AddRequisition extends React.Component {
                                                            )
                                                             :
                                                             (
-                                                                null
-                                                            
+                                                                null                                                            
                                                             )
                                                             
                                                         ))
@@ -645,7 +640,6 @@ class AddRequisition extends React.Component {
 
                                                             <option value={pt.position_type}>{pt.position_type}</option>
                                                         ))
-
                                                     }
 
                                                 </select>

@@ -178,7 +178,6 @@ function ViewCandForAdmin() {
 
             if (st.requisition.requisition_id == requisitionID && st.flag == 1)
             if (st.requisition.requisition_id == requisitionID)
-                // && st.recruiter.recruiter_id==empID 
 
                 return (
                     <tr key={st.status_id}>
@@ -207,7 +206,6 @@ function ViewCandForAdmin() {
 
                         </td>
 
-
                         <td>
                             {
                                 st.candidate == null ?
@@ -216,7 +214,6 @@ function ViewCandForAdmin() {
                                     ) :
                                     (
                                         st.candidate.visa_type
-
                                     )
                             }
 

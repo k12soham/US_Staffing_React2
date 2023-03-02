@@ -27,6 +27,7 @@ function ViewAllReq() {
     const [location, setLocation] = useState(null);
     const [skills, setSkills] = useState(null);
     const [status, setStatus] = useState(null);
+    const [searchTerm, setSearchTerm] = useState("");
 
     const [inEditMode, setInEditMode,] = useState({
         status: true,
@@ -34,7 +35,7 @@ function ViewAllReq() {
     });
     let navigate = useNavigate();
 
-    let empID= localStorage.getItem("recruiterID");
+    let empID = localStorage.getItem("recruiterID");
     let sessionreq = localStorage.getItem("requisitionID");
     useEffect(() => {
         axios.get(`${base_url}/getAllRequisition`).then(json => setClosureList(json.data))
@@ -46,22 +47,6 @@ function ViewAllReq() {
     }, []);
 
     const deleteBook = (id) => { }
-
-    // const updateRequisition = ({ newReqid, newReqFrom, newId, newClient, newJobTitle, newDuration,
-    //     newClientRate, newLocation, newPType, newSkills }) => {
-
-    //         axios.post(`${base_url}/update_requsition?requisition_id=${newReqid}&requisition_from=${newReqFrom}
-    //         &id=${newId}&client=${newClient}&job_title=${newJobTitle}&duration=${newDuration}&client_rate=${newClientRate}&location=${newLocation}&
-    //         position_type=${newPType}&skills=${newSkills}`).then(
-    //             (response)=>{
-    //                 toast.success("Record updated successfully!", {position: 'top-right'});
-    //             },
-    //             (error)=>{
-    //                 alert("Please enter valid details.");
-    //             }
-    //         )
-    //     alert("update val successfully")
-    // }
 
     const onSave = ({ newReqid, newReqFrom, newId, newClient, newJobTitle, newDuration,
         newClientRate, newLocation, newPType, newSkills }) => {
@@ -114,8 +99,6 @@ function ViewAllReq() {
                 alert("Please enter valid details.")
             }
         );
-
-
     }
 
     // ----------------------------------------------------------------------------------------------------------
@@ -134,15 +117,7 @@ function ViewAllReq() {
             status: true,
             rowKey: requisitionID,
         })
-        // setReqFrom(crrReqFrom);
-        // setId(crrId);
-        // setClient(crrClient);
-        // setJobTitle(crrJobTitle);
-        // setDuration(crrDuration);
-        // setClientRate(crrClientRate);
-        // setLocation(crrLocation);
-        // setPType(crrPType);
-        // setSkills(crrSkills);
+        
 
     }
 
@@ -164,263 +139,175 @@ function ViewAllReq() {
     }
 
     const renderTable = () => {
-        return statusList.map(cls => {
 
-            if(cls.recruiter.recruiter_id == empID && cls.requisitionflag == 1)            
+        return (
 
-            return (
+            statusList.filter((cls) => {
+                console.log(cls)
+                if (searchTerm === "") {
+                    return cls;
+                } 
+                else if (cls.requisition.requisition_from.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return cls;
+                }
+                else if (cls.requisition.client.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return cls;
+                }
+                else if (cls.requisition.job_title.toString().toLowerCase().includes(searchTerm.toString().toLowerCase())) {
+                    return cls;
+                } else if (cls.requisition.duration.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return cls;
+                }
+                else if (cls.requisition.client_rate.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return cls;
+                }
+                else if (cls.requisition.location.toString().toLowerCase().includes(searchTerm.toString().toLowerCase())) {
+                    return cls;
+                } else if (cls.requisition.position_type.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return cls;
+                }
+                else if (cls.requisition.skills.toString().toLowerCase().includes(searchTerm.toString().toLowerCase())) {
+                    return cls;
+                }
+                else if (cls.requisition.id.toString().toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return cls;
+                }
+               
+            }
+            ).map(cls => {
 
-                <tr key={cls.requisition.requisition_id}>
-           
-                    <td></td>
-                    <td hidden>{cls.requisition.requisition_id}</td>
-                    <td style={{ width: '50px' }}>
-                        {
-                            inEditMode.status && inEditMode.rowKey === cls.requisition.requisition_id ? (
-                           
-                                <input required
-                                    type='text'
-                                    value={reqFrom}
-                                    onChange={(event) => setReqFrom(event.target.value)}
-                                    style={{ width: "100px" }}
-                                    minLength={2}
-                                    maxLength={50}
-                                />
-                            ) : (
+                if (cls.recruiter.recruiter_id == empID && cls.requisitionflag == 1)
+                    return (
 
-                                <a href="/viewCandidate" onClick={(evt) => getnewID({ rq: cls.requisition.requisition_id })}>{cls.requisition.requisition_from}</a>
-                            )
-                        }
-                    
-                    </td>
-                    <td>
-                        {
-                            inEditMode.status && inEditMode.rowKey === cls.requisition.requisition_id ? (
-                                <input required
-                                    type='number'
-                                    value={id}
-                                    onChange={(event) => setId(event.target.value)}
-                                    style={{ width: "100px" }}
-                                    minLength={2}
-                                    maxLength={10}
-                                />
-                            ) : (
-                                cls.requisition.id
-                            )
-                        }
+                        <tr key={cls.requisition.requisition_id}>
+                            <td></td>
+                            <td hidden>{cls.requisition.requisition_id}</td>
+                            <td>{<a href="/viewCandidate" onClick={(evt) => getnewID({ rq: cls.requisition.requisition_id })}>{cls.requisition.requisition_from}</a>}</td>
+                            <td>{cls.requisition.id}</td>
+                            <td>{cls.requisition.client}</td>
+                            <td>{cls.requisition.job_title}</td>
+                            <td>{cls.requisition.duration}</td>
+                            <td>{ cls.requisition.client_rate}</td>
+                            <td>{ cls.requisition.location}</td>
+                            <td>{cls.requisition.position_type}</td>
+                            <td>{cls.requisition.skills}</td>
+                            <td>
+                            {
+                                inEditMode.status && inEditMode.rowKey === cls.requisition.requisition_id ? (
+                                    <>
+                                        <button
 
-                    </td>
-                    <td>
-                        {
-                            inEditMode.status && inEditMode.rowKey === cls.requisition.requisition_id ? (
-                          
-                                <input required
-                                    type='text'
-                                    value={client}
-                                    onChange={(event) => setClient(event.target.value)}
-                                    style={{ width: "100px" }}
-                                    minLength={2}
-                                    maxLength={50}
-                                />
-                            ) : (
-                                cls.requisition.client
-                            )
-                        }
-                    </td>
-                    <td>
-                        {
-                            inEditMode.status && inEditMode.rowKey === cls.requisition.requisition_id ? (
-                                <input required
-                                    type='text'
-                                    value={jobTitle}
-                                    onChange={(event) => setJobTitle(event.target.value)}
-                                    style={{ width: "100px" }}
-                                    minLength={2}
-                                    maxLength={50}
-                                />
-                            ) : (
-                                cls.requisition.job_title
-                            )
-                        }
-                    </td>
-                    <td>
-                        {
-                            inEditMode.status && inEditMode.rowKey === cls.requisition.requisition_id ? (
-                                <input required
-                                    type='text'
-                                    value={duration}
-                                    onChange={(event) => setDuration(event.target.value)}
-                                    style={{ width: "100px" }}
-                                    minLength={2}
-                                    maxLength={20}
-                                />
-                            ) : (
-                                cls.requisition.duration
-                            )
-                        }
-                    </td>
-                    <td>
-                        {
-                            inEditMode.status && inEditMode.rowKey === cls.requisition.requisition_id ? (
-                                <input required value={clientRate}
-                                    onChange={(event) => setDuration(event.target.value)}
-                                    style={{ width: "100px" }}
-                                    minLength={1}
-                                    maxLength={3}
-                                />
-                            ) : (
-                                cls.requisition.client_rate
-                            )
-                        }
-                    </td>
-                    {/* <td>{cls.client_rate}</td> */}
-                    <td>
-                        {
-                            inEditMode.status && inEditMode.rowKey === cls.requisition.requisition_id ? (
-                                <input required value={location}
-                                    onChange={(event) => setDuration(event.target.value)}
-                                    style={{ width: "100px" }}
-                                    minLength={1}
-                                    maxLength={3}
-                                />
-                            ) : (
-                                cls.requisition.location
-                            )
-                        }
-                    </td>
-                    {/* <td>{cls.location}</td> */}
-                    <td>
-                        {
-                            inEditMode.status && inEditMode.rowKey === cls.requisition.requisition_id ? (
-                                <input required value={ptype}
-                                    onChange={(event) => setDuration(event.target.value)}
-                                    style={{ width: "100px" }}
-                                    minLength={1}
-                                    maxLength={3}
-                                />
-                            ) : (
-                                cls.requisition.position_type
-                            )
-                        }
-                    </td>
-                    <td>
-                        {
-                            inEditMode.status && inEditMode.rowKey === cls.requisition.requisition_id ? (
-                                <input required value={skills}
-                                    onChange={(event) => setDuration(event.target.value)}
-                                    style={{ width: "100px" }}
-                                    minLength={1}
-                                    maxLength={3}
-                                />
-                            ) : (
-                                cls.requisition.skills
-                            )
-                        }
-                    </td>
-                    {/* <td>{cls.skills}</td> */}
+                                            className={"btn btn-outline-success"}
+                                            onClick={() => {
 
-                    <td>
-                        {
-                            inEditMode.status && inEditMode.rowKey === cls.requisition.requisition_id ? (
-                                <>
-                                    <button
+                                                onSave(
+                                                    {
+                                                        newReqid: cls.requisition_id, newReqFrom: reqFrom, newId: id,
+                                                        newClient: client, newJobTitle: jobTitle, newDuration: duration,
+                                                        newClientRate: clientRate, newLocation: location, newPType: ptype, newSkills: skills,
 
-                                        className={"btn btn-outline-success"}
-                                        onClick={() => {
+                                                    })
+                                            }
+                                            }
+                                        >
+                                            <i class="fa fa-save"></i>
+                                        </button>
 
-                                            onSave(
-                                                {
-                                                    newReqid: cls.requisition_id, newReqFrom: reqFrom, newId: id,
-                                                    newClient: client, newJobTitle: jobTitle, newDuration: duration,
-                                                    newClientRate: clientRate, newLocation: location, newPType: ptype, newSkills: skills,
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <button
+                                            className={"btn btn-outline-warning"}
 
-                                                })
-                                        }
-                                        }
-                                    >
-                                        <i class="fa fa-save"></i>
-                                    </button>
+                                            onClick={() => onCancel()}
+                                        >
+                                            <i class="fa fa-close"></i>
+                                        </button>
+                                    </>
 
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <button
-                                        className={"btn btn-outline-warning"}
+                                ) : (
+                                    <>
+                                        <button
+                                            className="btn btn-outline-success"
 
-                                        onClick={() => onCancel()}
-                                    >
-                                        <i class="fa fa-close"></i>
-                                    </button>
-                                </>
+                                            onClick={() => onEdit({
 
-                            ) : (
-                                <>
-                                    <button
-                                        className="btn btn-outline-success"
+                                                requisitionID: cls.requisition.requisition_id,
 
-                                        onClick={() => onEdit({
+                                            })}
+                                        >
+                                            <i class="fa fa-edit"></i>
 
-                                            requisitionID: cls.requisition.requisition_id,
+                                        </button>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <button className="btn btn-outline-danger"
+                                            onClick={() => { if (window.confirm('Are you sure to delete this requirement?')) deleteBook(cls.requisition.requisition_id) }}>
+                                            {/*Delete*/}<i class="fa fa-trash"></i></button>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                    </>
 
-                                        })}
-                                    >
-                                        <i class="fa fa-edit"></i>
+                                )
+                            }
 
-                                    </button>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <button className="btn btn-outline-danger"
-                                        onClick={() => { if (window.confirm('Are you sure to delete this requirement?')) deleteBook(cls.requisition.requisition_id) }}>
-                                        {/*Delete*/}<i class="fa fa-trash"></i></button>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                </>
+                        </td>
+                        </tr>
 
-                            )
-                        }
+                    )
 
-                    </td>
-                </tr >
-                    
-            );
-        })
+            }))
     }
 
 
 
     return (
         // return (
-        <div className="container-fluid">
+        <div className="">
+            <div className="row">
 
-            <div className="col-12 h-100 master_backgroung_heder">
-                <EmployeeHeader />
-            </div>
+                <div className="col-12 h-100 master_backgroung_heder">
+                    <EmployeeHeader />
+                </div>
 
-            <div className="master_backgroung_work scroll-bar-horizontal">
+                <div className="col-12 master_backgroung_work scroll-bar-horizontal">
+                    {/* ---------------------------SearchBar----------------------------- */}
+                    <div className="row">
+                        <div className="col-12 input-icons"
+                         style={{ padding:'5px',margin:'10px' }}>
+                            <i className="fa fa-search icon"></i>
+                            <input
+                                type="search"
+                                className="form-control"
+                                placeholder="Search"
+                                onChange={event => { setSearchTerm(event.target.value) }}
+                                style={{ width: '500px', borderRadius: '100px', paddingLeft:'30px'}}
+                            />
 
-                <div style={{ backgroundColor: '', width: '1500px' }}  >
-                    <Table bordered class="table table-sm" style={{ fontFamily: 'arial' }}>
-                        <thead>
-                            <tr>
-                                <th style={{ width: '10px' }}>Sr No.</th>
-                                <th style={{ width: '150px' }}>Requisition From</th>
-                                <th style={{ width: '90px' }}>ID</th>
-                                <th style={{ width: '150px' }}>Client</th>
-                                <th style={{ width: '160px' }}>Job Title</th>
-                                <th style={{ width: '70px' }}>Duration</th>
-                                <th style={{ width: '100px' }}>Client Rate</th>
-                                <th style={{ width: '100px' }}>Location</th>
-                                <th style={{ width: '120px' }}>Position Type</th>
-                                <th style={{ width: '150px' }}>Skills</th>
+                        </div>
+                    </div>
 
-                                <th style={{ width: '125px' }}>Action</th>
+                    <div style={{ backgroundColor: '', width: '1500px' }}  >
+                        <Table bordered class="table table-sm" style={{ fontFamily: 'arial' }}>
+                            <thead>
+                                <tr>
+                                    <th style={{ width: '10px' }}>Sr No.</th>
+                                    <th style={{ width: '150px' }}>Requisition From</th>
+                                    <th style={{ width: '90px' }}>ID</th>
+                                    <th style={{ width: '150px' }}>Client</th>
+                                    <th style={{ width: '160px' }}>Job Title</th>
+                                    <th style={{ width: '70px' }}>Duration</th>
+                                    <th style={{ width: '100px' }}>Client Rate</th>
+                                    <th style={{ width: '100px' }}>Location</th>
+                                    <th style={{ width: '120px' }}>Position Type</th>
+                                    <th style={{ width: '150px' }}>Skills</th>
+                                    <th style={{ width: '125px' }}>Action</th>
 
-                            </tr>
-                        </thead>
-                        <tbody>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                            {renderTable()}
+                                {renderTable()}
 
-
-                        </tbody>
-                    </Table>
-
+                            </tbody>
+                        </Table>
+                    </div>
                 </div>
             </div>
         </div>
