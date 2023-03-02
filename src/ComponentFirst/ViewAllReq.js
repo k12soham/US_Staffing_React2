@@ -138,7 +138,10 @@ function ViewAllReq() {
         //console.log(rq)
     }
 
-    const renderTable = () => {
+   /* const renderTable = () => {
+        return statusList.map(cls => {
+
+            if(cls.recruiter.recruiter_id == empID && cls.requisitionflag == 1 && cls.requisition.deleted==1)            
 
         return (
 
@@ -236,13 +239,13 @@ function ViewAllReq() {
                                         >
                                             <i class="fa fa-edit"></i>
 
-                                        </button>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <button className="btn btn-outline-danger"
-                                            onClick={() => { if (window.confirm('Are you sure to delete this requirement?')) deleteBook(cls.requisition.requisition_id) }}>
-                                            {/*Delete*/}<i class="fa fa-trash"></i></button>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;
-                                    </>
+                                    </button>
+                                    {/* &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <button className="btn btn-outline-danger"
+                                        onClick={() => { if (window.confirm('Are you sure to delete this requirement?')) deleteBook(cls.requisition.requisition_id) }}>
+                                        <i class="fa fa-trash"></i></button>
+                                    &nbsp;&nbsp;&nbsp;&nbsp; 
+                                </>
 
                                 )
                             }
@@ -253,9 +256,133 @@ function ViewAllReq() {
                     )
 
             }))
-    }
+        }
+        
+    
+   */
+        const renderTable = () => {
+           
+    
+  
+            return (
+    
+                statusList.filter((cls) => {
+                    console.log(cls)
+                    if (searchTerm === "") {
+                        return cls;
+                    } 
+                    else if (cls.requisition.requisition_from.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        return cls;
+                    }
+                    else if (cls.requisition.client.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        return cls;
+                    }
+                    else if (cls.requisition.job_title.toString().toLowerCase().includes(searchTerm.toString().toLowerCase())) {
+                        return cls;
+                    } else if (cls.requisition.duration.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        return cls;
+                    }
+                    else if (cls.requisition.client_rate.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        return cls;
+                    }
+                    else if (cls.requisition.location.toString().toLowerCase().includes(searchTerm.toString().toLowerCase())) {
+                        return cls;
+                    } else if (cls.requisition.position_type.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        return cls;
+                    }
+                    else if (cls.requisition.skills.toString().toLowerCase().includes(searchTerm.toString().toLowerCase())) {
+                        return cls;
+                    }
+                    else if (cls.requisition.id.toString().toLowerCase().includes(searchTerm.toLowerCase())) {
+                        return cls;
+                    }
+                   
+                }
+                ).map(cls => {
+    
+                    if (cls.recruiter.recruiter_id == empID && cls.requisitionflag == 1 && cls.requisition.deleted==1)
+              
+                        return (
+    
+                            <tr key={cls.requisition.requisition_id}>
+                                <td></td>
+                                <td hidden>{cls.requisition.requisition_id}</td>
+                                <td>{cls.requisition.requisition_from}</td>
+                                {/* <td>{<a href="/viewCandidate" onClick={(evt) => getnewID({ rq: cls.requisition.requisition_id })}>{cls.requisition.requisition_from}</a>}</td> */}
+                                <td>{<a href="/viewCandidate" onClick={(evt) => getnewID({ rq: cls.requisition.requisition_id })}>{cls.requisition.id}</a>}</td>
+                                <td>{cls.requisition.client}</td>
+                                <td>{cls.requisition.job_title}</td>
+                                <td>{cls.requisition.duration}</td>
+                                <td>{ cls.requisition.client_rate}</td>
+                                <td>{ cls.requisition.location}</td>
+                                <td>{cls.requisition.position_type}</td>
+                                <td>{cls.requisition.skills}</td>
+                                <td>
+                                {
+                                    inEditMode.status && inEditMode.rowKey === cls.requisition.requisition_id ? (
+                                        <>
+                                            <button
+    
+                                                className={"btn btn-outline-success"}
+                                                onClick={() => {
+    
+                                                    onSave(
+                                                        {
+                                                            newReqid: cls.requisition_id, newReqFrom: reqFrom, newId: id,
+                                                            newClient: client, newJobTitle: jobTitle, newDuration: duration,
+                                                            newClientRate: clientRate, newLocation: location, newPType: ptype, newSkills: skills,
+    
+                                                        })
+                                                }
+                                                }
+                                            >
+                                                <i class="fa fa-save"></i>
+                                            </button>
+    
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <button
+                                                className={"btn btn-outline-warning"}
+    
+                                                onClick={() => onCancel()}
+                                            >
+                                                <i class="fa fa-close"></i>
+                                            </button>
+                                        </>
+    
+                                    ) : (
+                                        <>
+                                            <button
+                                                className="btn btn-outline-success"
+    
+                                                onClick={() => onEdit({
+    
+                                                    requisitionID: cls.requisition.requisition_id,
+    
+                                                })}
+                                            >
+                                                <i class="fa fa-edit"></i>
+    
+                                            </button>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <button className="btn btn-outline-danger"
+                                                onClick={() => { if (window.confirm('Are you sure to delete this requirement?')) deleteBook(cls.requisition.requisition_id) }}>
+                                                {/*Delete*/}<i class="fa fa-trash"></i></button>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                        </>
+    
+                                    )
+                                }
+    
+                            </td>
+                            </tr>
+    
+                        )
+    
+                }))
 
 
+        }
+    
 
     return (
         // return (
@@ -283,21 +410,22 @@ function ViewAllReq() {
                         </div>
                     </div>
 
-                    <div style={{ backgroundColor: '', width: '1500px' }}  >
-                        <Table bordered class="table table-sm" style={{ fontFamily: 'arial' }}>
-                            <thead>
-                                <tr>
-                                    <th style={{ width: '10px' }}>Sr No.</th>
-                                    <th style={{ width: '150px' }}>Requisition From</th>
-                                    <th style={{ width: '90px' }}>ID</th>
-                                    <th style={{ width: '150px' }}>Client</th>
-                                    <th style={{ width: '160px' }}>Job Title</th>
-                                    <th style={{ width: '70px' }}>Duration</th>
-                                    <th style={{ width: '100px' }}>Client Rate</th>
-                                    <th style={{ width: '100px' }}>Location</th>
-                                    <th style={{ width: '120px' }}>Position Type</th>
-                                    <th style={{ width: '150px' }}>Skills</th>
-                                    <th style={{ width: '125px' }}>Action</th>
+                <div style={{ backgroundColor: '', width: '1500px' }}  >
+                    <Table bordered class="table table-sm" style={{ fontFamily: 'arial' }}>
+                        <thead>
+                            <tr>
+                                <th style={{ width: '10px' }}>Sr No.</th>
+                                <th style={{ width: '150px' }}>Requisition From</th>
+                                <th style={{ width: '90px' }}>ID</th>
+                                <th style={{ width: '150px' }}>Client</th>
+                                <th style={{ width: '160px' }}>Job Title</th>
+                                <th style={{ width: '70px' }}>Duration</th>
+                                <th style={{ width: '100px' }}>Client Rate</th>
+                                <th style={{ width: '100px' }}>Location</th>
+                                <th style={{ width: '120px' }}>Position Type</th>
+                                <th style={{ width: '150px' }}>Skills</th>
+
+                                <th style={{ width: '120px' }}>Action</th>
 
                                 </tr>
                             </thead>

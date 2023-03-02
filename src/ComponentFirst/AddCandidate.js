@@ -92,7 +92,7 @@ class AddCandidate extends React.Component {
    
 
     CheckRequisiton = (e) => {
-
+      
        let requisition_id = this.state.input;
         requisition_id[e.target.name] = e.target.value;
         let a= this.state.input.reqid
@@ -108,9 +108,13 @@ class AddCandidate extends React.Component {
                //alert("found")
             },
             (error) => {
-               alert("Requisiton not found of this ID")
-            
-             //  this.refInput.focus();
+             // toast.error("Requisiton not found of this ID")
+              toast.error("Requisiton not found of this ID",
+              { 
+              position: "top-right", autoClose: 2000,
+              style: { position: "absolute", top: "5px", width: "300px" } }
+          );
+               this.refInput.focus();
              // focus(this.state.input.reqid)
             }
         );
@@ -333,7 +337,7 @@ class AddCandidate extends React.Component {
                                                 <label for="reqid"><b>Requisition ID:</b></label>
                                                 <input
                                                     style={{width: '30%'}}
-                                                    //ref={(input) => { this.refInput = input; }}
+                                                    ref={(input) => { this.refInput = input; }}
                                                     minLength={1}
                                                     maxLength={50}
                                                     type="text"
@@ -376,7 +380,7 @@ class AddCandidate extends React.Component {
                                                     onKeyUp={this.keyUpHandlerReq}
                                                     value={this.state.input.visa_type}>
 
-                                                    <option value='' default selected> Select Visa Type </option>
+                                                    <option value='' hidden> Select Visa Type </option>
                                                     {
                                              this.state.visaType_fd.map((vt) => (
 
@@ -397,7 +401,7 @@ class AddCandidate extends React.Component {
                                                     onKeyUp={this.keyUpHandlerReq}
                                                     value={this.state.input.rate_term}>
 
-                                                    <option value='' default selected> Select Rate Term </option>
+                                                    <option value='' hidden> Select Rate Term </option>
                                                  
                                                     {
                                              this.state.rateTerm_fd.map((rt) => (
