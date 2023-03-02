@@ -337,7 +337,8 @@ class AddRequisition extends React.Component {
             errors["clientrate"] = "This field is required";
         }
         if ((input["clientrate"]) != undefined) {
-            var pattern = new RegExp(/^(?=.*[0-9]).{1,3}$/); //new RegExp(/^[A-Za-z#+.\b]+$/);
+            // var pattern = new RegExp(/^(?=.*[0-9]).{1,3}/); //new RegExp(/^[A-Za-z#+.\b]+$/);
+            var pattern = new RegExp(/^((?!(0))[0-9]{0,5})$/);
             if (!pattern.test(input["clientrate"])) {
                 isValid = false;
                 errors["clientrate"] = "Client rate should be numeric data.";
@@ -578,7 +579,7 @@ class AddRequisition extends React.Component {
                                                     onKeyUp={this.keyUpHandlerReq}
                                                     value={this.state.input.duration}>
 
-                                                    <option hidden value="">Select Duration</option>
+                                                    <option hidden value=''>Select Duration</option>
                                                     {
                                                         this.state.duration_fd.map((dr) => (
 
@@ -600,7 +601,6 @@ class AddRequisition extends React.Component {
                                                     type="text"
                                                     name="clientrate"
                                                     value={this.state.input.clientrate}
-
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerSub}
                                                     placeholder="Client Rate"
@@ -612,7 +612,7 @@ class AddRequisition extends React.Component {
                                             <div class="form-group">
                                                 <label for="location"><b>Location:</b></label>
                                                 <input
-                                                    minLength={2}
+                                                    minLength={1}
                                                     maxLength={50}
                                                     type="text"
                                                     name="location"

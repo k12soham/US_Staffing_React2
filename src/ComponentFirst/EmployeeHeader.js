@@ -51,7 +51,7 @@ function EmployeeHeader() {
         <ul className="nav nav-pills">
 
         <ListGroup style={{ marginTop: '-3px' }}>
-          <ListGroupItem tag="a" href="/addRequisition" action className={splitLocation[1] !== "addRequisition" ? "list-group-item-primary" : ""}>Add Requirements</ListGroupItem>
+          <ListGroupItem tag="a" href="/addRequisition" action className={splitLocation[1] !== "addRequisition" ? "list-group-item-info" : ""}>Add Requirements</ListGroupItem>
         </ListGroup>
         <ListGroup style={{ marginTop: '-3px' }}>
           <ListGroupItem tag="a" href="/addCandidate" action className={splitLocation[1] !== "addCandidate" ? "list-group-item-info" : ""}>Add Candidate</ListGroupItem>
