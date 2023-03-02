@@ -51,11 +51,36 @@ function ViewCandidate() {
 
     }, []);
 
+    // const getStatusData = ()=>{
+    //     axios.get(`${base_url}/getAllRequisition`).then(json => setClosureList(json.data))
+    //     axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
+    // }
+
     let sessionreq = localStorage.getItem("requisitionID")
     let empID = localStorage.getItem("recruiterID")
     console.log(sessionreq)
     console.log(empID)
-    const deleteBook = (id) => { }
+
+    const deleteBook = (candidateID) => {
+
+
+        console.log(candidateID);
+        axios.delete(`${base_url}/deleteCadByAdmin?candidate_id=${candidateID}`)
+        .then(response => {
+
+            toast.success("Record deleted successfully!", {
+                position: "top-right",
+                autoClose: 1000,
+                style: { position: "absolute", top: "5px", width: "300px" }
+            });
+
+            axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
+         
+        },
+            (error) => {
+                // alert("Enter valid data");
+            });
+     }
 
     const updateInventory = ({ newReqid, newReqFrom, newId, newClient, newJobTitle, newDuration,
         newClientRate, newLocation, newSkills }) => {
@@ -239,7 +264,7 @@ function ViewCandidate() {
             }
             ).map(st => {
                 if (st.requisition.requisition_id == sessionreq
-                    && st.recruiter.recruiter_id == empID && st.flag == 1)
+                    && st.recruiter.recruiter_id == empID && st.flag == 1 && (st.candidate==null||st.candidate.deleted==1))
 
                     return (
                         <tr key={st.status_id}>
@@ -463,9 +488,13 @@ function ViewCandidate() {
             }))
 
         return statusList.map(st => {
-
-            if (st.requisition.requisition_id == sessionreq
-                && st.recruiter.recruiter_id == empID && st.flag == 1)
+            // console.log(st.requisition.requisition_id)
+            //  console.log(sessionreq)
+            if (st.requisition.requisition_id == sessionreq && st.recruiter.recruiter_id == empID 
+                && st.flag == 1 && (st.candidate==null||st.candidate.deleted==1)) 
+                // console.log(st.requisition.requisition_id)
+                // console.log(sessionreq)
+                // ||(st.requisition.requisition_id==can.requisition.requisition_id && st.flag==1 && can.candidate_id==''))
 
                 return (
                     <tr key={st.status_id}>
@@ -722,22 +751,22 @@ function ViewCandidate() {
                         </div>
                     </div>
 
-                    <div style={{ backgroundColor: '', width: '1900px' }}  >
-                        <Table bordered>
-                            <thead>
-                                <tr>
-                                    <th style={{ width: '10px' }}>Sr No.</th>
-                                    <th style={{ width: '120px' }}>Current Status </th>
-                                    <th style={{ width: '100px' }}>Date </th>
-                                    <th style={{ width: '200px' }}>Status </th>
-                                    <th style={{ width: '150px' }}>Candidate Name</th>
-                                    <th style={{ width: '50px' }}>Visa Type</th>
-                                    <th style={{ width: '60px' }}>Rate term</th>
-                                    <th style={{ width: '20px' }}>Submitted Rate</th>
-                                    <th style={{ width: '70px' }}>Phone</th>
-                                    <th style={{ width: '150px' }}>Email</th>
-                                    <th style={{ width: '100px' }}>Remark</th>
-                                    <th style={{ width: '100px' }}>Reason</th>
+                <div style={{ backgroundColor: '', width: '1800px' }}  >
+                    <Table bordered>
+                        <thead>
+                            <tr>
+                                <th style={{ width: '10px' }}>Sr No.</th>
+                                <th style={{ width: '120px' }}>Current Status </th>
+                                <th style={{ width: '100px' }}>Date </th>
+                                <th style={{ width: '200px' }}>Status </th>
+                                <th style={{ width: '150px' }}>Candidate Name</th>
+                                <th style={{ width: '50px' }}>Visa Type</th>
+                                <th style={{ width: '60px' }}>Rate term</th>
+                                <th style={{ width: '20px' }}>Submitted Rate</th>
+                                <th style={{ width: '70px' }}>Phone</th>
+                                <th style={{ width: '150px' }}>Email</th>
+                                <th style={{ width: '100px' }}>Remark</th>
+                                <th style={{ width: '100px' }}>Reason</th>
 
                                     <th style={{ width: '140px' }}>Action</th>
 

@@ -29,7 +29,26 @@ function ViewReqForAdmin() {
 
     }, []);
 
-    const deleteBook = (id) => { }
+    const deleteBook = (requisitionID) => {
+        console.log(requisitionID);
+        axios.delete(`${base_url}/deleteRequisitionByAdmin?requisition_id=${requisitionID}`)
+        .then(response => {
+
+            toast.success("Record deleted successfully!", {
+                position: "top-right",
+                autoClose: 1000,
+                style: { position: "absolute", top: "5px", width: "300px" }
+            });
+
+            axios.get(`${base_url}/getAllRequisition`).then(json => setRequisitionList(json.data))
+         
+        },
+            (error) => {
+                // alert("Enter valid data");
+            });
+
+
+     }
 
     // const onSave = ({ newReqid, newReqFrom, newId, newClient, newJobTitle, newDuration,
     //     newClientRate, newLocation, newPType, newSkills }) => {
@@ -70,12 +89,15 @@ function ViewReqForAdmin() {
     }
 
     const renderTable = () => {
+     
         return (
 
             requisitionList.filter((cls) => {
+
                 if (searchTerm === "") {
                     return cls;
-                } else if (cls.requisition_from.toLowerCase().includes(searchTerm.toLowerCase())) {
+                } 
+                else if (cls.requisition_from.toLowerCase().includes(searchTerm.toLowerCase())) {
                     return cls;
                 }
                 else if (cls.client.toLowerCase().includes(searchTerm.toLowerCase())) {
@@ -100,8 +122,12 @@ function ViewReqForAdmin() {
                 else if (cls.id.toString().toLowerCase().includes(searchTerm.toString().toLowerCase())) {
                     return cls;
                 }
+
+
             }
             ).map(cls => {
+                if(cls.deleted==1)
+                {
                 return (
                     <tr key={cls.requisition_id}>
                         <td></td>
@@ -141,6 +167,7 @@ function ViewReqForAdmin() {
                     </tr >
 
                 )
+            }
 
             })
         )
@@ -174,7 +201,7 @@ function ViewReqForAdmin() {
                         </div>
                     </div>
 
-                    <div style={{ width: '1800px' }}  >
+                    <div style={{ width: '1600px' }}  >
 
                         {/* <div className="col-12">
                             <input type="search" placeholder="Search course by title/discription or fee" onChange={event => { setSearchTerm(event.target.value) }}></input>
@@ -186,14 +213,14 @@ function ViewReqForAdmin() {
                                     <th style={{ width: '150px' }}>Requisition From</th>
                                     <th style={{ width: '90px' }}>ID</th>
                                     <th style={{ width: '150px' }}>Client</th>
-                                    <th style={{ width: '160px' }}>Job Title</th>
+                                    <th style={{ width: '130px' }}>Job Title</th>
                                     <th style={{ width: '70px' }}>Duration</th>
-                                    <th style={{ width: '100px' }}>Client Rate</th>
-                                    <th style={{ width: '130px' }}>Location</th>
-                                    <th style={{ width: '120px' }}>Position Type</th>
-                                    <th style={{ width: '200px' }}>Skills</th>
+                                    <th style={{ width: '50px' }}>Client Rate</th>
+                                    <th style={{ width: '80px' }}>Location</th>
+                                    <th style={{ width: '90px' }}>Position Type</th>
+                                    <th style={{ width: '100px' }}>Skills</th>
 
-                                    <th style={{ width: '70px' }}>Action</th>
+                                    <th style={{ width: '50px' }}>Action</th>
 
                                 </tr>
                             </thead>
