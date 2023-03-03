@@ -110,7 +110,7 @@ class AddRequisition extends React.Component {
         errors1["skills"] = "";
         this.setState({ errors: errors1 });
 
-        alert('Call reset');
+        //alert('Call reset');
     }
 
     addCandidate = () => {
@@ -161,15 +161,24 @@ class AddRequisition extends React.Component {
 
             let add_cls = this.state.input;
             add_cls[e.target.name] = e.target.value;
-            if ((this.state.requisitionId1) != undefined) {
-                localStorage.setItem("requisitionID",this.state.requisitionId1)
-                alert("This Requisition is already exist. Please submit candidate");
-              
-               this.post_requisition(add_cls);
-            }
-            else {
-                this.post_requisition(add_cls);
-            }
+
+            this.post_requisition(add_cls);
+
+        //     if ((this.state.requisitionId1) != undefined) {
+        //         localStorage.setItem("requisitionID",this.state.requisitionId1)
+        //        // alert("This Requisition is already exist. Please submit candidate");
+           
+        //        toast.success("Requisition added successfully!",
+        //        { position: "top-right" ,
+        //        autoClose: 1000,
+        //        style: { position: "absolute", top: "5px", width: "300px" }
+        //    }
+        //    );
+        //        this.post_requisition(add_cls);
+        //     }
+        //     else {
+        //         this.post_requisition(add_cls);
+        //     }
         }
         // 👇️ clear all input values in the form
         e.target.reset();
@@ -198,6 +207,7 @@ class AddRequisition extends React.Component {
                 console.log(response.data)             
                 
                  let a = response.data.requisition_id;
+                 console.log(a);
                 // let b = response.data.id;
                 // let c = response.data.requisition.requisition_id
 
@@ -230,7 +240,7 @@ class AddRequisition extends React.Component {
             (error) => {
                 console.log(error);
                 console.log("Error");
-                alert("Please enter valid details.")
+                alert("Please enter valid details or you already assigned for this requisition")
             }
         );
 
@@ -407,10 +417,13 @@ class AddRequisition extends React.Component {
         let reqID = e.target.value;
         console.log(reqID);
 
-        // http://localhost:8085/getRequisitionByID?ID=3344
         axios.get(`${base_url}/getRequisitionByID?ID=${reqID}`).then(
 
             (response) => {
+                //alert("This Requisition is already exist. Please click Add button to assign requisition to you");
+                
+                
+               
                 console.log(typeof (response));
                 console.log(response.data)
                 console.log(response.data.requisition_id);
@@ -437,6 +450,14 @@ class AddRequisition extends React.Component {
                     requisitionId1: a3,
                     RID: b,
                 });
+                let text ="On this requisiton recruiters are already working. \nWould you like to add yourself for this requisition?"
+                if (window.confirm(text) == true) {
+                    let add_cls = this.state.input;
+                    add_cls[e.target.name] = e.target.value;
+                    this.post_requisition(add_cls)
+                  } else {
+                    alert("cancel")
+                  }
                 console.log(this.state.requisitionId1);
 
             },
