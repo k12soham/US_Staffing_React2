@@ -516,7 +516,7 @@ class AddCandidate extends React.Component {
                                                     type="submit"
                                                     className="btn btn-primary w-100 theme-btn mx-auto"
                                                 >
-                                                    Add
+                                                    Submit
                                                 </button>
                                             </div>
                                             <div className='col-2'>

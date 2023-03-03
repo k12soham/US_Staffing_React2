@@ -9,6 +9,7 @@ import { getValue } from '@testing-library/user-event/dist/utils';
 import NavBarHeader from './NavbarHeader';
 import EmployeeHeader from './EmployeeHeader';
 import { json } from 'react-router-dom';
+import AdminHeader from './AdminHeader';
 
 const empID = localStorage.getItem('recruiterID');
 console.log("recruiterId : " + empID);
@@ -376,7 +377,14 @@ class UpdateCandidate extends React.Component {
                 <div className="row">
 
                     <div className="col-12 h-100 master_backgroung_heder">
-                        <EmployeeHeader />
+                     
+                     
+                        if (isAuthenticated==null) {
+                               <EmployeeHeader />
+                        } else {
+                            <AdminHeader/>
+                        }
+                     
                     </div>
 
                     <div className="col-12 master_backgroung_work scroll-bar">

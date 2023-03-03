@@ -56,10 +56,10 @@ function EmployeeHeader() {
           <ListGroupItem tag="a" href="/addRequisition" action className={splitLocation[1] !== "addRequisition" ? "list-group-item-info" : ""}>Add Requirements</ListGroupItem>
         </ListGroup>
         <ListGroup style={{ marginTop: '-3px' }}>
-          <ListGroupItem tag="a" href="/addCandidate" action className={splitLocation[1] !== "addCandidate" ? "list-group-item-info" : ""}>Add Candidate</ListGroupItem>
+          <ListGroupItem tag="a" href="/addCandidate" action className={splitLocation[1] !== "addCandidate" ? "list-group-item-info" : ""}>Submit Candidate</ListGroupItem>
         </ListGroup>
         <ListGroup style={{ marginTop: '-3px' }}>
-          <ListGroupItem tag="a" href="/view_all_req" action className={splitLocation[1] !== "view_all_req" ? "list-group-item-info" : ""}>View Requirements</ListGroupItem>
+          <ListGroupItem tag="a" href="/view_all_req" action className={splitLocation[1] !== "view_all_req" ? "list-group-item-info" : ""}>View Requisition</ListGroupItem>
         </ListGroup>
         </ul>
       </div>
