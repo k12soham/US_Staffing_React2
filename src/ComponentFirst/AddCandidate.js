@@ -88,9 +88,6 @@ class AddCandidate extends React.Component {
         });
     }
 
-
-   
-
     CheckRequisiton = (e) => {
       
        let requisition_id = this.state.input;
@@ -122,11 +119,14 @@ class AddCandidate extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        let add_cls = this.state.input;
+        add_cls[e.target.name] = e.target.value;
+
+        this.state.input["cad_name"] = this.state.input["cad_name"].trim(" ");
+        this.state.input["email"] = this.state.input["email"].trim(" ");
+            console.log("cad_name : " + this.state.input["cad_name"]+" "+ this.state.input["email"]);
 
         if (this.validate()) {
-
-            let add_cls = this.state.input;
-            add_cls[e.target.name] = e.target.value;
         
             this.postCandidate(add_cls);
         }
@@ -135,6 +135,7 @@ class AddCandidate extends React.Component {
     }
 
     postCandidate = (data) => {
+        alert("cad is added")
      
         // let z = this.state.empID = localStorage.getItem("recruiterId")
         let recruiterID = localStorage.getItem('recruiterID');
@@ -184,6 +185,7 @@ class AddCandidate extends React.Component {
     validate() {
 
         let input = this.state.input;
+        // add_cls[e.target.name] = e.target.value.trim(" ");
         let errors = {};
         let isValid = true;
 
@@ -210,9 +212,9 @@ class AddCandidate extends React.Component {
         }
         if ((input["cad_name"]) !== undefined) {
 
-            var pattern = new RegExp(/^[^\s][a-zA-Z\s]{3,50}$/);
-            // RegExp(/^[a-zA-Z]{2,10}$/);
-            // (/^[^\s][a-zA-Z\s]+[^\s].{2,5}$/);
+            var pattern = new RegExp(/^[^\s][a-zA-Z\s]+[^\s]{1,50}$/);
+            // new RegExp(/^[^\s][a-zA-Z\s]+[^\s]$/);
+            
             if (!pattern.test(input["cad_name"])) {
                 isValid = false;
                 errors["cad_name"] = "Please enter only characters.";
@@ -238,7 +240,7 @@ class AddCandidate extends React.Component {
         }
         if ((input["submitted_rate"]) !== undefined) {
 
-            var pattern = new RegExp(/^[^\s][0-9$\s]{2,4}$/);
+            var pattern = new RegExp(/^((?!(0))[0-9]{0,5})$/);
             // new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$%^&*,!? \b]).{6,15}$/); 
 
             if (!pattern.test(input["submitted_rate"])) {
@@ -315,6 +317,8 @@ class AddCandidate extends React.Component {
 
     render() {
         const isAuthenticated = localStorage.getItem('recruiterID');
+        localStorage.setItem('recruiterID', isAuthenticated);
+        console.log(isAuthenticated);
 
 
         return isAuthenticated ? (
