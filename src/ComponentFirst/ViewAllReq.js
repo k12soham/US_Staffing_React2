@@ -201,7 +201,7 @@ function ViewAllReq() {
                                         <>
                                             <button
     
-                                                className={"btn btn-outline-success"}
+                                                className={"btn btn-sm btn-outline-success"}
                                                 onClick={() => {
     
                                                     onSave(
@@ -219,7 +219,7 @@ function ViewAllReq() {
     
                                             &nbsp;&nbsp;&nbsp;&nbsp;
                                             <button
-                                                className={"btn btn-outline-warning"}
+                                                className={"btn btn-sm btn-outline-warning"}
     
                                                 onClick={() => onCancel()}
                                             >
@@ -230,7 +230,7 @@ function ViewAllReq() {
                                     ) : (
                                         <>
                                             <button
-                                                className="btn btn-outline-success"
+                                                className="btn btn-sm btn-outline-success"
     
                                                 onClick={() => onEdit({
     
@@ -242,7 +242,7 @@ function ViewAllReq() {
     
                                             </button>
                                             &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <button className="btn btn-outline-danger"
+                                            <button className="btn btn-sm btn-outline-danger"
                                                 onClick={() => { if (window.confirm('Are you sure to delete this requirement?')) deleteBook(cls.requisition.requisition_id) }}>
                                                 {/*Delete*/}<i class="fa fa-trash"></i></button>
                                             &nbsp;&nbsp;&nbsp;&nbsp;

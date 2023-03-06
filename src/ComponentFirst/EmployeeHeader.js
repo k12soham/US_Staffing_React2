@@ -5,8 +5,6 @@ import ModalWithCSS from "./ModalWithCSS";
 import {ListGroup, ListGroupItem} from "reactstrap";
 import { useLocation } from "react-router-dom";
 
-
-
 function EmployeeHeader() {
 
   const recruiterName = localStorage.getItem('recruiterName');

@@ -135,7 +135,6 @@ class AddCandidate extends React.Component {
     }
 
     postCandidate = (data) => {
-        alert("cad is added")
      
         // let z = this.state.empID = localStorage.getItem("recruiterId")
         let recruiterID = localStorage.getItem('recruiterID');

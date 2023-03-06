@@ -156,15 +156,16 @@ class AddRequisition extends React.Component {
             this.state.input["jobTitle"] = this.state.input["jobTitle"].trim(" ");
             console.log("jobTitle : " + this.state.input["jobTitle"]);
 
-            if ((this.state.requisitionId1) != undefined) {
-                localStorage.setItem("requisitionID",this.state.requisitionId1)
-                alert("This Requisition is already exist. Please submit candidate");
+            this.post_requisition(add_cls);
+            // if ((this.state.requisitionId1) != undefined) {
+            //     localStorage.setItem("requisitionID",this.state.requisitionId1)
+            //     alert("This Requisition is already exist. Please submit candidate");
               
-               this.post_requisition(add_cls);
-            }
-            else {
-                this.post_requisition(add_cls);
-            }
+            //    this.post_requisition(add_cls);
+            // }
+            // else {
+            //     this.post_requisition(add_cls);
+            // }
         }
         // 👇️ clear all input values in the form
         e.target.reset();
@@ -448,6 +449,7 @@ class AddRequisition extends React.Component {
                   } else {
                     alert("cancel")
                   }
+              
                 console.log(this.state.requisitionId1);
 
             },

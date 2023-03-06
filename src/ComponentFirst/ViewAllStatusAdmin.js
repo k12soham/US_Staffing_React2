@@ -14,6 +14,9 @@ function ViewAllStatusAdmin() {
     const recruiterIDAdmin = localStorage.getItem('recruiterIDAdmin');
     const statusID = localStorage.getItem('statusID');
     const requisitionID = localStorage.getItem('requisitionID');
+    const candidateID1 = localStorage.getItem('candidateID');
+    const recruiterIDView = localStorage.getItem('recruiterIDView');
+    // recruiterIDView
 
     const [requisitionList, setRequisitionList] = useState([]);
     const [statusList, setstatusList] = useState([]);
@@ -237,8 +240,27 @@ function ViewAllStatusAdmin() {
             var dd = new Date(st.status_date);
 
             // if (st.requisition.requisition_id == requisitionID && st.flag == 1)
-            if (st.requisition.requisition_id == requisitionID)
-                // && st.recruiter.recruiter_id==empID 
+            if (st.requisition.requisition_id == requisitionID && st.recruiter.recruiter_id === recruiterIDView)
+                // && st.recruiter.recruiter_id==empID  && st.candidate.candidate_id === candidateID1
+                // console.log("requisitionID: "+requisitionID+" recruiterIDView :"+recruiterIDView);
+                // console.log(st);
+
+                // if(st.candidate === null)
+                // {
+                //     if( st.requisition.requisition_id == requisitionID && st.recruiter.recruiter_id === recruiterIDView)
+                //     alert("candidate not found")
+                //     return (
+                //         <td>candidate not found</td>
+                //     )
+                // }
+                // else if(st.candidate !== null ){
+                    
+                //     if( st.requisition.requisition_id == requisitionID && st.recruiter.recruiter_id === recruiterIDView && st.candidate.candidate_id === candidateID1)
+                //     alert("candidate not found")
+                //     return(
+                //         <td>candidate found</td>
+                //     )
+                // }
 
                 return (
                     <tr key={st.status_id}>
@@ -313,8 +335,11 @@ function ViewAllStatusAdmin() {
                                         console.log("null")
                                     ) :
                                     (
-                                        st.candidate.candidate_name
-
+                                        // st.candidate.candidate_id === candidateID1 ?(
+                                            st.candidate.candidate_name
+                                        // ):(
+                                        //     console.log("null")
+                                        // )
                                     )
                             }
                         </td>

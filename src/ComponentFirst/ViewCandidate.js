@@ -7,8 +7,6 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 function ViewCandidate() {
-
-
     // const [duration, setDuration] = useState(null);
 
     // const [location, setLocation] = useState(null);
@@ -35,7 +33,6 @@ function ViewCandidate() {
     const [searchTerm, setSearchTerm] = useState("");
     let navigate = useNavigate();
 
-
     const [inEditMode, setInEditMode,] = useState({
         status: true,
         rowKey: null
@@ -47,7 +44,6 @@ function ViewCandidate() {
         axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
         axios.get(`${base_url}/getAllCandidate`).then(json => setCandidateList(json.data))
         axios.get(`${base_url}/getAllStatusFd`).then(json => setstatusFD(json.data))
-
 
     }, []);
 
@@ -63,7 +59,6 @@ function ViewCandidate() {
 
     const deleteBook = (candidateID) => {
 
-
         console.log(candidateID);
         axios.delete(`${base_url}/deleteCadByAdmin?candidate_id=${candidateID}`)
         .then(response => {
@@ -74,49 +69,38 @@ function ViewCandidate() {
                 style: { position: "absolute", top: "5px", width: "300px" }
             });
 
-            axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
-         
+            axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))         
         },
             (error) => {
                 // alert("Enter valid data");
             });
      }
 
-    const updateInventory = ({ newReqid, newReqFrom, newId, newClient, newJobTitle, newDuration,
-        newClientRate, newLocation, newSkills }) => {
-        alert("update val successfully")
-    }
+    // const updateInventory = ({ newReqid, newReqFrom, newId, newClient, newJobTitle, newDuration,
+    //     newClientRate, newLocation, newSkills }) => {
+    //     alert("update val successfully")
+    // }
 
     const onSave = ({ candidateID }) => {
 
         console.log(candidateID);
-        // console.log("clsid,"+clsid+" newReq,"+newReq+ "newSub,"+newSub+" newFirst,"+newFirst+" newSecond,"+newSecond+" newClosure,"+newClosure+" y "+y);
-        // updateInventory({
-        //     newReqid, newReqFrom, newId, newClient, newJobTitle, newDuration,
-        //     newClientRate, newLocation, newSkills
-        // });
+       
     }
     const handleChange = (e) => {
 
         let a = e.rrid;
         let b = e.sstt
         //let c= e.canid;
-
         console.log(a, b)
 
         setReqid(a)
         setUpdateStatus(b)
-
-
-
 
     }
 
     const handleSubmit = (e) => {
 
         console.log("submit11111111")
-
-
         let a = reqid;
         let b = updatestatus;
 
@@ -182,8 +166,6 @@ function ViewCandidate() {
                 alert("Please enter valid details.")
             }
         );
-
-
     }
 
     // ----------------------------------------------------------------------------------------------------------
@@ -214,7 +196,6 @@ function ViewCandidate() {
 
     const fetchInventory = () => {
         axios.get(`${base_url}/CurMonthAll`).then(json => setClosureList(json.data))
-
     }
 
     const renderTable = () => {
@@ -273,7 +254,6 @@ function ViewCandidate() {
                             <td>{st.status_date}</td>
                             <td>
                                 {
-
                                     <select class="btn btn-sm btn-secondary dropdown-toggle"
                                         style={{ width: '155px' }}
                                         name="status" id="status"
