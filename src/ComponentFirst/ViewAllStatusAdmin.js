@@ -12,8 +12,8 @@ import { format } from 'date-fns';
 function ViewAllStatusAdmin() {
 
     const recruiterIDAdmin = localStorage.getItem('recruiterIDAdmin');
-    const statusID = localStorage.getItem('statusID');
-    const requisitionID = localStorage.getItem('requisitionID');
+   // const statusID = localStorage.getItem('statusID');
+    //const requisitionID = localStorage.getItem('requisitionID');
 
     const [requisitionList, setRequisitionList] = useState([]);
     const [statusList, setstatusList] = useState([]);
@@ -232,13 +232,17 @@ function ViewAllStatusAdmin() {
     }
 
     const renderTable = () => {
+       let candidate_id=  localStorage.getItem("candidateID")
+        let requisition_id=  localStorage.getItem("requisitionID")
+        let recruiter_id= localStorage.getItem("recruiterID")
         return statusList.map(st => {
 
             var dd = new Date(st.status_date);
 
             // if (st.requisition.requisition_id == requisitionID && st.flag == 1)
-            if (st.requisition.requisition_id == requisitionID)
-                // && st.recruiter.recruiter_id==empID 
+            if (st.requisition.requisition_id == requisition_id && 
+                (st.candidate==null || st.candidate.candidate_id== candidate_id)
+                && st.recruiter.recruiter_id==recruiter_id )
 
                 return (
                     <tr key={st.status_id}>

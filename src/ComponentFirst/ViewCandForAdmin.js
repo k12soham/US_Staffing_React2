@@ -80,9 +80,14 @@ function ViewCandForAdmin() {
 
     }
     const getnewID = (e) => {
-        let statusIDnew = e.statusID
-        localStorage.setItem("statusID", statusIDnew)
-        //console.log(rq)
+        let candidate_id = e.canid
+        let requisition_id = e.reqid;
+        let recruiter_id= e.recid;
+       localStorage.setItem("candidateID", candidate_id)
+       localStorage.setItem("requisitionID", requisition_id)
+       localStorage.setItem("recruiterID", recruiter_id)
+      console.log(candidate_id)
+        console.log(requisition_id)
     }
 
     const handleChange = (e) => {
@@ -184,8 +189,12 @@ function ViewCandForAdmin() {
                     <tr key={st.status_id}>
                         <td></td>
                         <td>
-                            { <button>
+                            {/* { <button>
                                 <a href="/viewAllStatusAdmin" onClick={(evt) => getnewID({statusID: st.status_id })}>View</a></button>
+                         } */}
+                           { <button>
+                                <a href="/viewAllStatusAdmin" onClick={(evt) => getnewID({canid: st.candidate.candidate_id, reqid:st.requisition.requisition_id , 
+                                recid:st.recruiter.recruiter_id})}>View</a></button>
                          }
                         </td>
                        

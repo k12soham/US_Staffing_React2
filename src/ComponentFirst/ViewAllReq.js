@@ -287,7 +287,7 @@ function ViewAllReq() {
                         </div>
                     </div>
 
-                <div style={{ backgroundColor: '', width: '1500px' }}  >
+                <div style={{ backgroundColor: '', width: '' }}  >
                     <Table bordered class="table table-sm" style={{ fontFamily: 'arial' }}>
                         <thead>
                             <tr>
