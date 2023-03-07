@@ -146,6 +146,7 @@ function ViewReqForAdmin() {
                         <td>{cls.position_type}</td>
                         <td>{cls.skills}</td>
                         <td>
+                        &nbsp;&nbsp;
                             <button
                                 style={{ marginRight: '3px' }}
                                 className="btn btn-sm btn-outline-success"
@@ -155,6 +156,7 @@ function ViewReqForAdmin() {
                             >
                                 <i class="fa fa-edit"></i>
                             </button>
+                            &nbsp;&nbsp;
 
                             <button className="btn btn-sm btn-outline-danger"
                                 onClick={() => {
@@ -201,18 +203,18 @@ function ViewReqForAdmin() {
                         </div>
                     </div>
 
-                    <div style={{ width: '1600px' }}  >
+                    <div style={{ width: '' }}  >
 
                         {/* <div className="col-12">
                             <input type="search" placeholder="Search course by title/discription or fee" onChange={event => { setSearchTerm(event.target.value) }}></input>
                         </div> */}
-                        <Table bordered class="table table-sm" style={{ fontFamily: 'arial' }}>
+                        <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '13px' }}>
                             <thead>
                                 <tr>
-                                    <th style={{ width: '10px' }}>Sr No.</th>
-                                    <th style={{ width: '150px' }}>Requisition From</th>
+                                    <th style={{ width: '60px' }}>Sr No.</th>
+                                    <th style={{ width: '120px' }}>Requisition From</th>
                                     <th style={{ width: '90px' }}>ID</th>
-                                    <th style={{ width: '150px' }}>Client</th>
+                                    <th style={{ width: '100px' }}>Client</th>
                                     <th style={{ width: '130px' }}>Job Title</th>
                                     <th style={{ width: '70px' }}>Duration</th>
                                     <th style={{ width: '50px' }}>Client Rate</th>
@@ -220,7 +222,7 @@ function ViewReqForAdmin() {
                                     <th style={{ width: '90px' }}>Position Type</th>
                                     <th style={{ width: '100px' }}>Skills</th>
 
-                                    <th style={{ width: '50px' }}>Action</th>
+                                    <th style={{ width: '70px' }}>Action</th>
 
                                 </tr>
                             </thead>

@@ -196,6 +196,9 @@ class UpdateReq extends React.Component {
 
             let add_cls = this.state.input;
             add_cls[e.target.name] = e.target.value;
+            this.state.input["jobTitle"] = this.state.input["jobTitle"].trim(" ");
+            this.state.input["location"] = this.state.input["location"].trim(" ");
+            console.log("skills: "+ this.state.input["skills"]);
 
             this.post_requisition(add_cls);
 
@@ -208,6 +211,8 @@ class UpdateReq extends React.Component {
         let recId = this.state.empID = localStorage.getItem("recruiterID");
         console.log("recruiterID : " + recId);
         console.log("recruiterIDAdmin: " + this.state.recruiterIDAdmin);
+        console.log("jobtitle: "+ data["jobTitle"]);
+        
         let d = this.state.requisitionId1;
         let d1 = data["req"];
         let d2 = data["id"];
@@ -219,8 +224,9 @@ class UpdateReq extends React.Component {
         let d8 = data["positionType"];
         let d9 = data["skills"];
 
-        axios.put(`${base_url}/update_requsition?requisition_id=${d}&requisition_from=${d1}&id=${d2}&client=${d3}&job_title=${d4}
-        &duration=${d5}&client_rate=${d6}&location=${d7}&position_type=${d8}&skills=${d9}`).then(
+        alert('skills; '+ d9);
+
+        axios.put(`${base_url}/update_requsition?requisition_id=${d}&requisition_from=${d1}&id=${d2}&client=${d3}&job_title=${d4}&duration=${d5}&client_rate=${d6}&location=${d7}&position_type=${d8}&skills=${d9}`).then(
 
             // requisition_id, requisition_from, id, client, job_title, duration, client_rate, location,
             // 	position_type, skills
@@ -237,11 +243,11 @@ class UpdateReq extends React.Component {
                     { position: "top-right" }
                 );
                 if (this.state.recruiterIDAdmin !== null) {
-                    history.push("/viewReqForAdmin");
-                    window.location.reload();
+                    // history.push("/viewReqForAdmin");
+                    // window.location.reload();
                 } else {
-                    history.push("/view_all_req");
-                    window.location.reload();
+                    // history.push("/view_all_req");
+                    // window.location.reload();
                 }
             },
             (error) => {
@@ -277,18 +283,14 @@ class UpdateReq extends React.Component {
 
         console.log("type of input " + typeof (input["req"]));
         console.log("type of reqNum " + typeof (reqNum));
+        this.state.input["jobTitle"] = this.state.input["jobTitle"].trim(" ");
+        this.state.input["location"] = this.state.input["location"].trim(" ");
 
+        // -------------req---------------------------------------------------------------------------------------------
+        
         if ((!input["req"])) {
             isValid = false;
-            errors["req"] = "This req field is required";
-        }
-        if ((input["req"]) != undefined) {
-
-            var pattern = new RegExp(/^[^\s][a-zA-Z\s]+[^\s]$/);
-            if (!pattern.test(input["req"])) {
-                isValid = false;
-                errors["req"] = "Please enter only characters.";
-            }
+            errors["req"] = "This field is required";
         }
         if ((input["req"]) != undefined) {
 
@@ -301,21 +303,21 @@ class UpdateReq extends React.Component {
         // -------------id---------------------------------------------------------------------------------------------
         if ((!input["id"])) {
             isValid = false;
-            errors["id"] = "This id field is required";
+            errors["id"] = "This field is required";
         }
         let id1 = parseInt(input["id"]);
         console.log(id1);
         console.log("typeOf id1: " + typeof (id1));
         if ((input["id"]) != undefined) {
 
-            var pattern = new RegExp(/^(?=.*[0-9]).{1,10}$/); //new RegExp(/^[A-Za-z#+.\b]+$/);
+            var pattern = new RegExp(/^(?=.*[a-zA-Z0-9]).{1,25}$/); //new RegExp(/^[A-Za-z#+.\b]+$/);
             if (!pattern.test(id1)) {
                 isValid = false;
-                errors["id"] = "Only 10 digit number is accepted!";
+                errors["id"] = "Please enter valid Job Posting ID.";
             }
             if (id1 < 0) {
                 isValid = false;
-                errors["id"] = "Only +ve digit number is accepted!";
+                errors["id"] = "ID should be numeric data.";
             }
         }
 
@@ -333,8 +335,7 @@ class UpdateReq extends React.Component {
         if ((input["jobTitle"]) != undefined) {
 
             var pattern = new RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]+[^\s]{2,50}$/);
-            // new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$%^&*,!? \b]).{6,15}$/); 
-
+          
             if (!pattern.test(input["jobTitle"])) {
                 isValid = false;
                 errors["jobTitle"] = "Please enter only characters.";
@@ -349,16 +350,27 @@ class UpdateReq extends React.Component {
         // -------------clientrate-----------------------------------------------------------------------------------------
         if ((!input["clientrate"])) {
             isValid = false;
-            errors["clientrate"] = "This clientrate field is required";
+            errors["clientrate"] = "This field is required";
+        }
+        if ((input["clientrate"]) != undefined) {
+            var pattern = new RegExp(/^((?!(0))[0-9]{0,5})$/);
+            if (!pattern.test(input["clientrate"])) {
+                isValid = false;
+                errors["clientrate"] = "Client rate should be numeric data.";
+            }
+            if (input["clientrate"] < 0) {
+                isValid = false;
+                errors["clientrate"] = "Client rate should be numeric data.";
+            }
         }
         // -------------location-----------------------------------------------------------------------------------------
         if ((!input["location"])) {
             isValid = false;
-            errors["location"] = "This location field is required";
+            errors["location"] = "This field is required";
         }
         if ((input["location"]) != undefined) {
 
-            var pattern = new RegExp(/^[^\s][a-zA-Z0-9 &*()_;':",./\s]+[^\s]{2,50}$/);
+            var pattern = new RegExp(/^[a-zA-Z]{2,50}$/);
 
             if (!pattern.test(input["location"])) {
                 isValid = false;
@@ -376,22 +388,22 @@ class UpdateReq extends React.Component {
             isValid = false;
             errors["skills"] = "This skills field is required";
         }
-        if ((input["skills"]) != undefined) {
-            if ((input["skills"]) != undefined) {
+        // if ((input["skills"]) != undefined) {
+        //     if ((input["skills"]) != undefined) {
 
-                var pattern = new RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]+[^\s]{2,50}$/);
-                // new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$%^&*,!? \b]).{6,15}$/); 
-
-                if (!pattern.test(input["skills"])) {
-                    isValid = false;
-                    errors["skills"] = "Please enter valid skills.";
-                }
-            }
-            if (!pattern.test(input["skills"])) {
-                isValid = false;
-                errors["skills"] = "Please enter valid skills.";
-            }
-        }
+        //         var pattern = new RegExp(/^[^\s][a-zA-Z !@#$%^&*()\s]+[^\s].{1,9}$/);
+        //         // new RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]+[^\s]{2,50}$/);
+               
+        //         if (!pattern.test(input["skills"])) {
+        //             isValid = false;
+        //             errors["skills"] = "Please enter valid skills.";
+        //         }
+        //     }
+        //     if (!pattern.test(input["skills"])) {
+        //         isValid = false;
+        //         errors["skills"] = "Please enter valid skills.";
+        //     }
+        // }
 
         this.setState({
             errors: errors
@@ -456,7 +468,7 @@ class UpdateReq extends React.Component {
                                             <div className="text-danger">{this.state.errors.req}</div>
 
                                             <div class="form-group">
-                                                <label for="id"><b>ID:</b></label>
+                                                <label for="id"><b>Job Posting ID:</b></label>
                                                 <input
                                                     minLength={1}
                                                     maxLength={10}
@@ -466,7 +478,7 @@ class UpdateReq extends React.Component {
                                                     onChange={this.handleChange}
                                                     // onBlur={this.keyUpHandlerID}
                                                     // onKeyUp={this.keyUpHandlerID}
-                                                    placeholder="ID"
+                                                    placeholder="Job Posting ID"
 
                                                     class="form-control" />
 

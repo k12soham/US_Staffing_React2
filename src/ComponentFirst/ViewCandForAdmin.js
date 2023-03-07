@@ -10,9 +10,9 @@ import ReactPaginate from 'react-paginate';
 function ViewCandForAdmin() {
 
     const recruiterIDAdmin = localStorage.getItem('recruiterIDAdmin');
-  //  localStorage.setItem('recruiterIDAdmin', recruiterIDAdmin)
+    //  localStorage.setItem('recruiterIDAdmin', recruiterIDAdmin)
     const requisitionID = localStorage.getItem('requisitionID');
-   // localStorage.setItem('requisitionID', requisitionID)
+    // localStorage.setItem('requisitionID', requisitionID)
 
 
     const [requisitionList, setRequisitionList] = useState([]);
@@ -38,24 +38,24 @@ function ViewCandForAdmin() {
     //     axios.get(`${base_url}/getAllRequisition`).then(json => setRequisitionList(json.data))
     //     axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
     // }
-    
-    const deleteBook = (candidateID) => { 
+
+    const deleteBook = (candidateID) => {
         console.log(candidateID);
         axios.delete(`${base_url}/deleteCadByAdmin?candidate_id=${candidateID}`)
-        .then(response => {
+            .then(response => {
 
-            toast.success("Record deleted successfully!", {
-                position: "top-right",
-                autoClose: 1000,
-                style: { position: "absolute", top: "5px", width: "300px" }
-            });
+                toast.success("Record deleted successfully!", {
+                    position: "top-right",
+                    autoClose: 1000,
+                    style: { position: "absolute", top: "5px", width: "300px" }
+                });
 
-            axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
-         
-        },
-            (error) => {
-                // alert("Enter valid data");
-            });
+                axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
+
+            },
+                (error) => {
+                    // alert("Enter valid data");
+                });
     }
 
     // const onSave = ({ newReqid, newReqFrom, newId, newClient, newJobTitle, newDuration,
@@ -73,7 +73,6 @@ function ViewCandForAdmin() {
 
         navigate("/updateCandidate");
 
-
     }
 
     const fetchInventory = () => {
@@ -83,20 +82,12 @@ function ViewCandForAdmin() {
     const getnewID = (e) => {
         let candidate_id = e.canid
         let requisition_id = e.reqid;
-        let recruiter_id= e.recid;
-       localStorage.setItem("candidateID", candidate_id)
-       localStorage.setItem("requisitionID", requisition_id)
-       localStorage.setItem("recruiterID", recruiter_id)
-     
-    }
-
-    const getnewID2 = (e) => {
-  
-        let requisition_id = e.reqid;
-        let recruiter_id= e.recid;
-       localStorage.setItem("requisitionID", requisition_id)
-       localStorage.setItem("recruiterID", recruiter_id)
-     
+        let recruiter_id = e.recid;
+        localStorage.setItem("candidateID", candidate_id)
+        localStorage.setItem("requisitionID", requisition_id)
+        localStorage.setItem("recruiterID", recruiter_id)
+        console.log("candidate_id= " + candidate_id + "requisition_id= " + requisition_id + "recruiter_id= " + recruiter_id)
+        console.log(requisition_id)
     }
 
     const handleChange = (e) => {
@@ -126,7 +117,6 @@ function ViewCandForAdmin() {
 
     const handleSubmit2 = (e) => {
 
-        // e.preventDefault();
         console.log("submit222222")
         let a = reqid;
         let b = updatestatus;
@@ -247,9 +237,9 @@ function ViewCandForAdmin() {
     const RenderTable = () => {
       
         return statusList.map(st => {
-          
-            if (st.requisition.requisition_id == requisitionID && st.flag == 1 && (st.candidate==null||st.candidate.deleted==1))
-           // if (st.requisition.requisition_id == requisitionID)
+
+            if (st.requisition.requisition_id == requisitionID && st.flag == 1 && (st.candidate == null || st.candidate.deleted == 1))
+                // if (st.requisition.requisition_id == requisitionID)
                 // && st.recruiter.recruiter_id==empID 
 
                 return  (
@@ -257,30 +247,28 @@ function ViewCandForAdmin() {
                     <tr key={st.status_id}>
                         <td></td>
                         <td>
-                            {/* { <button>
-                                <a href="/viewAllStatusAdmin" onClick={(evt) => getnewID({statusID: st.status_id })}>View</a></button>
-                         } */}
-                           {
-                             st.candidate == null ?
-                           (
+                            {
+                                st.candidate == null ?
+                                    (
+                                        // <button>
+                                            <a href="/viewAllStatusAdmin" onClick={(evt) => getnewID({
+                                                reqid: st.requisition.requisition_id,
+                                                recid: st.recruiter.recruiter_id
+                                            })}>View All Status</a>
+                                            // </button>
+                                    ) :
+                                    (
+                                        // <button>
+                                            <a href="/viewAllStatusAdmin" onClick={(evt) => getnewID({
+                                                canid: st.candidate.candidate_id, reqid: st.requisition.requisition_id,
+                                                recid: st.recruiter.recruiter_id
+                                            })}>View All Status</a>
+                                            // </button>
 
-                            <button>
-                            <a href="/viewAllStatusAdmin" onClick={(evt) => getnewID2({reqid:st.requisition.requisition_id , 
-                            recid:st.recruiter.recruiter_id})}>View</a></button>
-                           
-
-                           ):
-                           (
-
-                            <button>
-                            <a href="/viewAllStatusAdmin" onClick={(evt) => getnewID({canid: st.candidate.candidate_id, reqid:st.requisition.requisition_id , 
-                            recid:st.recruiter.recruiter_id})}>View</a></button>
-
-                           )
-                          
-                         }
+                                    )
+                            }
                         </td>
-                       
+
                         <td>{st.status}</td>
                         <td>{st.status_date}</td>
                         <td>{st.recruiter.recruiter_name}</td>
@@ -404,6 +392,7 @@ function ViewCandForAdmin() {
                                     ) :
                                     (
                                         <>
+                                        &nbsp;
                                             <button
                                                 style={{ marginRight: '3px' }}
                                                 className="btn btn-sm btn-outline-success"
@@ -413,6 +402,7 @@ function ViewCandForAdmin() {
                                             >
                                                 <i class="fa fa-edit"></i>
                                             </button>
+                                            &nbsp;
 
                                             <button className="btn btn-sm btn-outline-danger"
                                                 onClick={() => {
@@ -434,54 +424,46 @@ function ViewCandForAdmin() {
     
     return (
         // return (
-        <div className="container-fluid">
+        <div className="">
+            <div className="row">
 
-            <div className="col-12 h-100 master_backgroung_heder">
-                <AdminHeader />
-            </div>
-
-            <div className="master_backgroung_work scroll-bar-horizontal">
-                
-
-                <div style={{ width: '1800px' }}  >
-                    <Table bordered class="table table-sm" style={{ fontFamily: 'arial' }}>
-                        <thead>
-                      
-                            <tr>
-                                <th style={{ width: '10px' }}>Sr No.</th>
-                                <th style={{ width: '20px' }}>View All Status</th>
-                                <th style={{ width: '80px' }}>Current Status </th>
-                                <th style={{ width: '100px' }}>Date </th>
-                                <th style={{ width: '160px' }}>Recruiter Name </th>
-                                <th style={{ width: '100px' }}>Candidate Name</th>
-                                <th style={{ width: '90px' }}>Visa Type</th>
-                                <th style={{ width: '60px' }}>Rate term</th>
-                                <th style={{ width: '60px' }}>Submitted Rate</th>
-                                <th style={{ width: '90px' }}>Phone</th>
-                                <th style={{ width: '150px' }}>Email</th>
-                                <th style={{ width: '100px' }}>Remark</th>
-                                <th style={{ width: '100px' }}>Reason</th>
-                                <th style={{ width: '95px' }}>Action</th>
-                              
-                            </tr>
-                          
-                        </thead>
-                        <tbody>
-
-                            {RenderTable()}
-                            {/* <PaginatedItems itemsPerPage={2} /> */}
-
-                        </tbody>
-                       
-                    </Table>
-                    
+                <div className="col-12 h-100 master_backgroung_heder">
+                    <AdminHeader />
                 </div>
-              
+
+                <div className="col-12 master_backgroung_work scroll-bar-horizontal">
+
+                    <div style={{ width: '' }}  >
+                        <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '13px' }}>
+                            <thead>
+                                <tr>
+                                    <th style={{ width: '60px' }}>Sr No.</th>
+                                    <th style={{ width: '110px' }}>View All Status</th>
+                                    <th style={{ width: '130px' }}>Current Status </th>
+                                    <th style={{ width: '100px' }}>Date </th>
+                                    <th style={{ width: '160px' }}>Recruiter Name </th>
+                                    <th style={{ width: '100px' }}>Candidate Name</th>
+                                    <th style={{ width: '80px' }}>Visa Type</th>
+                                    <th style={{ width: '60px' }}>Rate term</th>
+                                    <th style={{ width: '50px' }}>Submitted Rate</th>
+                                    <th style={{ width: '80px' }}>Phone</th>
+                                    <th style={{ width: '130px' }}>Email</th>
+                                    <th style={{ width: '100px' }}>Remark</th>
+                                    <th style={{ width: '100px' }}>Reason</th>
+                                    <th style={{ width: '95px' }}>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                {renderTable()}
+
+                            </tbody>
+                        </Table>
+
+                    </div>
+                </div>
             </div>
-            
-        </div> 
-        
-        
+        </div>
         //)
     );
 }
