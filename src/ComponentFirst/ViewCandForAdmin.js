@@ -79,11 +79,14 @@ function ViewCandForAdmin() {
 
     }
     const getnewID = (e) => {
-        let candidateID = e.candidateID
-        localStorage.setItem("candidateID", candidateID)
-        let recruiterIDView = e.recruiterIDView
-        localStorage.setItem("recruiterIDView", recruiterIDView)
-        //console.log(rq)
+        let candidate_id = e.canid
+        let requisition_id = e.reqid;
+        let recruiter_id = e.recid;
+        localStorage.setItem("candidateID", candidate_id)
+        localStorage.setItem("requisitionID", requisition_id)
+        localStorage.setItem("recruiterID", recruiter_id)
+        console.log("candidate_id= " + candidate_id + "requisition_id= " + requisition_id + "recruiter_id= " + recruiter_id)
+        console.log(requisition_id)
     }
 
     const handleChange = (e) => {
@@ -185,8 +188,24 @@ function ViewCandForAdmin() {
                         <td></td>
                         <td>
                             {
-                                <a href="/viewAllStatusAdmin" 
-                                onClick={(evt) => getnewID({ candidateID: st.candidate.candidate_id, recruiterIDView: st.recruiter.recruiter_id })}>View All Status</a>
+                                st.candidate == null ?
+                                    (
+                                        // <button>
+                                            <a href="/viewAllStatusAdmin" onClick={(evt) => getnewID({
+                                                reqid: st.requisition.requisition_id,
+                                                recid: st.recruiter.recruiter_id
+                                            })}>View All Status</a>
+                                            // </button>
+                                    ) :
+                                    (
+                                        // <button>
+                                            <a href="/viewAllStatusAdmin" onClick={(evt) => getnewID({
+                                                canid: st.candidate.candidate_id, reqid: st.requisition.requisition_id,
+                                                recid: st.recruiter.recruiter_id
+                                            })}>View All Status</a>
+                                            // </button>
+
+                                    )
                             }
                         </td>
 
@@ -313,6 +332,7 @@ function ViewCandForAdmin() {
                                     ) :
                                     (
                                         <>
+                                        &nbsp;
                                             <button
                                                 style={{ marginRight: '3px' }}
                                                 className="btn btn-sm btn-outline-success"
@@ -322,6 +342,7 @@ function ViewCandForAdmin() {
                                             >
                                                 <i class="fa fa-edit"></i>
                                             </button>
+                                            &nbsp;
 
                                             <button className="btn btn-sm btn-outline-danger"
                                                 onClick={() => {
@@ -352,11 +373,11 @@ function ViewCandForAdmin() {
 
                 <div className="col-12 master_backgroung_work scroll-bar-horizontal">
 
-                    <div style={{ width: '1900px' }}  >
-                        <Table bordered class="table table-sm" style={{ fontFamily: 'arial' }}>
+                    <div style={{ width: '' }}  >
+                        <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '13px' }}>
                             <thead>
                                 <tr>
-                                    <th style={{ width: '7px' }}>Sr No.</th>
+                                    <th style={{ width: '60px' }}>Sr No.</th>
                                     <th style={{ width: '110px' }}>View All Status</th>
                                     <th style={{ width: '130px' }}>Current Status </th>
                                     <th style={{ width: '100px' }}>Date </th>

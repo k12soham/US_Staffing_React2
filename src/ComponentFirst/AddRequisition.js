@@ -52,6 +52,10 @@ class AddRequisition extends React.Component {
             .catch(error => {
                 // alert("Error client")
             })
+
+            var myStr = "Hi Dev! #";
+            var newStr = myStr.replace("#", "Guys");
+            console.log(newStr);
     }
 
     constructor(props) {
@@ -65,7 +69,6 @@ class AddRequisition extends React.Component {
             duration_fd: [],
             positionType_fd: [],
             requisitor_fd: [],
-            // status_fd: [],
             client_fd: [],
             setReqList: [],
             requisitionId1: undefined,
@@ -105,15 +108,11 @@ class AddRequisition extends React.Component {
     }
 
     addCandidate = () => {
-        // console.log(reqID);
-        // let storageVal = localStorage.getItem("requisitionID");
-        // console.log(storageVal);
 
         let a = this.state.empID
         let b = this.state.requisitionId1;
         console.log("recid = " + a + " rqid = " + b);
-        console.log("recid = " + this.state.empID + " rqid = " + this.state.requisitionId1);
-        // onClick={this.addCandidate(this.state.empID, this.state.requisitionId1)}                                       
+        console.log("recid = " + this.state.empID + " rqid = " + this.state.requisitionId1);                                     
 
         if (b != undefined) {
             localStorage.setItem('recruiterID', a);
@@ -150,11 +149,13 @@ class AddRequisition extends React.Component {
         console.log(this.state.requisitionId1);
         if (this.validate()) {
 
-            let add_cls = this.state.input;
-            add_cls[e.target.name] = e.target.value;
-
             this.state.input["jobTitle"] = this.state.input["jobTitle"].trim(" ");
             console.log("jobTitle : " + this.state.input["jobTitle"]);
+            this.state.input["skills"] = this.state.input["skills"].replaceAll("#", "%23")
+            console.log(this.state.input["skills"]);
+
+            let add_cls = this.state.input;
+            add_cls[e.target.name] = e.target.value;
 
             this.post_requisition(add_cls);
             // if ((this.state.requisitionId1) != undefined) {
@@ -186,7 +187,8 @@ class AddRequisition extends React.Component {
         let d6 = data["clientrate"];
         let d7 = data["location"];
         let d8 = data["positionType"];
-        let d9 = data["skills"];
+        let d9 = data["skills"]      
+
 
         axios.post(`${base_url}/add_requsition?requisition_from=${d1}&id=${d2}&client=${d3}&job_title=${d4}
         &duration=${d5}&client_rate=${d6}&location=${d7}&position_type=${d8}&skills=${d9}&recruiter_id=${z}`).then(
@@ -203,17 +205,7 @@ class AddRequisition extends React.Component {
                     localStorage.setItem("requisitionID", a);
                     console.log("reqisitionID a="+response.data.requisition_id);
                     this.setState({ requisitionId1: a });
-                }
-                
-                // else{
-                //     localStorage.setItem("requisitionID", c);
-                //     console.log("reqisitionID c="+response.data.requisition.requisition_id);
-                //     this.setState({ requisitionId1: c });
-                // }
-                // console.log(typeof (response));
-
-               
-               // this.setState({ RID: b });                
+                }              
 
                 toast.success("Requisition added successfully!",
                     { position: "top-right" ,
@@ -294,10 +286,10 @@ class AddRequisition extends React.Component {
         console.log("typeOf id1: " + typeof (id1));
         if ((input["id"]) != undefined) {
 
-            var pattern = new RegExp(/^(?=.*[a-zA-Z0-9]).{1,25}$/); //new RegExp(/^[A-Za-z#+.\b]+$/);
+            var pattern = new RegExp(/^(?=.*[a-zA-Z0-9]).{1,25}$/); 
             if (!pattern.test(id1)) {
                 isValid = false;
-                errors["id"] = "ID should be numeric data.";
+                errors["id"] = "Please enter valid Job Posting ID.";
             }
             if (id1 < 0) {
                 isValid = false;
@@ -377,9 +369,9 @@ class AddRequisition extends React.Component {
         if ((input["skills"]) != undefined) {
             if ((input["skills"]) != undefined) {
 
-                var pattern = new RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]+[^\s]{2,50}$/);
-                // new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$%^&*,!? \b]).{6,15}$/); 
-
+                var pattern = new RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]+[^\s]$/);
+                // new RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]+[^\s]{2,50}$/);
+               
                 if (!pattern.test(input["skills"])) {
                     isValid = false;
                     errors["skills"] = "Please enter valid skills.";
@@ -406,19 +398,10 @@ class AddRequisition extends React.Component {
             requisitionId1: undefined
         });
         let reqID = e.target.value;
-        console.log(reqID);
 
         axios.get(`${base_url}/getRequisitionByID?ID=${reqID}`).then(
 
             (response) => {
-                //alert("This Requisition is already exist. Please click Add button to assign requisition to you");
-                
-                
-               
-                console.log(typeof (response));
-                console.log(response.data)
-                console.log(response.data.requisition_id);
-                // console.log(response.data[0].id);
 
                 let inputs = this.state.input;
 
@@ -446,18 +429,11 @@ class AddRequisition extends React.Component {
                     let add_cls = this.state.input;
                     add_cls[e.target.name] = e.target.value;
                     this.post_requisition(add_cls)
-                  } else {
-                    alert("cancel")
                   }
-              
-                console.log(this.state.requisitionId1);
 
             },
             (error) => {
                 console.log(error);
-
-                console.log(this.state.input.req);
-                console.log(this.state.input.id);
 
                 let inputs = {};
                 inputs["req"] = this.state.input.req;
@@ -530,7 +506,7 @@ class AddRequisition extends React.Component {
                                                     value={this.state.input.id}
                                                     onChange={this.handleChange}
                                                     onBlur={this.keyUpHandlerID}
-                                                    placeholder="ID"
+                                                    placeholder="Job Posting ID"
                                                     class="form-control" />
 
                                                 <div className="text-danger">{this.state.errors.id}</div>
@@ -661,7 +637,7 @@ class AddRequisition extends React.Component {
                                             </div>
                                             <div class="form-group">
                                                 <label for="closure"><b>Skills:</b></label>
-                                                <textarea
+                                                <input
 
                                                     minLength={1}
                                                     maxLength={200}
@@ -669,8 +645,9 @@ class AddRequisition extends React.Component {
                                                     name="skills"
                                                     value={this.state.input.skills}
                                                     onChange={this.handleChange}
-                                                    onKeyUp={this.keyUpHandlerClosure}
+                                                    // onKeyUp={this.keyUpHandlerClosure}
                                                     placeholder="Skills"
+
 
                                                     class="form-control"
                                                     style={{ height: '130px' }} />

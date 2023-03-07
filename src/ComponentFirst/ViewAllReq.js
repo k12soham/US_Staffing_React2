@@ -287,14 +287,14 @@ function ViewAllReq() {
                         </div>
                     </div>
 
-                <div style={{ backgroundColor: '', width: '1500px' }}  >
-                    <Table bordered class="table table-sm" style={{ fontFamily: 'arial' }}>
+                <div>
+                    <Table bordered className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '13px' }}>
                         <thead>
                             <tr>
-                                <th style={{ width: '10px' }}>Sr No.</th>
+                                <th style={{ width: '60px' }}>Sr No.</th>
                                 <th style={{ width: '150px' }}>Requisition From</th>
-                                <th style={{ width: '90px' }}>ID</th>
-                                <th style={{ width: '150px' }}>Client</th>
+                                <th style={{ width: '100px' }}>Job Posting ID</th>
+                                <th style={{ width: '130px' }}>Client</th>
                                 <th style={{ width: '160px' }}>Job Title</th>
                                 <th style={{ width: '70px' }}>Duration</th>
                                 <th style={{ width: '100px' }}>Client Rate</th>
@@ -302,7 +302,7 @@ function ViewAllReq() {
                                 <th style={{ width: '120px' }}>Position Type</th>
                                 <th style={{ width: '150px' }}>Skills</th>
 
-                                <th style={{ width: '120px' }}>Action</th>
+                                <th style={{ width: '100px' }}>Action</th>
 
                                 </tr>
                             </thead>
