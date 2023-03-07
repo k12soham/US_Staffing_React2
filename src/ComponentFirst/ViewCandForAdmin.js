@@ -218,7 +218,7 @@ function ViewCandForAdmin() {
       
         return (
           <>
-            <RenderTable currentItems={currentItems} />
+            <renderTable currentItems={currentItems} />
             <ReactPaginate
               breakLabel="..."
               nextLabel="next >"
@@ -234,7 +234,7 @@ function ViewCandForAdmin() {
       
         
 
-    const RenderTable = () => {
+    const renderTable = () => {
       
         return statusList.map(st => {
 
