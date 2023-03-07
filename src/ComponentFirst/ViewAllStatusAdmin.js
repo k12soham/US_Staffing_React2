@@ -12,7 +12,7 @@ import { format } from 'date-fns';
 function ViewAllStatusAdmin() {
 
     const recruiterIDAdmin = localStorage.getItem('recruiterIDAdmin');
-   // const statusID = localStorage.getItem('statusID');
+    // const statusID = localStorage.getItem('statusID');
     //const requisitionID = localStorage.getItem('requisitionID');
 
     const [requisitionList, setRequisitionList] = useState([]);
@@ -44,7 +44,7 @@ function ViewAllStatusAdmin() {
 
     }, []);
 
-    const getStatusData=()=>{
+    const getStatusData = () => {
         axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data));
     }
 
@@ -56,7 +56,7 @@ function ViewAllStatusAdmin() {
     // }
 
     const onEdit = ({ statusID, statusNew, statusDateNew }) => {
-        console.log('statusID : ' + statusID + ' statusNew :'+statusNew + ' statusDateNew: ' + statusDateNew)
+        console.log('statusID : ' + statusID + ' statusNew :' + statusNew + ' statusDateNew: ' + statusDateNew)
 
         setInEditMode({
             status: true,
@@ -65,7 +65,7 @@ function ViewAllStatusAdmin() {
 
         setStatus1(statusNew);
         setStatusDate(statusDateNew);
-       
+
         localStorage.setItem('statusID', statusID);
 
         navigate("/viewAllStatusAdmin");
@@ -82,7 +82,7 @@ function ViewAllStatusAdmin() {
     const UpdateStatusByAdmin = ({ statusID, newStatus, newStatusDate }) => {
         let status = newStatus;
         let stDate = newStatusDate;
-       
+
 
         // if ((sub < 0) || (first < 0) || (second < 0) || (closure < 0)) {
         //     alert("Please enter positive numbers")
@@ -100,24 +100,24 @@ function ViewAllStatusAdmin() {
         //     alert("Please enter valid number for closure")
         // }
         // else {
-            axios.put(`${base_url}/update_status_Admin?status_id=${statusID}&status=${newStatus}&status_date=${newStatusDate}`, {
-            })
-                .then(response => {
-                    onCancel();
+        axios.put(`${base_url}/update_status_Admin?status_id=${statusID}&status=${newStatus}&status_date=${newStatusDate}`, {
+        })
+            .then(response => {
+                onCancel();
 
-                    toast.success("Record updated successfully!", {
-                        position: "top-right",
-                        autoClose: 1000,
-                        style: { position: "absolute", top: "5px", width: "300px" }
-                    });
+                toast.success("Record updated successfully!", {
+                    position: "top-right",
+                    autoClose: 1000,
+                    style: { position: "absolute", top: "5px", width: "300px" }
+                });
 
-                    getStatusData();
-                 
-                },
-                    (error) => {
-                        alert("Enter valid data");
-                    }
-                )
+                getStatusData();
+
+            },
+                (error) => {
+                    alert("Enter valid data");
+                }
+            )
         // }
     }
 
@@ -232,17 +232,17 @@ function ViewAllStatusAdmin() {
     }
 
     const renderTable = () => {
-       let candidate_id=  localStorage.getItem("candidateID")
-        let requisition_id=  localStorage.getItem("requisitionID")
-        let recruiter_id= localStorage.getItem("recruiterID")
+        let candidate_id = localStorage.getItem("candidateID")
+        let requisition_id = localStorage.getItem("requisitionID")
+        let recruiter_id = localStorage.getItem("recruiterID")
         return statusList.map(st => {
 
             var dd = new Date(st.status_date);
 
             // if (st.requisition.requisition_id == requisitionID && st.flag == 1)
-            if (st.requisition.requisition_id == requisition_id && 
-                (st.candidate==null || st.candidate.candidate_id== candidate_id)
-                && st.recruiter.recruiter_id==recruiter_id )
+            if (st.requisition.requisition_id == requisition_id &&
+                (st.candidate == null || st.candidate.candidate_id == candidate_id)
+                && st.recruiter.recruiter_id == recruiter_id)
 
                 return (
                     <tr key={st.status_id}>
@@ -261,7 +261,7 @@ function ViewAllStatusAdmin() {
                                     // />
 
                                     <select class="btn btn-secondary dropdown-toggle"
-                                        style={{ width: '155px' }}
+                                        style={{ width: '200px' }}
                                         name="status" id="status"
                                         value={status1}
                                         onChange={(event) => setStatus1(event.target.value)}
@@ -299,6 +299,7 @@ function ViewAllStatusAdmin() {
                                 inEditMode.status && inEditMode.rowKey === st.status_id ? (
 
                                     <DatePicker
+                                        style={{ width: '80px' }}
                                         maxDate={new Date()} value={statusDate}
                                         className="datepicker"
                                         openToDate={dd}
@@ -318,32 +319,9 @@ function ViewAllStatusAdmin() {
                                     ) :
                                     (
                                         st.candidate.candidate_name
-
                                     )
                             }
                         </td>
-
-                        {/* <td>
-                            <button
-                                style={{ marginRight: '3px' }}
-                                className="btn btn-sm btn-outline-success"
-                                onClick={() => onEdit({
-                                    statusID: st.status_id,
-                                    statusNew: st.status, statusDateNew: st.status_date,
-                                })}
-                            >
-                                <i class="fa fa-edit"></i>
-                            </button>
-
-                            <button className="btn btn-sm btn-outline-danger"
-                                onClick={() => {
-                                    if (window.confirm('Are you sure to delete this requirement?'))
-                                        deleteBook(st.requisition.requisition_id)
-                                }}>
-                                <i class="fa fa-trash"></i>
-                            </button>
-
-                        </td> */}
 
                         <td>
                             {
@@ -404,16 +382,17 @@ function ViewAllStatusAdmin() {
 
     return (
         // return (
-        <div className="container-fluid">
+        <div className="">
+            <div className="row">
 
             <div className="col-12 h-100 master_backgroung_heder">
                 <AdminHeader />
             </div>
 
-            <div className="master_backgroung_work scroll-bar-horizontal">
+            <div className=" col-12 master_backgroung_work scroll-bar-horizontal">
 
                 <div style={{ width: '100%' }}  >
-                    <Table bordered class="table table-sm" style={{ fontFamily: 'arial' }}>
+                    <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '13px' }}>
                         <thead>
                             <tr>
                                 <th style={{ width: '10px' }}>Sr No.</th>
@@ -433,6 +412,7 @@ function ViewAllStatusAdmin() {
                     </Table>
 
                 </div>
+            </div>
             </div>
         </div>
         //)
