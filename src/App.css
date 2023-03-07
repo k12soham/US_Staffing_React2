@@ -59,6 +59,13 @@
   background: transparent;
 }
 
+.pagination ul li {
+  display: inline;
+  padding: 10px 15px;
+  background: #eee;
+  margin: 10px;
+  cursor: pointer;
+}
 
 
 

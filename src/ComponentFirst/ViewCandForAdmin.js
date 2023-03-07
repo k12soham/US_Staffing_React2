@@ -6,6 +6,7 @@ import EmployeeHeader from "./EmployeeHeader";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import AdminHeader from "./AdminHeader";
+import ReactPaginate from 'react-paginate';
 function ViewCandForAdmin() {
 
     const recruiterIDAdmin = localStorage.getItem('recruiterIDAdmin');
@@ -86,8 +87,16 @@ function ViewCandForAdmin() {
        localStorage.setItem("candidateID", candidate_id)
        localStorage.setItem("requisitionID", requisition_id)
        localStorage.setItem("recruiterID", recruiter_id)
-      console.log(candidate_id)
-        console.log(requisition_id)
+     
+    }
+
+    const getnewID2 = (e) => {
+  
+        let requisition_id = e.reqid;
+        let recruiter_id= e.recid;
+       localStorage.setItem("requisitionID", requisition_id)
+       localStorage.setItem("recruiterID", recruiter_id)
+     
     }
 
     const handleChange = (e) => {
@@ -178,23 +187,97 @@ function ViewCandForAdmin() {
 
     }
 
-    const renderTable = () => {
-        return statusList.map(st => {
 
+
+    const items = [1, 2, 3];
+    // function  Items ({ currentItems }) {
+    //     console.log(currentItems)
+    //     return (
+        
+    //         currentItems &&
+    //           currentItems.map(() => (
+    //             <div>
+    //               <h3>Itemssssss </h3>
+    //             </div>
+    //           ))
+        
+    //     );
+    //   }
+
+      function PaginatedItems({ itemsPerPage }) {
+        // Here we use item offsets; we could also use page offsets
+        // following the API or data you're working with.
+        const [itemOffset, setItemOffset] = useState(0);
+      
+        // Simulate fetching items from another resources.
+        // (This could be items from props; or items loaded in a local state
+        // from an API endpoint with useEffect and useState)
+        const endOffset = itemOffset + itemsPerPage;
+        console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+       const currentItems = items.slice(itemOffset, endOffset);
+        const pageCount = Math.ceil(items.length / itemsPerPage);
+      
+        // Invoke when user click to request another page.
+        const handlePageClick = (event) => {
+          const newOffset = (event.selected * itemsPerPage) % items.length;
+          console.log(
+            `User requested page number ${event.selected}, which is offset ${newOffset}`
+          );
+          setItemOffset(newOffset);
+        };
+      
+        return (
+          <>
+            <RenderTable currentItems={currentItems} />
+            <ReactPaginate
+              breakLabel="..."
+              nextLabel="next >"
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={0}
+              pageCount={pageCount}
+              previousLabel="< previous"
+              renderOnZeroPageCount={null}
+            />
+          </>
+        );
+      }
+      
+        
+
+    const RenderTable = () => {
+      
+        return statusList.map(st => {
+          
             if (st.requisition.requisition_id == requisitionID && st.flag == 1 && (st.candidate==null||st.candidate.deleted==1))
            // if (st.requisition.requisition_id == requisitionID)
                 // && st.recruiter.recruiter_id==empID 
 
-                return (
+                return  (
+                    
                     <tr key={st.status_id}>
                         <td></td>
                         <td>
                             {/* { <button>
                                 <a href="/viewAllStatusAdmin" onClick={(evt) => getnewID({statusID: st.status_id })}>View</a></button>
                          } */}
-                           { <button>
-                                <a href="/viewAllStatusAdmin" onClick={(evt) => getnewID({canid: st.candidate.candidate_id, reqid:st.requisition.requisition_id , 
-                                recid:st.recruiter.recruiter_id})}>View</a></button>
+                           {
+                             st.candidate == null ?
+                           (
+
+                            <button>
+                            <a href="/viewAllStatusAdmin" onClick={(evt) => getnewID2({reqid:st.requisition.requisition_id , 
+                            recid:st.recruiter.recruiter_id})}>View</a></button>
+                           
+
+                           ):
+                           (
+
+                            <button>
+                            <a href="/viewAllStatusAdmin" onClick={(evt) => getnewID({canid: st.candidate.candidate_id, reqid:st.requisition.requisition_id , 
+                            recid:st.recruiter.recruiter_id})}>View</a></button>
+
+                           )
+                          
                          }
                         </td>
                        
@@ -348,7 +431,7 @@ function ViewCandForAdmin() {
                 );
         })
     }
-
+    
     return (
         // return (
         <div className="container-fluid">
@@ -358,10 +441,12 @@ function ViewCandForAdmin() {
             </div>
 
             <div className="master_backgroung_work scroll-bar-horizontal">
+                
 
                 <div style={{ width: '1800px' }}  >
                     <Table bordered class="table table-sm" style={{ fontFamily: 'arial' }}>
                         <thead>
+                      
                             <tr>
                                 <th style={{ width: '10px' }}>Sr No.</th>
                                 <th style={{ width: '20px' }}>View All Status</th>
@@ -377,19 +462,26 @@ function ViewCandForAdmin() {
                                 <th style={{ width: '100px' }}>Remark</th>
                                 <th style={{ width: '100px' }}>Reason</th>
                                 <th style={{ width: '95px' }}>Action</th>
-
+                              
                             </tr>
+                          
                         </thead>
                         <tbody>
 
-                            {renderTable()}
+                            {RenderTable()}
+                            {/* <PaginatedItems itemsPerPage={2} /> */}
 
                         </tbody>
+                       
                     </Table>
-
+                    
                 </div>
+              
             </div>
-        </div>
+            
+        </div> 
+        
+        
         //)
     );
 }

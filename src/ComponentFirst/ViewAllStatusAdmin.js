@@ -235,14 +235,17 @@ function ViewAllStatusAdmin() {
        let candidate_id=  localStorage.getItem("candidateID")
         let requisition_id=  localStorage.getItem("requisitionID")
         let recruiter_id= localStorage.getItem("recruiterID")
+        console.log(candidate_id)
+        console.log(requisition_id)
+        console.log(recruiter_id)
         return statusList.map(st => {
 
             var dd = new Date(st.status_date);
 
             // if (st.requisition.requisition_id == requisitionID && st.flag == 1)
-            if (st.requisition.requisition_id == requisition_id && 
-                (st.candidate==null || st.candidate.candidate_id== candidate_id)
-                && st.recruiter.recruiter_id==recruiter_id )
+            if (st.requisition.requisition_id == requisition_id && st.recruiter.recruiter_id==recruiter_id  &&
+                (st.candidate==null || st.candidate.candidate_id== candidate_id))
+               
 
                 return (
                     <tr key={st.status_id}>
@@ -412,7 +415,7 @@ function ViewAllStatusAdmin() {
 
             <div className="master_backgroung_work scroll-bar-horizontal">
 
-                <div style={{ width: '100%' }}  >
+                <div   >
                     <Table bordered class="table table-sm" style={{ fontFamily: 'arial' }}>
                         <thead>
                             <tr>

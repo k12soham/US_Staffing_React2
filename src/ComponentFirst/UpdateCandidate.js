@@ -378,12 +378,13 @@ class UpdateCandidate extends React.Component {
 
                     <div className="col-12 h-100 master_backgroung_heder">
                      
-                     
-                        if (isAuthenticated==null) {
+                    {
+                     isAuthenticated2!==null ?(
                                <EmployeeHeader />
-                        } else {
-                            <AdminHeader/>
-                        }
+                     ) :(
+                        <AdminHeader/>
+                     )
+                    }
                      
                     </div>
 
