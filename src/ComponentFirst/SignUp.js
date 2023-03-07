@@ -62,9 +62,13 @@ class SignUp extends React.Component {
 
     let d1 = data["name"].trim(" ");
     let d2 = data["email"];
-    let d3 = data["password"];
+     let d3 = data["password"];
 
-    axios.post(`${base_url}/addRecruiter?recruiter_name=${d1}&recruiter_email=${d2}&password=${d3}`).then(
+    axios.post(`${base_url}/addRecruiter?recruiter_name=${d1}&recruiter_email=${d2}&password=${d3}`)
+    
+   
+    
+    .then(
       // addEmp?empName=Admin&Username=admin@gmail.com&Password=Admin@1234
       (response) => {
         toast.success("Recruiter registered successfully!",

@@ -6,6 +6,8 @@ import { Table } from "reactstrap";
 import EmployeeHeader from "./EmployeeHeader";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Pagination from "./Pagination";
+import ReactPaginate from 'react-paginate';
 function ViewAllReq() {
 
     const recruiterID = localStorage.getItem('recruiterID');
@@ -29,6 +31,9 @@ function ViewAllReq() {
     const [status, setStatus] = useState(null);
     const [searchTerm, setSearchTerm] = useState("");
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [tableRowsPerPage, setTableRowsPerPage] = useState(3);
+
     const [inEditMode, setInEditMode,] = useState({
         status: true,
         rowKey: null
@@ -37,15 +42,31 @@ function ViewAllReq() {
 
     let empID = localStorage.getItem("recruiterID");
     let sessionreq = localStorage.getItem("requisitionID");
+
+    
     useEffect(() => {
         axios.get(`${base_url}/getAllRequisition`).then(json => setClosureList(json.data))
         // axios.get(`${base_url}/getEmpList_TM`).then(json => setEmployee(json.data))
         axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
         axios.get(`${base_url}/getAllStatusFd`).then(json => setstatusFD(json.data))
+        //getCurrentTableData()
 
 
     }, []);
 
+    const getCurrentTableData = () => {
+       
+        return statusList.slice(
+          currentPage * tableRowsPerPage - tableRowsPerPage,
+          currentPage * tableRowsPerPage
+        );
+      };
+    
+      const paginateData = (pageNumber) => {
+        setCurrentPage(pageNumber);
+      };
+
+      
     const deleteBook = (id) => { }
 
     const onSave = ({ newReqid, newReqFrom, newId, newClient, newJobTitle, newDuration,
@@ -137,15 +158,17 @@ function ViewAllReq() {
         localStorage.setItem("requisitionID", rq)
         //console.log(rq)
     }
-
-  
-        const renderTable = () => {          
     
+      
+        
+  
+        const RenderTable = () => {          
+            
   
             return (
     
                 statusList.filter((cls) => {
-                    console.log(cls)
+                  
                     if (searchTerm === "") {
                         return cls;
                     } 
@@ -307,11 +330,16 @@ function ViewAllReq() {
                                 </tr>
                             </thead>
                             <tbody>
-
-                                {renderTable()}
-
+                         
+                                {RenderTable()}
+     
                             </tbody>
                         </Table>
+                        {/* <Pagination
+        tableRowsPerPage={tableRowsPerPage}
+        totalData={statusList.length}
+        paginateData={paginateData}
+      /> */}
                     </div>
                 </div>
             </div>
