@@ -13,7 +13,7 @@ function ViewAllReq() {
 
     const recruiterID = localStorage.getItem('recruiterID');
 
-    const [closureList, setClosureList] = useState([]);
+    const [requisitionList, setRequisitionList] = useState([]);
     const [statusList, setstatusList] = useState([]);
 
     const [statusFD, setstatusFD] = useState([]);
@@ -46,11 +46,10 @@ function ViewAllReq() {
 
     
     useEffect(() => {
-        axios.get(`${base_url}/getAllRequisition`).then(json => setClosureList(json.data))
+        axios.get(`${base_url}/getAllRequisition`).then(json => setRequisitionList(json.data))
         // axios.get(`${base_url}/getEmpList_TM`).then(json => setEmployee(json.data))
         axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
         axios.get(`${base_url}/getAllStatusFd`).then(json => setstatusFD(json.data))
-        //getCurrentTableData()
 
 
     }, []);
@@ -151,7 +150,7 @@ function ViewAllReq() {
     }
 
     const fetchInventory = () => {
-        axios.get(`${base_url}/CurMonthAll`).then(json => setClosureList(json.data))
+        axios.get(`${base_url}/CurMonthAll`).then(json => setRequisitionList(json.data))
 
     }
     const getnewID = (e) => {

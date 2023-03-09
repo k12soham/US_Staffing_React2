@@ -4,6 +4,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ModalWithCSS from "./ModalWithCSS";
 import {ListGroup, ListGroupItem} from "reactstrap";
 import { useLocation } from "react-router-dom";
+// import "./assets/css/font-awesome.min.css";
+// import "./assets/css/slick.css";
+// import "./assets/css/style.css";
 
 function EmployeeHeader() {
 
@@ -34,20 +37,6 @@ function EmployeeHeader() {
       </div>
 
       <div className="navbar-css-2">
-
-        {/* <ul className="nav nav-pills">
-            
-        {/*  <li className="nav-item">
-            <a className="nav-link" aria-current="page" href="/addRequisition">Add Requisition</a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" aria-current="page" href="/addCandidate">Submit Candidate</a>
-          </li>          
-          <li className="nav-item">
-            <a className="nav-link" href="view_all_req">View all records</a>
-          </li>         
-          
-        </ul> */}
         <ul className="nav nav-pills">
 
         <ListGroup style={{ marginTop: '-3px' }}>

@@ -210,7 +210,7 @@ class UpdateCandidate extends React.Component {
                     history.push("/viewCandForAdmin");
                     window.location.reload();
                 } else {
-                    history.push("/view3");
+                    history.push("/viewCandidate");
                     window.location.reload();
                 }
             },
@@ -290,7 +290,7 @@ class UpdateCandidate extends React.Component {
         }
         if ((input["submitted_rate"]) != undefined) {
 
-            var pattern = new RegExp(/^[^\s][0-9$\s]{2,4}$/);
+            var pattern = new RegExp(/^[0-9]{2,4}$/);
             // new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$%^&*,!? \b]).{6,15}$/); 
 
             if (!pattern.test(input["submitted_rate"])) {
