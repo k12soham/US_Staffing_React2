@@ -27,6 +27,7 @@ import ViewCandidate from './ComponentFirst/ViewCandidate';
 import UpdateProfile from './ComponentFirst/UpdateProfile';
 import UpdateProfileAdmin from './ComponentFirst/UpdateProfileAdmin';
 import "react-datepicker/dist/react-datepicker.css";
+import Pagination from './ComponentFirst/PaginationDemo';
 
 function App() {
   return (
@@ -61,6 +62,9 @@ function App() {
         
         <Route path="/update_profile" element={<UpdateProfile/>}></Route>
         <Route path="/update_profile_Admin" element={<UpdateProfileAdmin/>}></Route>
+        <Route path="/pagination" element={<Pagination/>}></Route>
+        {/* <Route path="/paginatedItems" element={ <PaginatedItems/>}></Route> */}
+       
         {/* <Route path="/navdemo1" element={<mobileScreen />}></Route> */}
         </Routes>
       </Router>

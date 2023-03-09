@@ -6,6 +6,11 @@ import EmployeeHeader from "./EmployeeHeader";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import AdminHeader from "./AdminHeader";
+import { useMemo } from "react";
+// import data from './data/mock-data.json';
+
+let PageSize = 10;
+
 function ViewReqForAdmin() {
 
     const recruiterIDAdmin = localStorage.getItem('recruiterIDAdmin');
@@ -21,6 +26,10 @@ function ViewReqForAdmin() {
     let navigate = useNavigate();
 
     let empID = localStorage.getItem("recruiterIDAdmin")
+
+
+    // ---------------------------Pagination-------------------------------------------------------------
+    // ---------------------------Pagination-------------------------------------------------------------
     useEffect(() => {
         axios.get(`${base_url}/getAllRequisition`).then(json => setRequisitionList(json.data))
         // axios.get(`${base_url}/getEmpList_TM`).then(json => setEmployee(json.data))
@@ -40,14 +49,11 @@ function ViewReqForAdmin() {
                 style: { position: "absolute", top: "5px", width: "300px" }
             });
 
-            axios.get(`${base_url}/getAllRequisition`).then(json => setRequisitionList(json.data))
-         
+            axios.get(`${base_url}/getAllRequisition`).then(json => setRequisitionList(json.data))         
         },
             (error) => {
                 // alert("Enter valid data");
             });
-
-
      }
 
     // const onSave = ({ newReqid, newReqFrom, newId, newClient, newJobTitle, newDuration,

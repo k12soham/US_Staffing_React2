@@ -10,7 +10,7 @@ function ViewAllReq() {
 
     const recruiterID = localStorage.getItem('recruiterID');
 
-    const [closureList, setClosureList] = useState([]);
+    const [requisitionList, setRequisitionList] = useState([]);
     const [statusList, setstatusList] = useState([]);
 
     const [statusFD, setstatusFD] = useState([]);
@@ -38,15 +38,31 @@ function ViewAllReq() {
     let empID = localStorage.getItem("recruiterID");
     let sessionreq = localStorage.getItem("requisitionID");
     useEffect(() => {
-        axios.get(`${base_url}/getAllRequisition`).then(json => setClosureList(json.data))
+        axios.get(`${base_url}/getAllRequisition`).then(json => setRequisitionList(json.data))
         // axios.get(`${base_url}/getEmpList_TM`).then(json => setEmployee(json.data))
         axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
         axios.get(`${base_url}/getAllStatusFd`).then(json => setstatusFD(json.data))
 
-
     }, []);
 
-    const deleteBook = (id) => { }
+    
+    const deleteBook = (requisitionID) => {
+        console.log(requisitionID);
+        axios.delete(`${base_url}/deleteRequisitionByAdmin?requisition_id=${requisitionID}`)
+        .then(response => {
+
+            toast.success("Record deleted successfully!", {
+                position: "top-right",
+                autoClose: 1000,
+                style: { position: "absolute", top: "5px", width: "300px" }
+            });
+
+            axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))        
+        },
+            (error) => {
+                // alert("Enter valid data");
+            });
+     }
 
     const onSave = ({ newReqid, newReqFrom, newId, newClient, newJobTitle, newDuration,
         newClientRate, newLocation, newPType, newSkills }) => {
@@ -129,7 +145,7 @@ function ViewAllReq() {
     }
 
     const fetchInventory = () => {
-        axios.get(`${base_url}/CurMonthAll`).then(json => setClosureList(json.data))
+        axios.get(`${base_url}/CurMonthAll`).then(json => setRequisitionList(json.data))
 
     }
     const getnewID = (e) => {

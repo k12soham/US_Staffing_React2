@@ -18,18 +18,18 @@ function ViewCandidate() {
 
     const [statusFD, setstatusFD] = useState([]);
     const [updatestatus, setUpdateStatus] = useState(null);
-    const [candidateId, setCadidateId] = useState(null);
-    const [candi, setCandi] = useState(null);
+    // const [candidateId, setCadidateId] = useState(null);
+    // const [candi, setCandi] = useState(null);
     const [reqid, setReqid] = useState(null);
-    const [reqFrom, setReqFrom] = useState(null);
-    const [id, setId] = useState(null);
-    const [client, setClient] = useState(null);
-    const [jobTitle, setJobTitle] = useState(null);
-    const [clientRate, setClientRate] = useState(null);
+    // const [reqFrom, setReqFrom] = useState(null);
+    // const [id, setId] = useState(null);
+    // const [client, setClient] = useState(null);
+    // const [jobTitle, setJobTitle] = useState(null);
+    // const [clientRate, setClientRate] = useState(null);
 
-    const [candidate_name, setCandidate_name] = useState(null);
-    const [submitted_rate, setSubmitted_rate] = useState(null);
-    const [phone, setPhone] = useState(null);
+    // const [candidate_name, setCandidate_name] = useState(null);
+    // const [submitted_rate, setSubmitted_rate] = useState(null);
+    // const [phone, setPhone] = useState(null);
     const [searchTerm, setSearchTerm] = useState("");
     let navigate = useNavigate();
 
@@ -39,18 +39,13 @@ function ViewCandidate() {
     });
 
     useEffect(() => {
-        axios.get(`${base_url}/getAllRequisition`).then(json => setClosureList(json.data))
+        // axios.get(`${base_url}/getAllRequisition`).then(json => setClosureList(json.data))
         // axios.get(`${base_url}/getEmpList_TM`).then(json => setEmployee(json.data))
         axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
-        axios.get(`${base_url}/getAllCandidate`).then(json => setCandidateList(json.data))
+        // axios.get(`${base_url}/getAllCandidate`).then(json => setCandidateList(json.data))
         axios.get(`${base_url}/getAllStatusFd`).then(json => setstatusFD(json.data))
 
     }, []);
-
-    // const getStatusData = ()=>{
-    //     axios.get(`${base_url}/getAllRequisition`).then(json => setClosureList(json.data))
-    //     axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
-    // }
 
     let sessionreq = localStorage.getItem("requisitionID")
     let empID = localStorage.getItem("recruiterID")
@@ -61,31 +56,33 @@ function ViewCandidate() {
 
         console.log(candidateID);
         axios.delete(`${base_url}/deleteCadByAdmin?candidate_id=${candidateID}`)
-        .then(response => {
+            .then(response => {
 
-            toast.success("Record deleted successfully!", {
-                position: "top-right",
-                autoClose: 1000,
-                style: { position: "absolute", top: "5px", width: "300px" }
-            });
+                toast.success("Record deleted successfully!", {
+                    position: "top-right",
+                    autoClose: 1000,
+                    style: { position: "absolute", top: "5px", width: "300px" }
+                });
 
-            axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))         
-        },
-            (error) => {
-                // alert("Enter valid data");
-            });
-     }
+                axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
+            },
+                (error) => {
+                    // alert("Enter valid data");
+                });
+    }
 
     // const updateInventory = ({ newReqid, newReqFrom, newId, newClient, newJobTitle, newDuration,
     //     newClientRate, newLocation, newSkills }) => {
     //     alert("update val successfully")
     // }
 
-    const onSave = ({ candidateID }) => {
+    // const onSave = ({ candidateID }) => {
 
-        console.log(candidateID);
-       
-    }
+    //     console.log(candidateID);
+
+    // }
+
+
     const handleChange = (e) => {
 
         let a = e.rrid;
@@ -148,7 +145,6 @@ function ViewCandidate() {
 
         console.log(a, b, c)
 
-
         axios.post(`${base_url}/update_status2?recruiter_id=${empID}&requisition_id=${a}&candidate_id=${c}&status=${b}`).then(
 
             (response) => {
@@ -180,19 +176,16 @@ function ViewCandidate() {
             status: true,
             rowKey: candidateID,
         })
-        // setReqFrom(crrReqFrom);
-        // setId(crrId);
-        // setClient(crrClient);
-        // setJobTitle(crrJobTitle);
+       
 
     }
 
-    const onCancel = () => {
-        setInEditMode({
-            status: false,
-            rowKey: null
-        })
-    }
+    // const onCancel = () => {
+    //     setInEditMode({
+    //         status: false,
+    //         rowKey: null
+    //     })
+    // }
 
     const fetchInventory = () => {
         axios.get(`${base_url}/CurMonthAll`).then(json => setClosureList(json.data))
@@ -206,46 +199,46 @@ function ViewCandidate() {
 
                 if (searchTerm === "") {
                     return st;
-                }   
-                else if ( st.candidate == null || st.candidate != null) {
-                    if ( st.status.toLowerCase().includes(searchTerm.toLowerCase())) {
-                        return st;
-                    }
-                }             
-                else if ( st.candidate != null) {
-                    if ( st.candidate.candidate_name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                }
+                else if (st.candidate == null || st.candidate != null) {
+                    if (st.status.toLowerCase().includes(searchTerm.toLowerCase())) {
                         return st;
                     }
                 }
-                else if ( st.candidate != null) {
-                    if ( st.candidate.visa_type.toLowerCase().includes(searchTerm.toLowerCase())) {
+                else if (st.candidate != null) {
+                    if (st.candidate.candidate_name.toLowerCase().includes(searchTerm.toLowerCase())) {
                         return st;
                     }
                 }
-                else if ( st.candidate != null) {
-                    if ( st.candidate.rate_term.toLowerCase().includes(searchTerm.toLowerCase())) {
+                else if (st.candidate != null) {
+                    if (st.candidate.visa_type.toLowerCase().includes(searchTerm.toLowerCase())) {
                         return st;
                     }
                 }
-                else if ( st.candidate != null) {
-                    if ( st.candidate.submitted_rate.toLowerCase().includes(searchTerm.toLowerCase())) {
+                else if (st.candidate != null) {
+                    if (st.candidate.rate_term.toLowerCase().includes(searchTerm.toLowerCase())) {
                         return st;
                     }
                 }
-                else if ( st.candidate != null) {
-                    if ( st.candidate.phone.toLowerCase().includes(searchTerm.toLowerCase())) {
+                else if (st.candidate != null) {
+                    if (st.candidate.submitted_rate.toLowerCase().includes(searchTerm.toLowerCase())) {
                         return st;
                     }
                 }
-                else if ( st.candidate != null) {
-                    if ( st.candidate.email.toLowerCase().includes(searchTerm.toLowerCase())) {
+                else if (st.candidate != null) {
+                    if (st.candidate.phone.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        return st;
+                    }
+                }
+                else if (st.candidate != null) {
+                    if (st.candidate.email.toLowerCase().includes(searchTerm.toLowerCase())) {
                         return st;
                     }
                 }
             }
             ).map(st => {
                 if (st.requisition.requisition_id == sessionreq
-                    && st.recruiter.recruiter_id == empID && st.flag == 1 && (st.candidate==null||st.candidate.deleted==1))
+                    && st.recruiter.recruiter_id == empID && st.flag == 1 && (st.candidate == null || st.candidate.deleted == 1))
 
                     return (
                         <tr key={st.status_id}>
@@ -255,7 +248,7 @@ function ViewCandidate() {
                             <td>
                                 {
                                     <select class="btn btn-sm btn-secondary dropdown-toggle"
-                                        style={{ width: '140px',fontFamily: 'arial', fontSize: '12px' }}
+                                        style={{ width: '140px', fontFamily: 'arial', fontSize: '12px' }}
                                         name="status" id="status"
 
                                         onChange={(evt) => handleChange({
@@ -288,209 +281,160 @@ function ViewCandidate() {
                             </td>
                             <td>
 
-                            {
-                                st.candidate == null ?
-                                    (
-                                        console.log("null")
-                                    ) :
-                                    (
-                                        st.candidate.candidate_name
+                                {
+                                    st.candidate == null ?
+                                        (
+                                            console.log("null")
+                                        ) :
+                                        (
+                                            st.candidate.candidate_name
 
-                                    )
-                            }
+                                        )
+                                }
 
-                        </td>
+                            </td>
 
-                        <td>
-                            {
-                                st.candidate == null ?
-                                    (
-                                        console.log("null")
-                                    ) :
-                                    (
-                                        st.candidate.visa_type
+                            <td>
+                                {
+                                    st.candidate == null ?
+                                        (
+                                            console.log("null")
+                                        ) :
+                                        (
+                                            st.candidate.visa_type
 
-                                    )
-                            }
+                                        )
+                                }
 
-                        </td>
+                            </td>
 
-                        <td>
-                            {
-                                st.candidate == null ?
-                                    (
-                                        console.log("null")
-                                    ) :
-                                    (
-                                        st.candidate.rate_term
+                            <td>
+                                {
+                                    st.candidate == null ?
+                                        (
+                                            console.log("null")
+                                        ) :
+                                        (
+                                            st.candidate.rate_term
 
-                                    )
-                            }
+                                        )
+                                }
 
-                        </td>
+                            </td>
 
-                        <td>
-                            {
-                                st.candidate == null ?
-                                    (
-                                        console.log("null")
-                                    ) :
-                                    (
-                                        st.candidate.submitted_rate
+                            <td>
+                                {
+                                    st.candidate == null ?
+                                        (
+                                            console.log("null")
+                                        ) :
+                                        (
+                                            st.candidate.submitted_rate
 
-                                    )
-                            }
+                                        )
+                                }
 
-                        </td>
+                            </td>
 
-                        <td>
-                            {
-                                st.candidate == null ?
-                                    (
-                                        console.log("null")
-                                    ) :
-                                    (
-                                        st.candidate.phone
+                            <td>
+                                {
+                                    st.candidate == null ?
+                                        (
+                                            console.log("null")
+                                        ) :
+                                        (
+                                            st.candidate.phone
 
-                                    )
-                            }
+                                        )
+                                }
 
-                        </td>
+                            </td>
 
-                        <td>
-                            {
-                                st.candidate == null ?
-                                    (
-                                        console.log("null")
-                                    ) :
-                                    (
-                                        st.candidate.email
+                            <td>
+                                {
+                                    st.candidate == null ?
+                                        (
+                                            console.log("null")
+                                        ) :
+                                        (
+                                            st.candidate.email
 
-                                    )
-                            }
+                                        )
+                                }
 
-                        </td>
+                            </td>
 
-                        <td>
-                            {
-                                st.candidate == null ?
-                                    (
-                                        console.log("null")
-                                    ) :
-                                    (
-                                        st.candidate.remark
+                            <td>
+                                {
+                                    st.candidate == null ?
+                                        (
+                                            console.log("null")
+                                        ) :
+                                        (
+                                            st.candidate.remark
 
-                                    )
-                            }
+                                        )
+                                }
 
-                        </td>
+                            </td>
 
-                        <td>
-                            {
-                                st.candidate == null ?
-                                    (
-                                        console.log("null")
-                                    ) :
-                                    (
-                                        st.candidate.reason
+                            <td>
+                                {
+                                    st.candidate == null ?
+                                        (
+                                            console.log("null")
+                                        ) :
+                                        (
+                                            st.candidate.reason
 
-                                    )
-                            }
+                                        )
+                                }
 
-                        </td>
-                        <td>
-                            {
-                                inEditMode.status && inEditMode.rowKey === st.candidate_id ? (
-                                    <>
-                                        <button
+                            </td>
 
-                                            className={"btn btn-sm btn-outline-success"}
-                                            onClick={() => {
+                            <td>
 
-                                                onSave(
-                                                    {
-                                                        candidateID: st.candidate_id
-                                                        // newReqid: cls.requisition_id, newReqFrom: reqFrom, newId: id,
-                                                        // newClient: client, newJobTitle: jobTitle, newDuration: duration,
-                                                        // newClientRate: clientRate, newLocation: location, newPType: ptype, newSkills: skills,
+                                {
+                                    st.candidate == null ?
+                                        (
+                                            console.log("null")
+                                        ) :
+                                        (
+                                            <>
+                                                &nbsp;
+                                                <button
+                                                    style={{ marginRight: '3px' }}
+                                                    className="btn btn-sm btn-outline-success"
+                                                    onClick={() => onEdit({
+                                                        candidateID: st.candidate.candidate_id
+                                                    })}
+                                                >
+                                                    <i class="fa fa-edit"></i>
+                                                </button>
+                                                &nbsp;
 
-                                                    })
-                                            }
-                                            }
-                                        >
-                                            <i class="fa fa-save"></i>
-                                        </button>
+                                                <button className="btn btn-sm btn-outline-danger"
+                                                    onClick={() => {
+                                                        if (window.confirm('Are you sure to delete this requirement?'))
+                                                            deleteBook(st.candidate.candidate_id)
+                                                    }}>
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </>
 
-                                        &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <button
-                                            className={"btn btn-sm btn-outline-warning"}
+                                        )
+                                }
 
-                                            onClick={() => onCancel()}
-                                        >
-                                            <i class="fa fa-close"></i>
-                                        </button>
-                                    </>
-
-                                ) : (
-                                    <>
-                                        <button
-                                            className="btn btn-sm btn-outline-success"
-
-                                            onClick={() => onEdit({
-
-                                                candidateID: st.candidate.candidate_id
-
-                                                //     crrReqid: cls.requisition_id, crrReqFrom: cls.requisition_from, crrId: cls.id,
-                                                //     crrClient: cls.client, crrJobTitle: cls.job_title, crrDuration: cls.duration,
-                                                //     crrClientRate: cls.client_rate, crrLocation: cls.location, crrPType: cls.position_type,
-                                                //     crrSkills: cls.skills,
-
-                                            })}
-                                        >
-                                            <i class="fa fa-edit"></i>
-
-                                        </button>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <button className="btn btn-sm btn-outline-danger"
-                                            onClick={() => { if (window.confirm('Are you sure to delete this requirement?')) deleteBook(st.candidate_id) }}>
-                                            {/*Delete*/}<i class="fa fa-trash"></i></button>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;
-                                    </>
-
-                                )
-                            }
-
-                        </td>
+                            </td>
                         </tr>
                     )
 
             }))
 
-        // return statusList.map(st => {
-        //     // console.log(st.requisition.requisition_id)
-        //     //  console.log(sessionreq)
-        //     if (st.requisition.requisition_id == sessionreq && st.recruiter.recruiter_id == empID 
-        //         && st.flag == 1 && (st.candidate==null||st.candidate.deleted==1)) 
-                // console.log(st.requisition.requisition_id)
-                // console.log(sessionreq)
-                // ||(st.requisition.requisition_id==can.requisition.requisition_id && st.flag==1 && can.candidate_id==''))
-
-                // return (
-                //     <tr key={st.status_id}>
-                //         <td></td>
-                //         <td>{st.status}</td>
-                //         <td>{st.status_date}</td>
-                        
-
-                      
-                //     </tr>
-
-                // )
-        // })
+       
     }
 
     return (
-        // return (
         <div className="">
             <div className="row">
 
@@ -514,22 +458,22 @@ function ViewCandidate() {
                         </div>
                     </div>
 
-                <div>
-                    <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '13px' }}>
-                        <thead>
-                            <tr>
-                                <th style={{ width: '60px' }}>Sr No.</th>
-                                <th style={{ width: '120px' }}>Current Status </th>
-                                <th style={{ width: '90px' }}>Date </th>
-                                <th style={{ width: '200px' }}>Status </th>
-                                <th style={{ width: '140px' }}>Candidate Name</th>
-                                <th style={{ width: '50px' }}>Visa Type</th>
-                                <th style={{ width: '60px' }}>Rate term</th>
-                                <th style={{ width: '20px' }}>Submitted Rate</th>
-                                <th style={{ width: '70px' }}>Phone</th>
-                                <th style={{ width: '130px' }}>Email</th>
-                                <th style={{ width: '100px' }}>Remark</th>
-                                <th style={{ width: '100px' }}>Reason</th>
+                    <div>
+                        <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '13px' }}>
+                            <thead>
+                                <tr>
+                                    <th style={{ width: '60px' }}>Sr No.</th>
+                                    <th style={{ width: '120px' }}>Current Status </th>
+                                    <th style={{ width: '90px' }}>Date </th>
+                                    <th style={{ width: '200px' }}>Status </th>
+                                    <th style={{ width: '140px' }}>Candidate Name</th>
+                                    <th style={{ width: '50px' }}>Visa Type</th>
+                                    <th style={{ width: '60px' }}>Rate term</th>
+                                    <th style={{ width: '20px' }}>Submitted Rate</th>
+                                    <th style={{ width: '70px' }}>Phone</th>
+                                    <th style={{ width: '130px' }}>Email</th>
+                                    <th style={{ width: '100px' }}>Remark</th>
+                                    <th style={{ width: '100px' }}>Reason</th>
 
                                     <th style={{ width: '100px' }}>Action</th>
 
@@ -546,7 +490,7 @@ function ViewCandidate() {
                 </div>
             </div>
         </div>
-        //)
+        
     );
 }
 export default ViewCandidate;

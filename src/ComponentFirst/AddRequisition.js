@@ -107,25 +107,25 @@ class AddRequisition extends React.Component {
 
     }
 
-    addCandidate = () => {
+    // addCandidate = () => {
 
-        let a = this.state.empID
-        let b = this.state.requisitionId1;
-        console.log("recid = " + a + " rqid = " + b);
-        console.log("recid = " + this.state.empID + " rqid = " + this.state.requisitionId1);                                     
+    //     let a = this.state.empID
+    //     let b = this.state.requisitionId1;
+    //     console.log("recid = " + a + " rqid = " + b);
+    //     console.log("recid = " + this.state.empID + " rqid = " + this.state.requisitionId1);                                     
 
-        if (b != undefined) {
-            localStorage.setItem('recruiterID', a);
-            localStorage.setItem('requisitionID', b);
-            localStorage.setItem('RID', this.state.RID);
+    //     if (b != undefined) {
+    //         localStorage.setItem('recruiterID', a);
+    //         localStorage.setItem('requisitionID', b);
+    //         localStorage.setItem('RID', this.state.RID);
 
-            history.push("/addCandidate");
-            window.location.reload();
-            // toast.success("Render  successfully!",
-            //     { position: "top-right" })
-        }
-        console.log("addCandidate");
-    }
+    //         history.push("/addCandidate");
+    //         window.location.reload();
+    //         // toast.success("Render  successfully!",
+    //         //     { position: "top-right" })
+    //     }
+    //     console.log("addCandidate");
+    // }
 
     handleChange(e) {
 
@@ -149,9 +149,12 @@ class AddRequisition extends React.Component {
         console.log(this.state.requisitionId1);
         if (this.validate()) {
 
-            this.state.input["jobTitle"] = this.state.input["jobTitle"].trim(" ");
-            console.log("jobTitle : " + this.state.input["jobTitle"]);
+            this.state.input["jobTitle"] = this.state.input["jobTitle"].trim(" ");       
             this.state.input["skills"] = this.state.input["skills"].replaceAll("#", "%23")
+            this.state.input["location"] = this.state.input["location"].trim(" ");
+            this.state.input["clientrate"] = this.state.input["clientrate"].trim(" ");
+            this.state.input["skills"] = this.state.input["skills"].trim(" ");
+            console.log("jobTitle : " + this.state.input["jobTitle"]);
             console.log(this.state.input["skills"]);
 
             let add_cls = this.state.input;
@@ -187,8 +190,7 @@ class AddRequisition extends React.Component {
         let d6 = data["clientrate"];
         let d7 = data["location"];
         let d8 = data["positionType"];
-        let d9 = data["skills"]      
-
+        let d9 = data["skills"];
 
         axios.post(`${base_url}/add_requsition?requisition_from=${d1}&id=${d2}&client=${d3}&job_title=${d4}
         &duration=${d5}&client_rate=${d6}&location=${d7}&position_type=${d8}&skills=${d9}&recruiter_id=${z}`).then(
@@ -247,21 +249,21 @@ class AddRequisition extends React.Component {
         let addNew1 = true;
         let addNew2 = true;
 
-        console.log("type of input " + typeof (input["req"]));
+        // console.log("type of input " + typeof (input["req"]));
 
-        console.log("req " + input["req"]);
-        console.log("id " + input["id"]);
-        console.log("client " + input["client"]);
-        console.log("jobTitle " + input["jobTitle"]);
-        console.log("duration " + input["duration"]);
-        console.log("clientrate " + input["clientrate"]);
-        console.log("location " + input["location"]);
-        console.log("positionType " + input["positionType"]);
-        console.log("skills " + input["skills"]);
+        // console.log("req " + input["req"]);
+        // console.log("id " + input["id"]);
+        // console.log("client " + input["client"]);
+        // console.log("jobTitle " + input["jobTitle"]);
+        // console.log("duration " + input["duration"]);
+        // console.log("clientrate " + input["clientrate"]);
+        // console.log("location " + input["location"]);
+        // console.log("positionType " + input["positionType"]);
+        // console.log("skills " + input["skills"]);
+        // console.log("type of reqNum " + typeof (reqNum));
 
-        console.log("type of reqNum " + typeof (reqNum));
-        this.state.input["jobTitle"] = this.state.input["jobTitle"].trim(" ");
-        console.log("jobTitle : " + this.state.input["jobTitle"]);
+        // this.state.input["jobTitle"] = this.state.input["jobTitle"].trim(" ");
+        // console.log("jobTitle : " + this.state.input["jobTitle"]);
 
         if ((!input["req"])) {
             isValid = false;
@@ -286,15 +288,15 @@ class AddRequisition extends React.Component {
         console.log("typeOf id1: " + typeof (id1));
         if ((input["id"]) != undefined) {
 
-            var pattern = new RegExp(/^(?=.*[a-zA-Z0-9]).{1,25}$/); 
+            var pattern = new RegExp(/^(?=.*[a-zA-Z0-9\s]).{1,25}$/); 
             if (!pattern.test(id1)) {
                 isValid = false;
                 errors["id"] = "Please enter valid Job Posting ID.";
             }
-            if (id1 < 0) {
-                isValid = false;
-                errors["id"] = "ID should be numeric data.";
-            }
+            // if (id1 < 0) {
+            //     isValid = false;
+            //     errors["id"] = "ID should be numeric data.";
+            // }
         }
 
         // -------------client-----------------------------------------------------------------------------------------
@@ -310,8 +312,8 @@ class AddRequisition extends React.Component {
         }
         if ((input["jobTitle"]) != undefined) {
 
-            var pattern = new RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]+[^\s]{2,50}$/);
-            // new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$%^&*,!? \b]).{6,15}$/); 
+            var pattern = new RegExp(/^[a-zA-Z !@#$%^&*()_+-= \s]{2,50}$/);
+            // new RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]+[^\s]{2,50}$/);
 
             if (!pattern.test(input["jobTitle"])) {
                 isValid = false;
@@ -331,7 +333,7 @@ class AddRequisition extends React.Component {
         }
         if ((input["clientrate"]) != undefined) {
             // var pattern = new RegExp(/^(?=.*[0-9]).{1,3}/); //new RegExp(/^[A-Za-z#+.\b]+$/);
-            var pattern = new RegExp(/^((?!(0))[0-9]{0,5})$/);
+            var pattern = new RegExp(/^((?!(0))[0-9\s]{0,5})$/);
             if (!pattern.test(input["clientrate"])) {
                 isValid = false;
                 errors["clientrate"] = "Client rate should be numeric data.";
@@ -348,7 +350,7 @@ class AddRequisition extends React.Component {
         }
         if ((input["location"]) != undefined) {
 
-            var pattern = new RegExp(/^[a-zA-Z]{2,50}$/);
+            var pattern = new RegExp(/^[a-zA-Z\s]{2,50}$/);
 
             if (!pattern.test(input["location"])) {
                 isValid = false;
@@ -369,7 +371,9 @@ class AddRequisition extends React.Component {
         if ((input["skills"]) != undefined) {
             if ((input["skills"]) != undefined) {
 
-                var pattern = new RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]+[^\s]$/);
+                var pattern = new RegExp(/^(?=.{0,300}$)/);
+                // ([-"\w\d _@./#&+-,"']+\s)*[-"\w\d _@./#&+-,""'\s]+$/);
+                // new RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]+[^\s]$/);
                 // new RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]+[^\s]{2,50}$/);
                
                 if (!pattern.test(input["skills"])) {
@@ -450,8 +454,6 @@ class AddRequisition extends React.Component {
             }
         );        
     }
-
-
     
     // -------------------------------------------- render ----------------------------------------------------
     render() {
@@ -518,7 +520,7 @@ class AddRequisition extends React.Component {
                                                     style={{ width: '100%' }}
                                                     name="client" id="client"
                                                     onChange={this.handleChange}
-                                                    onKeyUp={this.keyUpHandlerReq}
+                                                    // onKeyUp={this.keyUpHandlerReq}
                                                     value={this.state.input.client}>
 
                                                     <option hidden value='' default selected> Select Client Name </option>
@@ -553,7 +555,7 @@ class AddRequisition extends React.Component {
                                                     name="jobTitle"
                                                     value={this.state.input.jobTitle}
                                                     onChange={this.handleChange}
-                                                    onKeyUp={this.keyUpHandlerSecond}
+                                                    // onKeyUp={this.keyUpHandlerSecond}
                                                     placeholder="Job Title"
                                                     class="form-control" />
 
@@ -591,7 +593,7 @@ class AddRequisition extends React.Component {
                                                     name="clientrate"
                                                     value={this.state.input.clientrate}
                                                     onChange={this.handleChange}
-                                                    onKeyUp={this.keyUpHandlerSub}
+                                                    // onKeyUp={this.keyUpHandlerSub}
                                                     placeholder="Client Rate"
 
                                                     class="form-control" />
@@ -607,7 +609,7 @@ class AddRequisition extends React.Component {
                                                     name="location"
                                                     value={this.state.input.location}
                                                     onChange={this.handleChange}
-                                                    onKeyUp={this.keyUpHandlerClosure}
+                                                    // onKeyUp={this.keyUpHandlerClosure}
                                                     placeholder="Location"
 
                                                     class="form-control" />
@@ -620,7 +622,7 @@ class AddRequisition extends React.Component {
                                                     style={{ width: '100%' }}
                                                     name="positionType" id="positionType"
                                                     onChange={this.handleChange}
-                                                    onKeyUp={this.keyUpHandlerReq}
+                                                    // onKeyUp={this.keyUpHandlerReq}
                                                     value={this.state.input.positionType}>
 
                                                     <option hidden value='' default selected> Select Position Type </option>
@@ -637,7 +639,7 @@ class AddRequisition extends React.Component {
                                             </div>
                                             <div class="form-group">
                                                 <label for="closure"><b>Skills:</b></label>
-                                                <input
+                                                <textarea
 
                                                     minLength={1}
                                                     maxLength={200}
@@ -647,7 +649,6 @@ class AddRequisition extends React.Component {
                                                     onChange={this.handleChange}
                                                     // onKeyUp={this.keyUpHandlerClosure}
                                                     placeholder="Skills"
-
 
                                                     class="form-control"
                                                     style={{ height: '130px' }} />
