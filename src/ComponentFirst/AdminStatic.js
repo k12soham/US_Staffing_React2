@@ -1390,7 +1390,7 @@ class AdminStatic extends React.Component {
                                                     reqid: rq.requisitor_id, currentreq: rq.requisitor_fd
                                                 })}
                                             >
-                                                <i class="fas fa-edit"></i>
+                                                <i class="fa fa-edit"></i>
 
                                             </button>
                                             &nbsp;&nbsp;&nbsp;&nbsp;

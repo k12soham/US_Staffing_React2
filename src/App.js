@@ -27,6 +27,9 @@ import ViewCandidate from './ComponentFirst/ViewCandidate';
 import UpdateProfile from './ComponentFirst/UpdateProfile';
 import UpdateProfileAdmin from './ComponentFirst/UpdateProfileAdmin';
 import "react-datepicker/dist/react-datepicker.css";
+import ViewAllReq2 from './ComponentFirst/ViewAllReq2';
+import Pageexample from './ComponentFirst/Pageexample';
+import ViewAllStatus from './ComponentFirst/ViewAllStatus';
 
 function App() {
   return (
@@ -51,6 +54,7 @@ function App() {
         {/* <Route path="/update_profile" element={<UpdateProfile />}></Route> */}
         <Route path="/viewCandidate" element={<ViewCandidate />}></Route>
         <Route path="/view_all_req" element={<ViewAllReq />}></Route>
+        <Route path="/view_all_req2" element={<ViewAllReq2 />}></Route>
 
         <Route path="/updateRequisition" element={<UpdateReq />}></Route>
         <Route path="/updateCandidate" element={<UpdateCandidate />}></Route>
@@ -58,9 +62,15 @@ function App() {
         <Route path="/viewReqForAdmin" element={<ViewReqForAdmin />}></Route>
         <Route path="/viewCandForAdmin" element={<ViewCandForAdmin />}></Route>
         <Route path="/viewAllStatusAdmin" element={<ViewAllStatusAdmin />}></Route>
+
+        <Route path="/viewAllStatus" element={<ViewAllStatus />}></Route>
         
         <Route path="/update_profile" element={<UpdateProfile/>}></Route>
         <Route path="/update_profile_Admin" element={<UpdateProfileAdmin/>}></Route>
+
+
+        <Route path="/page" element={<Pageexample/>}></Route>
+
         {/* <Route path="/navdemo1" element={<mobileScreen />}></Route> */}
         </Routes>
       </Router>

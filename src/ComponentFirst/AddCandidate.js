@@ -122,12 +122,12 @@ class AddCandidate extends React.Component {
         let add_cls = this.state.input;
         add_cls[e.target.name] = e.target.value;
 
-        this.state.input["cad_name"] = this.state.input["cad_name"].trim(" ");
-        this.state.input["email"] = this.state.input["email"].trim(" ");
-            console.log("cad_name : " + this.state.input["cad_name"]+" "+ this.state.input["email"]);
+        
 
         if (this.validate()) {
-        
+            this.state.input["cad_name"] = this.state.input["cad_name"].trim(" ");
+            this.state.input["email"] = this.state.input["email"].trim(" ");
+                console.log("cad_name : " + this.state.input["cad_name"]+" "+ this.state.input["email"]);
             this.postCandidate(add_cls);
         }
         // 👇️ clear all input values in the form
@@ -150,6 +150,17 @@ class AddCandidate extends React.Component {
         let d6 = data["email"];
         let d7 = data["remark"];
         let d8 = data["reason"];
+
+
+        if(d7==undefined)
+        {
+            d7=''
+        }
+        if(d8==undefined)
+        {
+            d8=''
+        }
+      
 
        axios.post(`${base_url}/add_candidate?candidate_name=${d1}&visa_type=${d2}&rate_term=${d3}
         &submitted_rate=${d4}&phone=${d5}&email=${d6}&remark=${d7}
@@ -244,7 +255,7 @@ class AddCandidate extends React.Component {
 
             if (!pattern.test(input["submitted_rate"])) {
                 isValid = false;
-                errors["submitted_rate"] = "Please enter only characters.";
+                errors["submitted_rate"] = "Please enter only numbers";
             }
         }
         // -------------phone-----------------------------------------------------------------------------------------

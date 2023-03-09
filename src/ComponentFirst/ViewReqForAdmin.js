@@ -208,7 +208,7 @@ function ViewReqForAdmin() {
                         {/* <div className="col-12">
                             <input type="search" placeholder="Search course by title/discription or fee" onChange={event => { setSearchTerm(event.target.value) }}></input>
                         </div> */}
-                        <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '13px' }}>
+                        <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px' }}>
                             <thead>
                                 <tr>
                                     <th style={{ width: '60px' }}>Sr No.</th>
