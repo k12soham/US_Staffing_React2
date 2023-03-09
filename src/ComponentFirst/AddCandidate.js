@@ -147,7 +147,18 @@ class AddCandidate extends React.Component {
         let d7 = data["remark"];
         let d8 = data["reason"];
 
-        axios.post(`${base_url}/add_candidate?candidate_name=${d1}&visa_type=${d2}&rate_term=${d3}
+
+        if(d7==undefined)
+        {
+            d7=''
+        }
+        if(d8==undefined)
+        {
+            d8=''
+        }
+      
+
+       axios.post(`${base_url}/add_candidate?candidate_name=${d1}&visa_type=${d2}&rate_term=${d3}
         &submitted_rate=${d4}&phone=${d5}&email=${d6}&remark=${d7}
         &reason=${d8}&recruiter_id=${recruiterID}&requisition_id=${requisitionID}`).then(
 
@@ -241,7 +252,7 @@ class AddCandidate extends React.Component {
 
             if (!pattern.test(input["submitted_rate"])) {
                 isValid = false;
-                errors["submitted_rate"] = "Please enter valid rate.";
+                errors["submitted_rate"] = "Please enter only numbers";
             }
         }
         // -------------phone-----------------------------------------------------------------------------------------

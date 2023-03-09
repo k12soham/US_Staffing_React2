@@ -6,6 +6,7 @@ import EmployeeHeader from "./EmployeeHeader";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import AdminHeader from "./AdminHeader";
+import ReactPaginate from 'react-paginate';
 function ViewCandForAdmin() {
 
     const recruiterIDAdmin = localStorage.getItem('recruiterIDAdmin');
@@ -176,14 +177,73 @@ function ViewCandForAdmin() {
 
     }
 
+
+
+    const items = [1, 2, 3];
+    // function  Items ({ currentItems }) {
+    //     console.log(currentItems)
+    //     return (
+        
+    //         currentItems &&
+    //           currentItems.map(() => (
+    //             <div>
+    //               <h3>Itemssssss </h3>
+    //             </div>
+    //           ))
+        
+    //     );
+    //   }
+
+      function PaginatedItems({ itemsPerPage }) {
+        // Here we use item offsets; we could also use page offsets
+        // following the API or data you're working with.
+        const [itemOffset, setItemOffset] = useState(0);
+      
+        // Simulate fetching items from another resources.
+        // (This could be items from props; or items loaded in a local state
+        // from an API endpoint with useEffect and useState)
+        const endOffset = itemOffset + itemsPerPage;
+        console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+       const currentItems = items.slice(itemOffset, endOffset);
+        const pageCount = Math.ceil(items.length / itemsPerPage);
+      
+        // Invoke when user click to request another page.
+        const handlePageClick = (event) => {
+          const newOffset = (event.selected * itemsPerPage) % items.length;
+          console.log(
+            `User requested page number ${event.selected}, which is offset ${newOffset}`
+          );
+          setItemOffset(newOffset);
+        };
+      
+        return (
+          <>
+            <renderTable currentItems={currentItems} />
+            <ReactPaginate
+              breakLabel="..."
+              nextLabel="next >"
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={0}
+              pageCount={pageCount}
+              previousLabel="< previous"
+              renderOnZeroPageCount={null}
+            />
+          </>
+        );
+      }
+      
+        
+
     const renderTable = () => {
+      
         return statusList.map(st => {
 
             if (st.requisition.requisition_id == requisitionID && st.flag == 1 && (st.candidate == null || st.candidate.deleted == 1))
                 // if (st.requisition.requisition_id == requisitionID)
                 // && st.recruiter.recruiter_id==empID 
 
-                return (
+                return  (
+                    
                     <tr key={st.status_id}>
                         <td></td>
                         <td>
@@ -361,7 +421,7 @@ function ViewCandForAdmin() {
                 );
         })
     }
-
+    
     return (
         // return (
         <div className="">
@@ -374,7 +434,7 @@ function ViewCandForAdmin() {
                 <div className="col-12 master_backgroung_work scroll-bar-horizontal">
 
                     <div style={{ width: '' }}  >
-                        <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '13px' }}>
+                        <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px' }}>
                             <thead>
                                 <tr>
                                     <th style={{ width: '60px' }}>Sr No.</th>
