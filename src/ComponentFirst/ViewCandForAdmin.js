@@ -434,7 +434,7 @@ function ViewCandForAdmin() {
                 <div className="col-12 master_backgroung_work scroll-bar-horizontal">
 
                     <div style={{ width: '' }}  >
-                        <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '13px' }}>
+                        <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px' }}>
                             <thead>
                                 <tr>
                                     <th style={{ width: '60px' }}>Sr No.</th>

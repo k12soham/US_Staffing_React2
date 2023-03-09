@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect ,useMemo } from "react";
 import axios from "axios";
 import base_url from "../api/bootapi";
 
@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import Pagination from "./Pagination";
 import ReactPaginate from 'react-paginate';
 import EmployeeHeader2 from "./EmployeeHeader2";
-function ViewAllReq() {
+function ViewAllReq2() {
 
     const recruiterID = localStorage.getItem('recruiterID');
 
@@ -35,6 +35,11 @@ function ViewAllReq() {
     const [currentPage, setCurrentPage] = useState(1);
     const [tableRowsPerPage, setTableRowsPerPage] = useState(3);
 
+    const [filterCompleted, setFilterCompleted] = useState("");
+
+  const [totalTodos, setTotalTodos] = useState(0);
+  const todosPerPage = 1;
+
     const [inEditMode, setInEditMode,] = useState({
         status: true,
         rowKey: null
@@ -55,6 +60,43 @@ function ViewAllReq() {
 
     }, []);
 
+
+
+    const pageNumbers = [];
+
+    for (let i = 1; i <= Math.ceil(totalTodos / todosPerPage); i++) {
+      pageNumbers.push(i);
+    }
+  
+  
+    const todosData = useMemo(() => {
+      let computedTodos = statusList;
+      computedTodos = statusList.map(cls =>
+        {
+            if (cls.recruiter.recruiter_id == empID && cls.requisitionflag == 1 && cls.requisition.deleted==1) {
+        }
+    }
+          
+            
+            
+          );
+          setTotalTodos(computedTodos.length);
+      
+  
+      
+  
+     
+  
+      //Current Page slice
+      return computedTodos.slice(
+          (currentPage - 1) * todosPerPage,
+          (currentPage - 1) * todosPerPage + todosPerPage
+      );
+  }, [statusList, currentPage, searchTerm, filterCompleted]);
+    // Change page
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+
     const getCurrentTableData = () => {
        
         return renderTable.slice(
@@ -68,61 +110,7 @@ function ViewAllReq() {
       };
 
       
-    const deleteBook = (id) => { }
-
-    const onSave = ({ newReqid, newReqFrom, newId, newClient, newJobTitle, newDuration,
-        newClientRate, newLocation, newPType, newSkills }) => {
-
-        // console.log("clsid,"+clsid+" newReq,"+newReq+ "newSub,"+newSub+" newFirst,"+newFirst+" newSecond,"+newSecond+" newClosure,"+newClosure+" y "+y);
-        // updateRequisition({
-        //     newReqid, newReqFrom, newId, newClient, newJobTitle, newDuration,
-        //     newClientRate, newLocation, newSkills
-        // });
-    }
-    // const handleChange = (e) => {
-
-    //     let a = e.rrid;
-    //     let b = e.sstt
-    //     setReqid(a)
-    //     setUpdateStatus(b)
-    //     console.log(a);
-    //     console.log(b);
-    //     //console.log(updatestatus);
-
-    // }
-
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-
-    //     let a = reqid;
-    //     let b = updatestatus;
-
-    //     postdata(a, b);
-
-    //     // 👇️ clear all input values in the form
-    //     // e.target.reset();
-    // }
-
-    // const postdata = (a, b) => {
-    //     let recruiter_id = 2;
-    //     let candidate_id = 0;
-
-
-    //     axios.post(`${base_url}/update_status?recruiter_id=${recruiter_id}&requisition_id=${a}&candidate_id=${candidate_id}&status=${b}`).then(
-
-    //         (response) => {
-    //             toast.success("Requirement added successfully!",
-    //                 { position: "top-right" }
-    //             );
-    //         },
-    //         (error) => {
-    //             console.log(error);
-    //             console.log("Error");
-    //             alert("Please enter valid details.")
-    //         }
-    //     );
-    // }
-
+    
     // ----------------------------------------------------------------------------------------------------------
     const onEdit = ({ requisitionID }) => {
         // ({ crrReqid, crrReqFrom, crrId, crrClient, crrJobTitle, crrDuration,
@@ -150,10 +138,6 @@ function ViewAllReq() {
         })
     }
 
-    const fetchInventory = () => {
-        axios.get(`${base_url}/CurMonthAll`).then(json => setClosureList(json.data))
-
-    }
     const getnewID = (e) => {
         let rq = e.rq
         localStorage.setItem("requisitionID", rq)
@@ -168,41 +152,13 @@ function ViewAllReq() {
   
             return (
     
-                statusList.filter((cls) => {
-                  
-                    if (searchTerm === "") {
-                        return cls;
-                    } 
-                    else if (cls.requisition.requisition_from.toLowerCase().includes(searchTerm.toLowerCase())) {
-                        return cls;
-                    }
-                    else if (cls.requisition.client.toLowerCase().includes(searchTerm.toLowerCase())) {
-                        return cls;
-                    }
-                    else if (cls.requisition.job_title.toString().toLowerCase().includes(searchTerm.toString().toLowerCase())) {
-                        return cls;
-                    } else if (cls.requisition.duration.toLowerCase().includes(searchTerm.toLowerCase())) {
-                        return cls;
-                    }
-                    else if (cls.requisition.client_rate.toLowerCase().includes(searchTerm.toLowerCase())) {
-                        return cls;
-                    }
-                    else if (cls.requisition.location.toString().toLowerCase().includes(searchTerm.toString().toLowerCase())) {
-                        return cls;
-                    } else if (cls.requisition.position_type.toLowerCase().includes(searchTerm.toLowerCase())) {
-                        return cls;
-                    }
-                    else if (cls.requisition.skills.toString().toLowerCase().includes(searchTerm.toString().toLowerCase())) {
-                        return cls;
-                    }
-                    else if (cls.requisition.id.toString().toLowerCase().includes(searchTerm.toLowerCase())) {
-                        return cls;
-                    }
-                   
-                }
-                ).map(cls => {
+     
+
+      
+                 todosData.map(cls => {
+                    console.log(todosData)
     
-                    if (cls.recruiter.recruiter_id == empID && cls.requisitionflag == 1 && cls.requisition.deleted==1)
+                  //  if (cls.recruiter.recruiter_id == empID && cls.requisitionflag == 1 && cls.requisition.deleted==1)
               
                         return (
     
@@ -223,23 +179,7 @@ function ViewAllReq() {
                                 {
                                     inEditMode.status && inEditMode.rowKey === cls.requisition.requisition_id ? (
                                         <>
-                                            <button
-    
-                                                className={"btn btn-sm btn-outline-success"}
-                                                onClick={() => {
-    
-                                                    onSave(
-                                                        {
-                                                            newReqid: cls.requisition_id, newReqFrom: reqFrom, newId: id,
-                                                            newClient: client, newJobTitle: jobTitle, newDuration: duration,
-                                                            newClientRate: clientRate, newLocation: location, newPType: ptype, newSkills: skills,
-    
-                                                        })
-                                                }
-                                                }
-                                            >
-                                                <i class="fa fa-save"></i>
-                                            </button>
+                                            
     
                                             &nbsp;&nbsp;&nbsp;&nbsp;
                                             <button
@@ -253,7 +193,7 @@ function ViewAllReq() {
     
                                     ) : (
                                         <>
-                                            <button
+                                            <button style={{marginLeft:'10px'}}
                                                 className="btn btn-sm btn-outline-success"
     
                                                 onClick={() => onEdit({
@@ -265,11 +205,7 @@ function ViewAllReq() {
                                                 <i class="fa fa-edit"></i>
     
                                             </button>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <button className="btn btn-sm btn-outline-danger"
-                                                onClick={() => { if (window.confirm('Are you sure to delete this requirement?')) deleteBook(cls.requisition.requisition_id) }}>
-                                                {/*Delete*/}<i class="fa fa-trash"></i></button>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                           
                                         </>
     
                                     )
@@ -326,21 +262,28 @@ function ViewAllReq() {
                                 <th style={{ width: '120px' }}>Position Type</th>
                                 <th style={{ width: '150px' }}>Skills</th>
 
-                                <th style={{ width: '100px' }}>Action</th>
+                                <th style={{  width: '40px' }}>Action</th>
 
                                 </tr>
                             </thead>
                             <tbody>
+                            
                          
                                 {renderTable()}
      
                             </tbody>
                         </Table>
-                         <Pagination
-        tableRowsPerPage={tableRowsPerPage}
-        totalData={renderTable.length}
-        paginateData={paginateData}
-      /> 
+                        <nav>
+        <ul className="pagination">
+          {pageNumbers.map((number) => (
+            <li key={number} className="page-item">
+              <button onClick={() => paginate(number)} className="page-link">
+                {number}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </nav>
                     </div>
                 </div>
             </div>
@@ -348,4 +291,4 @@ function ViewAllReq() {
         //)
     );
 }
-export default ViewAllReq;
+export default ViewAllReq2;

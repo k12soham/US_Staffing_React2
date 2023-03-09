@@ -224,7 +224,6 @@ class UpdateReq extends React.Component {
         let d8 = data["positionType"];
         let d9 = data["skills"];
 
-        alert('skills; '+ d9);
 
         axios.put(`${base_url}/update_requsition?requisition_id=${d}&requisition_from=${d1}&id=${d2}&client=${d3}&job_title=${d4}&duration=${d5}&client_rate=${d6}&location=${d7}&position_type=${d8}&skills=${d9}`).then(
 
@@ -240,7 +239,8 @@ class UpdateReq extends React.Component {
                 // console.log("rqid="+response.data.requisition.requisition_id);
 
                 toast.success("Requisition updated successfully!",
-                    { position: "top-right" }
+                    { position: "top-right" , autoClose: 2000,
+                    style: { position: "absolute", top: "5px", width: "300px" }}
                 );
                 if (this.state.recruiterIDAdmin !== null) {
                     // history.push("/viewReqForAdmin");
@@ -472,7 +472,7 @@ class UpdateReq extends React.Component {
                                                 <input
                                                     minLength={1}
                                                     maxLength={10}
-                                                    type="number"
+                                                    type="String"
                                                     name="id"
                                                     value={this.state.input.id}
                                                     onChange={this.handleChange}
@@ -496,10 +496,21 @@ class UpdateReq extends React.Component {
                                                     value={this.state.input.client}>
 
                                                     {/* <option value='' default selected> Select client name </option> */}
+                                                    <option hidden value='' default selected> Select Client Name </option>
                                                     {
+                                                            
                                                         this.state.client_fd.map((cl) => (
-
+                                                        
+                                                            cl.requisitor_fd.requisitor_fd==this.state.input.req?
+                                                           (
                                                             <option value={cl.client_name}>{cl.client_name}</option>
+                                                           
+                                                           )
+                                                            :
+                                                            (
+                                                                null                                                            
+                                                            )
+                                                            
                                                         ))
                                                     }
                                                 </select>
