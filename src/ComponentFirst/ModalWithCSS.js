@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+
 import ReactModal from 'react-modal';
 import history from './ResponseVal';
 import { toast } from "react-toastify";
+
 
 class ModalWithCSS extends React.Component {
   constructor() {
@@ -20,32 +21,38 @@ class ModalWithCSS extends React.Component {
     this.setState({ showModal: true });
   }
 
-  handleUpdateProfile() {
-    let recruiterID = localStorage.getItem('recruiterID');
+  handleUpdateProfile () {
+let recruiterID = localStorage.getItem('recruiterID');
     let recruiterIDAdmin = localStorage.getItem('recruiterIDAdmin');
+
     if(recruiterIDAdmin==null)
     {
+      
       history.push("/update_profile");
       window.location.reload();
+    
     }
     else{
-      history.push("/update_profile_Admin");
+
+       history.push("/update_profile_Admin");
       window.location.reload();
     }
-   
   }
+
+
 
   handleClose() {
     window.location.reload();
   }
 
-  logout() {
+  logout =()=>{
+
     localStorage.clear();
-    history.push("/");
+    history.push("/")
+    window.location.reload();
     toast.success("Logout successfully!",
       { position: "top-right" })
-    window.location.reload();
-
+    
   }
 
   render() {
