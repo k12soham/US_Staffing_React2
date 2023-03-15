@@ -182,6 +182,7 @@ class UpdateReq extends React.Component {
 
     handleChange(e) {
         let add_cls = this.state.input;
+    
         add_cls[e.target.name] = e.target.value;
         console.log(add_cls);
         this.setState({
@@ -191,12 +192,20 @@ class UpdateReq extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-
+        this.state.input["id"] = this.state.input["id"].trim(" ");
         this.state.input["jobTitle"] = this.state.input["jobTitle"].trim(" ");
-        this.state.input["skills"] = this.state.input["skills"].replaceAll("#", "%23")
         this.state.input["location"] = this.state.input["location"].trim(" ");
         this.state.input["clientrate"] = this.state.input["clientrate"].trim(" ");
         this.state.input["skills"] = this.state.input["skills"].trim(" ");
+
+
+        this.state.input["id"] = this.state.input["id"].replaceAll("#", "%23")
+        this.state.input["jobTitle"] = this.state.input["jobTitle"].replaceAll("#", "%23")
+        this.state.input["location"] = this.state.input["location"].replaceAll("#", "%23")
+        this.state.input["clientrate"] = this.state.input["clientrate"].replaceAll("#", "%23")
+        this.state.input["skills"] = this.state.input["skills"].replaceAll("#", "%23")
+
+
 
         if (this.validate()) {
 

@@ -18,6 +18,7 @@ function ViewCandidate() {
 
     const [statusFD, setstatusFD] = useState([]);
     const [updatestatus, setUpdateStatus] = useState(null);
+    const [currentstatus, setCurrentStatus] = useState(null);
     // const [candidateId, setCadidateId] = useState(null);
     // const [candi, setCandi] = useState(null);
     const [reqid, setReqid] = useState(null);
@@ -87,12 +88,12 @@ function ViewCandidate() {
 
         let a = e.rrid;
         let b = e.sstt
-        //let c= e.canid;
-        console.log(a, b)
+        let c= e.currentst;
+    
 
         setReqid(a)
         setUpdateStatus(b)
-
+        setCurrentStatus(c)
     }
 
     const handleSubmit = (e) => {
@@ -100,9 +101,17 @@ function ViewCandidate() {
         console.log("submit11111111")
         let a = reqid;
         let b = updatestatus;
+        let c= currentstatus;
 
-        console.log(a, b)
-        postdata(a, b);
+        if(b==c)
+        {
+            alert("This status is already saved")
+        }
+        else{
+            postdata(a,b);
+        }
+
+      
 
     }
 
@@ -113,9 +122,17 @@ function ViewCandidate() {
         let a = reqid;
         let b = updatestatus;
         let c = e.canid
+        let d= currentstatus;
+     
+        if(b==d)
+        {
+            alert("This status is already saved")
+        }
+        else{
+            postdata2(a, b, c);
+        }
 
-        console.log(a, b, c)
-        postdata2(a, b, c);
+       
     }
 
     const postdata = (a, b) => {
@@ -259,7 +276,7 @@ function ViewCandidate() {
                                             <a href="/viewAllStatus" onClick={(evt) => getnewID({
                                                 reqid: st.requisition.requisition_id,
                                                 recid: st.recruiter.recruiter_id
-                                            })}>View All Status</a>
+                                            })}>All Status</a>
                                           
                                     ) :
                                     (
@@ -267,15 +284,15 @@ function ViewCandidate() {
                                             <a href="/viewAllStatus" onClick={(evt) => getnewID({
                                                 canid: st.candidate.candidate_id, reqid: st.requisition.requisition_id,
                                                 recid: st.recruiter.recruiter_id
-                                            })}>View All Status</a>
+                                            })}>All Status</a>
                                             
 
                                     )
                             }
+
+                            
                         </td>
-                            <td>{st.status}</td>
-                            <td>{st.status_date}</td>
-                            <td>
+                        <td>
 
                                 {
                                 st.candidate == null ?
@@ -286,44 +303,13 @@ function ViewCandidate() {
                                         st.candidate.candidate_name
 
                                     )
-                            }
-
-                            </td>
-                            <td>
-                                {
-                                    <select class="btn btn-sm btn-secondary dropdown-toggle"
-                                        style={{ width: '140px',fontFamily: 'arial', fontSize: '14px' }}
-                                        name="status" id="status"
-
-                                        onChange={(evt) => handleChange({
-                                            rrid: sessionreq, sstt: evt.target.value
-                                        })}>
-                                        {/* ,setCandi(st.candidate.candidate_id))}> */}
-                                        <option hidden default selected> Select Status</option>
-
-                                        {
-                                            statusFD.map((stfd) => (
-
-                                                <option value={stfd.status_fd}>{stfd.status_fd}</option>
-                                            ))
-                                        }
-                                    </select>
-                                }
-                                &nbsp;&nbsp;&nbsp;
-                                {/* <button onClick={handleSubmit}>Change Status</button>  */}
-
-                                {
-                                    st.candidate == null ?
-                                        (
-                                            <button onClick={handleSubmit} class="btn btn-sm btn-primary fa fa-save"></button>
-                                        ) :
-                                        (
-                                            <button class="btn btn-sm btn-primary fa fa-save" onClick={() => handleSubmit2({ canid: st.candidate.candidate_id })}></button>
-                                        )
                                 }
 
-                            </td>
+                                </td>
+                            <td>{st.status}</td>
+                            <td style={{overflow:"false"}}>{st.status_date}</td>
                            
+                            
 
                             <td>
                                 {
@@ -438,6 +424,42 @@ function ViewCandidate() {
                             </td>
 
                             <td>
+                                {
+                                    <select class="btn btn-sm btn-secondary dropdown-toggle"
+                                        style={{ width: '140px',fontFamily: 'arial', fontSize: '13px' }}
+                                        name="status" id="status"
+
+                                        onChange={(evt) => handleChange({
+                                            rrid: sessionreq, sstt: evt.target.value, currentst:st.status
+                                        })}>
+                                        {/* ,setCandi(st.candidate.candidate_id))}> */}
+                                        <option hidden default selected> Select Status</option>
+
+                                        {
+                                            statusFD.map((stfd) => (
+
+                                                <option value={stfd.status_fd}>{stfd.status_fd}</option>
+                                            ))
+                                        }
+                                    </select>
+                                }
+                                &nbsp;
+                                {/* <button onClick={handleSubmit}>Change Status</button>  */}
+
+                                {
+                                    st.candidate == null ?
+                                        (
+                                            <button onClick={handleSubmit} class="btn btn-sm btn-primary fa fa-save"></button>
+                                        ) :
+                                        (
+                                            <button class="btn btn-sm btn-primary fa fa-save" onClick={() => handleSubmit2({ canid: st.candidate.candidate_id })}></button>
+                                        )
+                                }
+
+                            </td>
+                           
+
+                            <td>
 
                                 {
                                     st.candidate == null ?
@@ -448,7 +470,7 @@ function ViewCandidate() {
                                             <>
                                                 &nbsp;
                                                 <button
-                                                    style={{ marginRight: '3px' }}
+                                                   
                                                     className="btn btn-sm btn-outline-success"
                                                     onClick={() => onEdit({
                                                         candidateID: st.candidate.candidate_id
@@ -511,8 +533,8 @@ function ViewCandidate() {
                                 <th style={{ width: '110px' }}>View All Status</th>
                                 <th style={{ width: '140px' }}>Candidate Name</th>
                                 <th style={{ width: '120px' }}>Current Status </th>
-                                <th style={{ width: '90px' }}>Date </th>
-                                <th style={{ width: '200px' }}>Status </th>
+                                <th style={{ width: '100px' }}>Date </th>
+                              
                                 <th style={{ width: '50px' }}>Visa Type</th>
                                 <th style={{ width: '60px' }}>Rate term</th>
                                 <th style={{ width: '60px' }}>Client Rate</th>
@@ -521,7 +543,8 @@ function ViewCandidate() {
                                 <th style={{ width: '130px' }}>Email</th>
                                 <th style={{ width: '100px' }}>Remark</th>
                                 <th style={{ width: '100px' }}>Reason</th>
-                                <th style={{ width: '100px' }}>Action</th>
+                                <th style={{ width: '230px' }}>Status </th>
+                                <th style={{ width: '115px' }}>Action</th>
 
                                 </tr>
                             </thead>

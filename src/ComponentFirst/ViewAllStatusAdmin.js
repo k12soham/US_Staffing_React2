@@ -20,6 +20,7 @@ function ViewAllStatusAdmin() {
 
     const [statusFD, setstatusFD] = useState([]);
     const [updatestatus, setUpdateStatus] = useState(null);
+    const [currentstatus, setCurrentStatus] = useState(null);
 
     const [reqid, setReqid] = useState(null);
 
@@ -48,12 +49,26 @@ function ViewAllStatusAdmin() {
         axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data));
     }
 
-    const deleteBook = (id) => { }
+    const deleteBook = (id) => {
 
-    // const onSave = ({ newReqid, newReqFrom, newId, newClient, newJobTitle, newDuration,
-    //     newClientRate, newLocation, newPType, newSkills }) => {
+        axios.delete(`${base_url}/deleteStatusByAdmin?status_id=${id}`)
+            .then(response => {
 
-    // }
+                toast.success("Record deleted successfully!", {
+                    position: "top-right",
+                    autoClose: 1000,
+                    style: { position: "absolute", top: "5px", width: "300px" }
+                });
+
+                axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
+
+            },
+                (error) => {
+                    // alert("Enter valid data");
+                });
+     }
+
+    
 
     const onEdit = ({ statusID, statusNew, statusDateNew }) => {
         console.log('statusID : ' + statusID + ' statusNew :' + statusNew + ' statusDateNew: ' + statusDateNew)
@@ -76,7 +91,15 @@ function ViewAllStatusAdmin() {
 
         console.log("statusID," + statusID + " newStatus," + newStatus + "newStatusDate," + newStatusDate);
 
-        UpdateStatusByAdmin({ statusID, newStatus, newStatusDate });
+        if(currentstatus==newStatus)
+        {
+            alert("This status is already saved")
+        }
+        else{
+            UpdateStatusByAdmin({ statusID, newStatus, newStatusDate });
+        }
+
+       
     }
 
     const UpdateStatusByAdmin = ({ statusID, newStatus, newStatusDate }) => {
@@ -264,7 +287,10 @@ function ViewAllStatusAdmin() {
                                         style={{ width: '200px' }}
                                         name="status" id="status"
                                         value={status1}
-                                        onChange={(event) => setStatus1(event.target.value)}
+                                        
+                                        onChange={(event) => {setStatus1(event.target.value)
+                                            setCurrentStatus(st.status)}}
+                                            
                                     >
 
                                         <option hidden default select> Select Status</option>
@@ -367,7 +393,7 @@ function ViewAllStatusAdmin() {
                                         </button>
                                         &nbsp;&nbsp;&nbsp;&nbsp;
                                         <button className="btn btn-sm btn-outline-danger"
-                                            onClick={() => { if (window.confirm('Are you sure to delete this requirement?')) deleteBook(st.status_id) }}>{/*Delete*/}<i class="fa fa-trash"></i></button>
+                                            onClick={() => { if (window.confirm('Are you sure to delete this status?')) deleteBook(st.status_id) }}>{/*Delete*/}<i class="fa fa-trash"></i></button>
                                         &nbsp;&nbsp;&nbsp;&nbsp;
                                     </>
 
