@@ -269,9 +269,6 @@ function ViewCandForAdmin() {
                             }
                         </td>
 
-                        <td>{st.status}</td>
-                        <td>{st.status_date}</td>
-                        <td>{st.recruiter.recruiter_name}</td>
                         <td>
 
                             {
@@ -286,6 +283,11 @@ function ViewCandForAdmin() {
                             }
 
                         </td>
+
+                        <td>{st.status}</td>
+                        <td>{st.status_date}</td>
+                        <td>{st.recruiter.recruiter_name}</td>
+                        
 
                         <td>
                             {
@@ -308,6 +310,20 @@ function ViewCandForAdmin() {
                                     ) :
                                     (
                                         st.candidate.rate_term
+
+                                    )
+                            }
+
+                        </td>
+
+                        <td>
+                            {
+                                st.candidate == null ?
+                                    (
+                                        console.log("null")
+                                    ) :
+                                    (
+                                        st.requisition.client_rate
 
                                     )
                             }
@@ -437,20 +453,22 @@ function ViewCandForAdmin() {
                         <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px' }}>
                             <thead>
                                 <tr>
-                                    <th style={{ width: '60px' }}>Sr No.</th>
-                                    <th style={{ width: '110px' }}>View All Status</th>
-                                    <th style={{ width: '130px' }}>Current Status </th>
-                                    <th style={{ width: '100px' }}>Date </th>
-                                    <th style={{ width: '160px' }}>Recruiter Name </th>
-                                    <th style={{ width: '100px' }}>Candidate Name</th>
-                                    <th style={{ width: '80px' }}>Visa Type</th>
-                                    <th style={{ width: '60px' }}>Rate term</th>
-                                    <th style={{ width: '50px' }}>Submitted Rate</th>
-                                    <th style={{ width: '80px' }}>Phone</th>
-                                    <th style={{ width: '130px' }}>Email</th>
-                                    <th style={{ width: '100px' }}>Remark</th>
-                                    <th style={{ width: '100px' }}>Reason</th>
-                                    <th style={{ width: '95px' }}>Action</th>
+                                <th style={{ width: '60px' }}>Sr No.</th>
+                                <th style={{ width: '110px' }}>View All Status</th>
+                                <th style={{ width: '140px' }}>Candidate Name</th>
+                                <th style={{ width: '120px' }}>Current Status </th>
+                                <th style={{ width: '100px' }}>Date </th> 
+                                <th style={{ width: '100px' }}>Recruiter Name</th>
+                                <th style={{ width: '50px' }}>Visa Type</th>
+                                <th style={{ width: '60px' }}>Rate term</th>
+                                <th style={{ width: '60px' }}>Client Rate</th>
+                                <th style={{ width: '20px' }}>Submitted Rate</th>
+                                <th style={{ width: '70px' }}>Phone</th>
+                                <th style={{ width: '130px' }}>Email</th>
+                                <th style={{ width: '100px' }}>Remark</th>
+                                <th style={{ width: '100px' }}>Reason</th>
+                              
+                                <th style={{ width: '115px' }}>Action</th>
                                 </tr>
                             </thead>
                             <tbody>

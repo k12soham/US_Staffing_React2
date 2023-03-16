@@ -533,8 +533,7 @@ function ViewCandidate() {
                                 <th style={{ width: '110px' }}>View All Status</th>
                                 <th style={{ width: '140px' }}>Candidate Name</th>
                                 <th style={{ width: '120px' }}>Current Status </th>
-                                <th style={{ width: '100px' }}>Date </th>
-                              
+                                <th style={{ width: '100px' }}>Date </th>     
                                 <th style={{ width: '50px' }}>Visa Type</th>
                                 <th style={{ width: '60px' }}>Rate term</th>
                                 <th style={{ width: '60px' }}>Client Rate</th>
