@@ -180,13 +180,28 @@ class UpdateReq extends React.Component {
     //     console.log("addCandidate");
     // }
 
+    handleChangeReq(e) {
+        let add_cls1 = this.state.input;
+        add_cls1[e.target.name] = e.target.value;
+       
+        add_cls1["client"] = undefined;
+        this.setState({
+            input: add_cls1,
+        });
+        // this.state.input.client = null;
+
+        console.log(add_cls1); 
+    }
+
     handleChange(e) {
         let add_cls = this.state.input;
         add_cls[e.target.name] = e.target.value;
         console.log(add_cls);
+        
         this.setState({
             input: add_cls,
         });
+        console.log(this.state.input);
     }
 
     handleSubmit(e) {
@@ -243,8 +258,10 @@ class UpdateReq extends React.Component {
                 // console.log("rqid="+response.data.requisition.requisition_id);
 
                 toast.success("Requisition updated successfully!",
-                    { position: "top-right" , autoClose: 2000,
-                    style: { position: "absolute", top: "5px", width: "300px" }}
+                    {
+                        position: "top-right", autoClose: 2000,
+                        style: { position: "absolute", top: "5px", width: "300px" }
+                    }
                 );
                 if (this.state.recruiterIDAdmin !== null) {
                     history.push("/viewReqForAdmin");
@@ -429,12 +446,12 @@ class UpdateReq extends React.Component {
 
                     <div className="col-12 h-100 master_backgroung_heder">
                         {
-                     isAuthenticated2!==null ?(
-                               <EmployeeHeader />
-                     ) :(
-                        <AdminHeader/>
-                     )
-                    }
+                            isAuthenticated2 !== null ? (
+                                <EmployeeHeader />
+                            ) : (
+                                <AdminHeader />
+                            )
+                        }
                     </div>
 
                     <div className="col-12 master_backgroung_work scroll-bar">
@@ -452,7 +469,8 @@ class UpdateReq extends React.Component {
                                             <select class="btn btn-secondary dropdown-toggle form-group"
                                                 ref={(input) => { this.refInput = input; }}
                                                 style={{ width: '100%' }} name="req" id="req"
-                                                onChange={this.handleChange}
+                                                // onChange={this.handleChange}
+                                                onChange={this.handleChangeReq}                                                
                                                 onKeyUp={this.keyUpHandlerReq}
 
                                                 // value={this.state.requisitionData.req}
@@ -499,23 +517,26 @@ class UpdateReq extends React.Component {
                                                     onKeyUp={this.keyUpHandlerReq}
                                                     value={this.state.input.client}>
 
+                                                    {/* let cleanClient = this.state.input;
+                                                          cleanClient["client"]=null;
+                                                          this.setState({input:cleanClient}); */}
+
                                                     {/* <option value='' default selected> Select client name </option> */}
                                                     <option hidden value='' default selected> Select Client Name </option>
                                                     {
-                                                            
                                                         this.state.client_fd.map((cl) => (
-                                                        
-                                                            cl.requisitor_fd.requisitor_fd==this.state.input.req?
-                                                           (
-                                                            <option value={cl.client_name}>{cl.client_name}</option>
-                                                           
-                                                           )
-                                                            :
-                                                            (
-                                                                null                                                            
-                                                            )
-                                                            
-                                                        ))
+                                                            // this.state.input.client == null;
+
+                                                            cl.requisitor_fd.requisitor_fd == this.state.input.req ?
+                                                                (
+                                                                    <option value={cl.client_name}>{cl.client_name}</option>
+                                                                )
+                                                                :
+                                                                (
+                                                                    null
+                                                                )
+
+                                                                ))
                                                     }
                                                 </select>
 

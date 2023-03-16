@@ -31,6 +31,7 @@ import ViewAllReq2 from './ComponentFirst/ViewAllReq2';
 import Pageexample from './ComponentFirst/Pageexample';
 import ViewAllStatus from './ComponentFirst/ViewAllStatus';
 import Pagination from './ComponentFirst/PaginationDemo';
+import ReqView1 from './ComponentSecond.js/ReqView1';
 
 function App() {
   return (
@@ -73,6 +74,8 @@ function App() {
         <Route path="/page" element={<Pageexample/>}></Route>
 
         <Route path="/pagination" element={<Pagination/>}></Route>
+
+        <Route path="/req_view1" element={<ReqView1/>}></Route>
         {/* <Route path="/paginatedItems" element={ <PaginatedItems/>}></Route> */}
        
         {/* <Route path="/navdemo1" element={<mobileScreen />}></Route> */}

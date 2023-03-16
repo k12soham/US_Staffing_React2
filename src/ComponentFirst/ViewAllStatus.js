@@ -5,7 +5,6 @@ import { Table } from "reactstrap";
 import EmployeeHeader from "./EmployeeHeader";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import AdminHeader from "./AdminHeader";
 import DatePicker from "react-datepicker";
 import { format } from 'date-fns';
 
@@ -97,13 +96,13 @@ function ViewAllStatus() {
             <div className="row">
 
             <div className="col-12 h-100 master_backgroung_heder">
-                <AdminHeader />
+                <EmployeeHeader />
             </div>
 
             <div className=" col-12 master_backgroung_work scroll-bar-horizontal">
 
                 <div style={{ width: '100%' }}  >
-                    <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px' }}>
+                    <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '12px' }}>
                         <thead>
                             <tr>
                                 <th style={{ width: '10px' }}>Sr No.</th>

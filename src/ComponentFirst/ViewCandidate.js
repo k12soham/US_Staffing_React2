@@ -176,7 +176,7 @@ function ViewCandidate() {
             status: true,
             rowKey: candidateID,
         })
-       
+
 
     }
 
@@ -187,7 +187,7 @@ function ViewCandidate() {
         })
     }
 
-    
+
 
     const getnewID = (e) => {
         let candidate_id = e.canid
@@ -196,7 +196,7 @@ function ViewCandidate() {
         localStorage.setItem("candidateID", candidate_id)
         localStorage.setItem("requisitionID", requisition_id)
         localStorage.setItem("recruiterID", recruiter_id)
-      
+
     }
 
     const renderTable = () => {
@@ -207,39 +207,36 @@ function ViewCandidate() {
 
                 if (searchTerm === "") {
                     return st;
-                }
-                else if (st.candidate == null || st.candidate != null) {
-                    if (st.status.toLowerCase().includes(searchTerm.toLowerCase())) {
-                        return st;
-                    }
+                }  
+                else if(st.status_date.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return st;
                 }
                 else if (st.candidate != null) {
                     if (st.candidate.candidate_name.toLowerCase().includes(searchTerm.toLowerCase())) {
                         return st;
                     }
-                }
-                else if (st.candidate != null) {
-                    if (st.candidate.visa_type.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    if (st.candidate.visa_type.toString().toLowerCase().includes(searchTerm.toLowerCase())) {
                         return st;
                     }
-                }
-                else if (st.candidate != null) {
                     if (st.candidate.rate_term.toLowerCase().includes(searchTerm.toLowerCase())) {
                         return st;
                     }
-                }
-                else if (st.candidate != null) {
+                    if (st.requisition.client_rate.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        return st;
+                    }
+                    if (st.candidate.phone.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        return st;
+                    }
+                    if (st.candidate.email.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        return st;
+                    }
                     if (st.candidate.submitted_rate.toLowerCase().includes(searchTerm.toLowerCase())) {
                         return st;
                     }
                 }
-                else if (st.candidate != null) {
-                    if (st.candidate.phone.toLowerCase().includes(searchTerm.toLowerCase())) {
-                        return st;
-                    }
-                }
-                else if (st.candidate != null) {
-                    if (st.candidate.email.toLowerCase().includes(searchTerm.toLowerCase())) {
+                
+                else if (st.candidate == null || st.candidate != null) {
+                    if (st.status.toLowerCase().includes(searchTerm.toLowerCase())) {
                         return st;
                     }
                 }
@@ -252,47 +249,48 @@ function ViewCandidate() {
                         <tr key={st.status_id}>
                             <td></td>
                             <td>
-                            {
-                                st.candidate == null ?
-                                    (
-                                    
+                                {
+                                    st.candidate == null ?
+                                        (
+
                                             <a href="/viewAllStatus" onClick={(evt) => getnewID({
                                                 reqid: st.requisition.requisition_id,
                                                 recid: st.recruiter.recruiter_id
                                             })}>View All Status</a>
-                                          
-                                    ) :
-                                    (
-                                    
+
+                                        ) :
+                                        (
+
                                             <a href="/viewAllStatus" onClick={(evt) => getnewID({
                                                 canid: st.candidate.candidate_id, reqid: st.requisition.requisition_id,
                                                 recid: st.recruiter.recruiter_id
                                             })}>View All Status</a>
-                                            
 
-                                    )
-                            }
-                        </td>
-                            <td>{st.status}</td>
-                            <td>{st.status_date}</td>
+
+                                        )
+                                }
+                            </td>
                             <td>
 
                                 {
-                                st.candidate == null ?
-                                    (
-                                        console.log("null")
-                                    ) :
-                                    (
-                                        st.candidate.candidate_name
+                                    st.candidate == null ?
+                                        (
+                                            console.log("null")
+                                        ) :
+                                        (
+                                            st.candidate.candidate_name
 
-                                    )
-                            }
+                                        )
+                                }
 
                             </td>
+                            <td>{st.status}</td>
+                            <td>{st.status_date}</td>
+
                             <td>
                                 {
                                     <select class="btn btn-sm btn-secondary dropdown-toggle"
-                                        style={{ width: '140px',fontFamily: 'arial', fontSize: '14px' }}
+                                        style={{ width: '140px', fontFamily: 'arial', fontSize: '14px' }}
                                         name="status" id="status"
 
                                         onChange={(evt) => handleChange({
@@ -323,7 +321,7 @@ function ViewCandidate() {
                                 }
 
                             </td>
-                           
+
 
                             <td>
                                 {
@@ -351,20 +349,20 @@ function ViewCandidate() {
                                         )
                                 }
 
-                        </td>
-                        <td>
-                            {
-                                st.candidate == null ?
-                                    (
-                                        console.log("null")
-                                    ) :
-                                    (
-                                        st.requisition.client_rate
+                            </td>
+                            <td>
+                                {
+                                    st.candidate == null ?
+                                        (
+                                            console.log("null")
+                                        ) :
+                                        (
+                                            st.requisition.client_rate
 
-                                    )
-                            }
+                                        )
+                                }
 
-                        </td>
+                            </td>
 
 
                             <td>
@@ -476,7 +474,7 @@ function ViewCandidate() {
 
             }))
 
-       
+
     }
 
     return (
@@ -503,25 +501,25 @@ function ViewCandidate() {
                         </div>
                     </div>
 
-                <div>
-                    <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px' }}>
-                        <thead>
-                            <tr>
-                                <th style={{ width: '60px' }}>Sr No.</th>
-                                <th style={{ width: '110px' }}>View All Status</th>
-                                <th style={{ width: '140px' }}>Candidate Name</th>
-                                <th style={{ width: '120px' }}>Current Status </th>
-                                <th style={{ width: '90px' }}>Date </th>
-                                <th style={{ width: '200px' }}>Status </th>
-                                <th style={{ width: '50px' }}>Visa Type</th>
-                                <th style={{ width: '60px' }}>Rate term</th>
-                                <th style={{ width: '60px' }}>Client Rate</th>
-                                <th style={{ width: '20px' }}>Submitted Rate</th>
-                                <th style={{ width: '70px' }}>Phone</th>
-                                <th style={{ width: '130px' }}>Email</th>
-                                <th style={{ width: '100px' }}>Remark</th>
-                                <th style={{ width: '100px' }}>Reason</th>
-                                <th style={{ width: '100px' }}>Action</th>
+                    <div>
+                        <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '12px' }}>
+                            <thead>
+                                <tr>
+                                    <th style={{ width: '60px' }}>Sr No.</th>
+                                    <th style={{ width: '110px' }}>View All Status</th>
+                                    <th style={{ width: '140px' }}>Candidate Name</th>
+                                    <th style={{ width: '120px' }}>Current Status </th>
+                                    <th style={{ width: '90px' }}>Date </th>
+                                    <th style={{ width: '200px' }}>Status </th>
+                                    <th style={{ width: '50px' }}>Visa Type</th>
+                                    <th style={{ width: '60px' }}>Rate term</th>
+                                    <th style={{ width: '60px' }}>Client Rate</th>
+                                    <th style={{ width: '20px' }}>Submitted Rate</th>
+                                    <th style={{ width: '70px' }}>Phone</th>
+                                    <th style={{ width: '130px' }}>Email</th>
+                                    <th style={{ width: '100px' }}>Remark</th>
+                                    <th style={{ width: '100px' }}>Reason</th>
+                                    <th style={{ width: '100px' }}>Action</th>
 
                                 </tr>
                             </thead>
@@ -536,7 +534,7 @@ function ViewCandidate() {
                 </div>
             </div>
         </div>
-        
+
     );
 }
 export default ViewCandidate;

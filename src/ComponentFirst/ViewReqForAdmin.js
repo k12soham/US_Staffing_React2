@@ -7,6 +7,9 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import AdminHeader from "./AdminHeader";
 import { useMemo } from "react";
+import { Helmet } from "react-helmet";
+// import $ from 'jquery';
+
 // import data from './data/mock-data.json';
 
 let PageSize = 10;
@@ -41,20 +44,20 @@ function ViewReqForAdmin() {
     const deleteBook = (requisitionID) => {
         console.log(requisitionID);
         axios.delete(`${base_url}/deleteRequisitionByAdmin?requisition_id=${requisitionID}`)
-        .then(response => {
+            .then(response => {
 
-            toast.success("Record deleted successfully!", {
-                position: "top-right",
-                autoClose: 1000,
-                style: { position: "absolute", top: "5px", width: "300px" }
-            });
+                toast.success("Record deleted successfully!", {
+                    position: "top-right",
+                    autoClose: 1000,
+                    style: { position: "absolute", top: "5px", width: "300px" }
+                });
 
-            axios.get(`${base_url}/getAllRequisition`).then(json => setRequisitionList(json.data))         
-        },
-            (error) => {
-                // alert("Enter valid data");
-            });
-     }
+                axios.get(`${base_url}/getAllRequisition`).then(json => setRequisitionList(json.data))
+            },
+                (error) => {
+                    // alert("Enter valid data");
+                });
+    }
 
     // const onSave = ({ newReqid, newReqFrom, newId, newClient, newJobTitle, newDuration,
     //     newClientRate, newLocation, newPType, newSkills }) => {
@@ -95,14 +98,14 @@ function ViewReqForAdmin() {
     }
 
     const renderTable = () => {
-     
+
         return (
 
             requisitionList.filter((cls) => {
 
                 if (searchTerm === "") {
                     return cls;
-                } 
+                }
                 else if (cls.requisition_from.toLowerCase().includes(searchTerm.toLowerCase())) {
                     return cls;
                 }
@@ -132,50 +135,49 @@ function ViewReqForAdmin() {
 
             }
             ).map(cls => {
-                if(cls.deleted==1)
-                {
-                return (
-                    <tr key={cls.requisition_id}>
-                        <td></td>
-                        <td hidden>{cls.requisition_id}</td>
-                        <td>{cls.requisition_from}</td>
+                if (cls.deleted == 1) {
+                    return (
+                        <tr key={cls.requisition_id}>
+                            <td></td>
+                            <td hidden>{cls.requisition_id}</td>
+                            <td>{cls.requisition_from}</td>
 
-                        <td>{
-                            <a href="/viewCandForAdmin" onClick={(evt) => getnewID({ rq: cls.requisition_id })}>{cls.id}</a>
+                            <td>{
+                                <a href="/viewCandForAdmin" onClick={(evt) => getnewID({ rq: cls.requisition_id })}>{cls.id}</a>
 
-                        }</td>
-                        <td>{cls.client}</td>
-                        <td>{cls.job_title}</td>
-                        <td>{cls.duration}</td>
-                        <td>{cls.client_rate}</td>
-                        <td>{cls.location}</td>
-                        <td>{cls.position_type}</td>
-                        <td>{cls.skills}</td>
-                        <td>
-                        &nbsp;&nbsp;
-                            <button
-                                style={{ marginRight: '3px' }}
-                                className="btn btn-sm btn-outline-success"
-                                onClick={() => onEdit({
-                                    requisitionID: cls.requisition_id,
-                                })}
-                            >
-                                <i class="fa fa-edit"></i>
-                            </button>
-                            &nbsp;&nbsp;
+                            }</td>
+                            <td>{cls.client}</td>
+                            <td>{cls.job_title}</td>
+                            <td>{cls.duration}</td>
+                            <td>{cls.client_rate}</td>
+                            <td>{cls.location}</td>
+                            <td>{cls.position_type}</td>
+                            <td>{cls.skills}</td>
+                            <td>
+                                &nbsp;&nbsp;
+                                <button
+                                    style={{ marginRight: '3px' }}
+                                    className="btn btn-sm btn-outline-success"
+                                    onClick={() => onEdit({
+                                        requisitionID: cls.requisition_id,
+                                    })}
+                                >
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                                &nbsp;&nbsp;
 
-                            <button className="btn btn-sm btn-outline-danger"
-                                onClick={() => {
-                                    if (window.confirm('Are you sure to delete this requirement?'))
-                                        deleteBook(cls.requisition_id)
-                                }}>
-                                <i class="fa fa-trash"></i>
-                            </button>
-                        </td>
-                    </tr >
+                                <button className="btn btn-sm btn-outline-danger"
+                                    onClick={() => {
+                                        if (window.confirm('Are you sure to delete this requirement?'))
+                                            deleteBook(cls.requisition_id)
+                                    }}>
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr >
 
-                )
-            }
+                    )
+                }
 
             })
         )
@@ -196,14 +198,14 @@ function ViewReqForAdmin() {
                     {/* -------------------------------------------------------- */}
                     <div className="row">
                         <div className="col-12 input-icons"
-                         style={{ padding:'5px',margin:'10px' }}>
+                            style={{ padding: '5px', margin: '10px' }}>
                             <i className="fa fa-search icon"></i>
                             <input
                                 type="search"
                                 className="form-control"
                                 placeholder="Search"
                                 onChange={event => { setSearchTerm(event.target.value) }}
-                                style={{ width: '500px', borderRadius: '100px', paddingLeft:'30px'}}
+                                style={{ width: '500px', borderRadius: '100px', paddingLeft: '30px' }}
                             />
 
                         </div>
@@ -227,7 +229,6 @@ function ViewReqForAdmin() {
                                     <th style={{ width: '80px' }}>Location</th>
                                     <th style={{ width: '90px' }}>Position Type</th>
                                     <th style={{ width: '100px' }}>Skills</th>
-
                                     <th style={{ width: '70px' }}>Action</th>
 
                                 </tr>
@@ -242,7 +243,42 @@ function ViewReqForAdmin() {
                     </div>
                 </div>
             </div>
+
+
+
+            {/* // ********************************************** add script code**************************** */}
+
+            <div className="application">
+
+                <Helmet>
+                    {/* <meta charSet="utf-8" />
+                    <title>My Title</title>
+                    <link rel="canonical" href="http://example.com/example" />
+                    <script src="/path/to/resource.js" type="text/javascript" />
+                    <script>alert('Hello world')</script>
+
+                    <script>
+                        $(function () {
+                            $("#example1").DataTable({
+                                "responsive": true, "lengthChange": false, "autoWidth": false,
+                                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+                            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+                        $('#example2').DataTable({
+                            "paging": true,
+                        "lengthChange": false,
+                        "searching": false,
+                        "ordering": true,
+                        "info": true,
+                        "autoWidth": false,
+                        "responsive": true,
+    });
+  });
+                    </script> */}
+                </Helmet>
+            </div>
         </div>
+
+
         //)
     );
 }
