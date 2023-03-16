@@ -44,7 +44,7 @@ function ViewAllReq() {
     let empID = localStorage.getItem("recruiterID");
     let sessionreq = localStorage.getItem("requisitionID");
 
-    
+
     useEffect(() => {
         axios.get(`${base_url}/getAllRequisition`).then(json => setRequisitionList(json.data))
         // axios.get(`${base_url}/getEmpList_TM`).then(json => setEmployee(json.data))
@@ -55,18 +55,18 @@ function ViewAllReq() {
     }, []);
 
     const getCurrentTableData = () => {
-       
-        return renderTable.slice(
-          currentPage * tableRowsPerPage - tableRowsPerPage,
-          currentPage * tableRowsPerPage
-        );
-      };
-    
-      const paginateData = (pageNumber) => {
-        setCurrentPage(pageNumber);
-      };
 
-      
+        return renderTable.slice(
+            currentPage * tableRowsPerPage - tableRowsPerPage,
+            currentPage * tableRowsPerPage
+        );
+    };
+
+    const paginateData = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
+
     const deleteBook = (id) => { }
 
     const onSave = ({ newReqid, newReqFrom, newId, newClient, newJobTitle, newDuration,
@@ -138,7 +138,7 @@ function ViewAllReq() {
             status: true,
             rowKey: requisitionID,
         })
-        
+
 
     }
 
@@ -158,131 +158,132 @@ function ViewAllReq() {
         localStorage.setItem("requisitionID", rq)
         //console.log(rq)
     }
-    
-      
-        
-  
-        const renderTable = () => {          
-            
-  
-            return (
-    
-                statusList.filter((cls) => {
-                  
-                    if (searchTerm === "") {
-                        return cls;
-                    } 
-                    else if (cls.requisition.requisition_from.toLowerCase().includes(searchTerm.toLowerCase())) {
-                        return cls;
-                    }
-                    else if (cls.requisition.client.toLowerCase().includes(searchTerm.toLowerCase())) {
-                        return cls;
-                    }
-                    else if (cls.requisition.job_title.toString().toLowerCase().includes(searchTerm.toString().toLowerCase())) {
-                        return cls;
-                    } else if (cls.requisition.duration.toLowerCase().includes(searchTerm.toLowerCase())) {
-                        return cls;
-                    }
-                    else if (cls.requisition.client_rate.toLowerCase().includes(searchTerm.toLowerCase())) {
-                        return cls;
-                    }
-                    else if (cls.requisition.location.toString().toLowerCase().includes(searchTerm.toString().toLowerCase())) {
-                        return cls;
-                    } else if (cls.requisition.position_type.toLowerCase().includes(searchTerm.toLowerCase())) {
-                        return cls;
-                    }
-                    else if (cls.requisition.skills.toString().toLowerCase().includes(searchTerm.toString().toLowerCase())) {
-                        return cls;
-                    }
-                    else if (cls.requisition.id.toString().toLowerCase().includes(searchTerm.toLowerCase())) {
-                        return cls;
-                    }
-                   
+
+
+
+
+    const renderTable = () => {
+
+
+        return (
+
+            statusList.filter((cls) => {
+
+                if (searchTerm === "") {
+                    return cls;
                 }
-                ).map(cls => {
-    
-                    if (cls.recruiter.recruiter_id == empID && cls.requisitionflag == 1 && cls.requisition.deleted==1)
-              
-                        return (
-    
-                            <tr key={cls.requisition.requisition_id}>
-                                <td></td>
-                                <td hidden>{cls.requisition.requisition_id}</td>
-                                <td>{cls.requisition.requisition_from}</td>
-                                {/* <td>{<a href="/viewCandidate" onClick={(evt) => getnewID({ rq: cls.requisition.requisition_id })}>{cls.requisition.requisition_from}</a>}</td> */}
-                                <td>{<a href="/viewCandidate" onClick={(evt) => getnewID({ rq: cls.requisition.requisition_id })}>{cls.requisition.id}</a>}</td>
-                                <td>{cls.requisition.client}</td>
-                                <td>{cls.requisition.job_title}</td>
-                                <td>{cls.requisition.duration}</td>
-                                <td>{ cls.requisition.client_rate}</td>
-                                <td>{ cls.requisition.location}</td>
-                                <td>{cls.requisition.position_type}</td>
-                                <td>{cls.requisition.skills}</td>
-                                <td>
+                else if (cls.requisition.requisition_from.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return cls;
+                }
+                else if (cls.requisition.client.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return cls;
+                }
+                else if (cls.requisition.job_title.toString().toLowerCase().includes(searchTerm.toString().toLowerCase())) {
+                    return cls;
+                } else if (cls.requisition.duration.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return cls;
+                }
+                else if (cls.requisition.client_rate.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return cls;
+                }
+                else if (cls.requisition.location.toString().toLowerCase().includes(searchTerm.toString().toLowerCase())) {
+                    return cls;
+                } else if (cls.requisition.position_type.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return cls;
+                }
+                else if (cls.requisition.skills.toString().toLowerCase().includes(searchTerm.toString().toLowerCase())) {
+                    return cls;
+                }
+                else if (cls.requisition.id.toString().toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return cls;
+                }
+
+            }
+            ).map(cls => {
+
+                if (cls.recruiter.recruiter_id == empID && cls.requisitionflag == 1 && cls.requisition.deleted == 1)
+
+                    return (
+
+                        <tr key={cls.requisition.requisition_id}>
+                            <td></td>
+                            <td hidden>{cls.requisition.requisition_id}</td>
+                            <td>{cls.requisition.requisition_from}</td>
+                            {/* <td>{<a href="/viewCandidate" onClick={(evt) => getnewID({ rq: cls.requisition.requisition_id })}>{cls.requisition.requisition_from}</a>}</td> */}
+                            <td>{<a href="/viewCandidate" onClick={(evt) => getnewID({ rq: cls.requisition.requisition_id })}>{cls.requisition.id}</a>}</td>
+                            <td>{cls.requisition.client}</td>
+                            <td>{cls.requisition.job_title}</td>
+                            <td>{cls.requisition.duration}</td>
+                            <td>{cls.requisition.client_rate}</td>
+                            <td>{cls.requisition.location}</td>
+                            <td>{cls.requisition.position_type}</td>
+                            <td>{cls.requisition.skills}</td>
+                            <td>
                                 {
                                     inEditMode.status && inEditMode.rowKey === cls.requisition.requisition_id ? (
                                         <>
                                             <button
-    
+
                                                 className={"btn btn-sm btn-outline-success"}
                                                 onClick={() => {
-    
+
                                                     onSave(
                                                         {
                                                             newReqid: cls.requisition_id, newReqFrom: reqFrom, newId: id,
                                                             newClient: client, newJobTitle: jobTitle, newDuration: duration,
                                                             newClientRate: clientRate, newLocation: location, newPType: ptype, newSkills: skills,
-    
+
                                                         })
                                                 }
                                                 }
                                             >
                                                 <i class="fa fa-save"></i>
                                             </button>
-    
+
                                             &nbsp;&nbsp;&nbsp;&nbsp;
                                             <button
                                                 className={"btn btn-sm btn-outline-warning"}
-    
+
                                                 onClick={() => onCancel()}
                                             >
                                                 <i class="fa fa-close"></i>
                                             </button>
                                         </>
-    
+
                                     ) : (
                                         <>
+                                            &nbsp;&nbsp;
                                             <button
                                                 className="btn btn-sm btn-outline-success"
-    
+
                                                 onClick={() => onEdit({
-    
+
                                                     requisitionID: cls.requisition.requisition_id,
-    
+
                                                 })}
                                             >
                                                 <i class="fa fa-edit"></i>
-    
+
                                             </button>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            {/* &nbsp;&nbsp;&nbsp;&nbsp;
                                             <button className="btn btn-sm btn-outline-danger"
                                                 onClick={() => { if (window.confirm('Are you sure to delete this requirement?')) deleteBook(cls.requisition.requisition_id) }}>
-                                                {/*Delete*/}<i class="fa fa-trash"></i></button>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                               <i class="fa fa-trash"></i></button>
+                                            &nbsp;&nbsp;&nbsp;&nbsp; */}
                                         </>
-    
+
                                     )
                                 }
-    
-                            </td>
-                            </tr>
-    
-                        )
-    
-                }))
 
-        }
-    
+                            </td>
+                        </tr>
+
+                    )
+
+            }))
+
+    }
+
 
     return (
         // return (
@@ -297,49 +298,49 @@ function ViewAllReq() {
                     {/* ---------------------------SearchBar----------------------------- */}
                     <div className="row">
                         <div className="col-12 input-icons"
-                         style={{ padding:'5px',margin:'10px' }}>
+                            style={{ padding: '5px', margin: '10px' }}>
                             <i className="fa fa-search icon"></i>
                             <input
                                 type="search"
                                 className="form-control"
                                 placeholder="Search"
                                 onChange={event => { setSearchTerm(event.target.value) }}
-                                style={{ width: '500px', borderRadius: '100px', paddingLeft:'30px'}}
+                                style={{ width: '500px', borderRadius: '100px', paddingLeft: '30px' }}
                             />
 
                         </div>
                     </div>
 
-                <div>
-                    <Table bordered className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px' }}>
-                        <thead>
-                            <tr>
-                                <th style={{ width: '60px' }}>Sr No.</th>
-                                <th style={{ width: '150px' }}>Requisition From</th>
-                                <th style={{ width: '100px' }}>Job Posting ID</th>
-                                <th style={{ width: '130px' }}>Client</th>
-                                <th style={{ width: '160px' }}>Job Title</th>
-                                <th style={{ width: '70px' }}>Duration</th>
-                                <th style={{ width: '100px' }}>Client Rate</th>
-                                <th style={{ width: '100px' }}>Location</th>
-                                <th style={{ width: '120px' }}>Position Type</th>
-                                <th style={{ width: '150px' }}>Skills</th>
+                    <div>
+                        <Table bordered className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px' }}>
+                            <thead>
+                                <tr>
+                                    <th style={{ width: '60px' }}>Sr No.</th>
+                                    <th style={{ width: '150px' }}>Requisition From</th>
+                                    <th style={{ width: '100px' }}>Job Posting ID</th>
+                                    <th style={{ width: '130px' }}>Client</th>
+                                    <th style={{ width: '160px' }}>Job Title</th>
+                                    <th style={{ width: '70px' }}>Duration</th>
+                                    <th style={{ width: '100px' }}>Client Rate</th>
+                                    <th style={{ width: '100px' }}>Location</th>
+                                    <th style={{ width: '120px' }}>Position Type</th>
+                                    <th style={{ width: '150px' }}>Skills</th>
 
-                                <th style={{ width: '100px' }}>Action</th>
+                                    <th style={{ width: '50px' }}>Action</th>
 
                                 </tr>
                             </thead>
                             <tbody>
-                         
+
                                 {renderTable()}
-     
+
                             </tbody>
                         </Table>
-                         <Pagination
-        tableRowsPerPage={tableRowsPerPage}
-        totalData={renderTable.length}
-        paginateData={paginateData}
-      /> 
+                        <Pagination
+                            tableRowsPerPage={tableRowsPerPage}
+                            totalData={renderTable.length}
+                            paginateData={paginateData}
+                        />
                     </div>
                 </div>
             </div>

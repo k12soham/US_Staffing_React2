@@ -206,11 +206,11 @@ function ReqView() {
                                         <i class="fa fa-edit"></i>
 
                                     </button>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                   {/*  &nbsp;&nbsp;&nbsp;&nbsp;
                                     <button className="btn btn-outline-danger"
                                         onClick={() => { if (window.confirm('Are you sure to delete this requirement?')) deleteBook(cls.closureid) }}>
-                                        {/*Delete*/}<i class="fa fa-trash"></i></button>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                       <i class="fa fa-trash"></i></button>
+                                    &nbsp;&nbsp;&nbsp;&nbsp; */}
                                 </>
 
                             )

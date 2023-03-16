@@ -43,6 +43,7 @@ class UpdateReq extends React.Component {
 
                 let inputs = this.state.input;
 
+                inputs["req_id"] = response.data.requisition_id;
                 inputs["req"] = response.data.requisition_from;
                 inputs["id"] = response.data.id;
                 inputs["client"] = response.data.client;
@@ -181,28 +182,49 @@ class UpdateReq extends React.Component {
     // }
 
     handleChangeReq(e) {
-        let add_cls1 = this.state.input;
+        let add_cls1 = {}
+        // console.log("state val: "+this.state.input.client);
         add_cls1[e.target.name] = e.target.value;
-       
+
         add_cls1["client"] = undefined;
         this.setState({
             input: add_cls1,
         });
         // this.state.input.client = null;
 
-        console.log(add_cls1); 
+        console.log(add_cls1);
     }
 
     handleChange(e) {
         let add_cls = this.state.input;
-    
         add_cls[e.target.name] = e.target.value;
         console.log(add_cls);
-        
+
         this.setState({
             input: add_cls,
         });
-        console.log(this.state.input);
+        // console.log(this.state.input);
+        console.log("for req : " + this.state.input.req);
+
+        // this.state.client_fd.map((cl) => (
+        //     console.log(cl.client_name, this.state.input.client),
+        //     // ##########################################compare client name and current client name#####
+        //     cl.client_name != this.state.input.client ?
+        //         (
+        //             // console.log(cl.client_name),
+        //             add_cls["client"]=undefined,
+        //             this.setState({ input: add_cls})
+        //         )
+        //         :
+        //         (
+        //             add_cls[e.target.name] = e.target.value,
+        //             console.log(add_cls),
+
+        //             this.setState({
+        //                 input: add_cls,
+        //             })
+        //         )
+        // ))
     }
 
     handleSubmit(e) {
@@ -220,15 +242,12 @@ class UpdateReq extends React.Component {
         this.state.input["clientrate"] = this.state.input["clientrate"].replaceAll("#", "%23")
         this.state.input["skills"] = this.state.input["skills"].replaceAll("#", "%23")
 
-
-
         if (this.validate()) {
 
             let add_cls = this.state.input;
             add_cls[e.target.name] = e.target.value;
 
             console.log("skills: " + this.state.input["skills"]);
-
             this.post_requisition(add_cls);
         }
         // 👇️ clear all input values in the form
@@ -311,7 +330,8 @@ class UpdateReq extends React.Component {
         let addNew1 = true;
         let addNew2 = true;
 
-        // console.log("type of input " + typeof (input["req"]));
+        console.log("type of input ");
+        console.log(this.state.input.req_id);
         // console.log("type of reqNum " + typeof (reqNum));
         // this.state.input["jobTitle"] = this.state.input["jobTitle"].trim(" ");
         // this.state.input["location"] = this.state.input["location"].trim(" ");
@@ -435,6 +455,27 @@ class UpdateReq extends React.Component {
         //     }
         // }
 
+        const clientName ='';
+
+        this.state.client_fd.map((cl) => (
+            // console.log(cl.client_name, this.state.input.client),
+           
+            // ##########################################compare client name and current client name#####
+            cl.client_name == this.state.input.client 
+                (
+                  
+                    clientName = cl.client_name,
+                    console.log(cl.client_name, this.state.input.client),
+                    console.log("true")
+                )
+                // :
+                // (
+                    // isValid = false
+                //     console.log("error show"),
+                //     errors["client"] = "Select valid client"
+                // )
+        ))
+
         this.setState({
             errors: errors
         });
@@ -478,9 +519,9 @@ class UpdateReq extends React.Component {
                                             <select class="btn btn-secondary dropdown-toggle form-group"
                                                 ref={(input) => { this.refInput = input; }}
                                                 style={{ width: '100%' }} name="req" id="req"
-                                                // onChange={this.handleChange}
-                                                onChange={this.handleChangeReq}                                                
-                                                onKeyUp={this.keyUpHandlerReq}
+                                                // onChange={this.handleChange}                                                                                              
+                                                onChange={this.handleChange}
+                                                onBlur={this.handleChangeReq}
 
                                                 // value={this.state.requisitionData.req}
                                                 value={this.state.input.req}
@@ -545,7 +586,7 @@ class UpdateReq extends React.Component {
                                                                     null
                                                                 )
 
-                                                                ))
+                                                        ))
                                                     }
                                                 </select>
 
