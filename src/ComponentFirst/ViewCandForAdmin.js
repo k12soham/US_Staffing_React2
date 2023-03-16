@@ -254,7 +254,7 @@ function ViewCandForAdmin() {
                                             <a href="/viewAllStatusAdmin" onClick={(evt) => getnewID({
                                                 reqid: st.requisition.requisition_id,
                                                 recid: st.recruiter.recruiter_id
-                                            })}>View All Status</a>
+                                            })}>All Status</a>
                                             // </button>
                                     ) :
                                     (
@@ -262,7 +262,7 @@ function ViewCandForAdmin() {
                                             <a href="/viewAllStatusAdmin" onClick={(evt) => getnewID({
                                                 canid: st.candidate.candidate_id, reqid: st.requisition.requisition_id,
                                                 recid: st.recruiter.recruiter_id
-                                            })}>View All Status</a>
+                                            })}>All Status</a>
                                             // </button>
 
                                     )

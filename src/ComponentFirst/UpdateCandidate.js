@@ -158,7 +158,19 @@ class UpdateCandidate extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        this.state.input["cad_name"] = this.state.input["cad_name"].trim(" ");
+        this.state.input["submitted_rate"] = this.state.input["submitted_rate"].trim(" ");
+        this.state.input["phone"] = this.state.input["phone"].trim(" ");
+        this.state.input["email"] = this.state.input["email"].trim(" ");
+        this.state.input["remark"] = this.state.input["remark"].trim(" ");
+        this.state.input["reason"] = this.state.input["reason"].trim(" ");
 
+        this.state.input["cad_name"] = this.state.input["cad_name"].replaceAll("#", "%23")
+        this.state.input["submitted_rate"] = this.state.input["submitted_rate"].replaceAll("#", "%23")
+        this.state.input["phone"] = this.state.input["phone"].replaceAll("#", "%23")
+        this.state.input["email"] = this.state.input["email"].replaceAll("#", "%23")
+        this.state.input["remark"] = this.state.input["remark"].replaceAll("#", "%23")
+        this.state.input["reason"] = this.state.input["reason"].replaceAll("#", "%23")
         if (this.validate()) {
 
             let add_cls = this.state.input;
@@ -244,18 +256,7 @@ class UpdateCandidate extends React.Component {
         let addNew1 = true;
         let addNew2 = true;
 
-        console.log("type of input " + typeof (input["cad_name"]));
 
-        console.log("cad_name " + input["cad_name"]);
-        console.log("visa_type " + input["visa_type"]);
-        console.log("rate_term " + input["rate_term"]);
-        console.log("submitted_rate " + input["submitted_rate"]);
-        console.log("phone " + input["phone"]);
-        console.log("email " + input["email"]);
-        console.log("remark " + input["remark"]);
-        console.log("reason " + input["reason"]);
-
-        console.log("type of reqNum " + typeof (reqNum));
 
         if ((!input["cad_name"])) {
             isValid = false;
@@ -328,7 +329,7 @@ class UpdateCandidate extends React.Component {
             }
         }
         // -------------remark-----------------------------------------------------------------------------------------
-        if ((!input["remark"])) {
+       /* if ((!input["remark"])) {
             isValid = false;
             errors["remark"] = "This remark field is required";
         }
@@ -356,7 +357,7 @@ class UpdateCandidate extends React.Component {
                 isValid = false;
                 errors["reason"] = "Please enter valid reason.";
             }
-        }
+        }*/
 
         this.setState({
             errors: errors

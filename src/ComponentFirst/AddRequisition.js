@@ -9,11 +9,13 @@ import { getValue } from '@testing-library/user-event/dist/utils';
 import NavBarHeader from './NavbarHeader';
 import EmployeeHeader from './EmployeeHeader';
 import { json } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 class AddRequisition extends React.Component {
 
     componentDidMount() {
         this.refInput.focus();
+       
 
         const isAuthenticated = localStorage.getItem('recruiterID');
         localStorage.setItem('recruiterID', isAuthenticated)
@@ -147,15 +149,25 @@ class AddRequisition extends React.Component {
         console.log(add_cls);
         console.log(this.state.requisitionId1);
         console.log(this.state.requisitionId1);
+
+        this.state.input["id"] = this.state.input["id"].trim(" ");
+        this.state.input["jobTitle"] = this.state.input["jobTitle"].trim(" ");       
+        this.state.input["location"] = this.state.input["location"].trim(" ");
+        this.state.input["clientrate"] = this.state.input["clientrate"].trim(" ");
+        this.state.input["skills"] = this.state.input["skills"].trim(" ");
+
+
+        this.state.input["id"] = this.state.input["id"].replaceAll("#", "%23")
+        this.state.input["jobTitle"] = this.state.input["jobTitle"].replaceAll("#", "%23")
+        this.state.input["location"] = this.state.input["location"].replaceAll("#", "%23")
+        this.state.input["clientrate"] = this.state.input["clientrate"].replaceAll("#", "%23")
+        this.state.input["skills"] = this.state.input["skills"].replaceAll("#", "%23")
+
+
+
         if (this.validate()) {
 
-            this.state.input["jobTitle"] = this.state.input["jobTitle"].trim(" ");       
-            this.state.input["skills"] = this.state.input["skills"].replaceAll("#", "%23")
-            this.state.input["location"] = this.state.input["location"].trim(" ");
-            this.state.input["clientrate"] = this.state.input["clientrate"].trim(" ");
-            this.state.input["skills"] = this.state.input["skills"].trim(" ");
-            console.log("jobTitle : " + this.state.input["jobTitle"]);
-            console.log(this.state.input["skills"]);
+           
 
             let add_cls = this.state.input;
             add_cls[e.target.name] = e.target.value;
@@ -193,7 +205,8 @@ class AddRequisition extends React.Component {
         let d9 = data["skills"];
 
         axios.post(`${base_url}/add_requsition?requisition_from=${d1}&id=${d2}&client=${d3}&job_title=${d4}
-        &duration=${d5}&client_rate=${d6}&location=${d7}&position_type=${d8}&skills=${d9}&recruiter_id=${z}`).then(
+        &duration=${d5}&client_rate=${d6}&location=${d7}&position_type=${d8}&skills=${d9}&recruiter_id=${z}`)
+        .then(
 
             (response) => {
                 console.log(response.data)             
@@ -215,9 +228,10 @@ class AddRequisition extends React.Component {
                     style: { position: "absolute", top: "5px", width: "300px" }
                 }
                 );
-
-                history.push("/addRequisition");
-                window.location.reload();
+                let navigate = useNavigate();
+                navigate("/addRequisition");
+               // history.push("/addRequisition");
+               // window.location.reload();
             },
             (error) => {
                 console.log(error);
