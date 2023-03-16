@@ -55,9 +55,6 @@ class AddRequisition extends React.Component {
                 // alert("Error client")
             })
 
-            var myStr = "Hi Dev! #";
-            var newStr = myStr.replace("#", "Guys");
-            console.log(newStr);
     }
 
     constructor(props) {
@@ -146,27 +143,22 @@ class AddRequisition extends React.Component {
         let add_cls = this.state.input;
         add_cls[e.target.name] = e.target.value;
 
-        console.log(add_cls);
-        console.log(this.state.requisitionId1);
-        console.log(this.state.requisitionId1);
-
-        this.state.input["id"] = this.state.input["id"].trim(" ");
-        this.state.input["jobTitle"] = this.state.input["jobTitle"].trim(" ");       
-        this.state.input["location"] = this.state.input["location"].trim(" ");
-        this.state.input["clientrate"] = this.state.input["clientrate"].trim(" ");
-        this.state.input["skills"] = this.state.input["skills"].trim(" ");
-
-
-        this.state.input["id"] = this.state.input["id"].replaceAll("#", "%23")
-        this.state.input["jobTitle"] = this.state.input["jobTitle"].replaceAll("#", "%23")
-        this.state.input["location"] = this.state.input["location"].replaceAll("#", "%23")
-        this.state.input["clientrate"] = this.state.input["clientrate"].replaceAll("#", "%23")
-        this.state.input["skills"] = this.state.input["skills"].replaceAll("#", "%23")
-
-
-
+        
         if (this.validate()) {
 
+            this.state.input["id"] = this.state.input["id"].trim(" ");
+            this.state.input["jobTitle"] = this.state.input["jobTitle"].trim(" ");       
+            this.state.input["location"] = this.state.input["location"].trim(" ");
+            this.state.input["clientrate"] = this.state.input["clientrate"].trim(" ");
+            this.state.input["skills"] = this.state.input["skills"].trim(" ");
+    
+    
+            this.state.input["id"] = this.state.input["id"].replaceAll("#", "%23")
+            this.state.input["jobTitle"] = this.state.input["jobTitle"].replaceAll("#", "%23")
+            this.state.input["location"] = this.state.input["location"].replaceAll("#", "%23")
+            this.state.input["clientrate"] = this.state.input["clientrate"].replaceAll("#", "%23")
+            this.state.input["skills"] = this.state.input["skills"].replaceAll("#", "%23")
+    
            
 
             let add_cls = this.state.input;
@@ -283,14 +275,14 @@ class AddRequisition extends React.Component {
             isValid = false;
             errors["req"] = "This field is required";
         }
-        if ((input["req"]) != undefined) {
+        // if ((input["req"]) != undefined) {
 
-            var pattern = new RegExp(/^[^\s][a-zA-Z\s]+[^\s]$/);
-            if (!pattern.test(input["req"])) {
-                isValid = false;
-                errors["req"] = "Please enter only characters.";
-            }
-        }
+        //     var pattern = new RegExp(/^[^\s][a-zA-Z\s]+[^\s]$/);
+        //     if (!pattern.test(input["req"])) {
+        //         isValid = false;
+        //         errors["req"] = "Please enter only characters.";
+        //     }
+        // }
 
         // -------------id---------------------------------------------------------------------------------------------
         if ((!input["id"])) {
@@ -509,7 +501,6 @@ class AddRequisition extends React.Component {
                                                     ))
                                                 }
                                             </select>
-
                                             <div className="text-danger">{this.state.errors.req}</div>
 
                                             <div class="form-group">

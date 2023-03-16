@@ -12,6 +12,10 @@ import { useNavigate } from "react-router-dom";
 class AddCandidate extends React.Component {
 
     componentDidMount() {
+        const button1 = document.getElementById("btn1");
+        button1.disabled = true;
+        const button2 = document.getElementById("btn2");
+        button2.disabled = true;
         axios.get(`${base_url}/getAllRateTerm`)
             .then(json =>
                 this.setState({ rateTerm_fd: json.data })
@@ -41,7 +45,7 @@ class AddCandidate extends React.Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-
+       
     }
 
     resetForm = () => {
@@ -89,7 +93,7 @@ class AddCandidate extends React.Component {
         let requisition_id = this.state.input;
         requisition_id[e.target.name] = e.target.value;
         let a = this.state.input.reqid
-        console.log(a);
+        console.log(typeof(a));
 
         axios.get(`${base_url}/getRequisitionByID?ID=${a}`).then(
 
@@ -98,6 +102,10 @@ class AddCandidate extends React.Component {
                 console.log(response.data.requisition_id);
                 let requid = response.data.requisition_id
                 localStorage.setItem('requisitionID', requid);
+                const button1 = document.getElementById("btn1");
+                button1.disabled = false;
+                const button2 = document.getElementById("btn2");
+                button2.disabled = false;
                 //alert("found")
             },
             (error) => {
@@ -107,6 +115,7 @@ class AddCandidate extends React.Component {
                         style: { position: "absolute", top: "5px", width: "300px" }
                     }
                 );
+              
                 this.refInput.focus();
                 // focus(this.state.input.reqid)
             }
@@ -117,6 +126,11 @@ class AddCandidate extends React.Component {
         e.preventDefault();
         let add_cls = this.state.input;
         add_cls[e.target.name] = e.target.value;
+
+
+       
+
+
 
         if (this.validate()) {
 
@@ -129,15 +143,15 @@ class AddCandidate extends React.Component {
                 this.state.input["remark"] = this.state.input["remark"].trim(" ");
                 this.state.input["remark"] = this.state.input["remark"].replaceAll("#", "%23")
             }
-
+    
             if(  this.state.input["reason"]!=null)
             {
                 this.state.input["reason"] = this.state.input["reason"].trim(" ");
     
                 this.state.input["reason"] = this.state.input["reason"].replaceAll("#", "%23")
-
+    
             }
-
+    
           
         
             this.state.input["cad_name"] = this.state.input["cad_name"].replaceAll("#", "%23")
@@ -147,13 +161,13 @@ class AddCandidate extends React.Component {
            
           
 
-
+           
             console.log("cad_name : " + this.state.input["cad_name"] + " " + this.state.input["email"]);
             
             this.postCandidate(add_cls);
         }
         // 👇️ clear all input values in the form
-        e.target.reset();
+       
     }
 
     postCandidate = (data) => {
@@ -206,14 +220,14 @@ class AddCandidate extends React.Component {
             }
         );
 
-        let inputs = {};
-        inputs["req"] = undefined;
-        inputs["sub"] = undefined;
-        inputs["first"] = undefined;
-        inputs["second"] = undefined;
-        inputs["closure"] = undefined;
+        // let inputs = {};
+        // inputs["req"] = undefined;
+        // inputs["sub"] = undefined;
+        // inputs["first"] = undefined;
+        // inputs["second"] = undefined;
+        // inputs["closure"] = undefined;
 
-        this.setState({ input: inputs });
+        // this.setState({ input: inputs });
     }
     // --------------------------------------------Validation Code ----------------------------------------------------------
 
@@ -259,13 +273,13 @@ class AddCandidate extends React.Component {
         // -------------visa_type---------------------------------------------------------------------------------------------
         if ((!input["visa_type"])) {
             isValid = false;
-            errors["visa_type"] = "Please select visa type";
+            errors["visa_type"] = "This field is required";
         }
 
         // -------------rate_term-----------------------------------------------------------------------------------------
         if ((!input["rate_term"])) {
             isValid = false;
-            errors["rate_term"] = "Please select rate term";
+            errors["rate_term"] = "This field is required";
         }
 
         // -------------submitted_rate-----------------------------------------------------------------------------------------
@@ -523,15 +537,18 @@ class AddCandidate extends React.Component {
                                         <div className='row'>
                                             <div className='col-4'></div>
                                             <div className='col-2'>
-                                                <button
+                                                <button 
+                                                id="btn1"
                                                     type="submit"
                                                     className="btn btn-primary w-100 theme-btn mx-auto"
+                                                    
                                                 >
                                                     Submit
                                                 </button>
                                             </div>
                                             <div className='col-2'>
                                                 <button
+                                                 id="btn2"
                                                     type="reset"
                                                     className="btn btn-warning w-100 theme-btn mx-auto"
                                                     onClick={this.resetForm}

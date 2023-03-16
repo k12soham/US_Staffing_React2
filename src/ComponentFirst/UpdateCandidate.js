@@ -10,6 +10,7 @@ import NavBarHeader from './NavbarHeader';
 import EmployeeHeader from './EmployeeHeader';
 import { json } from 'react-router-dom';
 import AdminHeader from './AdminHeader';
+import { useNavigate } from "react-router-dom";
 
 const empID = localStorage.getItem('recruiterID');
 console.log("recruiterId : " + empID);
@@ -158,20 +159,38 @@ class UpdateCandidate extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        this.state.input["cad_name"] = this.state.input["cad_name"].trim(" ");
-        this.state.input["submitted_rate"] = this.state.input["submitted_rate"].trim(" ");
-        this.state.input["phone"] = this.state.input["phone"].trim(" ");
-        this.state.input["email"] = this.state.input["email"].trim(" ");
-        this.state.input["remark"] = this.state.input["remark"].trim(" ");
-        this.state.input["reason"] = this.state.input["reason"].trim(" ");
+       
 
-        this.state.input["cad_name"] = this.state.input["cad_name"].replaceAll("#", "%23")
-        this.state.input["submitted_rate"] = this.state.input["submitted_rate"].replaceAll("#", "%23")
-        this.state.input["phone"] = this.state.input["phone"].replaceAll("#", "%23")
-        this.state.input["email"] = this.state.input["email"].replaceAll("#", "%23")
-        this.state.input["remark"] = this.state.input["remark"].replaceAll("#", "%23")
-        this.state.input["reason"] = this.state.input["reason"].replaceAll("#", "%23")
+
         if (this.validate()) {
+
+            this.state.input["cad_name"] = this.state.input["cad_name"].trim(" ");
+            this.state.input["submitted_rate"] = this.state.input["submitted_rate"].trim(" ");
+            this.state.input["phone"] = this.state.input["phone"].trim(" ");
+            this.state.input["email"] = this.state.input["email"].trim(" ");
+          
+            this.state.input["cad_name"] = this.state.input["cad_name"].replaceAll("#", "%23")
+            this.state.input["submitted_rate"] = this.state.input["submitted_rate"].replaceAll("#", "%23")
+            this.state.input["phone"] = this.state.input["phone"].replaceAll("#", "%23")
+            this.state.input["email"] = this.state.input["email"].replaceAll("#", "%23")
+         
+    
+            if(  this.state.input["remark"]!=null)
+            {
+                this.state.input["remark"] = this.state.input["remark"].trim(" ");
+                this.state.input["remark"] = this.state.input["remark"].replaceAll("#", "%23")
+            }
+    
+            if(  this.state.input["reason"]!=null)
+            {
+                this.state.input["reason"] = this.state.input["reason"].trim(" ");
+    
+                this.state.input["reason"] = this.state.input["reason"].replaceAll("#", "%23")
+    
+            }
+    
+
+
 
             let add_cls = this.state.input;
             add_cls[e.target.name] = e.target.value;
@@ -201,29 +220,28 @@ class UpdateCandidate extends React.Component {
         &visa_type=${visa_type}&rate_term=${rate_term}&submitted_rate=${submitted_rate}
         &phone=${phone}&email=${email}&remark=${remark}&reason=${reason}`).then(
 
-            // update_candidate?candidate_id=15&candidate_name=Varad Sutar&visa_type=aaaa&rate_term=56$
-            // &submitted_rate=89$&phone=7878787878&email=varad@gmail.com&status=submitted&remark=NA&reason=NA
+          
             (response) => {
-                console.log(response.data)
-
-                console.log(response.data.candidate_id);
-                let a = response.data.candidate_id;
-                console.log(typeof (response));
-
-
-                // history.push("/view3");
-                // window.location.reload();
-
+               
+               // let navigate = useNavigate();
+             
                 toast.success("Candidate updated successfully!",
-                    { position: "top-right" }
+                    { position: "top-right",
+                    autoClose: 1000,
+                    style: { position: "absolute", top: "5px", width: "400px" }
+                } 
                 );
 
                 if (this.state.recruiterIDAdmin !== null) {
+                   // let navigate = useNavigate();
+                   // navigate("/viewCandForAdmin");
                     history.push("/viewCandForAdmin");
                     window.location.reload();
                 } else {
                     history.push("/viewCandidate");
-                    window.location.reload();
+                   window.location.reload();
+                   //let navigate = useNavigate();
+                   // navigate("/viewCandidate");
                 }
             },
             (error) => {
@@ -260,7 +278,7 @@ class UpdateCandidate extends React.Component {
 
         if ((!input["cad_name"])) {
             isValid = false;
-            errors["cad_name"] = "This cad_name field is required";
+            errors["cad_name"] = "This field is required";
         }
         if ((input["cad_name"]) != undefined) {
 
@@ -275,13 +293,13 @@ class UpdateCandidate extends React.Component {
         // -------------visa_type---------------------------------------------------------------------------------------------
         if ((!input["visa_type"])) {
             isValid = false;
-            errors["visa_type"] = "Please select visa type";
+            errors["visa_type"] = "This field is required";
         }
 
         // -------------rate_term-----------------------------------------------------------------------------------------
         if ((!input["rate_term"])) {
             isValid = false;
-            errors["rate_term"] = "Please select rate term type";
+            errors["rate_term"] = "This field is required";
         }
 
         // -------------submitted_rate-----------------------------------------------------------------------------------------
@@ -302,7 +320,7 @@ class UpdateCandidate extends React.Component {
         // -------------phone-----------------------------------------------------------------------------------------
         if ((!input["phone"])) {
             isValid = false;
-            errors["phone"] = "This duration field is required";
+            errors["phone"] = "This field is required";
         }
         if ((input["phone"]) != undefined) {
 
@@ -318,7 +336,7 @@ class UpdateCandidate extends React.Component {
         // -------------email-----------------------------------------------------------------------------------------
         if ((!input["email"])) {
             isValid = false;
-            errors["email"] = "This email field is required";
+            errors["email"] = "This field is required";
         }
         if (typeof input["email"] !== "undefined") {
 
@@ -459,7 +477,7 @@ class UpdateCandidate extends React.Component {
                                                     name="rate_term" id="rate_term"
                                                     onChange={this.handleChange}
                                                     value={this.state.input.rate_term}>
-                                                    {/* <option hidden value="">Select Rate Term</option> */}
+                                                    <option hidden value="">Select Rate Term</option>
                                                     {
                                                         this.state.rateTerm_fd.map((rt) => (
                                                             <option value={rt.rate_term}>{rt.rate_term}</option>

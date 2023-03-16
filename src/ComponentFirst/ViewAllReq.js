@@ -164,9 +164,9 @@ function ViewAllReq() {
   
         const renderTable = () => {          
             
-  
+          //  console.log(process.env.REACT_APP_API_KEY)
             return (
-    
+              
                 statusList.filter((cls) => {
                   
                     if (searchTerm === "") {
@@ -251,10 +251,10 @@ function ViewAllReq() {
                                         </>
     
                                     ) : (
-                                        <>
+                                       
                                             <button
                                                 className="btn btn-sm btn-outline-success"
-    
+                                                style={{marginLeft:"5px"}}
                                                 onClick={() => onEdit({
     
                                                     requisitionID: cls.requisition.requisition_id,
@@ -264,12 +264,8 @@ function ViewAllReq() {
                                                 <i class="fa fa-edit"></i>
     
                                             </button>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <button className="btn btn-sm btn-outline-danger"
-                                                onClick={() => { if (window.confirm('Are you sure to delete this requirement?')) deleteBook(cls.requisition.requisition_id) }}>
-                                                {/*Delete*/}<i class="fa fa-trash"></i></button>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;
-                                        </>
+                                            
+                                        
     
                                     )
                                 }
@@ -286,6 +282,7 @@ function ViewAllReq() {
 
     return (
         // return (
+           
         <div className="">
             <div className="row">
 
@@ -314,18 +311,18 @@ function ViewAllReq() {
                     <Table bordered className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px' }}>
                         <thead>
                             <tr>
-                                <th style={{ width: '60px' }}>Sr No.</th>
-                                <th style={{ width: '150px' }}>Requisition From</th>
-                                <th style={{ width: '100px' }}>Job Posting ID</th>
-                                <th style={{ width: '130px' }}>Client</th>
+                                <th style={{ width: '20px' }}>Sr No.</th>
+                                <th style={{ width: '160px' }}>Requisition From</th>
+                                <th style={{ width: '120px' }}>Job Posting ID</th>
+                                <th style={{ width: '180px' }}>Client</th>
                                 <th style={{ width: '160px' }}>Job Title</th>
                                 <th style={{ width: '70px' }}>Duration</th>
-                                <th style={{ width: '100px' }}>Client Rate</th>
+                                <th style={{ width: '40px' }}>Client Rate</th>
                                 <th style={{ width: '100px' }}>Location</th>
-                                <th style={{ width: '120px' }}>Position Type</th>
+                                <th style={{ width: '80px' }}>Position Type</th>
                                 <th style={{ width: '150px' }}>Skills</th>
 
-                                <th style={{ width: '100px' }}>Action</th>
+                                <th style={{ width: '30px' }}>Action</th>
 
                                 </tr>
                             </thead>
