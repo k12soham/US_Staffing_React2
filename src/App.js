@@ -34,8 +34,11 @@ function App() {
         <Route path="/addRequisition" element={<AddRequisition />}></Route>
         <Route path="/addCandidate" element={<AddCandidate />}></Route>
         <Route path="/adminstatic" element={<AdminStatic />}></Route>
+  
         <Route path="/viewCandidate" element={<ViewCandidate />}></Route>
         <Route path="/view_all_req" element={<ViewAllReq />}></Route>
+
+
         <Route path="/updateRequisition" element={<UpdateReq />}></Route>
         <Route path="/updateCandidate" element={<UpdateCandidate />}></Route>
 
@@ -49,7 +52,7 @@ function App() {
 
         <Route path="/page" element={<Pageexample/>}></Route>
         <Route path="/pagination" element={<Pagination/>}></Route>
-      
+       
         </Routes>
       </Router>
     </div>

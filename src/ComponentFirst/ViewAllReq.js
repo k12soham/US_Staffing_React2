@@ -5,6 +5,7 @@ import { Table } from "reactstrap";
 import EmployeeHeader from "./EmployeeHeader";
 import { useNavigate } from "react-router-dom";
 import Pagination from "./Pagination";
+import ReactPaginate from 'react-paginate';
 function ViewAllReq() {
 
     const recruiterID = localStorage.getItem('recruiterID');

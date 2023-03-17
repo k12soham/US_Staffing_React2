@@ -4,17 +4,8 @@ import base_url from '../api/bootapi';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import history from './ResponseVal';
-import { useRef } from 'react';
-import { getValue } from '@testing-library/user-event/dist/utils';
-import NavBarHeader from './NavbarHeader';
 import EmployeeHeader from './EmployeeHeader';
-import { json } from 'react-router-dom';
 import AdminHeader from './AdminHeader';
-import { useNavigate } from "react-router-dom";
-
-const empID = localStorage.getItem('recruiterID');
-console.log("recruiterId : " + empID);
-let reqID = '';
 
 class UpdateCandidate extends React.Component {
 
@@ -23,24 +14,16 @@ class UpdateCandidate extends React.Component {
 
         const recruiterIDAdmin1 = localStorage.getItem('recruiterIDAdmin');
         this.setState({ recruiterIDAdmin: recruiterIDAdmin1 });
-        const recruiterID = localStorage.getItem('recruiterID');
         const requisitionID = localStorage.getItem('requisitionID');
         const candidateID2 = localStorage.getItem('candidateID');
         this.setState({ candidateID: candidateID2 });
-        // this.setState({ empID: recruiterID });
         this.setState({ requisitionId1: requisitionID });
 
-        console.log("recruiterID : " + recruiterID);
-        console.log("requisitionID : " + requisitionID);
-        console.log("candidateID2 : " + candidateID2);
 
         axios.get(`${base_url}/getCandidateByID?candidateID=${candidateID2}`).then(
 
             (response) => {
-                console.log(typeof (response));
-                console.log(response.data)
-                console.log(response.data.candidate_id);
-                console.log(response.data.rate_term);
+
 
                 let inputs = {};
                 inputs["cad_name"] = response.data.candidate_name;
@@ -57,7 +40,6 @@ class UpdateCandidate extends React.Component {
             },
             (error) => {
                 console.log(error);
-                console.log("Error");
                 alert("Please enter valid details.")
             }
         );
@@ -67,7 +49,7 @@ class UpdateCandidate extends React.Component {
                 this.setState({ rateTerm_fd: json.data })
             )
             .catch(error => {
-                //  alert("Error rate term")
+
             })
 
         axios.get(`${base_url}/getAllVisaType`)
@@ -75,7 +57,7 @@ class UpdateCandidate extends React.Component {
                 this.setState({ visaType_fd: json.data })
             )
             .catch(error => {
-                // alert("Error visa")
+
             })
     }
 
@@ -87,7 +69,6 @@ class UpdateCandidate extends React.Component {
         this.state = {
             input: {},
             errors: {},
-            // empID: '',
             candidateID: 0,
             rateTerm_fd: [],
             visaType_fd: [],
@@ -126,32 +107,12 @@ class UpdateCandidate extends React.Component {
         this.setState({ errors: errors1 });
     }
 
-    // addCandidate = () => {
-    //     console.log(reqID);
 
-    //     // let a = this.state.empID
-    //     let b = this.state.requisitionId1;
-    //     console.log("recid = " + a + " rqid = " + b);
-    //     // console.log("recid = " + this.state.empID + " rqid = " + this.state.requisitionId1);
-    //     // onClick={this.addCandidate(this.state.empID, this.state.requisitionId1)}                                       
-
-    //     if (b != undefined) {
-    //         localStorage.setItem('recruiterId', a);
-    //         localStorage.setItem('ReqId', b)
-
-    //         history.push("/addCandidate");
-    //         window.location.reload();
-    //         toast.success("Render  successfully!",
-    //             { position: "top-right" })
-    //     }
-
-    //     console.log("addCandidate");
-    // }
 
     handleChange(e) {
         let add_cls = this.state.input;
         add_cls[e.target.name] = e.target.value;
-        console.log(add_cls);
+
         this.setState({
             input: add_cls,
         });
@@ -159,7 +120,7 @@ class UpdateCandidate extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-       
+
 
 
         if (this.validate()) {
@@ -168,44 +129,36 @@ class UpdateCandidate extends React.Component {
             this.state.input["submitted_rate"] = this.state.input["submitted_rate"].trim(" ");
             this.state.input["phone"] = this.state.input["phone"].trim(" ");
             this.state.input["email"] = this.state.input["email"].trim(" ");
-          
+
             this.state.input["cad_name"] = this.state.input["cad_name"].replaceAll("#", "%23")
             this.state.input["submitted_rate"] = this.state.input["submitted_rate"].replaceAll("#", "%23")
             this.state.input["phone"] = this.state.input["phone"].replaceAll("#", "%23")
             this.state.input["email"] = this.state.input["email"].replaceAll("#", "%23")
-         
-    
-            if(  this.state.input["remark"]!=null)
-            {
+
+
+            if (this.state.input["remark"] != null) {
                 this.state.input["remark"] = this.state.input["remark"].trim(" ");
                 this.state.input["remark"] = this.state.input["remark"].replaceAll("#", "%23")
             }
-    
-            if(  this.state.input["reason"]!=null)
-            {
-                this.state.input["reason"] = this.state.input["reason"].trim(" ");
-    
-                this.state.input["reason"] = this.state.input["reason"].replaceAll("#", "%23")
-    
-            }
-    
 
+            if (this.state.input["reason"] != null) {
+                this.state.input["reason"] = this.state.input["reason"].trim(" ");
+                this.state.input["reason"] = this.state.input["reason"].replaceAll("#", "%23")
+
+            }
 
 
             let add_cls = this.state.input;
             add_cls[e.target.name] = e.target.value;
-           
+
             this.put_UpdateCandidate(add_cls);
-      
+
         }
-        // 👇️ clear all input values in the form
-        e.target.reset();
+       
     }
 
     put_UpdateCandidate = (data) => {
-        console.log(this.state.candidateID);
-        // let recId = this.state.empID = localStorage.getItem("recruiterId");
-        // console.log("recruiterId : " + recId);
+       
         let d = this.state.requisitionId1;
         let cad_name = data["cad_name"];
         let visa_type = data["visa_type"];
@@ -220,28 +173,26 @@ class UpdateCandidate extends React.Component {
         &visa_type=${visa_type}&rate_term=${rate_term}&submitted_rate=${submitted_rate}
         &phone=${phone}&email=${email}&remark=${remark}&reason=${reason}`).then(
 
-          
+
             (response) => {
-               
-               // let navigate = useNavigate();
-             
+
+
                 toast.success("Candidate updated successfully!",
-                    { position: "top-right",
-                    autoClose: 1000,
-                    style: { position: "absolute", top: "5px", width: "400px" }
-                } 
+                    {
+                        position: "top-right",
+                        autoClose: 1000,
+                        style: { position: "absolute", top: "5px", width: "400px" }
+                    }
                 );
 
                 if (this.state.recruiterIDAdmin !== null) {
-                   // let navigate = useNavigate();
-                   // navigate("/viewCandForAdmin");
+                    
                     history.push("/viewCandForAdmin");
                     window.location.reload();
                 } else {
                     history.push("/viewCandidate");
-                   window.location.reload();
-                   //let navigate = useNavigate();
-                   // navigate("/viewCandidate");
+                    window.location.reload();
+                   
                 }
             },
             (error) => {
@@ -271,10 +222,7 @@ class UpdateCandidate extends React.Component {
         let input = this.state.input;
         let errors = {};
         let isValid = true;
-        let addNew1 = true;
-        let addNew2 = true;
-
-
+      
 
         if ((!input["cad_name"])) {
             isValid = false;
@@ -283,8 +231,7 @@ class UpdateCandidate extends React.Component {
         if ((input["cad_name"]) != undefined) {
 
             var pattern = new RegExp(/^[^\s][a-zA-Z\s]{3,50}$/);
-            // RegExp(/^[a-zA-Z]{2,10}$/);
-            // (/^[^\s][a-zA-Z\s]+[^\s].{2,5}$/);
+          
             if (!pattern.test(input["cad_name"])) {
                 isValid = false;
                 errors["cad_name"] = "Please enter only characters.";
@@ -325,7 +272,7 @@ class UpdateCandidate extends React.Component {
         if ((input["phone"]) != undefined) {
 
             var pattern = new RegExp(/^[^\s][0-9 *()-\s]{4,15}$/);
-            // new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$%^&*,!? \b]).{6,15}$/); 
+        
 
             if (!pattern.test(input["phone"])) {
                 isValid = false;
@@ -346,37 +293,7 @@ class UpdateCandidate extends React.Component {
                 errors["email"] = "Please enter valid email address (e.g.: abc@gmail.com).";
             }
         }
-        // -------------remark-----------------------------------------------------------------------------------------
-       /* if ((!input["remark"])) {
-            isValid = false;
-            errors["remark"] = "This remark field is required";
-        }
-        if ((input["remark"]) != undefined) {
-
-            var pattern = new RegExp(/^[^\s][a-zA-Z0-9 @#$%&*()_\\[\]{};':"\\|,.<>\/\s]{1,50}$/);
-            // RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]+[^\s]{1,50}$/);
-
-            if (!pattern.test(input["remark"])) {
-                isValid = false;
-                errors["remark"] = "Please enter valid remark name.";
-            }
-        }
-        // -------------reason-----------------------------------------------------------------------------------------
-        if ((!input["reason"])) {
-            isValid = false;
-            errors["reason"] = "This reason field is required";
-        }
-        if ((input["reason"]) != undefined) {
-
-            var pattern = new RegExp(/^[^\s][a-zA-Z0-9 @#$%&*()_\\[\]{};':"\\|,.<>\/\s]{1,50}$/);
-            // RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]{1,50}$/);
-
-            if (!pattern.test(input["reason"])) {
-                isValid = false;
-                errors["reason"] = "Please enter valid reason.";
-            }
-        }*/
-
+       
         this.setState({
             errors: errors
         });
@@ -396,15 +313,15 @@ class UpdateCandidate extends React.Component {
                 <div className="row">
 
                     <div className="col-12 h-100 master_backgroung_heder">
-                     
-                    {
-                     isAuthenticated2!==null ?(
-                               <EmployeeHeader />
-                     ) :(
-                        <AdminHeader/>
-                     )
-                    }
-                     
+
+                        {
+                            isAuthenticated2 !== null ? (
+                                <EmployeeHeader />
+                            ) : (
+                                <AdminHeader />
+                            )
+                        }
+
                     </div>
 
                     <div className="col-12 master_backgroung_work scroll-bar">
@@ -451,25 +368,7 @@ class UpdateCandidate extends React.Component {
                                                 <div className="text-danger">{this.state.errors.visa_type}</div>
                                             </div>
 
-                                            {/* <div class="form-group">
-                                                <label for="rate_term"><b>Rate Term:</b></label><br />
-                                                <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '100%' }}
-                                                    name="rate_term" id="rate_term"
-                                                    onChange={this.handleChange}
-                                                    value={this.state.input.rate_term}>
-
-                                                    <option hidden value='' default selected> Select Rate Term </option>
-
-                                                    {
-                                                        this.state.rateTerm_fd.map((rt) => (
-                                                            <option value={rt.rate_term}>{rt.rate_term}</option>
-                                                        ))
-                                                    }
-                                                </select>
-                                                <div className="text-danger">{this.state.errors.rate_term}</div>
-                                            </div> */}
-
+                                            
                                             <div class="form-group">
                                                 <label for="rate_term"><b>Rate Term:</b></label><br />
                                                 <select class="btn btn-secondary dropdown-toggle"
