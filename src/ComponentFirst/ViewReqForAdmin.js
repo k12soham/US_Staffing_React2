@@ -2,12 +2,10 @@ import { React, useState, useEffect } from "react";
 import axios from "axios";
 import base_url from "../api/bootapi";
 import { Table } from "reactstrap";
-import EmployeeHeader from "./EmployeeHeader";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import AdminHeader from "./AdminHeader";
-import { useMemo } from "react";
-// import data from './data/mock-data.json';
+import { Helmet } from "react-helmet";
 
 let PageSize = 10;
 
@@ -15,24 +13,17 @@ function ViewReqForAdmin() {
 
     const recruiterIDAdmin = localStorage.getItem('recruiterIDAdmin');
 
-
     const [requisitionList, setRequisitionList] = useState([]);
     const [statusList, setstatusList] = useState([]);
     const [statusFD, setstatusFD] = useState([]);
-    const [updatestatus, setUpdateStatus] = useState(null);
-    const [reqid, setReqid] = useState(null);
     const [searchTerm, setSearchTerm] = useState("");
-
     let navigate = useNavigate();
 
     let empID = localStorage.getItem("recruiterIDAdmin")
 
-
-    // ---------------------------Pagination-------------------------------------------------------------
     // ---------------------------Pagination-------------------------------------------------------------
     useEffect(() => {
         axios.get(`${base_url}/getAllRequisition`).then(json => setRequisitionList(json.data))
-        // axios.get(`${base_url}/getEmpList_TM`).then(json => setEmployee(json.data))
         axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
         axios.get(`${base_url}/getAllStatusFd`).then(json => setstatusFD(json.data))
 
@@ -41,48 +32,30 @@ function ViewReqForAdmin() {
     const deleteBook = (requisitionID) => {
         console.log(requisitionID);
         axios.delete(`${base_url}/deleteRequisitionByAdmin?requisition_id=${requisitionID}`)
-        .then(response => {
+            .then(response => {
 
-            toast.success("Record deleted successfully!", {
-                position: "top-right",
-                autoClose: 1000,
-                style: { position: "absolute", top: "5px", width: "300px" }
-            });
+                toast.success("Record deleted successfully!", {
+                    position: "top-right",
+                    autoClose: 1000,
+                    style: { position: "absolute", top: "5px", width: "300px" }
+                });
 
-            axios.get(`${base_url}/getAllRequisition`).then(json => setRequisitionList(json.data))         
-        },
-            (error) => {
-                // alert("Enter valid data");
-            });
-     }
-
-    // const onSave = ({ newReqid, newReqFrom, newId, newClient, newJobTitle, newDuration,
-    //     newClientRate, newLocation, newPType, newSkills }) => {
-
-    // }
+                axios.get(`${base_url}/getAllRequisition`).then(json => setRequisitionList(json.data))
+            },
+                (error) => {
+                    console.log(error);
+                });
+    }
 
     const onEdit = ({ requisitionID }) => {
 
-        console.log(requisitionID + " " + recruiterIDAdmin);
         // localStorage.setItem('recruiterID', recruiterID);
-
         // localStorage.setItem("recruiterIDAdmin",recruiterIDAdmin);
         localStorage.setItem('requisitionID', requisitionID);
 
         navigate("/updateRequisition");
 
-        // setInEditMode({
-        //     status: true,
-        //     rowKey: requisitionID,
-        // })
     }
-
-    // const onCancel = () => {
-    //     setInEditMode({
-    //         status: false,
-    //         rowKey: null
-    //     })
-    // }
 
     const fetchInventory = () => {
         axios.get(`${base_url}/CurMonthAll`).then(json => setRequisitionList(json.data))
@@ -91,18 +64,17 @@ function ViewReqForAdmin() {
     const getnewID = (e) => {
         let requisitionID = e.rq
         localStorage.setItem("requisitionID", requisitionID)
-        //console.log(rq)
     }
 
     const renderTable = () => {
-     
+
         return (
 
             requisitionList.filter((cls) => {
 
                 if (searchTerm === "") {
                     return cls;
-                } 
+                }
                 else if (cls.requisition_from.toLowerCase().includes(searchTerm.toLowerCase())) {
                     return cls;
                 }
@@ -132,50 +104,49 @@ function ViewReqForAdmin() {
 
             }
             ).map(cls => {
-                if(cls.deleted==1)
-                {
-                return (
-                    <tr key={cls.requisition_id}>
-                        <td></td>
-                        <td hidden>{cls.requisition_id}</td>
-                        <td>{cls.requisition_from}</td>
+                if (cls.deleted == 1) {
+                    return (
+                        <tr key={cls.requisition_id}>
+                            <td></td>
+                            <td hidden>{cls.requisition_id}</td>
+                            <td>{cls.requisition_from}</td>
 
-                        <td>{
-                            <a href="/viewCandForAdmin" onClick={(evt) => getnewID({ rq: cls.requisition_id })}>{cls.id}</a>
+                            <td>{
+                                <a href="/viewCandForAdmin" onClick={(evt) => getnewID({ rq: cls.requisition_id })}>{cls.id}</a>
 
-                        }</td>
-                        <td>{cls.client}</td>
-                        <td>{cls.job_title}</td>
-                        <td>{cls.duration}</td>
-                        <td>{cls.client_rate}</td>
-                        <td>{cls.location}</td>
-                        <td>{cls.position_type}</td>
-                        <td>{cls.skills}</td>
-                        <td>
-                        &nbsp;&nbsp;
-                            <button
-                                style={{ marginRight: '3px' }}
-                                className="btn btn-sm btn-outline-success"
-                                onClick={() => onEdit({
-                                    requisitionID: cls.requisition_id,
-                                })}
-                            >
-                                <i class="fa fa-edit"></i>
-                            </button>
-                            &nbsp;&nbsp;
+                            }</td>
+                            <td>{cls.client}</td>
+                            <td>{cls.job_title}</td>
+                            <td>{cls.duration}</td>
+                            <td>{cls.client_rate}</td>
+                            <td>{cls.location}</td>
+                            <td>{cls.position_type}</td>
+                            <td>{cls.skills}</td>
+                            <td>
+                                &nbsp;&nbsp;
+                                <button
+                                    style={{ marginRight: '3px' }}
+                                    className="btn btn-sm btn-outline-success"
+                                    onClick={() => onEdit({
+                                        requisitionID: cls.requisition_id,
+                                    })}
+                                >
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                                &nbsp;&nbsp;
 
-                            <button className="btn btn-sm btn-outline-danger"
-                                onClick={() => {
-                                    if (window.confirm('Are you sure to delete this requirement?'))
-                                        deleteBook(cls.requisition_id)
-                                }}>
-                                <i class="fa fa-trash"></i>
-                            </button>
-                        </td>
-                    </tr >
+                                <button className="btn btn-sm btn-outline-danger"
+                                    onClick={() => {
+                                        if (window.confirm('Are you sure to delete this requirement?'))
+                                            deleteBook(cls.requisition_id)
+                                    }}>
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr >
 
-                )
-            }
+                    )
+                }
 
             })
         )
@@ -196,24 +167,20 @@ function ViewReqForAdmin() {
                     {/* -------------------------------------------------------- */}
                     <div className="row">
                         <div className="col-12 input-icons"
-                         style={{ padding:'5px',margin:'10px' }}>
+                            style={{ padding: '5px', margin: '10px' }}>
                             <i className="fa fa-search icon"></i>
                             <input
                                 type="search"
                                 className="form-control"
                                 placeholder="Search"
                                 onChange={event => { setSearchTerm(event.target.value) }}
-                                style={{ width: '500px', borderRadius: '100px', paddingLeft:'30px'}}
+                                style={{ width: '500px', borderRadius: '100px', paddingLeft: '30px' }}
                             />
-
                         </div>
                     </div>
 
                     <div style={{ width: '' }}  >
 
-                        {/* <div className="col-12">
-                            <input type="search" placeholder="Search course by title/discription or fee" onChange={event => { setSearchTerm(event.target.value) }}></input>
-                        </div> */}
                         <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px' }}>
                             <thead>
                                 <tr>
@@ -227,7 +194,6 @@ function ViewReqForAdmin() {
                                     <th style={{ width: '80px' }}>Location</th>
                                     <th style={{ width: '90px' }}>Position Type</th>
                                     <th style={{ width: '100px' }}>Skills</th>
-
                                     <th style={{ width: '70px' }}>Action</th>
 
                                 </tr>
@@ -242,7 +208,40 @@ function ViewReqForAdmin() {
                     </div>
                 </div>
             </div>
+
+            {/* // ********************************************** add script code**************************** */}
+
+            <div className="application">
+
+                <Helmet>
+                    {/* <meta charSet="utf-8" />
+                    <title>My Title</title>
+                    <link rel="canonical" href="http://example.com/example" />
+                    <script src="/path/to/resource.js" type="text/javascript" />
+                    <script>alert('Hello world')</script>
+
+                    <script>
+                        $(function () {
+                            $("#example1").DataTable({
+                                "responsive": true, "lengthChange": false, "autoWidth": false,
+                                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+                            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+                        $('#example2').DataTable({
+                            "paging": true,
+                        "lengthChange": false,
+                        "searching": false,
+                        "ordering": true,
+                        "info": true,
+                        "autoWidth": false,
+                        "responsive": true,
+    });
+  });
+                    </script> */}
+                </Helmet>
+            </div>
         </div>
+
+
         //)
     );
 }

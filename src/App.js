@@ -45,17 +45,13 @@ function App() {
         <Route path="/viewReqForAdmin" element={<ViewReqForAdmin />}></Route>
         <Route path="/viewCandForAdmin" element={<ViewCandForAdmin />}></Route>
         <Route path="/viewAllStatusAdmin" element={<ViewAllStatusAdmin />}></Route>
-
         <Route path="/viewAllStatus" element={<ViewAllStatus />}></Route>
         
         <Route path="/update_profile" element={<UpdateProfile/>}></Route>
         <Route path="/update_profile_Admin" element={<UpdateProfileAdmin/>}></Route>
 
-
         <Route path="/page" element={<Pageexample/>}></Route>
-
         <Route path="/pagination" element={<Pagination/>}></Route>
-        {/* <Route path="/paginatedItems" element={ <PaginatedItems/>}></Route> */}
        
         </Routes>
       </Router>

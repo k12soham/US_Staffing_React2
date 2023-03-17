@@ -256,11 +256,12 @@ class UpdateCandidate extends React.Component {
         }
         if ((input["submitted_rate"]) != undefined) {
 
-            var pattern = new RegExp(/^[0-9]{2,4}$/);
-         
+            var pattern = new RegExp(/^((?!(0))[0-9\s]{0,5})$/);
+            // new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$%^&*,!? \b]).{6,15}$/); 
+
             if (!pattern.test(input["submitted_rate"])) {
                 isValid = false;
-                errors["submitted_rate"] = "Please enter only characters.";
+                errors["submitted_rate"] = "Please enter valid rate in $/hr.";
             }
         }
         // -------------phone-----------------------------------------------------------------------------------------
@@ -388,8 +389,8 @@ class UpdateCandidate extends React.Component {
                                             <div class="form-group">
                                                 <label for="submitted_rate"><b>Submitted Rate:</b></label>
                                                 <input
-                                                    minLength={2}
-                                                    maxLength={4}
+                                                    // minLength={2}
+                                                    // maxLength={4}
                                                     type="text"
                                                     name="submitted_rate"
                                                     value={this.state.input.submitted_rate}

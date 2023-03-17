@@ -11,12 +11,12 @@ class AddRequisition extends React.Component {
 
     componentDidMount() {
         this.refInput.focus();
-       
+
 
         const isAuthenticated = localStorage.getItem('recruiterID');
         localStorage.setItem('recruiterID', isAuthenticated)
         this.setState({ empID: isAuthenticated })
-       
+
 
         axios.get(`${base_url}/getAllDuration`)
             .then(json =>
@@ -50,7 +50,6 @@ class AddRequisition extends React.Component {
             .catch(error => {
                 
             })
-
     }
 
     constructor(props) {
@@ -84,7 +83,7 @@ class AddRequisition extends React.Component {
         inputs["clientrate"] = undefined;
         inputs["location"] = undefined;
         inputs["positionType"] = undefined;
-        inputs["skills"] = undefined;
+        inputs["skills"] = '';
 
         this.setState({ input: inputs });
 
@@ -112,7 +111,6 @@ class AddRequisition extends React.Component {
         this.setState({
             input: add_cls,
         });
-
     }
 
     handleSubmit(e) {
@@ -121,23 +119,20 @@ class AddRequisition extends React.Component {
         let add_cls = this.state.input;
         add_cls[e.target.name] = e.target.value;
 
-        
+
         if (this.validate()) {
 
             this.state.input["id"] = this.state.input["id"].trim(" ");
-            this.state.input["jobTitle"] = this.state.input["jobTitle"].trim(" ");       
+            this.state.input["jobTitle"] = this.state.input["jobTitle"].trim(" ");
             this.state.input["location"] = this.state.input["location"].trim(" ");
             this.state.input["clientrate"] = this.state.input["clientrate"].trim(" ");
             this.state.input["skills"] = this.state.input["skills"].trim(" ");
-    
-    
+
             this.state.input["id"] = this.state.input["id"].replaceAll("#", "%23")
             this.state.input["jobTitle"] = this.state.input["jobTitle"].replaceAll("#", "%23")
             this.state.input["location"] = this.state.input["location"].replaceAll("#", "%23")
             this.state.input["clientrate"] = this.state.input["clientrate"].replaceAll("#", "%23")
             this.state.input["skills"] = this.state.input["skills"].replaceAll("#", "%23")
-    
-           
 
             let add_cls = this.state.input;
             add_cls[e.target.name] = e.target.value;
@@ -165,7 +160,7 @@ class AddRequisition extends React.Component {
 
         axios.post(`${base_url}/add_requsition?requisition_from=${d1}&id=${d2}&client=${d3}&job_title=${d4}
         &duration=${d5}&client_rate=${d6}&location=${d7}&position_type=${d8}&skills=${d9}&recruiter_id=${z}`)
-        .then(
+            .then(
 
             (response) => {
                        
@@ -229,7 +224,7 @@ class AddRequisition extends React.Component {
         let id1 = parseInt(input["id"]);
         if ((input["id"]) != undefined) {
 
-            var pattern = new RegExp(/^(?=.*[a-zA-Z0-9\s]).{1,25}$/); 
+            var pattern = new RegExp(/^(?=.*[a-zA-Z0-9\s]).{1,25}$/);
             if (!pattern.test(id1)) {
                 isValid = false;
                 errors["id"] = "Please enter valid Job Posting ID.";
@@ -360,12 +355,12 @@ class AddRequisition extends React.Component {
                     requisitionId1: a3,
                     RID: b,
                 });
-                let text ="On this requisiton recruiters are already working. \nWould you like to add yourself for this requisition?"
+                let text = "On this requisiton recruiters are already working. \nWould you like to add yourself for this requisition?"
                 if (window.confirm(text) == true) {
                     let add_cls = this.state.input;
                     add_cls[e.target.name] = e.target.value;
                     this.post_requisition(add_cls)
-                  }
+                }
 
             },
             (error) => {
@@ -384,12 +379,12 @@ class AddRequisition extends React.Component {
 
                 this.setState({ input: inputs });
             }
-        );        
+        );
     }
-    
+
     // -------------------------------------------- render ----------------------------------------------------
     render() {
-        
+
         const isAuthenticated = localStorage.getItem('recruiterID');
 
         return isAuthenticated ? (
@@ -411,23 +406,24 @@ class AddRequisition extends React.Component {
 
                                         <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '20px' }}>
 
-                                            <label for="req"><b>Requisition From:</b></label><br />
+                                            <div class="form-group">
+                                                <label for="req"><b>Requisition From:</b></label><br />
+                                                <select class="btn btn-secondary dropdown-toggle form-group"
+                                                    ref={(input) => { this.refInput = input; }}
+                                                    style={{ width: '100%' }}
+                                                    name="req" id="req"
+                                                    onChange={this.handleChange}
+                                                    value={this.state.input.req}>
 
-                                            <select class="btn btn-secondary dropdown-toggle form-group"
-                                                ref={(input) => { this.refInput = input; }}
-                                                style={{ width: '100%' }} 
-                                                name="req" id="req"
-                                                onChange={this.handleChange}
-                                                value={this.state.input.req}>
-
-                                                <option hidden value='' default selected> Select MSP/VMS/Commercial Client </option>
-                                                {
-                                                    this.state.requisitor_fd.map((rq) => (
-                                                        <option value={rq.requisitor_fd}>{rq.requisitor_fd}</option>
-                                                    ))
-                                                }
-                                            </select>
-                                            <div className="text-danger">{this.state.errors.req}</div>
+                                                    <option hidden value='' default selected> Select MSP/VMS/Commercial Client </option>
+                                                    {
+                                                        this.state.requisitor_fd.map((rq) => (
+                                                            <option value={rq.requisitor_fd}>{rq.requisitor_fd}</option>
+                                                        ))
+                                                    }
+                                                </select>
+                                                <div className="text-danger">{this.state.errors.req}</div>
+                                            </div>
 
                                             <div class="form-group">
                                                 <label for="id"><b>Job Posting ID:</b></label>
@@ -456,23 +452,20 @@ class AddRequisition extends React.Component {
 
                                                     <option hidden value='' default selected> Select Client Name </option>
                                                     {
-                                                            
+
                                                         this.state.client_fd.map((cl) => (
-                                                        
-                                                            cl.requisitor_fd.requisitor_fd==this.state.input.req?
-                                                           (
-                                                            <option value={cl.client_name}>{cl.client_name}</option>
-                                                           
-                                                           )
-                                                            :
-                                                            (
-                                                                null                                                            
-                                                            )
-                                                            
+
+                                                            cl.requisitor_fd.requisitor_fd == this.state.input.req ?
+                                                                (
+                                                                    <option value={cl.client_name}>{cl.client_name}</option>
+                                                                )
+                                                                :
+                                                                (
+                                                                    null
+                                                                )
                                                         ))
                                                     }
-                                                    
-                                                     
+
                                                 </select>
 
                                                 <div className="text-danger">{this.state.errors.client}</div>
@@ -504,7 +497,6 @@ class AddRequisition extends React.Component {
                                                     <option hidden value=''>Select Duration</option>
                                                     {
                                                         this.state.duration_fd.map((dr) => (
-
                                                             <option value={dr.duration}>{dr.duration}</option>
                                                         ))
                                                     }
@@ -542,7 +534,6 @@ class AddRequisition extends React.Component {
                                                     onChange={this.handleChange}
                                                   
                                                     placeholder="Location"
-
                                                     class="form-control" />
 
                                                 <div className="text-danger">{this.state.errors.location}</div>
