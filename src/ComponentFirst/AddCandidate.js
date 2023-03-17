@@ -4,9 +4,7 @@ import base_url from '../api/bootapi';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import history from './ResponseVal';
-import { useRef } from 'react';
-import { getValue } from '@testing-library/user-event/dist/utils';
-import NavBarHeader from './NavbarHeader';
+
 import EmployeeHeader from './EmployeeHeader';
 import { useNavigate } from "react-router-dom";
 class AddCandidate extends React.Component {
@@ -21,7 +19,7 @@ class AddCandidate extends React.Component {
                 this.setState({ rateTerm_fd: json.data })
             )
             .catch(error => {
-                //  alert("Error rate term")
+            
             })
 
         axios.get(`${base_url}/getAllVisaType`)
@@ -29,7 +27,7 @@ class AddCandidate extends React.Component {
                 this.setState({ visaType_fd: json.data })
             )
             .catch(error => {
-                // alert("Error visa")
+              
             })
     }
 
@@ -81,8 +79,6 @@ class AddCandidate extends React.Component {
 
         let add_cls = this.state.input;
         add_cls[e.target.name] = e.target.value;
-        console.log(add_cls);
-
         this.setState({
             add_cls
         });
@@ -93,20 +89,20 @@ class AddCandidate extends React.Component {
         let requisition_id = this.state.input;
         requisition_id[e.target.name] = e.target.value;
         let a = this.state.input.reqid
-        console.log(typeof(a));
+      
 
         axios.get(`${base_url}/getRequisitionByID?ID=${a}`).then(
 
             (response) => {
 
-                console.log(response.data.requisition_id);
+              
                 let requid = response.data.requisition_id
                 localStorage.setItem('requisitionID', requid);
                 const button1 = document.getElementById("btn1");
                 button1.disabled = false;
                 const button2 = document.getElementById("btn2");
                 button2.disabled = false;
-                //alert("found")
+              
             },
             (error) => {
                 toast.error("Requisiton not found of this ID",
@@ -126,10 +122,6 @@ class AddCandidate extends React.Component {
         e.preventDefault();
         let add_cls = this.state.input;
         add_cls[e.target.name] = e.target.value;
-
-
-       
-
 
 
         if (this.validate()) {
@@ -159,25 +151,18 @@ class AddCandidate extends React.Component {
             this.state.input["phone"] = this.state.input["phone"].replaceAll("#", "%23")
             this.state.input["email"] = this.state.input["email"].replaceAll("#", "%23")
            
-          
-
-           
-            console.log("cad_name : " + this.state.input["cad_name"] + " " + this.state.input["email"]);
             
             this.postCandidate(add_cls);
         }
-        // 👇️ clear all input values in the form
+      
        
     }
 
     postCandidate = (data) => {
 
-        // let z = this.state.empID = localStorage.getItem("recruiterId")
         let recruiterID = localStorage.getItem('recruiterID');
         let requisitionID = localStorage.getItem('requisitionID');
-        console.log("RecId_New : " + recruiterID + " requisitionID " + requisitionID);
 
-        console.log(data)
         let d1 = data["cad_name"];
         let d2 = data["visa_type"];
         let d3 = data["rate_term"];
@@ -220,36 +205,22 @@ class AddCandidate extends React.Component {
             }
         );
 
-        // let inputs = {};
-        // inputs["req"] = undefined;
-        // inputs["sub"] = undefined;
-        // inputs["first"] = undefined;
-        // inputs["second"] = undefined;
-        // inputs["closure"] = undefined;
+        let inputs = {};
+        inputs["req"] = undefined;
+        inputs["sub"] = undefined;
+        inputs["first"] = undefined;
+        inputs["second"] = undefined;
+        inputs["closure"] = undefined;
 
-        // this.setState({ input: inputs });
+        this.setState({ input: inputs });
     }
     // --------------------------------------------Validation Code ----------------------------------------------------------
 
     validate() {
 
         let input = this.state.input;
-        // add_cls[e.target.name] = e.target.value.trim(" ");
         let errors = {};
         let isValid = true;
-
-        console.log("type of input " + typeof (input["cad_name"]));
-
-        console.log("cad_name " + input["cad_name"]);
-        console.log("visa_type " + input["visa_type"]);
-        console.log("rate_term " + input["rate_term"]);
-        console.log("submitted_rate " + input["submitted_rate"]);
-        console.log("phone " + input["phone"]);
-        console.log("email " + input["email"]);
-        console.log("remark " + input["remark"]);
-        console.log("reason " + input["reason"]);
-
-        console.log("type of reqNum " + typeof (reqNum));
 
         if ((!input["reqid"])) {
             isValid = false;
@@ -262,7 +233,7 @@ class AddCandidate extends React.Component {
         if ((input["cad_name"]) !== undefined) {
 
             var pattern = new RegExp(/^[^\s][a-zA-Z\s]{1,50}$/);
-            // new RegExp(/^[^\s][a-zA-Z\s]+[^\s]$/);
+           
 
             if (!pattern.test(input["cad_name"])) {
                 isValid = false;
@@ -290,8 +261,7 @@ class AddCandidate extends React.Component {
         if ((input["submitted_rate"]) !== undefined) {
 
             var pattern = new RegExp(/^((?!(0))[0-9\s]{0,5})$/);
-            // new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$%^&*,!? \b]).{6,15}$/); 
-
+        
             if (!pattern.test(input["submitted_rate"])) {
                 isValid = false;
                 errors["submitted_rate"] = "Please enter only numbers";
@@ -305,8 +275,7 @@ class AddCandidate extends React.Component {
         if ((input["phone"]) !== undefined) {
 
             var pattern = new RegExp(/^[^\s][0-9 *()-\s]{4,15}$/);
-            // new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$%^&*,!? \b]).{6,15}$/); 
-
+           
             if (!pattern.test(input["phone"])) {
                 isValid = false;
                 errors["phone"] = "Please enter only characters.";
@@ -326,18 +295,7 @@ class AddCandidate extends React.Component {
                 errors["email"] = "Please enter valid email address (e.g.: abc@gmail.com).";
             }
         }
-        // -------------remark-----------------------------------------------------------------------------------------
-        /*  if ((!input["remark"])) {
-              isValid = false;
-              errors["remark"] = "This remark field is required";
-          }
-          
-          // -------------reason-----------------------------------------------------------------------------------------
-          if ((!input["reason"])) {
-              isValid = false;
-              errors["reason"] = "This reason field is required";
-          }
-         */
+        
 
         this.setState({
             errors: errors
@@ -349,7 +307,6 @@ class AddCandidate extends React.Component {
     render() {
         const isAuthenticated = localStorage.getItem('recruiterID');
         localStorage.setItem('recruiterID', isAuthenticated);
-        console.log(isAuthenticated);
 
         return isAuthenticated ? (
             <div className="">
@@ -391,7 +348,7 @@ class AddCandidate extends React.Component {
                                             <div class="form-group">
                                                 <label for="cad_name"><b>Candidate Name:</b></label>
                                                 <input
-                                                    // ref={(input) => { this.refInput = input; }}
+                                                 
                                                     minLength={1}
                                                     maxLength={50}
                                                     type="text"

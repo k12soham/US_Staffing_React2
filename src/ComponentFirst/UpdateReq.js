@@ -4,11 +4,7 @@ import base_url from '../api/bootapi';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import history from './ResponseVal';
-import { useRef } from 'react';
-import { getValue } from '@testing-library/user-event/dist/utils';
-import NavBarHeader from './NavbarHeader';
 import EmployeeHeader from './EmployeeHeader';
-import { json } from 'react-router-dom';
 import AdminHeader from './AdminHeader';
 
 // const empID = localStorage.getItem('recruiterID');

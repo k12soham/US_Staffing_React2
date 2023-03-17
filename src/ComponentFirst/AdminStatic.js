@@ -4,19 +4,10 @@ import base_url from '../api/bootapi';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import history from './ResponseVal';
-// import Header from './Header';
-// import EmpSidebar from './EmpSidebar';
-
-import { useRef } from 'react';
-import { getValue } from '@testing-library/user-event/dist/utils';
-
-import NavBarHeader from './NavbarHeader';
-import EmployeeHeader from './EmployeeHeader';
 import { List } from 'reactstrap';
-import { Table, Button } from "reactstrap";
-import { json, Link } from 'react-router-dom';
+import { Table } from "reactstrap";
+import {  Link } from 'react-router-dom';
 import AdminHeader from './AdminHeader';
-// import 'reactjs-popup/dist/index.css';
 import Popup from 'reactjs-popup';
 
 class AdminStatic extends React.Component {
@@ -32,11 +23,11 @@ class AdminStatic extends React.Component {
 
             )
             .catch(error => {
-                // alert("Error duration")
+           
             })
     }
     componentDidMount() {
-        //   this.refInput.focus();
+ 
 
         axios.get(`${base_url}/getAllDuration`)
             .then(json =>
@@ -50,7 +41,7 @@ class AdminStatic extends React.Component {
 
             )
             .catch(error => {
-                // alert("Error duration")
+                
             })
 
         axios.get(`${base_url}/getAllPositionType`)
@@ -58,7 +49,7 @@ class AdminStatic extends React.Component {
                 this.setState({ positionType_fd: json.data })
             )
             .catch(error => {
-                //  alert("Error position")
+               
             })
 
 
@@ -67,7 +58,7 @@ class AdminStatic extends React.Component {
                 this.setState({ requisitor_fd: json.data })
             )
             .catch(error => {
-                // alert("Error requisitor")
+                
             })
 
         axios.get(`${base_url}/getAllStatusFd`)
@@ -75,7 +66,7 @@ class AdminStatic extends React.Component {
                 this.setState({ status_fd: json.data })
             )
             .catch(error => {
-                // alert("Error status")
+               
             })
 
 
@@ -85,7 +76,7 @@ class AdminStatic extends React.Component {
                 this.setState({ client_fd: json.data })
             )
             .catch(error => {
-                // alert("Error client")
+              
             })
 
         axios.get(`${base_url}/getAllRateTerm`)
@@ -93,7 +84,7 @@ class AdminStatic extends React.Component {
                 this.setState({ rateTerm_fd: json.data })
             )
             .catch(error => {
-                //alert("Error rate term")
+               
             })
 
         axios.get(`${base_url}/getAllVisaType`)
@@ -101,14 +92,14 @@ class AdminStatic extends React.Component {
                 this.setState({ visaType_fd: json.data })
             )
             .catch(error => {
-                //alert("Error visa")
+                
             })
 
 
     }
 
     getallduration() {
-        alert("ss")
+     
         axios.get(`${base_url}/getAllDuration`)
             .then(json =>
                 this.setState({ duration_fd: json.data })
@@ -248,7 +239,7 @@ class AdminStatic extends React.Component {
     }
 
     onCancel1 = () => {
-        // reset the inEditMode state value
+        
         this.setState({
             editstatus: false,
             editrowKey: null
@@ -269,7 +260,7 @@ class AdminStatic extends React.Component {
         }).then(response => {
             this.onCancel1();
             this.componentDidMount();
-            // window.location.reload()
+            
             toast.success("Record deleted successfully!", {
                 position: "top-right",
                 autoClose: 1000,
@@ -328,7 +319,7 @@ class AdminStatic extends React.Component {
     }
 
     onCancel2 = () => {
-        // reset the inEditMode state value
+        
         this.setState({
             editstatus2: false,
             editrowKey2: null
@@ -351,7 +342,7 @@ class AdminStatic extends React.Component {
         }).then(response => {
             this.onCancel2();
             this.componentDidMount();
-            // window.location.reload()
+        
             toast.success("Record deleted successfully!", {
                 position: "top-right",
                 autoClose: 1000,
@@ -410,7 +401,7 @@ class AdminStatic extends React.Component {
     }
 
     onCancel3 = () => {
-        // reset the inEditMode state value
+      
         this.setState({
             editstatus3: false,
             editrowKey3: null
@@ -434,7 +425,6 @@ class AdminStatic extends React.Component {
         }).then(response => {
             this.onCancel3();
             this.componentDidMount();
-            // window.location.reload()
             toast.success("Record deleted successfully!", {
                 position: "top-right",
                 autoClose: 1000,
@@ -469,7 +459,6 @@ class AdminStatic extends React.Component {
         }).then(response => {
             this.onCancel4();
             this.componentDidMount();
-            // window.location.reload()
             toast.success("Record updated successfully!", {
                 position: "top-right",
                 autoClose: 1000,
@@ -493,7 +482,7 @@ class AdminStatic extends React.Component {
     }
 
     onCancel4 = () => {
-        // reset the inEditMode state value
+     
         this.setState({
             editstatus4: false,
             editrowKey4: null
@@ -516,7 +505,6 @@ class AdminStatic extends React.Component {
         }).then(response => {
             this.onCancel4();
             this.componentDidMount();
-            // window.location.reload()
             toast.success("Record deleted successfully!", {
                 position: "top-right",
                 autoClose: 1000,
@@ -548,7 +536,6 @@ class AdminStatic extends React.Component {
         }).then(response => {
             this.onCancel5();
             this.componentDidMount();
-            // window.location.reload()
             toast.success("Record updated successfully!", {
                 position: "top-right",
                 autoClose: 1000,
@@ -572,7 +559,6 @@ class AdminStatic extends React.Component {
     }
 
     onCancel5 = () => {
-        // reset the inEditMode state value
         this.setState({
             editstatus5: false,
             editrowKey5: null
@@ -595,7 +581,6 @@ class AdminStatic extends React.Component {
         }).then(response => {
             this.onCancel5();
             this.componentDidMount();
-            // window.location.reload()
             toast.success("Record deleted successfully!", {
                 position: "top-right",
                 autoClose: 1000,
@@ -626,7 +611,6 @@ class AdminStatic extends React.Component {
         }).then(response => {
             this.onCancel6();
             this.componentDidMount();
-            // window.location.reload()
             toast.success("Record updated successfully!", {
                 position: "top-right",
                 autoClose: 1000,
@@ -649,7 +633,6 @@ class AdminStatic extends React.Component {
     }
 
     onCancel6 = () => {
-        // reset the inEditMode state value
         this.setState({
             editstatus6: false,
             editrowKey6: null
@@ -672,7 +655,6 @@ class AdminStatic extends React.Component {
         }).then(response => {
             this.onCancel6();
             this.componentDidMount();
-            // window.location.reload()
             toast.success("Record deleted successfully!", {
                 position: "top-right",
                 autoClose: 1000,
@@ -704,7 +686,6 @@ class AdminStatic extends React.Component {
         }).then(response => {
             this.onCancel7();
             this.componentDidMount();
-            // window.location.reload()
             toast.success("Record updated successfully!", {
                 position: "top-right",
                 autoClose: 1000,
@@ -727,7 +708,6 @@ class AdminStatic extends React.Component {
     }
 
     onCancel7 = () => {
-        // reset the inEditMode state value
         this.setState({
             editstatus7: false,
             editrowKey7: null
@@ -764,7 +744,6 @@ class AdminStatic extends React.Component {
 
         let isValid = true;
         let positionval = this.state.position
-        let poserror = this.state.positionerr;
 
         if ((!positionval)) {
             console.log("positionval : " + positionval)
@@ -776,130 +755,7 @@ class AdminStatic extends React.Component {
         return isValid;
     }
 
-    // validate() {
-
-    //     console.log("this.state.position : "+this.state.position)
-
-    //     let reqval = this.state.req;
-    //     console.log("reqval: "+reqval)
-
-    //     let clientval = this.state.client;
-    //     let statusval = this.state.status;
-    //     let positionval = this.state.position
-
-    //     let durationval = this.state.duration
-    //     let visatypeval = this.state.visatype
-    //     let ratetermval = this.state.rateterm
-
-    //     let clerror = this.state.clienterr
-    //     let sterror = this.state.statuserr;
-    //     let poserror = this.state.positionerr;
-    //     let durerror = this.state.durationerr;
-    //     let visaerror = this.state.visatypeerr;
-    //     let reteerror = this.state.ratetermerr;
-
-    //     let isValid = true;
-
-
-    //     if ((!clientval)) {
-    //         isValid = false;
-    //         clerror = "This field is required";
-    //     }
-
-
-    //     if ((!statusval)) {
-    //         isValid = false;
-    //         sterror = "This field is required";
-    //     }
-
-    //     if ((!positionval)) {
-    //         console.log("positionval : "+positionval)
-    //         isValid = false;
-    //         poserror = "This field is required";
-    //     }
-
-    //     if ((!durationval)) {
-    //         isValid = false;
-    //         durerror = "This field is required";
-    //     }
-
-    //     if ((!visatypeval)) {
-    //         isValid = false;
-    //         visaerror = "This field is required";
-    //     }
-
-    //     if ((!ratetermval)) {
-    //         isValid = false;
-    //         reteerror = "This field is required";
-    //     }
-
-    //     return isValid;
-    // }
-
-
-    /* if (reqval != undefined) {
-         var pattern = new RegExp(/^[^\s][a-zA-Z\s]+[^\s]$/);
-         if (!pattern.test(reqval)) {
-             isValid = false;
-             errors["req"] = "Please enter only characters.";
-         }
- 
-      }
- 
-      if ((!clientval)) {
-         isValid = false;
-         errors["client"] = "This field is required";
-     }
- 
- 
-     if (clientval != undefined) {
-         var pattern = new RegExp(/^[^\s][a-zA-Z\s]+[^\s]$/);
-         if (!pattern.test(clientval)) {
-             isValid = false;
-             errors["client"] = "Please enter only characters.";
-         }
- 
-      }
-    
-      if ((!statusval)) {
-         isValid = false;
-         errors["status"] = "This field is required";
-     }
- 
- 
-     if (statusval != undefined) {
-         var pattern = new RegExp(/^[^\s][a-zA-Z\s]+[^\s]$/);
-         if (!pattern.test(statusval)) {
-             isValid = false;
-             errors["status"] = "Please enter only characters.";
-         }
- 
-      }
- 
-      if ((!positionval)) {
-         isValid = false;
-         errors["position"] = "This field is required";
-     }
- 
- 
-     if (positionval != undefined) {
-         var pattern = new RegExp(/^[^\s][a-zA-Z\s]+[^\s]$/);
-         if (!pattern.test(positionval)) {
-             isValid = false;
-             errors["position"] = "Please enter only characters.";
-         }
- 
-      }
-    
- 
- 
-     this.setState({
-       
-         errors: errors
-     });
-     return isValid;
- }
- */
+   
     handleChange1(e) {
         let a = e.target.value;
         this.setState({
@@ -938,7 +794,7 @@ class AdminStatic extends React.Component {
             },
             (error) => {
                 console.log(error);
-                // alert("Please enter valid details.")
+               
             }
         );
     }
@@ -947,7 +803,6 @@ class AdminStatic extends React.Component {
 
         let isValid = true;
         let reqval = this.state.req
-        let reqerr = this.state.reqerr;
 
         if ((!reqval)) {
             console.log("reqval : " + reqval)
@@ -978,7 +833,8 @@ class AdminStatic extends React.Component {
 
         }
         else {
-            // alert("Enter valid details")
+            console.log('error');
+         
         }
     }
 
@@ -1005,7 +861,7 @@ class AdminStatic extends React.Component {
             },
             (error) => {
                 console.log(error);
-                // alert("Please enter valid details.")
+             
             }
         );
     }
@@ -1014,10 +870,8 @@ class AdminStatic extends React.Component {
 
         let isValid = true;
         let clientval = this.state.client
-        let clienterr = this.state.clienterr;
-
+     
         if ((!clientval)) {
-            console.log("clientval : " + clientval)
             isValid = false;
             this.setState({ clienterr: "This field is required" });
         }
@@ -1042,7 +896,7 @@ class AdminStatic extends React.Component {
         }
         else {
             console.log('error');
-            // alert("Enter valid details");
+         
         }
     }
 
@@ -1062,7 +916,6 @@ class AdminStatic extends React.Component {
             },
             (error) => {
                 console.log(error);
-                console.log("Error");
                 alert("Please enter valid details.")
             }
         );
@@ -1072,7 +925,6 @@ class AdminStatic extends React.Component {
 
         let isValid = true;
         let statusval = this.state.status
-        let statuserr = this.state.statuserr;
 
         if ((!statusval)) {
             console.log("statusval : " + statusval)
@@ -1092,7 +944,6 @@ class AdminStatic extends React.Component {
     }
 
     handleSubmit4(e) {
-        console.log("this.state.position : " + this.state.position);
         e.preventDefault();
         if (this.validate1()) {
             let a = this.state.position;
@@ -1100,7 +951,7 @@ class AdminStatic extends React.Component {
 
         }
         else {
-            // alert("Enter valid details");
+          
             console.log('error');
         }
 
@@ -1142,7 +993,7 @@ class AdminStatic extends React.Component {
             this.postdata5(a)
         }
         else {
-            // alert("Enter valid details")
+           
             console.log('error');
         }
 
@@ -1172,10 +1023,10 @@ class AdminStatic extends React.Component {
 
         let isValid = true;
         let durationval = this.state.duration
-        let durationerr = this.state.durationerr;
+      
 
         if ((!durationval)) {
-            console.log("durationval : " + durationval)
+          
             isValid = false;
             this.setState({ durationerr: "This field is required" });
         }
@@ -1198,7 +1049,7 @@ class AdminStatic extends React.Component {
             this.postdata6(a)
         }
         else {
-            // alert("Enter valid details")
+          
             console.log('error');
         }
     }
@@ -1207,10 +1058,10 @@ class AdminStatic extends React.Component {
 
         let isValid = true;
         let visatypeval = this.state.visatype
-        let visatypeerr = this.state.visatypeerr;
+        
 
         if ((!visatypeval)) {
-            console.log("visatypeval : " + visatypeval)
+          
             isValid = false;
             this.setState({ visatypeerr: "This field is required" });
         }
@@ -1233,7 +1084,6 @@ class AdminStatic extends React.Component {
             },
             (error) => {
                 console.log(error);
-                console.log("Error");
                 alert("Please enter valid details.")
             }
         );
@@ -1256,8 +1106,8 @@ class AdminStatic extends React.Component {
             this.postdata7(a)
         }
         else {
-            // alert("Enter valid details")
-            console.log('error');
+             alert("Enter valid details")
+            
         }
 
     }
@@ -1289,7 +1139,7 @@ class AdminStatic extends React.Component {
         let ratetermerr = this.state.ratetermerr;
 
         if ((!ratetermval)) {
-            console.log("ratetermval : " + ratetermval)
+          
             isValid = false;
             this.setState({ ratetermerr: "This field is required" });
         }
@@ -1338,7 +1188,7 @@ class AdminStatic extends React.Component {
                                                         )
                                                 )
                                             }
-                                            {/* <Link onClick={() => this.getnewID({rqid: rq.requisitor_id })}>{rq.requisitor_fd}</Link> */}
+                                           
                                             <form onSubmit={this.handleSubmit2}>
                                                 <label><b>Add new client:</b></label><br></br>
                                                 <input type="text" name="client" style={{ height: 23 }} value={this.state.client} onChange={this.handleChange2}></input>
@@ -1923,42 +1773,9 @@ class AdminStatic extends React.Component {
             </List>
         )
     }
-    //  Boxshow()
-    // {
-
-    //     console.log("abcd")
-    //     //this.setState({isShown:true})
-
-    // }
-    //  Box()
-    // {
-
-    //         return(
-    //             <div>
-    //                 {
-    //                     alert(this.isShown)
-    //                 }
-
-    //      <form onSubmit={this.handleSubmit1}>
-    //                                             <label>Add new requisitor</label><br></br>
-    //                                                <input type="text"   value={this.state.req} onChange={this.handleChange1}></input>
-    //                                                 <button >Save</button>
-    //                                             <div className="text-danger">{this.state.errors.req}</div>
-    //                                             </form><br></br><br></br>
-    //                                             {
-    //                                             this.setState({isShown:false})
-    //                                             } 
-
-    //                                             </div> 
-
-
-    //         )
-
-    // }
-
+   
     render() {
         const isAuthenticated = localStorage.getItem('recruiterIDAdmin');
-        console.log("Hello");
         return isAuthenticated ? (
 
 
@@ -2046,17 +1863,7 @@ class AdminStatic extends React.Component {
                                             </tbody>
 
                                         </Table>
-                                        {/* <form onSubmit={this.Boxshow()}> */}
-                                        {/* <button  onClick={this.Boxshow()}>Add new requisitor</button>  */}
-
-                                        {/* </form> */}
-
-
-                                        {/* {this.state.isShown=='true' && <this.Box/> } */}
-
-
-
-
+                                        
 
                                         <form onSubmit={this.handleSubmit1}>
                                             <label>Add new requisitor</label><br></br>
@@ -2097,12 +1904,7 @@ class AdminStatic extends React.Component {
                                                     <td>{this.clientlist()}</td>
                                                 </tbody>
                                             </Table>
-                                            {/* <form onSubmit={this.handleSubmit2}>
-                                            <label>Add new client</label><br></br>
-                                               <input type="text"  name="client"  style={{height:23}} value={this.state.client} onChange={this.handleChange2}></input>
-                                               <button class= "btn btn-sm  btn-success"> <i class=" fa fa-save"></i>&nbsp;Add</button>
-                                            <div className="text-danger">{this.state.errors.client}</div>
-                                            </form> */}
+                                          
                                         </div>
 
                                     </div>

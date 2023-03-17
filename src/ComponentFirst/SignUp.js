@@ -2,11 +2,10 @@ import React from 'react';
 import axios from 'axios';
 import base_url from '../api/bootapi';
 import { toast } from "react-toastify";
-import { useNavigate, Link } from 'react-router-dom';
+import {  Link } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import history from './ResponseVal';
-// import { number } from 'joi';
-// import { Card, CardBody } from "reactstrap";
+
 
 class SignUp extends React.Component {
 
@@ -18,18 +17,14 @@ class SignUp extends React.Component {
       hover: false,
     };
 
-    // this.showPassword = this.showPassword.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    // this.togglePassword = this.togglePassword(this);
+  
   }
 
   handleChange(e) {
-    console.log(this.state.hover);
     let emp_reg = this.state.input;
     emp_reg[e.target.name] = e.target.value;
-    console.log("current added val is " + emp_reg[e.target.name] + ":" + e.target.value);
-
     this.setState({
       emp_reg
     });
@@ -42,20 +37,12 @@ class SignUp extends React.Component {
 
       let emp_reg = this.state.input;
       emp_reg[e.target.name] = e.target.value;
-      // console.log("current added val is " + emp_reg[e.target.name] + ":" + e.target.value);
-
       this.state.input["name"] = this.state.input["name"].trim(" ");
-      console.log("result : " + this.state.input["name"]);
-
-      let d1 = this.state.input["name"];
-      let d2 = this.state.input["email"];
-      let d3 = this.state.input["password"];
-
+     
       this.postdata(emp_reg);
 
     }
-    // 👇️ clear all input values in the form
-    e.target.reset();
+   
   }
 
   postdata = (data) => {
@@ -66,10 +53,8 @@ class SignUp extends React.Component {
 
     axios.post(`${base_url}/addRecruiter?recruiter_name=${d1}&recruiter_email=${d2}&password=${d3}`)
     
-   
-    
     .then(
-      // addEmp?empName=Admin&Username=admin@gmail.com&Password=Admin@1234
+   
       (response) => {
         toast.success("Recruiter registered successfully!",
           { position: "top-right" }
@@ -104,8 +89,7 @@ class SignUp extends React.Component {
 
     if (typeof input["name"] !== "undefined") {
 
-      // var pattern = new RegExp(/^(?=.*[a-zA-Z]).{3,20}$/); //new RegExp(/^[A-Za-z#+.\b]+$/);
-      // var pattern = new RegExp(/^[A-Za-z\b]+$/);
+     
       var pattern = new RegExp(/^[^\s][a-zA-Z\s]+[^\s]$/);
       if (!pattern.test(input["name"])) {
         isValid = false;
@@ -154,14 +138,11 @@ class SignUp extends React.Component {
     if (this.state.hover) {
 
       this.setState({ hover: false });
-      console.log("false : ");
     } else {
 
       this.setState({ hover: true });
-      console.log("true");
     }
 
-    console.log(this.state.hover);
   };
 
   render() {
@@ -172,7 +153,7 @@ class SignUp extends React.Component {
         </div>
 
         <div className="col-12 col-md-7 col-lg-6 auth-main-col ">
-          {/* text-center */}
+      
           <div className="d-flex flex-column align-content-end">
             <div className="auth-body mx-auto">
 
@@ -190,7 +171,6 @@ class SignUp extends React.Component {
                     name="name"
                     value={this.state.input.name}
                     onChange={this.handleChange}
-                    // className="form-control"
                     style={{ width: '360px', height: '37px' }}
                     placeholder="Name"
                     minLength={3}
@@ -210,7 +190,6 @@ class SignUp extends React.Component {
                     placeholder="Email"
                     minLength={11}
                     maxLength={50}
-                    // className="form-control"
                     style={{ width: '360px', height: '37px' }}
                   />
 
@@ -250,24 +229,7 @@ class SignUp extends React.Component {
                 </div>
 
                 <div className="text-center">
-                  {/* <div className='row'>
-                    <div className='col-6'>
-                      <button
-                        type="submit"
-                        className="btn btn-primary w-100 theme-btn mx-auto"
-                      >
-                        Sign Up
-                      </button>
-                    </div>
-                    <div className='col-6'>
-                      <button
-                        type="reset"
-                        className="btn btn-warning w-100 theme-btn mx-auto"
-                      >
-                        Reset
-                      </button>
-                    </div>
-                  </div> */}
+                  
 
                   <button
                     type="submit"
@@ -277,8 +239,6 @@ class SignUp extends React.Component {
                   </button>
 
                 </div>
-
-                {/* <input type="submit" value="Submit" class="btn btn-success" /> */}
 
               </form>
               <hr />

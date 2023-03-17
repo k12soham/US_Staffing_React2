@@ -10,11 +10,10 @@ class ModalWithCSS extends React.Component {
     super();
     this.state = {
       showModal: false,
-      // navigate: useNavigate()
     };
-    //  let navigate = useNavigate();
+    
     this.handleOpenModal = this.handleOpenModal.bind(this);
-    // this.handleCloseModal = this.handleCloseModal.bind(this);
+   
   }
 
   handleOpenModal() {
@@ -22,7 +21,7 @@ class ModalWithCSS extends React.Component {
   }
 
   handleUpdateProfile () {
-let recruiterID = localStorage.getItem('recruiterID');
+
     let recruiterIDAdmin = localStorage.getItem('recruiterIDAdmin');
 
     if(recruiterIDAdmin==null)
@@ -56,9 +55,7 @@ let recruiterID = localStorage.getItem('recruiterID');
   }
 
   render() {
-    let recruiterIDAdmin = localStorage.getItem('recruiterIDAdmin')
-    // console.log(recruiterIDAdmin)
-    let empID = localStorage.getItem('recruiterID');
+
     let empName = localStorage.getItem('recruiterName');
     let empMail = localStorage.getItem('recruiterEmail');
     return (
@@ -71,8 +68,7 @@ let recruiterID = localStorage.getItem('recruiterID');
 
         </div>
 
-        {/* <button className="btn btn-primary btn-sm w-100 theme-btn mx-auto"
-          style={{ color: 'white', margin: '0px' }} onClick={this.handleOpenModal}>View Profile</button> */}
+      
         <div className="col-5 col-md-7 col-lg- auth-main-col text-center">
 
           <ReactModal
@@ -81,7 +77,6 @@ let recruiterID = localStorage.getItem('recruiterID');
             onRequestClose={this.handleCloseModal}
             className="Modal"
 
-          // overlayClassName="Overlay"
           >
             <div style={{ textAlign: "right" }}>
 
@@ -92,7 +87,7 @@ let recruiterID = localStorage.getItem('recruiterID');
               <span > <img src="https://img.icons8.com/ios/35/000000/user-male-circle--v2.png" /><b style={{ fontSize: '22px' }}> &nbsp; &nbsp;{empName}</b></span><br />
               <span ><h6 style={{ marginLeft: '50px' }}>{empMail} </h6></span><hr></hr>
             </div>
-            {/* <p style={{ margin: '0px', padding: '0px' }}>Modal text!{empID}</p> */}
+
 
             <div className="text-center">
               <div className='row'>
@@ -121,7 +116,7 @@ let recruiterID = localStorage.getItem('recruiterID');
             </div>
 
           </ReactModal>
-          {/* ---------------------------------------------------------------------------------- */}
+        
         </div>
       </div >
     );

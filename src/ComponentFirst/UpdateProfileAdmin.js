@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import base_url from '../api/bootapi';
 import { toast } from "react-toastify";
-import { useNavigate, Link } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import history from './ResponseVal';
 import { Button } from 'reactstrap';
@@ -70,7 +69,6 @@ class UpdateProfileAdmin extends React.Component {
         if (((this.state.newPassword) == (this.state.confirmPassword)) && (this.state.newPassword !== undefined)) {
 
             this.setState({ passNotMatch: '' });
-            // console.log("passMatch val = " + (this.state.passMatch));
             this.setState({ passMatch: 'Password matched' });
         }
         else {
@@ -81,16 +79,14 @@ class UpdateProfileAdmin extends React.Component {
 
     handleChange(e) {
 
-        console.log(this.state.hover);
         let emp_reg = this.state.input;
 
         emp_reg[e.target.name] = e.target.value;
-        // console.log("current added val is " + emp_reg[e.target.name] + ":" + e.target.value);
-
+    
         this.setState({
             input: emp_reg,
         });
-        // console.log("input Updated data = " + JSON.stringify(this.state.input));
+       
 
         this.state.currentPassword = this.state.input["currentPass"];
         this.state.newPassword = this.state.input['newPass'];
@@ -111,9 +107,7 @@ class UpdateProfileAdmin extends React.Component {
 
                 this.state.input["recruiter_name"] = this.state.input["recruiter_name"].trim(" ");
 
-                // console.log("Current pass: " + this.state.currentPassword + " newPass : " + this.state.newPassword + "  confirmPass: " + this.state.confirmPassword);
-                // console.log("Submiting data are : " + JSON.stringify(this.state.input));
-
+               
                 this.postdata(emp_reg);
 
             }
@@ -130,7 +124,6 @@ class UpdateProfileAdmin extends React.Component {
         let recruiter_name = data["recruiter_name"].trim(" ");
         let recruiter_email = data["recruiter_email"];
      
-        let newPass = data["newPass"];
         let confirmPass = data["confirmPass"];
 
 
@@ -195,7 +188,7 @@ class UpdateProfileAdmin extends React.Component {
         if (this.state.newPassword == undefined) {
             isValid = false;
             errors["newPass"] = "Please enter new password.";
-            console.log("Please enter password.");
+          
         }
 
         if ((this.state.newPassword) !== undefined) {
@@ -214,7 +207,7 @@ class UpdateProfileAdmin extends React.Component {
         if (this.state.confirmPassword == undefined) {
             isValid = false;
             errors["confirmPass"] = "Please enter confirm password.";
-            console.log("Please enter password.");
+           
         }
 
         if ((this.state.confirmPassword) !== undefined) {
@@ -285,7 +278,7 @@ class UpdateProfileAdmin extends React.Component {
                 </div>
 
                 <div className="col-12 col-md-7 col-lg-6 auth-main-col ">
-                    {/* text-center */}
+                   
                     <div className="d-flex flex-column align-content-end">
                         <div className="auth-body mx-auto">
 
@@ -302,7 +295,7 @@ class UpdateProfileAdmin extends React.Component {
                                     <input
                                         type="text"
                                         name="recruiter_name"
-                                        // value={Object.values(empData)[3]}
+                                        
                                         value={this.state.input.recruiter_name}
                                         onChange={this.handleChange}
                                         style={{ width: '360px', height: '37px' }}
@@ -317,7 +310,7 @@ class UpdateProfileAdmin extends React.Component {
                                 <div class="form-group">
                                     <label for="email"><b>Enter Email:</b></label>
                                     <input
-                                        // name="email"
+                                       
                                         name='recruiter_email'
                                         value={this.state.input.recruiter_email}
                                         onChange={this.handleChange}
@@ -344,7 +337,7 @@ class UpdateProfileAdmin extends React.Component {
                                             type={(this.state.showNewPass) ? "text" : "password"}
                                             name="newPass"
                                             id="newPass"
-                                            // value={this.state.input.password}
+                                           
                                             onChange={this.handleChange}
                                             onKeyUp={this.keyUpHandler}
                                             placeholder="Password"
@@ -379,7 +372,7 @@ class UpdateProfileAdmin extends React.Component {
                                             name="confirmPass"
                                             id="confirmPass"
                                             onChange={this.handleChange}
-                                            onKeyUp={this.keyUpHandler} //ref="PwdInput"/////////////////////////
+                                            onKeyUp={this.keyUpHandler} 
                                             placeholder="Password"
                                             minLength={6}
                                             maxLength={15}
@@ -400,11 +393,11 @@ class UpdateProfileAdmin extends React.Component {
                                         <div className="text-danger">{this.state.errors['confirmPass']}</div>
                                         <div className="text-danger">{this.state.passNotMatch}</div>
                                         <div className="text-success">{this.state.passMatch}</div>
-                                        {/* this.state.errors["confirmPass"] */}
+                                       
 
                                     </div>
                                 </div>
-                                {/* </div> */}
+                               
 
 
                                 <div className="text-center">
@@ -428,7 +421,7 @@ class UpdateProfileAdmin extends React.Component {
                                             </button>
 
                                         </div>
-                                        {/* <div className='col-2'></div> */}
+                                       
                                     </div>
 
                                 </div>
