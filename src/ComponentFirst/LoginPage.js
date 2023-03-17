@@ -4,18 +4,15 @@ import Form from "../utilities/Form";
 import base_url from "../api/bootapi";
 import axios from "axios";
 import { toast } from 'react-toastify';
-// Import toastify css file
 import 'react-toastify/dist/ReactToastify.css';
 
 const Login1 = () => {
 
     const [username, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [remember, setRemember] = useState(false);
     const [validate, setValidate] = useState({});
     const [showPassword, setShowPassword] = useState(false);
-    const [logindata, setLoginData] = useState([])
-    //const [error, setError] = useState(false);
+
     let navigate = useNavigate();
     localStorage.setItem("email",username)
     const inputRef = useRef();
@@ -80,19 +77,18 @@ const Login1 = () => {
     };
 
     const postDataToServer = (uname, pass) => {
-        // alert("Username :"+uname+"Password :"+pass);
+      
         axios.post(`${base_url}/login?Username=${uname}&Password=${pass}`).then(
             (response) => {
 
                 localStorage.setItem('uuid', response.data);
-                // console.log("Emp Role is: " + response.data);
-                console.log("Results:  " + response.data.username);
+              
 
                 if (response.data.role == "Admin") {
                     localStorage.setItem('recruiterName', response.data.recruiter_name);
                     localStorage.setItem('recruiterIDAdmin', response.data.recruiter_id);
                     localStorage.setItem('recruiterEmail', response.data.recruiter_email);
-                    // alert("Successfully Login");
+                  
                     navigate("/adminstatic");
                     toast.success("Login successfully!",
                         { position: "top-right",autoClose: 2000,
@@ -101,7 +97,6 @@ const Login1 = () => {
 
                 else if (response.data.role == "TM") {
                     localStorage.setItem('recruiterName', response.data.recruiter_name);
-                    // localStorage.setItem('recruiterID', response.data.recruiter_id);
                     localStorage.setItem('recruiterID', response.data.recruiter_id);
                     localStorage.setItem('recruiterEmail', response.data.recruiter_email);
              
@@ -111,27 +106,25 @@ const Login1 = () => {
                         style: { position: "absolute", top: "5px", width: "300px" }
                        })
                 } else {
-                    // history.push("/login");
+                  
                     alert("Invalid Email ID or Password.");
                     navigate("/");
                 }
             },
             (error) => {
-                console.log("Error");
+                
                 alert("Invalid username OR password.");
                 navigate("/");
             }
         )
     }
 
-    // const isAuthenticated = localStorage.getItem('empID');
-    // return isAuthenticated ? (
+
     return (
         <div className="row g-0 auth-wrapper">
             <div className="col-12 col-md-5 col-lg-6 h-100 master_backgroung_login">
                 <img src="usa.png" width="670" height="657"></img>
-                {/* <div className="auth-background-holder">
-                </div> */}
+              
                 <div className="auth-background-mask"></div>
             </div>
 
@@ -218,9 +211,7 @@ const Login1 = () => {
                                                 : ""}
                                         </div>
                                     </div>
-                                    {/* <Link className="text-link" to="/forgetpass2" params={{ testvalue: "hello" }} >
-                                    Forget Password{" "}
-                                </Link> */}
+                                    
                                 </div>
                                 <div className="text-center">
                                     <button
@@ -244,9 +235,7 @@ const Login1 = () => {
                 </div>
             </div>
         </div>
-        //  ) : (
-        //     navigate("/"),
-        //     window.location.reload()
+        
     );
 }
 

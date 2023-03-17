@@ -8,7 +8,6 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Pagination from "./Pagination";
 import ReactPaginate from 'react-paginate';
-import EmployeeHeader2 from "./EmployeeHeader2";
 function ViewAllReq() {
 
     const recruiterID = localStorage.getItem('recruiterID');
