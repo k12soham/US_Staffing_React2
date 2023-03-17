@@ -4,23 +4,19 @@ import base_url from '../api/bootapi';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import history from './ResponseVal';
-import { useRef } from 'react';
-import { getValue } from '@testing-library/user-event/dist/utils';
-import NavBarHeader from './NavbarHeader';
 import EmployeeHeader from './EmployeeHeader';
-import { json } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 
 class AddRequisition extends React.Component {
 
     componentDidMount() {
         this.refInput.focus();
-       
+
 
         const isAuthenticated = localStorage.getItem('recruiterID');
         localStorage.setItem('recruiterID', isAuthenticated)
         this.setState({ empID: isAuthenticated })
-       
+
 
         axios.get(`${base_url}/getAllDuration`)
             .then(json =>
@@ -54,10 +50,6 @@ class AddRequisition extends React.Component {
             .catch(error => {
                 // alert("Error client")
             })
-
-            var myStr = "Hi Dev! #";
-            var newStr = myStr.replace("#", "Guys");
-            console.log(newStr);
     }
 
     constructor(props) {
@@ -91,7 +83,7 @@ class AddRequisition extends React.Component {
         inputs["clientrate"] = undefined;
         inputs["location"] = undefined;
         inputs["positionType"] = undefined;
-        inputs["skills"] = undefined;
+        inputs["skills"] = '';
 
         this.setState({ input: inputs });
 
@@ -109,26 +101,6 @@ class AddRequisition extends React.Component {
 
     }
 
-    // addCandidate = () => {
-
-    //     let a = this.state.empID
-    //     let b = this.state.requisitionId1;
-    //     console.log("recid = " + a + " rqid = " + b);
-    //     console.log("recid = " + this.state.empID + " rqid = " + this.state.requisitionId1);                                     
-
-    //     if (b != undefined) {
-    //         localStorage.setItem('recruiterID', a);
-    //         localStorage.setItem('requisitionID', b);
-    //         localStorage.setItem('RID', this.state.RID);
-
-    //         history.push("/addCandidate");
-    //         window.location.reload();
-    //         // toast.success("Render  successfully!",
-    //         //     { position: "top-right" })
-    //     }
-    //     console.log("addCandidate");
-    // }
-
     handleChange(e) {
 
         let add_cls = this.state.input;
@@ -137,7 +109,6 @@ class AddRequisition extends React.Component {
         this.setState({
             input: add_cls,
         });
-
     }
 
     handleSubmit(e) {
@@ -146,53 +117,37 @@ class AddRequisition extends React.Component {
         let add_cls = this.state.input;
         add_cls[e.target.name] = e.target.value;
 
-        console.log(add_cls);
-        console.log(this.state.requisitionId1);
-        console.log(this.state.requisitionId1);
-
-        this.state.input["id"] = this.state.input["id"].trim(" ");
-        this.state.input["jobTitle"] = this.state.input["jobTitle"].trim(" ");       
-        this.state.input["location"] = this.state.input["location"].trim(" ");
-        this.state.input["clientrate"] = this.state.input["clientrate"].trim(" ");
-        this.state.input["skills"] = this.state.input["skills"].trim(" ");
-
-
-        this.state.input["id"] = this.state.input["id"].replaceAll("#", "%23")
-        this.state.input["jobTitle"] = this.state.input["jobTitle"].replaceAll("#", "%23")
-        this.state.input["location"] = this.state.input["location"].replaceAll("#", "%23")
-        this.state.input["clientrate"] = this.state.input["clientrate"].replaceAll("#", "%23")
-        this.state.input["skills"] = this.state.input["skills"].replaceAll("#", "%23")
-
-
 
         if (this.validate()) {
 
-           
+            this.state.input["id"] = this.state.input["id"].trim(" ");
+            this.state.input["jobTitle"] = this.state.input["jobTitle"].trim(" ");
+            this.state.input["location"] = this.state.input["location"].trim(" ");
+            this.state.input["clientrate"] = this.state.input["clientrate"].trim(" ");
+            this.state.input["skills"] = this.state.input["skills"].trim(" ");
+
+            this.state.input["id"] = this.state.input["id"].replaceAll("#", "%23")
+            this.state.input["jobTitle"] = this.state.input["jobTitle"].replaceAll("#", "%23")
+            this.state.input["location"] = this.state.input["location"].replaceAll("#", "%23")
+            this.state.input["clientrate"] = this.state.input["clientrate"].replaceAll("#", "%23")
+            this.state.input["skills"] = this.state.input["skills"].replaceAll("#", "%23")
 
             let add_cls = this.state.input;
             add_cls[e.target.name] = e.target.value;
 
             this.post_requisition(add_cls);
-            // if ((this.state.requisitionId1) != undefined) {
-            //     localStorage.setItem("requisitionID",this.state.requisitionId1)
-            //     alert("This Requisition is already exist. Please submit candidate");
-              
-            //    this.post_requisition(add_cls);
-            // }
-            // else {
-            //     this.post_requisition(add_cls);
-            // }
+          
         }
         // 👇️ clear all input values in the form
         e.target.reset();
     }
 
     post_requisition = (data) => {
-        
+
         console.log(this.state.requisitionId1);
         let recId = this.state.empID = localStorage.getItem("recruiterID");
-       let z=  parseInt(recId);
-       console.log(z);
+        let z = parseInt(recId);
+        console.log(z);
         console.log("recruiterID : " + recId);
         let d1 = data["req"];
         let d2 = data["id"];
@@ -206,39 +161,37 @@ class AddRequisition extends React.Component {
 
         axios.post(`${base_url}/add_requsition?requisition_from=${d1}&id=${d2}&client=${d3}&job_title=${d4}
         &duration=${d5}&client_rate=${d6}&location=${d7}&position_type=${d8}&skills=${d9}&recruiter_id=${z}`)
-        .then(
+            .then(
 
-            (response) => {
-                console.log(response.data)             
-                
-                 let a = response.data.requisition_id;
-                 console.log(a);
-                // let b = response.data.id;
-                // let c = response.data.requisition.requisition_id
+                (response) => {
+                    console.log(response.data)
 
-                if(a != undefined){
-                    localStorage.setItem("requisitionID", a);
-                    console.log("reqisitionID a="+response.data.requisition_id);
-                    this.setState({ requisitionId1: a });
-                }              
+                    let a = response.data.requisition_id;
+                    console.log(a);
 
-                toast.success("Requisition added successfully!",
-                    { position: "top-right" ,
-                    autoClose: 1000,
-                    style: { position: "absolute", top: "5px", width: "300px" }
+                    if (a != undefined) {
+                        localStorage.setItem("requisitionID", a);
+                        console.log("reqisitionID a=" + response.data.requisition_id);
+                        this.setState({ requisitionId1: a });
+                    }
+
+                    toast.success("Requisition added successfully!",
+                        {
+                            position: "top-right",
+                            autoClose: 1000,
+                            style: { position: "absolute", top: "5px", width: "300px" }
+                        }
+                    );
+                    let navigate = useNavigate();
+                    navigate("/addRequisition");
+
+                },
+                (error) => {
+                    console.log(error);
+                    console.log("Error");
+                    alert("Please enter valid details or you already assigned for this requisition")
                 }
-                );
-                let navigate = useNavigate();
-                navigate("/addRequisition");
-               // history.push("/addRequisition");
-               // window.location.reload();
-            },
-            (error) => {
-                console.log(error);
-                console.log("Error");
-                alert("Please enter valid details or you already assigned for this requisition")
-            }
-        );
+            );
 
         let inputs = {};
         inputs["req"] = undefined;
@@ -263,33 +216,9 @@ class AddRequisition extends React.Component {
         let addNew1 = true;
         let addNew2 = true;
 
-        // console.log("type of input " + typeof (input["req"]));
-
-        // console.log("req " + input["req"]);
-        // console.log("id " + input["id"]);
-        // console.log("client " + input["client"]);
-        // console.log("jobTitle " + input["jobTitle"]);
-        // console.log("duration " + input["duration"]);
-        // console.log("clientrate " + input["clientrate"]);
-        // console.log("location " + input["location"]);
-        // console.log("positionType " + input["positionType"]);
-        // console.log("skills " + input["skills"]);
-        // console.log("type of reqNum " + typeof (reqNum));
-
-        // this.state.input["jobTitle"] = this.state.input["jobTitle"].trim(" ");
-        // console.log("jobTitle : " + this.state.input["jobTitle"]);
-
         if ((!input["req"])) {
             isValid = false;
             errors["req"] = "This field is required";
-        }
-        if ((input["req"]) != undefined) {
-
-            var pattern = new RegExp(/^[^\s][a-zA-Z\s]+[^\s]$/);
-            if (!pattern.test(input["req"])) {
-                isValid = false;
-                errors["req"] = "Please enter only characters.";
-            }
         }
 
         // -------------id---------------------------------------------------------------------------------------------
@@ -302,15 +231,12 @@ class AddRequisition extends React.Component {
         console.log("typeOf id1: " + typeof (id1));
         if ((input["id"]) != undefined) {
 
-            var pattern = new RegExp(/^(?=.*[a-zA-Z0-9\s]).{1,25}$/); 
+            var pattern = new RegExp(/^(?=.*[a-zA-Z0-9\s]).{1,25}$/);
             if (!pattern.test(id1)) {
                 isValid = false;
                 errors["id"] = "Please enter valid Job Posting ID.";
             }
-            // if (id1 < 0) {
-            //     isValid = false;
-            //     errors["id"] = "ID should be numeric data.";
-            // }
+
         }
 
         // -------------client-----------------------------------------------------------------------------------------
@@ -386,10 +312,6 @@ class AddRequisition extends React.Component {
             if ((input["skills"]) != undefined) {
 
                 var pattern = new RegExp(/^(?=.{0,300}$)/);
-                // ([-"\w\d _@./#&+-,"']+\s)*[-"\w\d _@./#&+-,""'\s]+$/);
-                // new RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]+[^\s]$/);
-                // new RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]+[^\s]{2,50}$/);
-               
                 if (!pattern.test(input["skills"])) {
                     isValid = false;
                     errors["skills"] = "Please enter valid skills.";
@@ -442,12 +364,12 @@ class AddRequisition extends React.Component {
                     requisitionId1: a3,
                     RID: b,
                 });
-                let text ="On this requisiton recruiters are already working. \nWould you like to add yourself for this requisition?"
+                let text = "On this requisiton recruiters are already working. \nWould you like to add yourself for this requisition?"
                 if (window.confirm(text) == true) {
                     let add_cls = this.state.input;
                     add_cls[e.target.name] = e.target.value;
                     this.post_requisition(add_cls)
-                  }
+                }
 
             },
             (error) => {
@@ -466,12 +388,12 @@ class AddRequisition extends React.Component {
 
                 this.setState({ input: inputs });
             }
-        );        
+        );
     }
-    
+
     // -------------------------------------------- render ----------------------------------------------------
     render() {
-        
+
         const isAuthenticated = localStorage.getItem('recruiterID');
 
         return isAuthenticated ? (
@@ -493,24 +415,24 @@ class AddRequisition extends React.Component {
 
                                         <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '20px' }}>
 
-                                            <label for="req"><b>Requisition From:</b></label><br />
+                                            <div class="form-group">
+                                                <label for="req"><b>Requisition From:</b></label><br />
+                                                <select class="btn btn-secondary dropdown-toggle form-group"
+                                                    ref={(input) => { this.refInput = input; }}
+                                                    style={{ width: '100%' }}
+                                                    name="req" id="req"
+                                                    onChange={this.handleChange}
+                                                    value={this.state.input.req}>
 
-                                            <select class="btn btn-secondary dropdown-toggle form-group"
-                                                ref={(input) => { this.refInput = input; }}
-                                                style={{ width: '100%' }} 
-                                                name="req" id="req"
-                                                onChange={this.handleChange}
-                                                value={this.state.input.req}>
-
-                                                <option hidden value='' default selected> Select MSP/VMS/Commercial Client </option>
-                                                {
-                                                    this.state.requisitor_fd.map((rq) => (
-                                                        <option value={rq.requisitor_fd}>{rq.requisitor_fd}</option>
-                                                    ))
-                                                }
-                                            </select>
-
-                                            <div className="text-danger">{this.state.errors.req}</div>
+                                                    <option hidden value='' default selected> Select MSP/VMS/Commercial Client </option>
+                                                    {
+                                                        this.state.requisitor_fd.map((rq) => (
+                                                            <option value={rq.requisitor_fd}>{rq.requisitor_fd}</option>
+                                                        ))
+                                                    }
+                                                </select>
+                                                <div className="text-danger">{this.state.errors.req}</div>
+                                            </div>
 
                                             <div class="form-group">
                                                 <label for="id"><b>Job Posting ID:</b></label>
@@ -534,28 +456,24 @@ class AddRequisition extends React.Component {
                                                     style={{ width: '100%' }}
                                                     name="client" id="client"
                                                     onChange={this.handleChange}
-                                                    // onKeyUp={this.keyUpHandlerReq}
                                                     value={this.state.input.client}>
 
                                                     <option hidden value='' default selected> Select Client Name </option>
                                                     {
-                                                            
+
                                                         this.state.client_fd.map((cl) => (
-                                                        
-                                                            cl.requisitor_fd.requisitor_fd==this.state.input.req?
-                                                           (
-                                                            <option value={cl.client_name}>{cl.client_name}</option>
-                                                           
-                                                           )
-                                                            :
-                                                            (
-                                                                null                                                            
-                                                            )
-                                                            
+
+                                                            cl.requisitor_fd.requisitor_fd == this.state.input.req ?
+                                                                (
+                                                                    <option value={cl.client_name}>{cl.client_name}</option>
+                                                                )
+                                                                :
+                                                                (
+                                                                    null
+                                                                )
                                                         ))
                                                     }
-                                                    
-                                                     
+
                                                 </select>
 
                                                 <div className="text-danger">{this.state.errors.client}</div>
@@ -569,7 +487,6 @@ class AddRequisition extends React.Component {
                                                     name="jobTitle"
                                                     value={this.state.input.jobTitle}
                                                     onChange={this.handleChange}
-                                                    // onKeyUp={this.keyUpHandlerSecond}
                                                     placeholder="Job Title"
                                                     class="form-control" />
 
@@ -587,7 +504,6 @@ class AddRequisition extends React.Component {
                                                     <option hidden value=''>Select Duration</option>
                                                     {
                                                         this.state.duration_fd.map((dr) => (
-
                                                             <option value={dr.duration}>{dr.duration}</option>
                                                         ))
                                                     }
@@ -607,7 +523,6 @@ class AddRequisition extends React.Component {
                                                     name="clientrate"
                                                     value={this.state.input.clientrate}
                                                     onChange={this.handleChange}
-                                                    // onKeyUp={this.keyUpHandlerSub}
                                                     placeholder="Client Rate"
 
                                                     class="form-control" />
@@ -623,9 +538,7 @@ class AddRequisition extends React.Component {
                                                     name="location"
                                                     value={this.state.input.location}
                                                     onChange={this.handleChange}
-                                                    // onKeyUp={this.keyUpHandlerClosure}
                                                     placeholder="Location"
-
                                                     class="form-control" />
 
                                                 <div className="text-danger">{this.state.errors.location}</div>
@@ -636,7 +549,6 @@ class AddRequisition extends React.Component {
                                                     style={{ width: '100%' }}
                                                     name="positionType" id="positionType"
                                                     onChange={this.handleChange}
-                                                    // onKeyUp={this.keyUpHandlerReq}
                                                     value={this.state.input.positionType}>
 
                                                     <option hidden value='' default selected> Select Position Type </option>
@@ -661,7 +573,6 @@ class AddRequisition extends React.Component {
                                                     name="skills"
                                                     value={this.state.input.skills}
                                                     onChange={this.handleChange}
-                                                    // onKeyUp={this.keyUpHandlerClosure}
                                                     placeholder="Skills"
 
                                                     class="form-control"
@@ -687,18 +598,7 @@ class AddRequisition extends React.Component {
                                                     Add
                                                 </button>
                                             </div>
-                                            {/* <div className='col-2'>
-                                                <button
-                                                    // type="reset"
-                                                    type='button'
-                                                    className="btn btn-success w-100 theme-btn mx-auto"
-                                                    onClick={this.addCandidate}
-                                                // onClick={this.addCandidate(this.state.empID, this.state.requisitionId1)}
-                                                >
-                                                    Next
-                                                </button>
-
-                                            </div> */}
+                                          
                                             <div className='col-2'>
                                                 <button
                                                     type="reset"

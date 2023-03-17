@@ -2,15 +2,10 @@ import { React, useState, useEffect } from "react";
 import axios from "axios";
 import base_url from "../api/bootapi";
 import { Table } from "reactstrap";
-import EmployeeHeader from "./EmployeeHeader";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import AdminHeader from "./AdminHeader";
-import { useMemo } from "react";
 import { Helmet } from "react-helmet";
-// import $ from 'jquery';
-
-// import data from './data/mock-data.json';
 
 let PageSize = 10;
 
@@ -18,24 +13,17 @@ function ViewReqForAdmin() {
 
     const recruiterIDAdmin = localStorage.getItem('recruiterIDAdmin');
 
-
     const [requisitionList, setRequisitionList] = useState([]);
     const [statusList, setstatusList] = useState([]);
     const [statusFD, setstatusFD] = useState([]);
-    const [updatestatus, setUpdateStatus] = useState(null);
-    const [reqid, setReqid] = useState(null);
     const [searchTerm, setSearchTerm] = useState("");
-
     let navigate = useNavigate();
 
     let empID = localStorage.getItem("recruiterIDAdmin")
 
-
-    // ---------------------------Pagination-------------------------------------------------------------
     // ---------------------------Pagination-------------------------------------------------------------
     useEffect(() => {
         axios.get(`${base_url}/getAllRequisition`).then(json => setRequisitionList(json.data))
-        // axios.get(`${base_url}/getEmpList_TM`).then(json => setEmployee(json.data))
         axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
         axios.get(`${base_url}/getAllStatusFd`).then(json => setstatusFD(json.data))
 
@@ -55,37 +43,19 @@ function ViewReqForAdmin() {
                 axios.get(`${base_url}/getAllRequisition`).then(json => setRequisitionList(json.data))
             },
                 (error) => {
-                    // alert("Enter valid data");
+                    console.log(error);
                 });
     }
 
-    // const onSave = ({ newReqid, newReqFrom, newId, newClient, newJobTitle, newDuration,
-    //     newClientRate, newLocation, newPType, newSkills }) => {
-
-    // }
-
     const onEdit = ({ requisitionID }) => {
 
-        console.log(requisitionID + " " + recruiterIDAdmin);
         // localStorage.setItem('recruiterID', recruiterID);
-
         // localStorage.setItem("recruiterIDAdmin",recruiterIDAdmin);
         localStorage.setItem('requisitionID', requisitionID);
 
         navigate("/updateRequisition");
 
-        // setInEditMode({
-        //     status: true,
-        //     rowKey: requisitionID,
-        // })
     }
-
-    // const onCancel = () => {
-    //     setInEditMode({
-    //         status: false,
-    //         rowKey: null
-    //     })
-    // }
 
     const fetchInventory = () => {
         axios.get(`${base_url}/CurMonthAll`).then(json => setRequisitionList(json.data))
@@ -94,7 +64,6 @@ function ViewReqForAdmin() {
     const getnewID = (e) => {
         let requisitionID = e.rq
         localStorage.setItem("requisitionID", requisitionID)
-        //console.log(rq)
     }
 
     const renderTable = () => {
@@ -207,15 +176,11 @@ function ViewReqForAdmin() {
                                 onChange={event => { setSearchTerm(event.target.value) }}
                                 style={{ width: '500px', borderRadius: '100px', paddingLeft: '30px' }}
                             />
-
                         </div>
                     </div>
 
                     <div style={{ width: '' }}  >
 
-                        {/* <div className="col-12">
-                            <input type="search" placeholder="Search course by title/discription or fee" onChange={event => { setSearchTerm(event.target.value) }}></input>
-                        </div> */}
                         <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px' }}>
                             <thead>
                                 <tr>
@@ -243,8 +208,6 @@ function ViewReqForAdmin() {
                     </div>
                 </div>
             </div>
-
-
 
             {/* // ********************************************** add script code**************************** */}
 

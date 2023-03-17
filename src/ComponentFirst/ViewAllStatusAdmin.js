@@ -2,7 +2,6 @@ import { React, useState, useEffect } from "react";
 import axios from "axios";
 import base_url from "../api/bootapi";
 import { Table } from "reactstrap";
-import EmployeeHeader from "./EmployeeHeader";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import AdminHeader from "./AdminHeader";
@@ -12,8 +11,6 @@ import { format } from 'date-fns';
 function ViewAllStatusAdmin() {
 
     const recruiterIDAdmin = localStorage.getItem('recruiterIDAdmin');
-    // const statusID = localStorage.getItem('statusID');
-    //const requisitionID = localStorage.getItem('requisitionID');
 
     const [requisitionList, setRequisitionList] = useState([]);
     const [statusList, setstatusList] = useState([]);
@@ -36,10 +33,8 @@ function ViewAllStatusAdmin() {
 
     let navigate = useNavigate();
 
-    // let empID = localStorage.getItem("recruiterIDAdmin")
     useEffect(() => {
         axios.get(`${base_url}/getAllRequisition`).then(json => setRequisitionList(json.data))
-        // axios.get(`${base_url}/getEmpList_TM`).then(json => setEmployee(json.data))
         axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
         axios.get(`${base_url}/getAllStatusFd`).then(json => setstatusFD(json.data))
 
@@ -64,7 +59,7 @@ function ViewAllStatusAdmin() {
 
             },
                 (error) => {
-                    // alert("Enter valid data");
+                    console.log(error);
                 });
      }
 
@@ -97,32 +92,13 @@ function ViewAllStatusAdmin() {
         }
         else{
             UpdateStatusByAdmin({ statusID, newStatus, newStatusDate });
-        }
-
-       
+        }       
     }
 
     const UpdateStatusByAdmin = ({ statusID, newStatus, newStatusDate }) => {
         let status = newStatus;
         let stDate = newStatusDate;
 
-
-        // if ((sub < 0) || (first < 0) || (second < 0) || (closure < 0)) {
-        //     alert("Please enter positive numbers")
-        // }
-        // else if (req < 1) {
-        //     alert("Atleast one requirement is needed")
-        // }
-        // else if (sub < first) {
-        //     alert("Please enter valid number for first interview")
-        // }
-        // else if (first < second) {
-        //     alert("Please enter valid number for second interview")
-        // }
-        // else if (second < closure) {
-        //     alert("Please enter valid number for closure")
-        // }
-        // else {
         axios.put(`${base_url}/update_status_Admin?status_id=${statusID}&status=${newStatus}&status_date=${newStatusDate}`, {
         })
             .then(response => {
@@ -135,17 +111,15 @@ function ViewAllStatusAdmin() {
                 });
 
                 getStatusData();
-
             },
                 (error) => {
                     alert("Enter valid data");
                 }
-            )
-        // }
+            )     
     }
 
     const onCancel = () => {
-        // reset the inEditMode state value
+   
         setInEditMode({
             status: false,
             rowKey: null
@@ -159,101 +133,6 @@ function ViewAllStatusAdmin() {
         console.log('date : ' + z)
     }
 
-    const fetchInventory = () => {
-        axios.get(`${base_url}/CurMonthAll`).then(json => setRequisitionList(json.data))
-
-    }
-    const getnewID = (e) => {
-        let requisitionID = e.rq
-        localStorage.setItem("requisitionID", requisitionID)
-        //console.log(rq)
-    }
-
-    const handleChange = (e) => {
-
-        let a = e.rrid;
-        let b = e.sstt
-        //let c= e.canid;
-
-        console.log(a, b)
-
-        setReqid(a)
-        setUpdateStatus(b)
-    }
-
-    const handleSubmit = (e) => {
-
-        console.log("submit11111111")
-
-
-        let a = reqid;
-        let b = updatestatus;
-
-        console.log(a, b)
-        postdata(a, b);
-
-    }
-
-    const handleSubmit2 = (e) => {
-
-        // e.preventDefault();
-        console.log("submit222222")
-        let a = reqid;
-        let b = updatestatus;
-        let c = e.canid
-
-        console.log(a, b, c)
-        postdata2(a, b, c);
-    }
-
-    const postdata = (a, b) => {
-
-        console.log(a, b)
-        let empID = 0;
-
-        axios.post(`${base_url}/update_status1?recruiter_id=${empID}&requisition_id=${a}&status=${b}`).then(
-
-            (response) => {
-                axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
-                toast.success("Status update successfully!",
-                    {
-                        position: "top-right", autoClose: 2000,
-                        style: { position: "absolute", top: "5px", width: "300px" }
-                    }
-                );
-            },
-            (error) => {
-                console.log(error);
-                console.log("Error");
-                alert("Please enter valid details.")
-            }
-        );
-    }
-
-    const postdata2 = (a, b, c) => {
-
-        console.log(a, b, c)
-        let empID = 0;
-
-        axios.post(`${base_url}/update_status2?recruiter_id=${empID}&requisition_id=${a}&candidate_id=${c}&status=${b}`).then(
-
-            (response) => {
-                axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
-                toast.success("Status update successfully!",
-                    {
-                        position: "top-right", autoClose: 2000,
-                        style: { position: "absolute", top: "5px", width: "300px" }
-                    }
-                );
-            },
-            (error) => {
-                console.log(error);
-                console.log("Error");
-                alert("Please enter valid details.")
-            }
-        );
-    }
-
     const renderTable = () => {
         let candidate_id = localStorage.getItem("candidateID")
         let requisition_id = localStorage.getItem("requisitionID")
@@ -262,7 +141,6 @@ function ViewAllStatusAdmin() {
 
             var dd = new Date(st.status_date);
 
-            // if (st.requisition.requisition_id == requisitionID && st.flag == 1)
             if (st.requisition.requisition_id == requisition_id &&
                 (st.candidate == null || st.candidate.candidate_id == candidate_id)
                 && st.recruiter.recruiter_id == recruiter_id)
@@ -273,15 +151,8 @@ function ViewAllStatusAdmin() {
                         <td>{st.requisition.id}</td>
                         <td>{st.recruiter.recruiter_name}</td>
                         <td>
-                            {/* {st.status} */}
                             {
-                                inEditMode.status && inEditMode.rowKey === st.status_id ? (
-                                    // <input required value={ st.status}
-                                    //     onChange={(event) => setStatus1(event.target.value)}
-                                    //     style={{ width: "100px" }}
-                                    //     minLength={1}
-                                    //     maxLength={3}
-                                    // />
+                                inEditMode.status && inEditMode.rowKey === st.status_id ? (                                    
 
                                     <select class="btn btn-secondary dropdown-toggle"
                                         style={{ width: '200px' }}
@@ -292,7 +163,6 @@ function ViewAllStatusAdmin() {
                                             setCurrentStatus(st.status)}}
                                             
                                     >
-
                                         <option hidden default select> Select Status</option>
 
                                         {
@@ -308,19 +178,6 @@ function ViewAllStatusAdmin() {
                             }
                         </td>
                         <td>
-                            {/* {st.status_date} */}
-                            {/* {
-                                    inEditMode.status && inEditMode.rowKey === st.status_id ? (
-                                        <input required value={st.status_date}
-                                            onChange={(event) => setStatusDate(event.target.value)}
-                                            style={{ width: "100px" }}
-                                            minLength={1}
-                                            maxLength={3}
-                                        />
-                                    ) : (
-                                        st.status_date
-                                    )
-                                } */}
                             {
                                 inEditMode.status && inEditMode.rowKey === st.status_id ? (
 

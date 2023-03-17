@@ -1,8 +1,6 @@
 import { React, useState, useEffect } from "react";
 import axios from "axios";
 import base_url from "../api/bootapi";
-import Header from "../ViewComponent1/Header";
-import EmpSidebar from "../ViewComponent1/EmpSidebar";
 import { Table } from "reactstrap";
 import EmployeeHeader from "./EmployeeHeader";
 import { toast } from "react-toastify";
@@ -32,11 +30,9 @@ function ViewAllRecords() {
 
     useEffect(() => {
         axios.get(`${base_url}/getAllRequisition`).then(json => setClosureList(json.data))
-        // axios.get(`${base_url}/getEmpList_TM`).then(json => setEmployee(json.data))
         axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
-        axios.get(`${base_url}/getAllStatusFd`).then(json =>setstatusFD(json.data))
-      
-       
+        axios.get(`${base_url}/getAllStatusFd`).then(json => setstatusFD(json.data))
+
     }, []);
 
     const deleteBook = (id) => { }
@@ -49,40 +45,37 @@ function ViewAllRecords() {
     const onSave = ({ newReqid, newReqFrom, newId, newClient, newJobTitle, newDuration,
         newClientRate, newLocation, newSkills }) => {
 
-        // console.log("clsid,"+clsid+" newReq,"+newReq+ "newSub,"+newSub+" newFirst,"+newFirst+" newSecond,"+newSecond+" newClosure,"+newClosure+" y "+y);
         updateInventory({
             newReqid, newReqFrom, newId, newClient, newJobTitle, newDuration,
             newClientRate, newLocation, newSkills
         });
     }
-    const handleChange= (e)=> {
+    const handleChange = (e) => {
 
-       let a= e.rrid;
-       let b= e.sstt
-       setReqid(a)
-       setUpdateStatus(b)
-       console.log(a);
-       console.log(b);
-    //console.log(updatestatus);
-        
+        let a = e.rrid;
+        let b = e.sstt
+        setReqid(a)
+        setUpdateStatus(b)
+        console.log(a);
+        console.log(b);
+
     }
 
-    const handleSubmit=(e)=> {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
-          let a= reqid;
-          let b= updatestatus;
+        let a = reqid;
+        let b = updatestatus;
 
-            postdata(a,b);
-        
+        postdata(a, b);
+
         // 👇️ clear all input values in the form
-       // e.target.reset();
+        // e.target.reset();
     }
 
-   const postdata = (a,b) => {
+    const postdata = (a, b) => {
         let recruiter_id = 2;
-        let candidate_id= 0;
-      
+        let candidate_id = 0;
 
         axios.post(`${base_url}/update_status?recruiter_id=${recruiter_id}&requisition_id=${a}&candidate_id=${candidate_id}&status=${b}`).then(
 
@@ -97,14 +90,12 @@ function ViewAllRecords() {
                 alert("Please enter valid details.")
             }
         );
-
-       
     }
 
     // ----------------------------------------------------------------------------------------------------------
     const onEdit = ({ crrReqid, crrReqFrom, crrId, crrClient, crrJobTitle, crrDuration,
-        crrClientRate, crrLocation, crrSkills}) => {
-           
+        crrClientRate, crrLocation, crrSkills }) => {
+
         setInEditMode({
             status: true,
             rowKey: crrReqid,
@@ -117,7 +108,6 @@ function ViewAllRecords() {
         setClientRate(crrClientRate);
         setLocation(crrLocation);
         setSkills(crrSkills);
-        
     }
 
     const onCancel = () => {
@@ -129,19 +119,18 @@ function ViewAllRecords() {
 
     const fetchInventory = () => {
         axios.get(`${base_url}/CurMonthAll`).then(json => setClosureList(json.data))
-
     }
-    const getnewID = (e)=>{
-        let rq= e.rq
-        localStorage.setItem("requisitionID",rq)
-        //console.log(rq)
+
+    const getnewID = (e) => {
+        let rq = e.rq
+        localStorage.setItem("requisitionID", rq)
     }
 
     const renderTable = () => {
         return closureList.map(cls => {
-           
+
             return (
-                
+
                 <tr key={cls.requisition_id}>
                     <td></td>
                     <td hidden>{cls.requisition_id}</td>
@@ -155,15 +144,11 @@ function ViewAllRecords() {
                                     maxLength={3}
                                 />
                             ) : (
-                                //  cls.requisition_from
-                                // <a href="view_all2/${abc}" >{cls.requisition_from}</a>
-                         
-                                <a href="view3" onClick={(evt)=>getnewID({rq: cls.requisition_id})}>{cls.requisition_from}</a>
+
+                                <a href="view3" onClick={(evt) => getnewID({ rq: cls.requisition_id })}>{cls.requisition_from}</a>
                             )
-                            
+
                         }
-                       
-                         
                     </td>
                     <td>
                         {
@@ -178,7 +163,6 @@ function ViewAllRecords() {
                                 cls.id
                             )
                         }
-
                     </td>
                     <td>
                         {
@@ -208,7 +192,7 @@ function ViewAllRecords() {
                             )
                         }
                     </td>
-                   <td>
+                    <td>
                         {
                             inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
                                 <input required value={duration}
@@ -225,59 +209,6 @@ function ViewAllRecords() {
                     <td>{cls.client_rate}</td>
                     <td>{cls.location}</td>
                     <td>{cls.skills}</td>
-                    {/*  <td>
-                
-                        {
-                                
-                            statusList.map(st => {
-                                console.log("status rq id : " +st.requisition.requisition_id);                                
-                                console.log("requisition rq id : " +cls.requisition_id);
-
-                                if(st.requisition.requisition_id==cls.requisition_id && st.flag==1)
-                                {
-                                    return (
-                                        <>
-                                        <td>{st.status}</td>
-                                        <td>{st.status_date}</td>
-                                        <td>
-                        {
-                           
-                        <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '100%' }}
-                                                    name="status" id="status"
-                                                    // onChange={(evt)=>setUpdateStatus(evt.target.value)}>
-                                                         onChange={(evt)=>handleChange({rrid: cls.requisition_id, sstt:evt.target.value})}>
-                                                    
-                                                     {/*onKeyUp={this.keyUpHandlerReq}
-                                                    value={this.state.input.rate_term}> 
-
-                                                    <option value='' default selected> Select Status</option>
-                                                 
-                                                    {
-                                             statusFD.map((stfd) => (
-
-                                                <option value={stfd.status_fd}>{stfd.status_fd}</option>
-                                               ))
-
-                                             }  
-                                               
-                                                </select>
-                                              
-
-                        }
-                        
-                           <button onClick={handleSubmit}>Change Status</button> 
-                    </td>
-                                        
-                                        </>
-                                            )
-                                        
-                                       }
-                                })
-                                
-                                
-                        }
-                    </td> */}
                     <td>
                         {
                             inEditMode.status && inEditMode.rowKey === cls.requisition_id ? (
@@ -292,7 +223,7 @@ function ViewAllRecords() {
                                                     newReqid: cls.requisition_id, newReqFrom: reqFrom, newId: id,
                                                     newClient: client, newJobTitle: jobTitle, newDuration: duration,
                                                     newClientRate: clientRate, newLocation: location, newSkills: skills,
-                                                 
+
                                                 })
                                         }
                                         }
@@ -316,11 +247,11 @@ function ViewAllRecords() {
                                         className="btn btn-outline-success"
 
                                         onClick={() => onEdit({
-                                           
+
                                             crrReqid: cls.requisition_id, crrReqFrom: cls.requisition_from, crrId: cls.id,
                                             crrClient: cls.client, crrJobTitle: cls.job_title, crrDuration: cls.duration,
                                             crrClientRate: cls.client_rate, crrLocation: cls.location, crrSkills: cls.skills,
-                                           
+
                                         })}
                                     >
                                         <i class="fa fa-edit"></i>
@@ -329,26 +260,18 @@ function ViewAllRecords() {
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <button className="btn btn-outline-danger"
                                         onClick={() => { if (window.confirm('Are you sure to delete this requirement?')) deleteBook(cls.closureid) }}>
-                                        {/*Delete*/}<i class="fa fa-trash"></i></button>
+                                        <i class="fa fa-trash"></i></button>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                 </>
-
                             )
                         }
 
                     </td>
-                    
-                   
-                   
                 </tr >
-
-                
 
             );
         })
     }
-
-   
 
     return (
         // return (
@@ -373,16 +296,15 @@ function ViewAllRecords() {
                                 <th style={{ width: '100px' }}>Client Rate</th>
                                 <th style={{ width: '130px' }}>Location</th>
                                 <th style={{ width: '200px' }}>Skills</th>
-                                
+
                                 <th style={{ width: '95px' }}>Action</th>
-                               
+
                             </tr>
                         </thead>
                         <tbody>
-                     
-                        {renderTable()}
-                       
-                           
+
+                            {renderTable()}
+
                         </tbody>
                     </Table>
 

@@ -4,16 +4,8 @@ import base_url from '../api/bootapi';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import history from './ResponseVal';
-import { useRef } from 'react';
-import { getValue } from '@testing-library/user-event/dist/utils';
-import NavBarHeader from './NavbarHeader';
 import EmployeeHeader from './EmployeeHeader';
-import { json } from 'react-router-dom';
 import AdminHeader from './AdminHeader';
-
-// const empID = localStorage.getItem('recruiterID');
-// console.log("recruiterId : " + empID);
-// let reqID = '';
 
 class UpdateReq extends React.Component {
 
@@ -25,25 +17,15 @@ class UpdateReq extends React.Component {
         const recruiterID = localStorage.getItem('recruiterID');
         this.setState({ recruiterID: recruiterID });
         const requisitionID = localStorage.getItem('requisitionID');
-        // this.setState({ empID: recruiterID });
 
         this.setState({ requisitionId1: requisitionID });
-
-        console.log("recruiterIDAdmin : " + recruiterIDAdmin);
-        console.log("recruiterID : " + recruiterID);
-        console.log("requisitionID : " + requisitionID);
 
         axios.get(`${base_url}/getReqByReqID?requisitionID=${requisitionID}`).then(
 
             (response) => {
-                console.log(typeof (response));
-                console.log(response.data)
-                console.log(response.data.requisition_id);
-                console.log(response.data.id);
 
                 let inputs = this.state.input;
-
-                inputs["req_id"] = response.data.requisition_id;
+                this.state.reqval = inputs["req"] = response.data.requisition_from;
                 inputs["req"] = response.data.requisition_from;
                 inputs["id"] = response.data.id;
                 inputs["client"] = response.data.client;
@@ -103,7 +85,7 @@ class UpdateReq extends React.Component {
                 this.setState({ client_fd: json.data })
             )
             .catch(error => {
-                // alert("Error client")
+                console.log(error);
             })
     }
 
@@ -113,7 +95,6 @@ class UpdateReq extends React.Component {
         this.state = {
             input: {},
             errors: {},
-            // empID: '',
             duration_fd: [],
             positionType_fd: [],
             requisitor_fd: [],
@@ -123,7 +104,9 @@ class UpdateReq extends React.Component {
             requisitionData: {},
             requisitionId1: undefined,
             recruiterID: undefined,
-            recruiterIDAdmin: undefined
+            recruiterIDAdmin: undefined,
+
+            reqval: '',
 
         };
         this.handleChange = this.handleChange.bind(this);
@@ -141,7 +124,7 @@ class UpdateReq extends React.Component {
         inputs["clientrate"] = undefined;
         inputs["location"] = undefined;
         inputs["positionType"] = undefined;
-        inputs["skills"] = undefined;
+        inputs["skills"] = '';
 
         this.setState({ input: inputs });
         this.setState({ requisitionData: inputs });
@@ -159,90 +142,50 @@ class UpdateReq extends React.Component {
         this.setState({ errors: errors1 });
     }
 
-    // addCandidate = () => {
-    //     console.log(reqID);
-
-    //     let a = this.state.empID
-    //     let b = this.state.requisitionId1;
-    //     console.log("recid = " + a + " rqid = " + b);
-    //     console.log("recid = " + this.state.empID + " rqid = " + this.state.requisitionId1);
-    //     // onClick={this.addCandidate(this.state.empID, this.state.requisitionId1)}                                       
-
-    //     if (b != undefined) {
-    //         localStorage.setItem('recruiterId', a);
-    //         localStorage.setItem('ReqId', b)
-
-    //         history.push("/addCandidate");
-    //         window.location.reload();
-    //         toast.success("Render  successfully!",
-    //             { position: "top-right" })
-    //     }
-
-    //     console.log("addCandidate");
-    // }
-
-    handleChangeReq(e) {
-        let add_cls1 = {}
-        // console.log("state val: "+this.state.input.client);
-        add_cls1[e.target.name] = e.target.value;
-
-        add_cls1["client"] = undefined;
-        this.setState({
-            input: add_cls1,
-        });
-        // this.state.input.client = null;
-
-        console.log(add_cls1);
-    }
-
     handleChange(e) {
+
         let add_cls = this.state.input;
         add_cls[e.target.name] = e.target.value;
-        console.log(add_cls);
+        let a = add_cls["req"]
+        if (this.state.reqval != a) {
+            add_cls["client"] = null
+        }
 
+        console.log(a);
         this.setState({
-            input: add_cls,
+            input: add_cls, reqval: a
         });
-        // console.log(this.state.input);
-        console.log("for req : " + this.state.input.req);
-
-        // this.state.client_fd.map((cl) => (
-        //     console.log(cl.client_name, this.state.input.client),
-        //     // ##########################################compare client name and current client name#####
-        //     cl.client_name != this.state.input.client ?
-        //         (
-        //             // console.log(cl.client_name),
-        //             add_cls["client"]=undefined,
-        //             this.setState({ input: add_cls})
-        //         )
-        //         :
-        //         (
-        //             add_cls[e.target.name] = e.target.value,
-        //             console.log(add_cls),
-
-        //             this.setState({
-        //                 input: add_cls,
-        //             })
-        //         )
-        // ))
     }
+
+    // handleChange2(e) {
+    //     let add_cls = this.state.input;
+    //     add_cls[e.target.name] = e.target.value;           
+
+    //     console.log(add_cls);
+
+    //     this.setState({
+    //         input: add_cls,
+    //     });
+        
+    //     console.log("for req : " + this.state.input.req);
+    // }
 
     handleSubmit(e) {
         e.preventDefault();
-        this.state.input["id"] = this.state.input["id"].trim(" ");
-        this.state.input["jobTitle"] = this.state.input["jobTitle"].trim(" ");
-        this.state.input["location"] = this.state.input["location"].trim(" ");
-        this.state.input["clientrate"] = this.state.input["clientrate"].trim(" ");
-        this.state.input["skills"] = this.state.input["skills"].trim(" ");
-
-
-        this.state.input["id"] = this.state.input["id"].replaceAll("#", "%23")
-        this.state.input["jobTitle"] = this.state.input["jobTitle"].replaceAll("#", "%23")
-        this.state.input["location"] = this.state.input["location"].replaceAll("#", "%23")
-        this.state.input["clientrate"] = this.state.input["clientrate"].replaceAll("#", "%23")
-        this.state.input["skills"] = this.state.input["skills"].replaceAll("#", "%23")
 
         if (this.validate()) {
+
+            this.state.input["id"] = this.state.input["id"].trim(" ");
+            this.state.input["jobTitle"] = this.state.input["jobTitle"].trim(" ");
+            this.state.input["location"] = this.state.input["location"].trim(" ");
+            this.state.input["clientrate"] = this.state.input["clientrate"].trim(" ");
+            this.state.input["skills"] = this.state.input["skills"].trim(" ");
+
+            this.state.input["id"] = this.state.input["id"].replaceAll("#", "%23")
+            this.state.input["jobTitle"] = this.state.input["jobTitle"].replaceAll("#", "%23")
+            this.state.input["location"] = this.state.input["location"].replaceAll("#", "%23")
+            this.state.input["clientrate"] = this.state.input["clientrate"].replaceAll("#", "%23")
+            this.state.input["skills"] = this.state.input["skills"].replaceAll("#", "%23")
 
             let add_cls = this.state.input;
             add_cls[e.target.name] = e.target.value;
@@ -274,8 +217,6 @@ class UpdateReq extends React.Component {
 
         axios.put(`${base_url}/update_requsition?requisition_id=${d}&requisition_from=${d1}&id=${d2}&client=${d3}&job_title=${d4}&duration=${d5}&client_rate=${d6}&location=${d7}&position_type=${d8}&skills=${d9}`).then(
 
-            // requisition_id, requisition_from, id, client, job_title, duration, client_rate, location,
-            // 	position_type, skills
             (response) => {
                 console.log(response.data)
                 console.log(response.data.requisition_id);
@@ -283,7 +224,6 @@ class UpdateReq extends React.Component {
                 console.log(typeof (response));
 
                 this.setState({ requisitionId1: a });
-                // console.log("rqid="+response.data.requisition.requisition_id);
 
                 toast.success("Requisition updated successfully!",
                     {
@@ -332,9 +272,6 @@ class UpdateReq extends React.Component {
 
         console.log("type of input ");
         console.log(this.state.input.req_id);
-        // console.log("type of reqNum " + typeof (reqNum));
-        // this.state.input["jobTitle"] = this.state.input["jobTitle"].trim(" ");
-        // this.state.input["location"] = this.state.input["location"].trim(" ");
 
         // -------------req---------------------------------------------------------------------------------------------
 
@@ -342,14 +279,7 @@ class UpdateReq extends React.Component {
             isValid = false;
             errors["req"] = "This field is required";
         }
-        if ((input["req"]) != undefined) {
-
-            var pattern = new RegExp(/^[^\s][a-zA-Z\s]+[^\s]$/);
-            if (!pattern.test(input["req"])) {
-                isValid = false;
-                errors["req"] = "Please enter only characters.";
-            }
-        }
+        
         // -------------id---------------------------------------------------------------------------------------------
         if ((!input["id"])) {
             isValid = false;
@@ -360,7 +290,7 @@ class UpdateReq extends React.Component {
         console.log("typeOf id1: " + typeof (id1));
         if ((input["id"]) != undefined) {
 
-            var pattern = new RegExp(/^(?=.*[a-zA-Z0-9]).{1,25}$/); //new RegExp(/^[A-Za-z#+.\b]+$/);
+            var pattern = new RegExp(/^(?=.*[a-zA-Z0-9]).{1,25}$/); 
             if (!pattern.test(id1)) {
                 isValid = false;
                 errors["id"] = "Please enter valid Job Posting ID.";
@@ -374,13 +304,13 @@ class UpdateReq extends React.Component {
         // -------------client-----------------------------------------------------------------------------------------
         if ((!input["client"])) {
             isValid = false;
-            errors["client"] = "This client field is required";
+            errors["client"] = "This  field is required";
         }
 
         // -------------jobTitle-----------------------------------------------------------------------------------------
         if ((!input["jobTitle"])) {
             isValid = false;
-            errors["jobTitle"] = "This jobTitle field is required";
+            errors["jobTitle"] = "This field is required";
         }
         if ((input["jobTitle"]) != undefined) {
 
@@ -395,7 +325,7 @@ class UpdateReq extends React.Component {
         // -------------duration-----------------------------------------------------------------------------------------
         if ((!input["duration"])) {
             isValid = false;
-            errors["duration"] = "This duration field is required";
+            errors["duration"] = "This field is required";
         }
         // -------------clientrate-----------------------------------------------------------------------------------------
         if ((!input["clientrate"])) {
@@ -431,50 +361,13 @@ class UpdateReq extends React.Component {
         // -------------positionType-----------------------------------------------------------------------------------------
         if ((!input["positionType"])) {
             isValid = false;
-            errors["positionType"] = "This positionType field is required";
+            errors["positionType"] = "This field is required";
         }
         // -------------skills-----------------------------------------------------------------------------------------
         if ((!input["skills"])) {
             isValid = false;
-            errors["skills"] = "This skills field is required";
+            errors["skills"] = "This field is required";
         }
-        // if ((input["skills"]) != undefined) {
-        //     if ((input["skills"]) != undefined) {
-
-        //         var pattern = new RegExp(/^[^\s][a-zA-Z !@#$%^&*()\s]+[^\s].{1,9}$/);
-        //         // new RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]+[^\s]{2,50}$/);
-
-        //         if (!pattern.test(input["skills"])) {
-        //             isValid = false;
-        //             errors["skills"] = "Please enter valid skills.";
-        //         }
-        //     }
-        //     if (!pattern.test(input["skills"])) {
-        //         isValid = false;
-        //         errors["skills"] = "Please enter valid skills.";
-        //     }
-        // }
-
-        const clientName ='';
-
-        this.state.client_fd.map((cl) => (
-            // console.log(cl.client_name, this.state.input.client),
-           
-            // ##########################################compare client name and current client name#####
-            cl.client_name == this.state.input.client 
-                (
-                  
-                    clientName = cl.client_name,
-                    console.log(cl.client_name, this.state.input.client),
-                    console.log("true")
-                )
-                // :
-                // (
-                    // isValid = false
-                //     console.log("error show"),
-                //     errors["client"] = "Select valid client"
-                // )
-        ))
 
         this.setState({
             errors: errors
@@ -519,15 +412,11 @@ class UpdateReq extends React.Component {
                                             <select class="btn btn-secondary dropdown-toggle form-group"
                                                 ref={(input) => { this.refInput = input; }}
                                                 style={{ width: '100%' }} name="req" id="req"
-                                                // onChange={this.handleChange}                                                                                              
-                                                onChange={this.handleChange}
-                                                onBlur={this.handleChangeReq}
-
-                                                // value={this.state.requisitionData.req}
+                                                onChange={this.handleChange}                                                
                                                 value={this.state.input.req}
                                             >
 
-                                                {/* <option value='' default selected> Select Requisitor </option> */}
+                                                <option hidden value='' default selected> Select Requisitor </option>
                                                 {
                                                     this.state.requisitor_fd.map((rq) => (
 
@@ -537,7 +426,7 @@ class UpdateReq extends React.Component {
                                             </select>
 
                                             <div className="text-danger">{this.state.errors.req}</div>
-                                            <div className="text-danger">{this.state.errors.req}</div>
+
 
                                             <div class="form-group">
                                                 <label for="id"><b>Job Posting ID:</b></label>
@@ -548,8 +437,6 @@ class UpdateReq extends React.Component {
                                                     name="id"
                                                     value={this.state.input.id}
                                                     onChange={this.handleChange}
-                                                    // onBlur={this.keyUpHandlerID}
-                                                    // onKeyUp={this.keyUpHandlerID}
                                                     placeholder="Job Posting ID"
 
                                                     class="form-control" />
@@ -562,20 +449,13 @@ class UpdateReq extends React.Component {
                                                 <select class="btn btn-secondary dropdown-toggle"
                                                     style={{ width: '100%' }}
                                                     name="client" id="client"
-
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerReq}
                                                     value={this.state.input.client}>
 
-                                                    {/* let cleanClient = this.state.input;
-                                                          cleanClient["client"]=null;
-                                                          this.setState({input:cleanClient}); */}
-
-                                                    {/* <option value='' default selected> Select client name </option> */}
                                                     <option hidden value='' default selected> Select Client Name </option>
                                                     {
                                                         this.state.client_fd.map((cl) => (
-                                                            // this.state.input.client == null;
 
                                                             cl.requisitor_fd.requisitor_fd == this.state.input.req ?
                                                                 (
@@ -585,7 +465,6 @@ class UpdateReq extends React.Component {
                                                                 (
                                                                     null
                                                                 )
-
                                                         ))
                                                     }
                                                 </select>
@@ -616,7 +495,7 @@ class UpdateReq extends React.Component {
                                                     onKeyUp={this.keyUpHandlerReq}
                                                     value={this.state.input.duration}>
 
-                                                    {/* <option value="">Select Duration</option> */}
+                                                    <option hidden value="">Select Duration</option>
                                                     {
                                                         this.state.duration_fd.map((dr) => (
 
@@ -669,13 +548,12 @@ class UpdateReq extends React.Component {
                                                     onKeyUp={this.keyUpHandlerReq}
                                                     value={this.state.input.positionType}>
 
-                                                    {/* <option value='' default selected> Select position type </option> */}
+                                                    <option hidden value='' default selected> Select position type </option>
                                                     {
                                                         this.state.positionType_fd.map((pt) => (
 
                                                             <option value={pt.position_type}>{pt.position_type}</option>
                                                         ))
-
                                                     }
 
                                                 </select>
@@ -690,6 +568,7 @@ class UpdateReq extends React.Component {
                                                     maxLength={200}
                                                     type="text"
                                                     name="skills"
+                                                    id="skills"
                                                     value={this.state.input.skills}
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerClosure}

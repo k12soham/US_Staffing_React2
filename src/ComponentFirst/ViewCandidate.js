@@ -7,30 +7,13 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 function ViewCandidate() {
-    // const [duration, setDuration] = useState(null);
 
-    // const [location, setLocation] = useState(null);
-    // const [skills, setSkills] = useState(null);
-
-    const [closureList, setClosureList] = useState([]);
     const [statusList, setstatusList] = useState([]);
-    const [candidateList, setCandidateList] = useState([]);
-
     const [statusFD, setstatusFD] = useState([]);
     const [updatestatus, setUpdateStatus] = useState(null);
     const [currentstatus, setCurrentStatus] = useState(null);
-    // const [candidateId, setCadidateId] = useState(null);
-    // const [candi, setCandi] = useState(null);
     const [reqid, setReqid] = useState(null);
-    // const [reqFrom, setReqFrom] = useState(null);
-    // const [id, setId] = useState(null);
-    // const [client, setClient] = useState(null);
-    // const [jobTitle, setJobTitle] = useState(null);
-    // const [clientRate, setClientRate] = useState(null);
-
-    // const [candidate_name, setCandidate_name] = useState(null);
-    // const [submitted_rate, setSubmitted_rate] = useState(null);
-    // const [phone, setPhone] = useState(null);
+    
     const [searchTerm, setSearchTerm] = useState("");
     let navigate = useNavigate();
 
@@ -40,10 +23,7 @@ function ViewCandidate() {
     });
 
     useEffect(() => {
-        // axios.get(`${base_url}/getAllRequisition`).then(json => setClosureList(json.data))
-        // axios.get(`${base_url}/getEmpList_TM`).then(json => setEmployee(json.data))
         axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
-        // axios.get(`${base_url}/getAllCandidate`).then(json => setCandidateList(json.data))
         axios.get(`${base_url}/getAllStatusFd`).then(json => setstatusFD(json.data))
 
     }, []);
@@ -68,28 +48,15 @@ function ViewCandidate() {
                 axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
             },
                 (error) => {
-                    // alert("Enter valid data");
+                    console.log(error);
                 });
     }
-
-    // const updateInventory = ({ newReqid, newReqFrom, newId, newClient, newJobTitle, newDuration,
-    //     newClientRate, newLocation, newSkills }) => {
-    //     alert("update val successfully")
-    // }
-
-    // const onSave = ({ candidateID }) => {
-
-    //     console.log(candidateID);
-
-    // }
-
 
     const handleChange = (e) => {
 
         let a = e.rrid;
         let b = e.sstt
-        let c= e.currentst;
-    
+        let c= e.currentst;    
 
         setReqid(a)
         setUpdateStatus(b)
@@ -109,15 +76,11 @@ function ViewCandidate() {
         }
         else{
             postdata(a,b);
-        }
-
-      
-
+        }  
     }
 
     const handleSubmit2 = (e) => {
 
-        // e.preventDefault();
         console.log("submit222222")
         let a = reqid;
         let b = updatestatus;
@@ -130,9 +93,7 @@ function ViewCandidate() {
         }
         else{
             postdata2(a, b, c);
-        }
-
-       
+        }       
     }
 
     const postdata = (a, b) => {
@@ -182,8 +143,7 @@ function ViewCandidate() {
     }
 
     // ----------------------------------------------------------------------------------------------------------
-    const onEdit = ({ candidateID }) => {
-        console.log(candidateID);
+    const onEdit = ({ candidateID }) => {     
 
         localStorage.setItem('candidateID', candidateID);
 
@@ -193,8 +153,6 @@ function ViewCandidate() {
             status: true,
             rowKey: candidateID,
         })
-
-
     }
 
     const onCancel = () => {
@@ -203,8 +161,6 @@ function ViewCandidate() {
             rowKey: null
         })
     }
-
-
 
     const getnewID = (e) => {
         let candidate_id = e.canid
@@ -269,28 +225,21 @@ function ViewCandidate() {
                                 {
                                     st.candidate == null ?
                                         (
-
                                             <a href="/viewAllStatus" onClick={(evt) => getnewID({
                                                 reqid: st.requisition.requisition_id,
                                                 recid: st.recruiter.recruiter_id
-                                            })}>All Status</a>
-                                          
+                                            })}>All Status</a>                                          
                                     ) :
-                                    (
-                                    
+                                    (                                    
                                             <a href="/viewAllStatus" onClick={(evt) => getnewID({
                                                 canid: st.candidate.candidate_id, reqid: st.requisition.requisition_id,
                                                 recid: st.recruiter.recruiter_id
-                                            })}>All Status</a>
-                                            
-
+                                            })}>All Status</a>   
                                     )
                             }
-
                             
                         </td>
                         <td>
-
                                 {
                                     st.candidate == null ?
                                         (
@@ -301,12 +250,9 @@ function ViewCandidate() {
 
                                     )
                                 }
-
                                 </td>
                             <td>{st.status}</td>
-                            <td style={{overflow:"false"}}>{st.status_date}</td>
-                           
-                            
+                            <td style={{overflow:"false"}}>{st.status_date}</td>    
 
                             <td>
                                 {
@@ -321,7 +267,6 @@ function ViewCandidate() {
                                 }
 
                             </td>
-
                             <td>
                                 {
                                     st.candidate == null ?
@@ -429,7 +374,7 @@ function ViewCandidate() {
                                         onChange={(evt) => handleChange({
                                             rrid: sessionreq, sstt: evt.target.value, currentst:st.status
                                         })}>
-                                        {/* ,setCandi(st.candidate.candidate_id))}> */}
+                                 
                                         <option hidden default selected> Select Status</option>
 
                                         {
@@ -441,8 +386,6 @@ function ViewCandidate() {
                                     </select>
                                 }
                                 &nbsp;
-                                {/* <button onClick={handleSubmit}>Change Status</button>  */}
-
                                 {
                                     st.candidate == null ?
                                         (
@@ -453,11 +396,9 @@ function ViewCandidate() {
                                         )
                                 }
 
-                            </td>
-                           
+                            </td>                           
 
                             <td>
-
                                 {
                                     st.candidate == null ?
                                         (
@@ -485,17 +426,12 @@ function ViewCandidate() {
                                                     <i class="fa fa-trash"></i>
                                                 </button>
                                             </>
-
                                         )
                                 }
-
                             </td>
                         </tr>
                     )
-
             }))
-
-
     }
 
     return (
@@ -530,8 +466,7 @@ function ViewCandidate() {
                                 <th style={{ width: '110px' }}>View All Status</th>
                                 <th style={{ width: '140px' }}>Candidate Name</th>
                                 <th style={{ width: '120px' }}>Current Status </th>
-                                <th style={{ width: '100px' }}>Date </th>
-                              
+                                <th style={{ width: '100px' }}>Date </th>     
                                 <th style={{ width: '50px' }}>Visa Type</th>
                                 <th style={{ width: '60px' }}>Rate term</th>
                                 <th style={{ width: '60px' }}>Client Rate</th>
