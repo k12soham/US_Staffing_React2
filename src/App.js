@@ -21,6 +21,7 @@ import UpdateProfileAdmin from './ComponentFirst/UpdateProfileAdmin';
 import Pageexample from './ComponentFirst/Pageexample';
 import ViewAllStatus from './ComponentFirst/ViewAllStatus';
 import Pagination from './ComponentFirst/PaginationDemo';
+import AdminStatic2 from './ComponentFirst/AdminStatic2';
 
 function App() {
 
@@ -56,6 +57,8 @@ function App() {
 
         <Route path="/page" element={<Pageexample/>}></Route>
         <Route path="/pagination" element={<Pagination/>}></Route>
+
+        <Route path="/adminstatic2" element={<AdminStatic2/>}></Route>
        
         </Routes>
       </Router>
