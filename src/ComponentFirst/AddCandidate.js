@@ -49,7 +49,7 @@ class AddCandidate extends React.Component {
     resetForm = () => {
       
         let inputs = {};
-        // inputs["reqid"] = undefined;
+       // inputs["reqid"] = undefined;
         inputs["cad_name"] = undefined;
         inputs["visa_type"] = undefined;
         inputs["rate_term"] = undefined;
@@ -62,7 +62,7 @@ class AddCandidate extends React.Component {
         this.setState({ input: inputs });
 
         let errors1 = {};
-        // inputs["reqid"] = "";
+       // inputs["reqid"] = "";
         errors1["cad_name"] = "";
         errors1["visa_type"] = "";
         errors1["rate_term"] = "";
@@ -80,7 +80,7 @@ class AddCandidate extends React.Component {
         let add_cls = this.state.input;
         add_cls[e.target.name] = e.target.value;
         this.setState({
-            add_cls
+            input:add_cls
         });
     }
 
@@ -120,38 +120,38 @@ class AddCandidate extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        let add_cls = this.state.input;
-        add_cls[e.target.name] = e.target.value;
+   
 
-
+        
         if (this.validate()) {
 
             this.state.input["cad_name"] = this.state.input["cad_name"].trim(" ");
-            this.state.input["submitted_rate"] = this.state.input["submitted_rate"].trim(" ");
-            this.state.input["phone"] = this.state.input["phone"].trim(" ");
-            this.state.input["email"] = this.state.input["email"].trim(" ");
-            if(  this.state.input["remark"]!=null)
-            {
-                this.state.input["remark"] = this.state.input["remark"].trim(" ");
-                this.state.input["remark"] = this.state.input["remark"].replaceAll("#", "%23")
-            }
-    
-            if(  this.state.input["reason"]!=null)
-            {
-                this.state.input["reason"] = this.state.input["reason"].trim(" ");
-    
-                this.state.input["reason"] = this.state.input["reason"].replaceAll("#", "%23")
-    
-            }
-    
-          
-        
-            this.state.input["cad_name"] = this.state.input["cad_name"].replaceAll("#", "%23")
-            this.state.input["submitted_rate"] = this.state.input["submitted_rate"].replaceAll("#", "%23")
-            this.state.input["phone"] = this.state.input["phone"].replaceAll("#", "%23")
-            this.state.input["email"] = this.state.input["email"].replaceAll("#", "%23")
-           
-            
+        this.state.input["submitted_rate"] = this.state.input["submitted_rate"].trim(" ");
+        this.state.input["phone"] = this.state.input["phone"].trim(" ");
+        this.state.input["email"] = this.state.input["email"].trim(" ");
+
+        if(  this.state.input["remark"]!=null)
+        {
+            this.state.input["remark"] = this.state.input["remark"].trim(" ");
+            this.state.input["remark"] = this.state.input["remark"].replaceAll("#", "%23")
+        }
+
+        if(  this.state.input["reason"]!=null)
+        {
+            this.state.input["reason"] = this.state.input["reason"].trim(" ");
+
+            this.state.input["reason"] = this.state.input["reason"].replaceAll("#", "%23")
+
+        }
+
+        this.state.input["cad_name"] = this.state.input["cad_name"].replaceAll("#", "%23")
+        this.state.input["submitted_rate"] = this.state.input["submitted_rate"].replaceAll("#", "%23")
+        this.state.input["phone"] = this.state.input["phone"].replaceAll("#", "%23")
+        this.state.input["email"] = this.state.input["email"].replaceAll("#", "%23")
+      
+
+            let add_cls = this.state.input;
+            add_cls[e.target.name] = e.target.value;
             this.postCandidate(add_cls);
         }
       
@@ -186,6 +186,7 @@ class AddCandidate extends React.Component {
        axios.post(`${base_url}/add_candidate?candidate_name=${d1}&visa_type=${d2}&rate_term=${d3}
         &submitted_rate=${d4}&phone=${d5}&email=${d6}&remark=${d7}
         &reason=${d8}&recruiter_id=${recruiterID}&requisition_id=${requisitionID}`).then(
+       
 
             (response) => {
 
@@ -195,24 +196,33 @@ class AddCandidate extends React.Component {
                         style: { position: "absolute", top: "5px", width: "300px" }
                     }
                 );
-                let navigate = useNavigate();
-                navigate("/addCandidate");
+             
             },
             (error) => {
+     
                 console.log(error);
                 console.log("Error");
                 alert("Please enter valid details.")
             }
         );
+      
+         const button1 = document.getElementById("btn1");
+         button1.disabled = true;
+    //     const button2 = document.getElementById("btn2");
+    //     button2.disabled = true;
 
         let inputs = {};
-        inputs["req"] = undefined;
-        inputs["sub"] = undefined;
-        inputs["first"] = undefined;
-        inputs["second"] = undefined;
-        inputs["closure"] = undefined;
+        inputs["cad_name"] = '';
+        inputs["visa_type"] = '';
+        inputs["rate_term"] = '';
+        inputs["submitted_rate"] = '';
+        inputs["phone"] = '';
+        inputs["email"] = '';
+        inputs["remark"] = '';
+        inputs["reason"] = '';
 
         this.setState({ input: inputs });
+
     }
     // --------------------------------------------Validation Code ----------------------------------------------------------
 
@@ -230,10 +240,10 @@ class AddCandidate extends React.Component {
             isValid = false;
             errors["cad_name"] = "This field is required";
         }
-        if ((input["cad_name"]) !== undefined) {
+        if ((input["cad_name"]) != undefined) {
 
-            var pattern = new RegExp(/^[^\s][a-zA-Z\s]{1,50}$/);
-           
+           // var pattern = new RegExp(/^[^\s][a-zA-Z\s]{1,50}$/);
+           var pattern = new RegExp("[a-zA-Z]");
 
             if (!pattern.test(input["cad_name"])) {
                 isValid = false;
@@ -306,9 +316,9 @@ class AddCandidate extends React.Component {
 
     render() {
         const isAuthenticated = localStorage.getItem('recruiterID');
-        localStorage.setItem('recruiterID', isAuthenticated);
 
         return isAuthenticated ? (
+
             <div className="">
                 <div className="row">
 
@@ -408,7 +418,7 @@ class AddCandidate extends React.Component {
                                             <div class="form-group">
                                                 <label for="submitted_rate"><b>Submitted Rate ($):</b></label>
                                                 <input
-                                                    minLength={2}
+                                                    minLength={1}
                                                     maxLength={4}
                                                     type="text"
                                                     name="submitted_rate"
@@ -426,8 +436,8 @@ class AddCandidate extends React.Component {
                                             <div class="form-group">
                                                 <label for="phone"><b>Phone :</b></label>
                                                 <input
-                                                    minLength={10}
-                                                    maxLength={20}
+                                                    minLength={1}
+                                            
                                                     type="text"
                                                     name="phone"
                                                     value={this.state.input.phone}

@@ -6,6 +6,7 @@ import EmployeeHeader from "./EmployeeHeader";
 import { useNavigate } from "react-router-dom";
 import Pagination from "./Pagination";
 import ReactPaginate from 'react-paginate';
+import history from './ResponseVal';
 function ViewAllReq() {
 
     const recruiterID = localStorage.getItem('recruiterID');
@@ -13,9 +14,7 @@ function ViewAllReq() {
     const [requisitionList, setRequisitionList] = useState([]);
     const [statusList, setstatusList] = useState([]);
     const [statusFD, setstatusFD] = useState([]);
-    const [updatestatus, setUpdateStatus] = useState(null);
-
-    const [reqid, setReqid] = useState(null);
+  
     const [reqFrom, setReqFrom] = useState(null);
     const [id, setId] = useState(null);
     const [client, setClient] = useState(null);
@@ -38,7 +37,7 @@ function ViewAllReq() {
     let navigate = useNavigate();
 
     let empID = localStorage.getItem("recruiterID");
-    let sessionreq = localStorage.getItem("requisitionID");
+
 
     useEffect(() => {
         axios.get(`${base_url}/getAllRequisition`).then(json => setRequisitionList(json.data))
@@ -85,9 +84,7 @@ function ViewAllReq() {
         })
     }
 
-    const fetchInventory = () => {
-        axios.get(`${base_url}/CurMonthAll`).then(json => setRequisitionList(json.data))
-    }
+  
     const getnewID = (e) => {
         let rq = e.rq
         localStorage.setItem("requisitionID", rq)
@@ -146,45 +143,9 @@ function ViewAllReq() {
                             <td>{cls.requisition.location}</td>
                             <td>{cls.requisition.position_type}</td>
                             <td>{cls.requisition.skills}</td>
-                            {/* <td class="CellWithComment">
-                                <p>{cls.requisition.skills}</p>
-                            <span class="CellComment">{cls.requisition.skills}</span>
-                            
-                            </td> */}
-                            <td>
-                                {
-                                    inEditMode.status && inEditMode.rowKey === cls.requisition.requisition_id ? (
-                                        <>
-                                            <button
-
-                                                className={"btn btn-sm btn-outline-success"}
-                                                onClick={() => {
-
-                                                    onSave(
-                                                        {
-                                                            newReqid: cls.requisition_id, newReqFrom: reqFrom, newId: id,
-                                                            newClient: client, newJobTitle: jobTitle, newDuration: duration,
-                                                            newClientRate: clientRate, newLocation: location, newPType: ptype, newSkills: skills,
-
-                                                        })
-                                                }
-                                                }
-                                            >
-                                                <i class="fa fa-save"></i>
-                                            </button>
-
-                                            &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <button
-                                                className={"btn btn-sm btn-outline-warning"}
-
-                                                onClick={() => onCancel()}
-                                            >
-                                                <i class="fa fa-close"></i>
-                                            </button>
-                                        </>
-
-                                    ) : (
-
+                           
+                        <td>
+                              
                                         <button
                                             className="btn btn-sm btn-outline-success"
                                             style={{ marginLeft: "5px" }}
@@ -197,16 +158,17 @@ function ViewAllReq() {
                                             <i class="fa fa-edit"></i>
 
                                         </button>
-                                    )
-                                }
+                                    
                             </td>
                         </tr>
                     )
             }))
     }
+    const isAuthenticated = localStorage.getItem('recruiterID');
 
-    return (
-        // return (
+        return isAuthenticated ? (
+   
+    
 
         <div className="">
             <div className="row">
@@ -254,16 +216,15 @@ function ViewAllReq() {
                                 {renderTable()}
                             </tbody>
                         </Table>
-                        <Pagination
-                            tableRowsPerPage={tableRowsPerPage}
-                            totalData={renderTable.length}
-                            paginateData={paginateData}
-                        />
+                        
                     </div>
                 </div>
             </div>
         </div>
-        //)
-    );
+       
+        ) : (
+            history.push("/"),
+            window.location.reload()
+        );
 }
 export default ViewAllReq;

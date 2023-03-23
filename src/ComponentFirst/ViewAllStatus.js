@@ -3,34 +3,18 @@ import axios from "axios";
 import base_url from "../api/bootapi";
 import { Table } from "reactstrap";
 import EmployeeHeader from "./EmployeeHeader";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import DatePicker from "react-datepicker";
-import { format } from 'date-fns';
-
+import history from './ResponseVal';
 function ViewAllStatus() {
-
-    const recruiterIDA = localStorage.getItem('recruiterID');
 
     const [requisitionList, setRequisitionList] = useState([]);
     const [statusList, setstatusList] = useState([]);
-
     const [statusFD, setstatusFD] = useState([]);
-    const [updatestatus, setUpdateStatus] = useState(null);
-
-    const [reqid, setReqid] = useState(null);
-
-    const [inEditMode, setInEditMode,] = useState({
-        status: true,
-        rowKey: null
-    });
-
-    const [status1, setStatus1] = useState(null);
+ 
     const [statusDate, setStatusDate] = useState(new Date());
     console.log(statusDate)
 
 
-    let navigate = useNavigate();
+  
 
     useEffect(() => {
         axios.get(`${base_url}/getAllRequisition`).then(json => setRequisitionList(json.data))
@@ -43,9 +27,12 @@ function ViewAllStatus() {
         let candidate_id = localStorage.getItem("candidateID")
         let requisition_id = localStorage.getItem("requisitionID")
         let recruiter_id = localStorage.getItem("recruiterID")
-        return statusList.map(st => {
 
-            var dd = new Date(st.status_date);
+        const isAuthenticated = localStorage.getItem('recruiterID');
+
+        return isAuthenticated ?statusList.map(st => {
+
+
 
             if (st.requisition.requisition_id == requisition_id &&
                 (st.candidate == null || st.candidate.candidate_id == candidate_id)
@@ -74,7 +61,13 @@ function ViewAllStatus() {
                         </td>
                     </tr >
                 );
-        })
+        }
+        
+        
+        ) : (
+            history.push("/"),
+            window.location.reload()
+        );
     }
 
     return (

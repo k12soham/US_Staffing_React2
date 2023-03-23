@@ -116,24 +116,23 @@ class AddRequisition extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
 
-        let add_cls = this.state.input;
-        add_cls[e.target.name] = e.target.value;
+        
+        this.state.input["id"] = this.state.input["id"].trim(" ");
+        this.state.input["jobTitle"] = this.state.input["jobTitle"].trim(" ");
+        this.state.input["location"] = this.state.input["location"].trim(" ");
+        this.state.input["clientrate"] = this.state.input["clientrate"].trim(" ");
+        this.state.input["skills"] = this.state.input["skills"].trim(" ");
+
+        this.state.input["id"] = this.state.input["id"].replaceAll("#", "%23")
+        this.state.input["jobTitle"] = this.state.input["jobTitle"].replaceAll("#", "%23")
+        this.state.input["location"] = this.state.input["location"].replaceAll("#", "%23")
+        this.state.input["clientrate"] = this.state.input["clientrate"].replaceAll("#", "%23")
+        this.state.input["skills"] = this.state.input["skills"].replaceAll("#", "%23")
 
 
         if (this.validate()) {
 
-            this.state.input["id"] = this.state.input["id"].trim(" ");
-            this.state.input["jobTitle"] = this.state.input["jobTitle"].trim(" ");
-            this.state.input["location"] = this.state.input["location"].trim(" ");
-            this.state.input["clientrate"] = this.state.input["clientrate"].trim(" ");
-            this.state.input["skills"] = this.state.input["skills"].trim(" ");
-
-            this.state.input["id"] = this.state.input["id"].replaceAll("#", "%23")
-            this.state.input["jobTitle"] = this.state.input["jobTitle"].replaceAll("#", "%23")
-            this.state.input["location"] = this.state.input["location"].replaceAll("#", "%23")
-            this.state.input["clientrate"] = this.state.input["clientrate"].replaceAll("#", "%23")
-            this.state.input["skills"] = this.state.input["skills"].replaceAll("#", "%23")
-
+          
             let add_cls = this.state.input;
             add_cls[e.target.name] = e.target.value;
 
@@ -178,6 +177,8 @@ class AddRequisition extends React.Component {
                     style: { position: "absolute", top: "5px", width: "300px" }
                 }
                 );
+
+                
                 let navigate = useNavigate();
                 navigate("/addRequisition");
                

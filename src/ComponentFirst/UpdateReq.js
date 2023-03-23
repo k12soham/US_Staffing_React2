@@ -53,7 +53,7 @@ class UpdateReq extends React.Component {
                 this.setState({ duration_fd: json.data })
             )
             .catch(error => {
-                alert("Error duration")
+              
             })
 
         axios.get(`${base_url}/getAllPositionType`)
@@ -61,7 +61,7 @@ class UpdateReq extends React.Component {
                 this.setState({ positionType_fd: json.data })
             )
             .catch(error => {
-                alert("Error position")
+              
             })
 
         axios.get(`${base_url}/getAllRequisitorFd`)
@@ -69,7 +69,7 @@ class UpdateReq extends React.Component {
                 this.setState({ requisitor_fd: json.data })
             )
             .catch(error => {
-                alert("Error requisitor")
+              
             })
 
         axios.get(`${base_url}/getAllStatusFd`)
@@ -77,7 +77,7 @@ class UpdateReq extends React.Component {
                 this.setState({ status_fd: json.data })
             )
             .catch(error => {
-                alert("Error status")
+                
             })
 
         axios.get(`${base_url}/getAllClient`)
@@ -151,41 +151,29 @@ class UpdateReq extends React.Component {
             add_cls["client"] = null
         }
 
-        console.log(a);
         this.setState({
             input: add_cls, reqval: a
         });
     }
 
-    // handleChange2(e) {
-    //     let add_cls = this.state.input;
-    //     add_cls[e.target.name] = e.target.value;           
-
-    //     console.log(add_cls);
-
-    //     this.setState({
-    //         input: add_cls,
-    //     });
-        
-    //     console.log("for req : " + this.state.input.req);
-    // }
+   
 
     handleSubmit(e) {
         e.preventDefault();
+        this.state.input["id"] = this.state.input["id"].trim(" ");
+        this.state.input["jobTitle"] = this.state.input["jobTitle"].trim(" ");
+        this.state.input["location"] = this.state.input["location"].trim(" ");
+        this.state.input["clientrate"] = this.state.input["clientrate"].trim(" ");
+        this.state.input["skills"] = this.state.input["skills"].trim(" ");
 
+        this.state.input["id"] = this.state.input["id"].replaceAll("#", "%23")
+        this.state.input["jobTitle"] = this.state.input["jobTitle"].replaceAll("#", "%23")
+        this.state.input["location"] = this.state.input["location"].replaceAll("#", "%23")
+        this.state.input["clientrate"] = this.state.input["clientrate"].replaceAll("#", "%23")
+        this.state.input["skills"] = this.state.input["skills"].replaceAll("#", "%23")
         if (this.validate()) {
 
-            this.state.input["id"] = this.state.input["id"].trim(" ");
-            this.state.input["jobTitle"] = this.state.input["jobTitle"].trim(" ");
-            this.state.input["location"] = this.state.input["location"].trim(" ");
-            this.state.input["clientrate"] = this.state.input["clientrate"].trim(" ");
-            this.state.input["skills"] = this.state.input["skills"].trim(" ");
-
-            this.state.input["id"] = this.state.input["id"].replaceAll("#", "%23")
-            this.state.input["jobTitle"] = this.state.input["jobTitle"].replaceAll("#", "%23")
-            this.state.input["location"] = this.state.input["location"].replaceAll("#", "%23")
-            this.state.input["clientrate"] = this.state.input["clientrate"].replaceAll("#", "%23")
-            this.state.input["skills"] = this.state.input["skills"].replaceAll("#", "%23")
+           
 
             let add_cls = this.state.input;
             add_cls[e.target.name] = e.target.value;
@@ -199,10 +187,7 @@ class UpdateReq extends React.Component {
 
     post_requisition = (data) => {
         let recId = this.state.empID = localStorage.getItem("recruiterID");
-        console.log("recruiterID : " + recId);
-        console.log("recruiterIDAdmin: " + this.state.recruiterIDAdmin);
-        console.log("jobtitle: " + data["jobTitle"]);
-
+      
         let d = this.state.requisitionId1;
         let d1 = data["req"];
         let d2 = data["id"];
@@ -218,10 +203,9 @@ class UpdateReq extends React.Component {
         axios.put(`${base_url}/update_requsition?requisition_id=${d}&requisition_from=${d1}&id=${d2}&client=${d3}&job_title=${d4}&duration=${d5}&client_rate=${d6}&location=${d7}&position_type=${d8}&skills=${d9}`).then(
 
             (response) => {
-                console.log(response.data)
-                console.log(response.data.requisition_id);
+              
                 let a = response.data.requisition_id;
-                console.log(typeof (response));
+        
 
                 this.setState({ requisitionId1: a });
 
@@ -267,11 +251,9 @@ class UpdateReq extends React.Component {
         let input = this.state.input;
         let errors = {};
         let isValid = true;
-        let addNew1 = true;
-        let addNew2 = true;
+    
 
-        console.log("type of input ");
-        console.log(this.state.input.req_id);
+      
 
         // -------------req---------------------------------------------------------------------------------------------
 

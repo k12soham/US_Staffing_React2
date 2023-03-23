@@ -280,8 +280,9 @@ class UpdateProfileAdmin extends React.Component {
     }
 
     render() {
+        const isAuthenticated = localStorage.getItem('recruiterIDAdmin');
+        return isAuthenticated ?(
 
-        return (
             <div className="row g-0 auth-wrapper">
                 <div className="col-12 col-md-5 col-lg-6 h-100 master_backgroung_login">
                     <img src="usa.png" width="670" height="657" alt="US staffing app"></img>
@@ -443,6 +444,9 @@ class UpdateProfileAdmin extends React.Component {
                     </div>
                 </div>
             </div>
+        ) : (
+            history.push("/"),
+            window.location.reload()
         );
     }
 }

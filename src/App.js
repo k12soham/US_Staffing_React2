@@ -23,6 +23,8 @@ import ViewAllStatus from './ComponentFirst/ViewAllStatus';
 import Pagination from './ComponentFirst/PaginationDemo';
 
 function App() {
+
+  let a= localStorage.getItem("recruiterIDAdmin")
   return (
     <div className="container-fluid">
       <Router>
@@ -32,9 +34,11 @@ function App() {
         <Route path="/" element={<Login1 />}></Route>
         <Route path="/signup" element={<SignUp />}></Route>
         <Route path="/addRequisition" element={<AddRequisition />}></Route>
-        <Route path="/addCandidate" element={<AddCandidate />}></Route>
+
         <Route path="/adminstatic" element={<AdminStatic />}></Route>
-  
+        <Route path="/addCandidate" element={<AddCandidate />}></Route>
+
+        
         <Route path="/viewCandidate" element={<ViewCandidate />}></Route>
         <Route path="/view_all_req" element={<ViewAllReq />}></Route>
 

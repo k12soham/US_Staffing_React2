@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import AdminHeader from "./AdminHeader";
 import DatePicker from "react-datepicker";
 import { format } from 'date-fns';
-
+import history from './ResponseVal';
 function ViewAllStatusAdmin() {
 
     const recruiterIDAdmin = localStorage.getItem('recruiterIDAdmin');
@@ -84,8 +84,6 @@ function ViewAllStatusAdmin() {
 
     const onSave = ({ statusID, newStatus, newStatusDate }) => {
 
-        console.log("statusID," + statusID + " newStatus," + newStatus + "newStatusDate," + newStatusDate);
-
         if(currentstatus==newStatus)
         {
             alert("This status is already saved")
@@ -96,8 +94,6 @@ function ViewAllStatusAdmin() {
     }
 
     const UpdateStatusByAdmin = ({ statusID, newStatus, newStatusDate }) => {
-        let status = newStatus;
-        let stDate = newStatusDate;
 
         axios.put(`${base_url}/update_status_Admin?status_id=${statusID}&status=${newStatus}&status_date=${newStatusDate}`, {
         })
@@ -130,14 +126,18 @@ function ViewAllStatusAdmin() {
         let a = e.d;
         let z = format(a, "yyyy-MM-dd");
         setStatusDate(z);
-        console.log('date : ' + z)
+  
     }
 
     const renderTable = () => {
         let candidate_id = localStorage.getItem("candidateID")
         let requisition_id = localStorage.getItem("requisitionID")
         let recruiter_id = localStorage.getItem("recruiterID")
-        return statusList.map(st => {
+
+
+        const isAuthenticated = localStorage.getItem('recruiterIDAdmin');
+        return isAuthenticated ?statusList.map(st => {
+
 
             var dd = new Date(st.status_date);
 
@@ -261,11 +261,16 @@ function ViewAllStatusAdmin() {
                         </td>
                     </tr >
                 );
-        })
+        }
+        
+        ) : (
+            history.push("/"),
+            window.location.reload()
+        );
     }
 
     return (
-        // return (
+       
         <div className="">
             <div className="row">
 

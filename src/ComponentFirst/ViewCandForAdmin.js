@@ -6,9 +6,10 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import AdminHeader from "./AdminHeader";
 import ReactPaginate from 'react-paginate';
+import history from './ResponseVal';
+
 function ViewCandForAdmin() {
 
-    const recruiterIDAdmin = localStorage.getItem('recruiterIDAdmin');
     const requisitionID = localStorage.getItem('requisitionID');
 
     const [statusList, setstatusList] = useState([]);
@@ -24,7 +25,6 @@ function ViewCandForAdmin() {
     }, []);
 
     const deleteBook = (candidateID) => {
-        console.log(candidateID);
         axios.delete(`${base_url}/deleteCadByAdmin?candidate_id=${candidateID}`)
             .then(response => {
 
@@ -53,9 +53,11 @@ function ViewCandForAdmin() {
         localStorage.setItem("candidateID", candidate_id)
         localStorage.setItem("requisitionID", requisition_id)
         localStorage.setItem("recruiterID", recruiter_id)
-        console.log("candidate_id= " + candidate_id + "requisition_id= " + requisition_id + "recruiter_id= " + recruiter_id)
-        console.log(requisition_id)
+       
     }
+
+ 
+
 
     const items = [1, 2, 3];
 
@@ -93,7 +95,8 @@ function ViewCandForAdmin() {
 
     const renderTable = () => {
 
-        return statusList.map(st => {
+        const isAuthenticated = localStorage.getItem('recruiterIDAdmin');
+        return isAuthenticated ?statusList.map(st => {
 
             if (st.requisition.requisition_id == requisitionID && st.flag == 1 && (st.candidate == null || st.candidate.deleted == 1))
             
@@ -263,7 +266,12 @@ function ViewCandForAdmin() {
                         </td>
                     </tr >
                 );
-        })
+        }
+        
+        ) : (
+            history.push("/"),
+            window.location.reload()
+        );
     }
 
     return (

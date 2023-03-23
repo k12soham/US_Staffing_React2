@@ -5,13 +5,12 @@ import { Table } from "reactstrap";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import AdminHeader from "./AdminHeader";
-import { Helmet } from "react-helmet";
+import history from './ResponseVal';
 
 let PageSize = 10;
 
 function ViewReqForAdmin() {
 
-    const recruiterIDAdmin = localStorage.getItem('recruiterIDAdmin');
 
     const [requisitionList, setRequisitionList] = useState([]);
     const [statusList, setstatusList] = useState([]);
@@ -19,7 +18,6 @@ function ViewReqForAdmin() {
     const [searchTerm, setSearchTerm] = useState("");
     let navigate = useNavigate();
 
-    let empID = localStorage.getItem("recruiterIDAdmin")
 
     // ---------------------------Pagination-------------------------------------------------------------
     useEffect(() => {
@@ -48,6 +46,7 @@ function ViewReqForAdmin() {
     }
 
     const onEdit = ({ requisitionID }) => {
+
         localStorage.setItem('requisitionID', requisitionID);
 
         navigate("/updateRequisition");
@@ -60,8 +59,9 @@ function ViewReqForAdmin() {
     }
 
     const renderTable = () => {
-
-        return (
+        const isAuthenticated = localStorage.getItem('recruiterIDAdmin');
+        return isAuthenticated ? (
+   
 
             requisitionList.filter((cls) => {
 
@@ -142,7 +142,10 @@ function ViewReqForAdmin() {
                 }
 
             })
-        )
+        ) : (
+            history.push("/"),
+            window.location.reload()
+        );
 
     }
 
@@ -206,8 +209,8 @@ function ViewReqForAdmin() {
 
             <div className="application">
 
-                <Helmet>
-                    {/* <meta charSet="utf-8" />
+                {/* <Helmet>
+                    <meta charSet="utf-8" />
                     <title>My Title</title>
                     <link rel="canonical" href="http://example.com/example" />
                     <script src="/path/to/resource.js" type="text/javascript" />
@@ -229,13 +232,16 @@ function ViewReqForAdmin() {
                         "responsive": true,
     });
   });
-                    </script> */}
-                </Helmet>
+                    </script> 
+                </Helmet>*/}
             </div>
         </div>
 
 
         //)
-    );
+
+       
+        );
+   
 }
 export default ViewReqForAdmin;

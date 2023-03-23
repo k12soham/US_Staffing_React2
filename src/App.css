@@ -110,3 +110,26 @@
   border: 1px solid white;
   cursor: pointer;
 }
+
+
+
+/*tbody  td {
+  max-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* table tr:hover {
+ 
+  overflow: visible;
+  white-space: normal;
+  height: auto;
+} */
+
+
+/* tr:hover > td 
+tr > td:hover {
+
+  overflow: visible;
+  white-space: unset;
+}*/

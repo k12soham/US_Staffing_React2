@@ -121,33 +121,33 @@ class UpdateCandidate extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
 
+        this.state.input["cad_name"] = this.state.input["cad_name"].trim(" ");
+        this.state.input["submitted_rate"] = this.state.input["submitted_rate"].trim(" ");
+        this.state.input["phone"] = this.state.input["phone"].trim(" ");
+        this.state.input["email"] = this.state.input["email"].trim(" ");
+
+        this.state.input["cad_name"] = this.state.input["cad_name"].replaceAll("#", "%23")
+        this.state.input["submitted_rate"] = this.state.input["submitted_rate"].replaceAll("#", "%23")
+        this.state.input["phone"] = this.state.input["phone"].replaceAll("#", "%23")
+        this.state.input["email"] = this.state.input["email"].replaceAll("#", "%23")
+
+
+        if (this.state.input["remark"] != null) {
+            this.state.input["remark"] = this.state.input["remark"].trim(" ");
+            this.state.input["remark"] = this.state.input["remark"].replaceAll("#", "%23")
+        }
+
+        if (this.state.input["reason"] != null) {
+            this.state.input["reason"] = this.state.input["reason"].trim(" ");
+            this.state.input["reason"] = this.state.input["reason"].replaceAll("#", "%23")
+
+        }
+
 
 
         if (this.validate()) {
 
-            this.state.input["cad_name"] = this.state.input["cad_name"].trim(" ");
-            this.state.input["submitted_rate"] = this.state.input["submitted_rate"].trim(" ");
-            this.state.input["phone"] = this.state.input["phone"].trim(" ");
-            this.state.input["email"] = this.state.input["email"].trim(" ");
-
-            this.state.input["cad_name"] = this.state.input["cad_name"].replaceAll("#", "%23")
-            this.state.input["submitted_rate"] = this.state.input["submitted_rate"].replaceAll("#", "%23")
-            this.state.input["phone"] = this.state.input["phone"].replaceAll("#", "%23")
-            this.state.input["email"] = this.state.input["email"].replaceAll("#", "%23")
-
-
-            if (this.state.input["remark"] != null) {
-                this.state.input["remark"] = this.state.input["remark"].trim(" ");
-                this.state.input["remark"] = this.state.input["remark"].replaceAll("#", "%23")
-            }
-
-            if (this.state.input["reason"] != null) {
-                this.state.input["reason"] = this.state.input["reason"].trim(" ");
-                this.state.input["reason"] = this.state.input["reason"].replaceAll("#", "%23")
-
-            }
-
-
+           
             let add_cls = this.state.input;
             add_cls[e.target.name] = e.target.value;
 
