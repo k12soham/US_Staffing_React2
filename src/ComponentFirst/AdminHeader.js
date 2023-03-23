@@ -28,10 +28,13 @@ function AdminHeader() {
         <ul className="nav nav-pills">
 
           <ListGroup style={{ marginTop: '-1px' }}>
-            <ListGroupItem tag="a" href="/adminstatic" action className={splitLocation[1] !== "adminstatic" ? "list-group-item-info" : ""}>Add Data</ListGroupItem>
+            <ListGroupItem tag="a" href="/adminstatic2" action className={splitLocation[1] !== "adminstatic2" ? "list-group-item-info" : ""}>Add Data</ListGroupItem>
           </ListGroup>
           <ListGroup style={{ marginTop: '-1px' }}>
             <ListGroupItem tag="a" href="/viewReqForAdmin" action className={splitLocation[1] !== "viewReqForAdmin" ? "list-group-item-info" : ""}>View Requisition</ListGroupItem>
+          </ListGroup>
+          <ListGroup style={{ marginTop: '-1px' }}>
+            <ListGroupItem tag="a" href="/adminstatic" action className={splitLocation[1] !== "adminstatic" ? "list-group-item-info" : ""}>Add Data old</ListGroupItem>
           </ListGroup>
 
         </ul>

@@ -421,6 +421,13 @@ tr:hover > td {
   background-color: aqua;
 }
 
+// ------------static-tbl-form---------------------
+.static-tbl-form{
+  max-height: 300px;
+  overflow-y: scroll;
+}
+
+
 // -------------- tooltip=-----------------------
 .CellWithComment{
   position:relative;
