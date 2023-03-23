@@ -12,7 +12,6 @@ function ViewAllReq() {
 
     const [requisitionList, setRequisitionList] = useState([]);
     const [statusList, setstatusList] = useState([]);
-
     const [statusFD, setstatusFD] = useState([]);
     const [updatestatus, setUpdateStatus] = useState(null);
 
@@ -62,12 +61,11 @@ function ViewAllReq() {
 
     const onSave = ({ newReqid, newReqFrom, newId, newClient, newJobTitle, newDuration,
         newClientRate, newLocation, newPType, newSkills }) => {
-
-    }    
+    }
 
     // ----------------------------------------------------------------------------------------------------------
     const onEdit = ({ requisitionID }) => {
-     
+
         console.log(requisitionID);
         localStorage.setItem('recruiterID', recruiterID);
         localStorage.setItem('requisitionID', requisitionID);
@@ -89,12 +87,10 @@ function ViewAllReq() {
 
     const fetchInventory = () => {
         axios.get(`${base_url}/CurMonthAll`).then(json => setRequisitionList(json.data))
-
     }
     const getnewID = (e) => {
         let rq = e.rq
         localStorage.setItem("requisitionID", rq)
-    
     }
 
     const renderTable = () => {
@@ -150,6 +146,11 @@ function ViewAllReq() {
                             <td>{cls.requisition.location}</td>
                             <td>{cls.requisition.position_type}</td>
                             <td>{cls.requisition.skills}</td>
+                            {/* <td class="CellWithComment">
+                                <p>{cls.requisition.skills}</p>
+                            <span class="CellComment">{cls.requisition.skills}</span>
+                            
+                            </td> */}
                             <td>
                                 {
                                     inEditMode.status && inEditMode.rowKey === cls.requisition.requisition_id ? (
@@ -232,7 +233,7 @@ function ViewAllReq() {
                     </div>
 
                     <div>
-                        <Table bordered className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px' }}>
+                        <Table bordered className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px', textOverflow: "ellipsis" }}>
                             <thead>
                                 <tr>
                                     <th style={{ width: '20px' }}>Sr No.</th>
@@ -244,16 +245,13 @@ function ViewAllReq() {
                                     <th style={{ width: '40px' }}>Client Rate</th>
                                     <th style={{ width: '100px' }}>Location</th>
                                     <th style={{ width: '80px' }}>Position Type</th>
-                                    <th style={{ width: '150px' }}>Skills</th>
-
+                                    <th style={{ width: '100px' }}>Skills</th>
                                     <th style={{ width: '30px' }}>Action</th>
 
                                 </tr>
                             </thead>
-                            <tbody>
-
+                            <tbody className="myColor2">
                                 {renderTable()}
-
                             </tbody>
                         </Table>
                         <Pagination

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        .first {
+            width: 50%;
+        }
+
+        .ellipsis {
+            position: relative;
+        }
+
+        .ellipsis:before {
+            content: '';
+            visibility: hidden;
+        }
+
+        .ellipsis span {
+            position: absolute;
+            left: 0;
+            right: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        h1 {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            width: 150px;
+        }
+
+        h1:hover {
+            overflow: visible;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Initial long text coming  here to test ellipsis</h1>
+
+    <h2 style="color:green">GeeksforGeeks</h2>
+    <b>
+        <p>text-overflow in table cell</p>
+    </b>
+    <br />
+    <table border="1">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Age</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="ellipsis first">
+                    <span>
+                        Free Tutorials, Millions of Articles, Live,
+                        Online and Classroom Courses ,Frequent Coding
+                        Competitions ,Webinars by Industry Experts,
+                        Internship opportunities and Job Opportunities.
+                    </span>
+                </td>
+                <td class="ellipsis">
+                    <span>
+                        Free Tutorials, Millions of Articles, Live,
+                        Online and Classroom Courses ,Frequent Coding
+                        Competitions ,Webinars by Industry Experts,
+                        Internship opportunities and Job Opportunities.
+                    </span>
+                </td>
+                <td class="ellipsis">
+                    <span>
+                        Free Tutorials, Millions of Articles, Live,
+                        Online and Classroom Courses ,Frequent Coding
+                        Competitions ,Webinars by Industry Experts,
+                        Internship opportunities and Job Opportunities.
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

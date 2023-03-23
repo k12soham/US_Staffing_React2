@@ -48,19 +48,12 @@ function ViewReqForAdmin() {
     }
 
     const onEdit = ({ requisitionID }) => {
-
-        // localStorage.setItem('recruiterID', recruiterID);
-        // localStorage.setItem("recruiterIDAdmin",recruiterIDAdmin);
         localStorage.setItem('requisitionID', requisitionID);
 
         navigate("/updateRequisition");
 
     }
 
-    const fetchInventory = () => {
-        axios.get(`${base_url}/CurMonthAll`).then(json => setRequisitionList(json.data))
-
-    }
     const getnewID = (e) => {
         let requisitionID = e.rq
         localStorage.setItem("requisitionID", requisitionID)

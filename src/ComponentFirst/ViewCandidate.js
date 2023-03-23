@@ -367,7 +367,7 @@ function ViewCandidate() {
 
                             <td>
                                 {
-                                    <select class="btn btn-sm btn-secondary dropdown-toggle"
+                                    <select className=" drop-down-style btn btn-sm btn-secondary dropdown-toggle"
                                         style={{ width: '140px',fontFamily: 'arial', fontSize: '13px' }}
                                         name="status" id="status"
 
@@ -463,20 +463,20 @@ function ViewCandidate() {
                         <thead>
                             <tr>
                                 <th style={{ width: '60px' }}>Sr No.</th>
-                                <th style={{ width: '110px' }}>View All Status</th>
+                                <th style={{ width: '80px' }}>View All Status</th>
                                 <th style={{ width: '140px' }}>Candidate Name</th>
                                 <th style={{ width: '120px' }}>Current Status </th>
                                 <th style={{ width: '100px' }}>Date </th>     
                                 <th style={{ width: '50px' }}>Visa Type</th>
                                 <th style={{ width: '60px' }}>Rate term</th>
                                 <th style={{ width: '60px' }}>Client Rate</th>
-                                <th style={{ width: '20px' }}>Submitted Rate</th>
-                                <th style={{ width: '70px' }}>Phone</th>
+                                <th style={{ width: '20px' }}>Submit Rate</th>
+                                <th style={{ width: '90px' }}>Phone</th>
                                 <th style={{ width: '130px' }}>Email</th>
                                 <th style={{ width: '100px' }}>Remark</th>
                                 <th style={{ width: '100px' }}>Reason</th>
                                 <th style={{ width: '230px' }}>Status </th>
-                                <th style={{ width: '115px' }}>Action</th>
+                                <th style={{ width: '90px' }}>Action</th>
 
                                 </tr>
                             </thead>

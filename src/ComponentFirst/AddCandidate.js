@@ -49,7 +49,7 @@ class AddCandidate extends React.Component {
     resetForm = () => {
       
         let inputs = {};
-        inputs["reqid"] = undefined;
+        // inputs["reqid"] = undefined;
         inputs["cad_name"] = undefined;
         inputs["visa_type"] = undefined;
         inputs["rate_term"] = undefined;
@@ -62,7 +62,7 @@ class AddCandidate extends React.Component {
         this.setState({ input: inputs });
 
         let errors1 = {};
-        inputs["reqid"] = "";
+        // inputs["reqid"] = "";
         errors1["cad_name"] = "";
         errors1["visa_type"] = "";
         errors1["rate_term"] = "";
