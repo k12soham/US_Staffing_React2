@@ -17,10 +17,10 @@ function EmployeeHeader() {
     <div>
       <div className="navbar-css-1">
         <div class="row">
-          <div class="col-11">
+          <div class="col-10">
             <lable className="navbar-brand" href="#" style={{ color: "GrayText" }}>US STAFFING APP</lable>
           </div>
-          <div class='col-1'>
+          <div class='col-2' style={{alignItems:"end" }}>
             <ModalWithCSS />
           </div>
         </div>

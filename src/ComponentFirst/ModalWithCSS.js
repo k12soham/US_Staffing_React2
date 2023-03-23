@@ -60,7 +60,7 @@ class ModalWithCSS extends React.Component {
     let empMail = localStorage.getItem('recruiterEmail');
     return (
 
-      <div>
+      <div style={{ textAlign: "right" }}>
         <div onClick={this.handleOpenModal}>
 
           <img src="https://img.icons8.com/ios/35/000000/user-male-circle--v2.png" ></img>&nbsp;
@@ -83,9 +83,9 @@ class ModalWithCSS extends React.Component {
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={this.handleClose}></button>
 
             </div>
-            <div style={{ marginLeft: '70px' }}>
-              <span > <img src="https://img.icons8.com/ios/35/000000/user-male-circle--v2.png" /><b style={{ fontSize: '22px' }}> &nbsp; &nbsp;{empName}</b></span><br />
-              <span ><h6 style={{ marginLeft: '50px' }}>{empMail} </h6></span><hr></hr>
+            <div style={{ marginLeft: '0px', textAlign:"center" }}>
+              <span > <img src="https://img.icons8.com/ios/35/000000/user-male-circle--v2.png" /><b style={{ fontSize: '18px' }}> &nbsp;{empName}</b></span><br />
+              <span ><h6>{empMail} </h6></span><hr></hr>
             </div>
 
 

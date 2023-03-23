@@ -144,8 +144,9 @@ function ViewAllStatusAdmin() {
             if (st.requisition.requisition_id == requisition_id &&
                 (st.candidate == null || st.candidate.candidate_id == candidate_id)
                 && st.recruiter.recruiter_id == recruiter_id)
-
+                  
                 return (
+                    
                     <tr key={st.status_id}>
                         <td></td>
                         <td>{st.requisition.id}</td>
@@ -198,7 +199,7 @@ function ViewAllStatusAdmin() {
                             {
                                 st.candidate == null ?
                                     (
-                                        console.log("null")
+                                        null
                                     ) :
                                     (
                                         st.candidate.candidate_name
@@ -248,7 +249,7 @@ function ViewAllStatusAdmin() {
                                         >
                                             <i class="fa fa-edit"></i>
                                         </button>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;
                                         <button className="btn btn-sm btn-outline-danger"
                                             onClick={() => { if (window.confirm('Are you sure to delete this status?')) deleteBook(st.status_id) }}>{/*Delete*/}<i class="fa fa-trash"></i></button>
                                         &nbsp;&nbsp;&nbsp;&nbsp;
@@ -278,13 +279,13 @@ function ViewAllStatusAdmin() {
                     <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px' }}>
                         <thead>
                             <tr>
-                                <th style={{ width: '10px' }}>Sr No.</th>
-                                <th style={{ width: '10px' }}>RquisitionID</th>
-                                <th style={{ width: '10px' }}>Recruiter Name</th>
-                                <th style={{ width: '10px' }}>Status</th>
-                                <th style={{ width: '10px' }}>Status Date</th>
-                                <th style={{ width: '10px' }}>Candidate Name</th>
-                                <th style={{ width: '10px' }}>Action</th>
+                                <th style={{ width: '20px' }}>Sr No.</th>
+                                <th style={{ width: '20px' }}>RquisitionID</th>
+                                <th style={{ width: '30px' }}>Recruiter Name</th>
+                                <th style={{ width: '20px' }}>Status</th>
+                                <th style={{ width: '20px' }}>Status Date</th>
+                                <th style={{ width: '30px' }}>Candidate Name</th>
+                                <th style={{ width: '2px' }}>Action</th>
                             </tr>
                         </thead>
                         <tbody>
