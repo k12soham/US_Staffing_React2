@@ -108,17 +108,15 @@ class UpdateProfile extends React.Component {
 
         axios.put(`${base_url}/UpdateRecruiterProfileAdmin/?recruiterId=${recruiter_id}&recruiterName=${recruiter_name}&recruiterEmail=${recruiter_email}&currentPass=${currentPass}&newPass=${confirmPass}`).then(
            
-        
-  
-          
             (response) => {
                 toast.success("Profile updated successfully!",
                     { position: "top-right" }
                 );
 
+                localStorage.setItem("recruiterName",recruiter_name);
+                localStorage.setItem('recruiterEmail',recruiter_email);
                 history.push("/addRequisition");
                 window.location.reload();
-
           
             },
             (error) => {

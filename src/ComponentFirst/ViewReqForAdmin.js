@@ -52,7 +52,7 @@ function ViewReqForAdmin() {
         navigate("/updateRequisition");
 
     }
- 
+
     const getnewID = (e) => {
         let requisitionID = e.rq
         localStorage.setItem("requisitionID", requisitionID)

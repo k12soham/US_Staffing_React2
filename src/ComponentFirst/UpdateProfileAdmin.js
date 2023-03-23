@@ -21,6 +21,7 @@ class UpdateProfileAdmin extends React.Component {
             confirmPassword: undefined,
             passMatch: null,
             passNotMatch: null,
+            role: null,
 
         };
 
@@ -36,9 +37,13 @@ class UpdateProfileAdmin extends React.Component {
         
 
         axios.get(`${base_url}/getRecruiterbyID?recruiterID=${recruiterIDAdmin}`).then((json) => {
+
+            console.log(json.data.role)
             this.setState({
-                input: json.data
+                input: json.data,
+                role: json.data.role,
             });
+            
           
         })
     }
@@ -49,7 +54,8 @@ class UpdateProfileAdmin extends React.Component {
      axios.get(`${base_url}/getRecruiterbyEmail?recruiterEmail=${z}`).then((json) => {
           
             this.setState({
-                input: json.data
+                input: json.data,
+                role: json.data.role,
             });
            
         },
@@ -105,9 +111,7 @@ class UpdateProfileAdmin extends React.Component {
                 let emp_reg = this.state.input;
                 emp_reg[e.target.name] = e.target.value;
 
-                this.state.input["recruiter_name"] = this.state.input["recruiter_name"].trim(" ");
-
-               
+                this.state.input["recruiter_name"] = this.state.input["recruiter_name"].trim(" ");               
                 this.postdata(emp_reg);
 
             }
@@ -119,6 +123,8 @@ class UpdateProfileAdmin extends React.Component {
     }
 
     postdata = (data) => {
+
+        console.log(this.state.role);
 
         let recruiter_id = data["recruiter_id"];
         let recruiter_name = data["recruiter_name"].trim(" ");
@@ -136,6 +142,10 @@ class UpdateProfileAdmin extends React.Component {
                     { position: "top-right" }
                 );
 
+                if((this.state.role) == "Admin"){
+                    localStorage.setItem("recruiterName",recruiter_name);
+                    localStorage.setItem('recruiterEmail',recruiter_email);
+                }              
                 history.push("/adminstatic");
                 window.location.reload();
             },

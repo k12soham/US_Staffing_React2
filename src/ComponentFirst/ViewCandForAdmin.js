@@ -12,16 +12,13 @@ function ViewCandForAdmin() {
 
     const requisitionID = localStorage.getItem('requisitionID');
 
-    const [requisitionList, setRequisitionList] = useState([]);
     const [statusList, setstatusList] = useState([]);
-
     const [statusFD, setstatusFD] = useState([]);
-
+    const [reqid, setReqid] = useState(null);
 
     let navigate = useNavigate();
 
     useEffect(() => {
-        axios.get(`${base_url}/getAllRequisition`).then(json => setRequisitionList(json.data))
         axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
         axios.get(`${base_url}/getAllStatusFd`).then(json => setstatusFD(json.data))
 
@@ -49,7 +46,6 @@ function ViewCandForAdmin() {
         navigate("/updateCandidate");
     }
 
-  
     const getnewID = (e) => {
         let candidate_id = e.canid
         let requisition_id = e.reqid;
@@ -97,8 +93,6 @@ function ViewCandForAdmin() {
         );
     }
 
-
-
     const renderTable = () => {
 
         const isAuthenticated = localStorage.getItem('recruiterIDAdmin');
@@ -129,7 +123,6 @@ function ViewCandForAdmin() {
                         </td>
 
                         <td>
-
                             {
                                 st.candidate == null ?
                                     (
@@ -137,17 +130,13 @@ function ViewCandForAdmin() {
                                     ) :
                                     (
                                         st.candidate.candidate_name
-
                                     )
                             }
-
                         </td>
 
                         <td>{st.status}</td>
                         <td>{st.status_date}</td>
                         <td>{st.recruiter.recruiter_name}</td>
-
-
                         <td>
                             {
                                 st.candidate == null ?
@@ -158,7 +147,6 @@ function ViewCandForAdmin() {
                                         st.candidate.visa_type
                                     )
                             }
-
                         </td>
 
                         <td>
@@ -169,10 +157,8 @@ function ViewCandForAdmin() {
                                     ) :
                                     (
                                         st.candidate.rate_term
-
                                     )
                             }
-
                         </td>
 
                         <td>
@@ -183,10 +169,8 @@ function ViewCandForAdmin() {
                                     ) :
                                     (
                                         st.requisition.client_rate
-
                                     )
                             }
-
                         </td>
 
                         <td>
@@ -197,10 +181,8 @@ function ViewCandForAdmin() {
                                     ) :
                                     (
                                         st.candidate.submitted_rate
-
                                     )
                             }
-
                         </td>
 
                         <td>
@@ -211,7 +193,6 @@ function ViewCandForAdmin() {
                                     ) :
                                     (
                                         st.candidate.phone
-
                                     )
                             }
                         </td>
@@ -224,7 +205,6 @@ function ViewCandForAdmin() {
                                     ) :
                                     (
                                         st.candidate.email
-
                                     )
                             }
                         </td>
@@ -250,12 +230,10 @@ function ViewCandForAdmin() {
                                     ) :
                                     (
                                         st.candidate.reason
-
                                     )
                             }
                         </td>
                         <td>
-
                             {
                                 st.candidate == null ?
                                     (
@@ -283,10 +261,8 @@ function ViewCandForAdmin() {
                                                 <i class="fa fa-trash"></i>
                                             </button>
                                         </>
-
                                     )
                             }
-
                         </td>
                     </tr >
                 );

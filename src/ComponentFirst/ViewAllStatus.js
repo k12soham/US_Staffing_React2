@@ -42,7 +42,6 @@ function ViewAllStatus() {
                     <tr key={st.status_id}>
                         <td></td>
                         <td>{st.requisition.id}</td>
-                        <td>{st.recruiter.recruiter_name}</td>
                         <td>
                             {st.status}
                         </td>
@@ -87,7 +86,6 @@ function ViewAllStatus() {
                                 <tr>
                                     <th style={{ width: '10px' }}>Sr No.</th>
                                     <th style={{ width: '10px' }}>RquisitionID</th>
-                                    <th style={{ width: '10px' }}>Recruiter Name</th>
                                     <th style={{ width: '10px' }}>Status</th>
                                     <th style={{ width: '10px' }}>Status Date</th>
                                     <th style={{ width: '10px' }}>Candidate Name</th>
