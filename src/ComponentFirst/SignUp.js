@@ -4,8 +4,8 @@ import base_url from '../api/bootapi';
 import { toast } from "react-toastify";
 import {  Link } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
-import history from './ResponseVal';
-
+ import history from './ResponseVal';
+import { useNavigate } from "react-router-dom";
 
 class SignUp extends React.Component {
 
@@ -32,12 +32,13 @@ class SignUp extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-
+    this.state.input["name"] = this.state.input["name"].trim(" ");
+    this.state.input["email"] = this.state.input["email"].trim(" ");
     if (this.validate()) {
 
       let emp_reg = this.state.input;
       emp_reg[e.target.name] = e.target.value;
-      this.state.input["name"] = this.state.input["name"].trim(" ");
+     
      
       this.postdata(emp_reg);
 
@@ -46,8 +47,8 @@ class SignUp extends React.Component {
   }
 
   postdata = (data) => {
-
-    let d1 = data["name"].trim(" ");
+   
+    let d1 = data["name"];  
     let d2 = data["email"];
      let d3 = data["password"];
 
@@ -57,21 +58,29 @@ class SignUp extends React.Component {
    
       (response) => {
         toast.success("Recruiter registered successfully!",
-          { position: "top-right" }
+          { position: "top-right" ,
+          autoClose: 1000,
+          style: { position: "absolute", top: "5px", width: "300px" }
+      }
         );
 
-        history.push("/");
-        window.location.reload();
+     
+      history.push('/');    
+       history.go();
+
+   
+ 
       },
       (error) => {
         alert("This account is already exist.")
+        
       }
     )
 
     let inputs = {};
-    inputs["name"] = undefined;
-    inputs["email"] = undefined;
-    inputs["password"] = undefined;
+    inputs["name"] = '';
+    inputs["email"] = '';
+    inputs["password"] = '';
 
     this.setState({ input: inputs });
 

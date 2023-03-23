@@ -35,7 +35,6 @@ function ViewCandidate() {
 
     const deleteBook = (candidateID) => {
 
-        console.log(candidateID);
         axios.delete(`${base_url}/deleteCadByAdmin?candidate_id=${candidateID}`)
             .then(response => {
 
@@ -64,8 +63,6 @@ function ViewCandidate() {
     }
 
     const handleSubmit = (e) => {
-
-        console.log("submit11111111")
         let a = reqid;
         let b = updatestatus;
         let c= currentstatus;
@@ -81,7 +78,6 @@ function ViewCandidate() {
 
     const handleSubmit2 = (e) => {
 
-        console.log("submit222222")
         let a = reqid;
         let b = updatestatus;
         let c = e.canid
@@ -97,8 +93,6 @@ function ViewCandidate() {
     }
 
     const postdata = (a, b) => {
-
-        console.log(a, b)
 
         axios.post(`${base_url}/update_status1?recruiter_id=${empID}&requisition_id=${a}&status=${b}`).then(
 
@@ -121,7 +115,6 @@ function ViewCandidate() {
 
     const postdata2 = (a, b, c) => {
 
-        console.log(a, b, c)
 
         axios.post(`${base_url}/update_status2?recruiter_id=${empID}&requisition_id=${a}&candidate_id=${c}&status=${b}`).then(
 
@@ -173,8 +166,10 @@ function ViewCandidate() {
     }
 
     const renderTable = () => {
-
-        return (
+        const isAuthenticated = localStorage.getItem('recruiterID');
+        localStorage.setItem('recruiterID', isAuthenticated);
+       
+        return isAuthenticated ? (
 
             statusList.filter((st) => {
 
@@ -431,7 +426,13 @@ function ViewCandidate() {
                             </td>
                         </tr>
                     )
-            }))
+            })
+            
+      
+           ) : (
+            navigate("/")
+            
+        );
     }
 
     return (
@@ -464,19 +465,19 @@ function ViewCandidate() {
                             <tr>
                                 <th style={{ width: '60px' }}>Sr No.</th>
                                 <th style={{ width: '110px' }}>View All Status</th>
-                                <th style={{ width: '140px' }}>Candidate Name</th>
-                                <th style={{ width: '120px' }}>Current Status </th>
-                                <th style={{ width: '100px' }}>Date </th>     
+                                <th style={{ width: '150px' }}>Candidate Name</th>
+                                <th style={{ width: '150px' }}>Current Status </th>
+                                <th style={{ width: '120px' }}>Date </th>     
                                 <th style={{ width: '50px' }}>Visa Type</th>
-                                <th style={{ width: '60px' }}>Rate term</th>
+                                <th style={{ width: '20px' }}>Rate term</th>
                                 <th style={{ width: '60px' }}>Client Rate</th>
-                                <th style={{ width: '20px' }}>Submitted Rate</th>
+                                <th style={{ width: '20px' }}>Submit Rate</th>
                                 <th style={{ width: '70px' }}>Phone</th>
                                 <th style={{ width: '130px' }}>Email</th>
                                 <th style={{ width: '100px' }}>Remark</th>
                                 <th style={{ width: '100px' }}>Reason</th>
-                                <th style={{ width: '230px' }}>Status </th>
-                                <th style={{ width: '115px' }}>Action</th>
+                                <th style={{ width: '300px' }}>Status </th>
+                                <th style={{ width: '160px' }}>Action</th>
 
                                 </tr>
                             </thead>
