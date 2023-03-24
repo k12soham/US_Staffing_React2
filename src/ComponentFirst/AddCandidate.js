@@ -282,14 +282,18 @@ class AddCandidate extends React.Component {
             isValid = false;
             errors["phone"] = "This field is required";
         }
-        if ((input["phone"]) !== undefined) {
+      
 
-            var pattern = new RegExp(/^[^\s][0-9 *()-\s]{4,15}$/);
-           
+        if ((input["phone"]) !== undefined) {
+            var pattern = /^(\([0-9]{3}\)|[0-9]{3})[\s\-]?[\0-9]{3}[\s\-]?[0-9]{4}$/
+           // var pattern = new RegExp(/^[^\s][0-9 *()-\s]{4,15}$/);
             if (!pattern.test(input["phone"])) {
                 isValid = false;
-                errors["phone"] = "Please enter only characters.";
+                errors["phone"] = "Please enter valid mobile number.";
             }
+
+           
+
         }
 
         // -------------email-----------------------------------------------------------------------------------------

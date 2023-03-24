@@ -14,21 +14,10 @@ function ViewAllReq() {
     const [requisitionList, setRequisitionList] = useState([]);
     const [statusList, setstatusList] = useState([]);
     const [statusFD, setstatusFD] = useState([]);
-  
-    const [reqFrom, setReqFrom] = useState(null);
-    const [id, setId] = useState(null);
-    const [client, setClient] = useState(null);
-    const [jobTitle, setJobTitle] = useState(null);
-    const [duration, setDuration] = useState(null);
-    const [clientRate, setClientRate] = useState(null);
-    const [ptype, setPType] = useState(null);
-    const [location, setLocation] = useState(null);
-    const [skills, setSkills] = useState(null);
-    const [status, setStatus] = useState(null);
+
+ 
     const [searchTerm, setSearchTerm] = useState("");
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const [tableRowsPerPage, setTableRowsPerPage] = useState(3);
 
     const [inEditMode, setInEditMode,] = useState({
         status: true,
@@ -46,22 +35,9 @@ function ViewAllReq() {
 
     }, []);
 
-    const getCurrentTableData = () => {
+    
 
-        return renderTable.slice(
-            currentPage * tableRowsPerPage - tableRowsPerPage,
-            currentPage * tableRowsPerPage
-        );
-    };
-
-    const paginateData = (pageNumber) => {
-        setCurrentPage(pageNumber);
-    };
-
-    const onSave = ({ newReqid, newReqFrom, newId, newClient, newJobTitle, newDuration,
-        newClientRate, newLocation, newPType, newSkills }) => {
-    }
-
+   
     // ----------------------------------------------------------------------------------------------------------
     const onEdit = ({ requisitionID }) => {
 
