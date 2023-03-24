@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import history from './ResponseVal';
 import EmployeeHeader from './EmployeeHeader';
 import AdminHeader from './AdminHeader';
-
+import { useNavigate } from "react-router-dom";
 class UpdateReq extends React.Component {
 
     componentDidMount() {
@@ -177,14 +177,12 @@ class UpdateReq extends React.Component {
 
             let add_cls = this.state.input;
             add_cls[e.target.name] = e.target.value;
-
-            console.log("skills: " + this.state.input["skills"]);
             this.post_requisition(add_cls);
         }
         // 👇️ clear all input values in the form
         e.target.reset();
     }
-
+   
     post_requisition = (data) => {
         let recId = this.state.empID = localStorage.getItem("recruiterID");
       
@@ -217,10 +215,10 @@ class UpdateReq extends React.Component {
                 );
                 if (this.state.recruiterIDAdmin !== null) {
                     history.push("/viewReqForAdmin");
-                    window.location.reload();
+                    window.location.reload()
                 } else {
-                    history.push("/view_all_req");
-                    window.location.reload();
+                     history.push("/view_all_req");
+                   window.location.reload()
                 }
             },
             (error) => {

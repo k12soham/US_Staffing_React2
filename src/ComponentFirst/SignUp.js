@@ -66,7 +66,7 @@ class SignUp extends React.Component {
 
      
       history.push('/');    
-       history.go();
+     window.location.reload()
 
    
  
