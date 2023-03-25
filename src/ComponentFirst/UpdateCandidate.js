@@ -120,14 +120,23 @@ class UpdateCandidate extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        
+          if(this.state.input["cad_name"]!=''){
+            this.state.input["cad_name"] = this.state.input["cad_name"].trim(" ");
+            
+        }
+            
+        if(this.state.input["submitted_rate"]!=''){
+            this.state.input["submitted_rate"] = this.state.input["cad_name"].trim(" ");
+            
+        }
+      
 
-        this.state.input["cad_name"] = this.state.input["cad_name"].trim(" ");
-        this.state.input["submitted_rate"] = this.state.input["submitted_rate"].trim(" ");
         this.state.input["phone"] = this.state.input["phone"].trim(" ");
         this.state.input["email"] = this.state.input["email"].trim(" ");
 
-        this.state.input["cad_name"] = this.state.input["cad_name"].replaceAll("#", "%23")
-        this.state.input["submitted_rate"] = this.state.input["submitted_rate"].replaceAll("#", "%23")
+       // this.state.input["cad_name"] = this.state.input["cad_name"].replaceAll("#", "%23")
+        //this.state.input["submitted_rate"] = this.state.input["submitted_rate"].replaceAll("#", "%23")
         this.state.input["phone"] = this.state.input["phone"].replaceAll("#", "%23")
         this.state.input["email"] = this.state.input["email"].replaceAll("#", "%23")
 
