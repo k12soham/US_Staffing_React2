@@ -121,8 +121,8 @@ class UpdateCandidate extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
         
-          if(this.state.input["cad_name"]!=''){
-            this.state.input["cad_name"] = this.state.input["cad_name"].trim(" ");
+          if(this.state.input["cad_name"]!=null){
+            this.state.input["cad_name"] = this.state.input["cad_name"].trim(");
             
         }
             
