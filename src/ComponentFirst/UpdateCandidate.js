@@ -82,7 +82,9 @@ class UpdateCandidate extends React.Component {
 
     resetForm = () => {
 
-        let inputs = {};
+        document.getElementById("candidateform").reset();
+        
+      /*  let inputs = {};
         inputs["cad_name"] = '';
         inputs["visa_type"] = undefined;
         inputs["rate_term"] = undefined;
@@ -104,7 +106,7 @@ class UpdateCandidate extends React.Component {
         errors1["location"] = "";
         errors1["remark"] = "";
         errors1["reason"] = "";
-        this.setState({ errors: errors1 });
+        this.setState({ errors: errors1 });*/
     }
 
 
@@ -336,7 +338,7 @@ class UpdateCandidate extends React.Component {
                     <div className="col-12 master_backgroung_work scroll-bar">
 
                         <div className="row">
-                            <form onSubmit={this.handleSubmit}>
+                            <form onSubmit={this.handleSubmit} id="candidateform">
 
                                 <div className="col-12">
                                     <div className="row" style={{ paddingTop: '20px' }}>
