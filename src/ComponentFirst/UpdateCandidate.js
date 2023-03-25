@@ -82,7 +82,7 @@ class UpdateCandidate extends React.Component {
 
     resetForm = () => {
 
-        console.log("hello"):
+        console.log("hello");
         document.getElementById("candidateform").reset();
         
       /*  let inputs = {};
