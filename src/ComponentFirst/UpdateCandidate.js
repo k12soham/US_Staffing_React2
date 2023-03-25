@@ -83,10 +83,10 @@ class UpdateCandidate extends React.Component {
     resetForm = () => {
 
         let inputs = {};
-        inputs["cad_name"] = undefined;
+        inputs["cad_name"] = '';
         inputs["visa_type"] = undefined;
         inputs["rate_term"] = undefined;
-        inputs["submitted_rate"] = undefined;
+        inputs["submitted_rate"] = '';
         inputs["phone"] = undefined;
         inputs["email"] = undefined;
         inputs["remark"] = undefined;
@@ -127,7 +127,7 @@ class UpdateCandidate extends React.Component {
         }
             
         if(this.state.input["submitted_rate"]!=undefined){
-            this.state.input["submitted_rate"] = this.state.input["cad_name"].trim(" ");
+            this.state.input["submitted_rate"] = this.state.input["submitted_rate"].trim(" ");
             
         }
       
