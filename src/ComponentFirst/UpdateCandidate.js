@@ -121,15 +121,15 @@ class UpdateCandidate extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
         
-          if(this.state.input["cad_name"]!=undefined){
+         // if(this.state.input["cad_name"]!=undefined){
             this.state.input["cad_name"] = this.state.input["cad_name"].trim(");
             
-        }
+       // }
             
-        if(this.state.input["submitted_rate"]!=undefined){
+    //    if(this.state.input["submitted_rate"]!=undefined||){
             this.state.input["submitted_rate"] = this.state.input["submitted_rate"].trim(" ");
             
-        }
+     //   }
       
 
       /*  this.state.input["phone"] = this.state.input["phone"].trim(" ");
