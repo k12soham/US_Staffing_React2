@@ -121,12 +121,17 @@ class AddCandidate extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
    
-
-        
-        if (this.validate()) {
-
+        if(this.state.input["cad_name"]!=''){
             this.state.input["cad_name"] = this.state.input["cad_name"].trim(" ");
-        this.state.input["submitted_rate"] = this.state.input["submitted_rate"].trim(" ");
+            
+        }
+            
+        if(this.state.input["submitted_rate"]!=''){
+            this.state.input["submitted_rate"] = this.state.input["cad_name"].trim(" ");
+            
+        }
+        
+       
         this.state.input["phone"] = this.state.input["phone"].trim(" ");
         this.state.input["email"] = this.state.input["email"].trim(" ");
 
@@ -150,6 +155,10 @@ class AddCandidate extends React.Component {
         this.state.input["email"] = this.state.input["email"].replaceAll("#", "%23")
       
 
+        
+        if (this.validate()) {
+
+            
             let add_cls = this.state.input;
             add_cls[e.target.name] = e.target.value;
             this.postCandidate(add_cls);
