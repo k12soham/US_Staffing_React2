@@ -78,10 +78,10 @@ class AddRequisition extends React.Component {
         inputs["req"] = undefined;
         inputs["id"] = undefined;
         inputs["client"] = undefined;
-        inputs["jobTitle"] = undefined;
+        inputs["jobTitle"] = null;
         inputs["duration"] = undefined;
         inputs["clientrate"] = undefined;
-        inputs["location"] = undefined;
+        inputs["location"] = null;
         inputs["positionType"] = undefined;
         inputs["skills"] = '';
 
@@ -194,10 +194,10 @@ class AddRequisition extends React.Component {
         inputs["req"] = undefined;
         inputs["id"] = undefined;
         inputs["client"] = undefined;
-        inputs["jobTitle"] = undefined;
+        inputs["jobTitle"] = '';
         inputs["duration"] = undefined;
         inputs["clientrate"] = undefined;
-        inputs["location"] = undefined;
+        inputs["location"] = '';
         inputs["positionType"] = undefined;
         inputs["skills"] = '';
 
@@ -225,8 +225,9 @@ class AddRequisition extends React.Component {
         let id1 = parseInt(input["id"]);
         if ((input["id"]) != undefined) {
 
-            var pattern = new RegExp(/^(?=.*[a-zA-Z0-9\s]).{1,25}$/);
-            if (!pattern.test(id1)) {
+            var pattern = new RegExp(/^[a-zA-Z0-9\s]{2,50}$/);
+            // RegExp(/^(?=.*[a-zA-Z0-9\s]).{1,25}$/);
+            if (!pattern.test(input["id"])) {
                 isValid = false;
                 errors["id"] = "Please enter valid Job Posting ID.";
             }
@@ -244,7 +245,7 @@ class AddRequisition extends React.Component {
             isValid = false;
             errors["jobTitle"] = "This field is required";
         }
-        if ((input["jobTitle"]) != undefined) {
+        if ((input["jobTitle"]) != '') {
 
             var pattern = new RegExp(/^[a-zA-Z !@#$%^&*()_+-= \s]{2,50}$/);
             if (!pattern.test(input["jobTitle"])) {
@@ -279,9 +280,9 @@ class AddRequisition extends React.Component {
             isValid = false;
             errors["location"] = "This field is required";
         }
-        if ((input["location"]) != undefined) {
+        if ((input["location"]) != '') {
 
-            var pattern = new RegExp(/^[a-zA-Z\s]{2,50}$/);
+            var pattern = new RegExp(/^[a-zA-Z,-\s]{2,50}$/);
 
             if (!pattern.test(input["location"])) {
                 isValid = false;
@@ -409,7 +410,7 @@ class AddRequisition extends React.Component {
 
                                             <div class="form-group">
                                                 <label for="req"><b>Requisition From:</b></label><br />
-                                                <select class="btn btn-secondary dropdown-toggle form-group"
+                                                <select class="btn btn-secondary dropdown-toggle"
                                                     ref={(input) => { this.refInput = input; }}
                                                     style={{ width: '100%' }}
                                                     name="req" id="req"

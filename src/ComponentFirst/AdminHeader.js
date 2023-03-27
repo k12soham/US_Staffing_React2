@@ -33,9 +33,6 @@ function AdminHeader() {
           <ListGroup style={{ marginTop: '-1px' }}>
             <ListGroupItem tag="a" href="/viewReqForAdmin" action className={splitLocation[1] !== "viewReqForAdmin" ? "list-group-item-info" : ""}>View Requisition</ListGroupItem>
           </ListGroup>
-          <ListGroup style={{ marginTop: '-1px' }}>
-            <ListGroupItem tag="a" href="/adminstatic" action className={splitLocation[1] !== "adminstatic" ? "list-group-item-info" : ""}>Add Data old</ListGroupItem>
-          </ListGroup>
 
         </ul>
       </div>

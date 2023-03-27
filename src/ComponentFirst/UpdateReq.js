@@ -119,10 +119,10 @@ class UpdateReq extends React.Component {
         inputs["req"] = undefined;
         inputs["id"] = undefined;
         inputs["client"] = undefined;
-        inputs["jobTitle"] = undefined;
+        inputs["jobTitle"] = '';
         inputs["duration"] = undefined;
         inputs["clientrate"] = undefined;
-        inputs["location"] = undefined;
+        inputs["location"] = '';
         inputs["positionType"] = undefined;
         inputs["skills"] = '';
 
@@ -172,8 +172,6 @@ class UpdateReq extends React.Component {
         this.state.input["clientrate"] = this.state.input["clientrate"].replaceAll("#", "%23")
         this.state.input["skills"] = this.state.input["skills"].replaceAll("#", "%23")
         if (this.validate()) {
-
-           
 
             let add_cls = this.state.input;
             add_cls[e.target.name] = e.target.value;
@@ -234,10 +232,10 @@ class UpdateReq extends React.Component {
         inputs["req"] = undefined;
         inputs["id"] = undefined;
         inputs["client"] = undefined;
-        inputs["jobTitle"] = undefined;
+        inputs["jobTitle"] = '';
         inputs["duration"] = undefined;
         inputs["clientrate"] = undefined;
-        inputs["location"] = undefined;
+        inputs["location"] = '';
         inputs["positionType"] = undefined;
         inputs["skills"] = undefined;
 
@@ -267,19 +265,13 @@ class UpdateReq extends React.Component {
             isValid = false;
             errors["id"] = "This field is required";
         }
-        let id1 = parseInt(input["id"]);
-        console.log(id1);
-        console.log("typeOf id1: " + typeof (id1));
+        
         if ((input["id"]) != undefined) {
 
             var pattern = new RegExp(/^(?=.*[a-zA-Z0-9]).{1,25}$/); 
-            if (!pattern.test(id1)) {
+            if (!pattern.test(input["id"])) {
                 isValid = false;
                 errors["id"] = "Please enter valid Job Posting ID.";
-            }
-            if (id1 < 0) {
-                isValid = false;
-                errors["id"] = "ID should be numeric data.";
             }
         }
 
@@ -294,7 +286,7 @@ class UpdateReq extends React.Component {
             isValid = false;
             errors["jobTitle"] = "This field is required";
         }
-        if ((input["jobTitle"]) != undefined) {
+        if ((input["jobTitle"]) != '') {
 
             var pattern = new RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]+[^\s]{2,50}$/);
 
@@ -330,9 +322,9 @@ class UpdateReq extends React.Component {
             isValid = false;
             errors["location"] = "This field is required";
         }
-        if ((input["location"]) != undefined) {
+        if ((input["location"]) != '') {
 
-            var pattern = new RegExp(/^[a-zA-Z]{2,50}$/);
+            var pattern = new RegExp(/^[a-zA-Z,-\s]{2,50}$/);
 
             if (!pattern.test(input["location"])) {
                 isValid = false;
