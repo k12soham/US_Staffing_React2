@@ -126,9 +126,9 @@ class UpdateProfileAdmin extends React.Component {
 
         console.log(this.state.role);
 
-        let recruiter_id = data["recruiter_id"];
+        let recruiter_id = data["recruiter_id"].trim(" ");
         let recruiter_name = data["recruiter_name"].trim(" ");
-        let recruiter_email = data["recruiter_email"];
+        let recruiter_email = data["recruiter_email"].trim(" ");
      
         let confirmPass = data["confirmPass"];
 

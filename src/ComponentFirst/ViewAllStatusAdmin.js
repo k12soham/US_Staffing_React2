@@ -155,7 +155,7 @@ function ViewAllStatusAdmin() {
                             {
                                 inEditMode.status && inEditMode.rowKey === st.status_id ? (                                    
 
-                                    <select class="btn btn-secondary dropdown-toggle"
+                                    <select class="btn btn-sm btn-secondary dropdown-toggle"
                                         style={{ width: '200px' }}
                                         name="status" id="status"
                                         value={status1}
@@ -284,13 +284,14 @@ function ViewAllStatusAdmin() {
                     <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px' }}>
                         <thead>
                             <tr>
-                                <th style={{ width: '20px' }}>Sr No.</th>
-                                <th style={{ width: '20px' }}>RquisitionID</th>
-                                <th style={{ width: '30px' }}>Recruiter Name</th>
-                                <th style={{ width: '20px' }}>Status</th>
-                                <th style={{ width: '20px' }}>Status Date</th>
-                                <th style={{ width: '30px' }}>Candidate Name</th>
-                                <th style={{ width: '2px' }}>Action</th>
+                            <th style={{ width: '10px' }}>Sr No.</th>
+                                    <th style={{ width: '10px' }}>Job Position ID</th>
+                                    <th style={{ width: '80px' }}>Recruiter Name</th>
+                                    <th style={{ width: '120px' }}>Status</th>
+                                    <th style={{ width: '80px' }}>Status Date</th>
+                                    <th style={{ width: '100px' }}>Candidate Name</th>
+                                    <th style={{ width: '20px' }}>Action</th>
+                               
                             </tr>
                         </thead>
                         <tbody>

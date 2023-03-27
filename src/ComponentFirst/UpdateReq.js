@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import history from './ResponseVal';
 import EmployeeHeader from './EmployeeHeader';
 import AdminHeader from './AdminHeader';
-
+import { useNavigate } from "react-router-dom";
 class UpdateReq extends React.Component {
 
     componentDidMount() {
@@ -116,14 +116,14 @@ class UpdateReq extends React.Component {
     resetForm = () => {
 
         let inputs = {};
-        inputs["req"] = undefined;
-        inputs["id"] = undefined;
-        inputs["client"] = undefined;
+        inputs["req"] = '';
+        inputs["id"] = '';
+        inputs["client"] = '';
         inputs["jobTitle"] = '';
-        inputs["duration"] = undefined;
-        inputs["clientrate"] = undefined;
+        inputs["duration"] = '';
+        inputs["clientrate"] = '';
         inputs["location"] = '';
-        inputs["positionType"] = undefined;
+        inputs["positionType"] = '';
         inputs["skills"] = '';
 
         this.setState({ input: inputs });
@@ -160,29 +160,47 @@ class UpdateReq extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        this.state.input["id"] = this.state.input["id"].trim(" ");
-        this.state.input["jobTitle"] = this.state.input["jobTitle"].trim(" ");
-        this.state.input["location"] = this.state.input["location"].trim(" ");
-        this.state.input["clientrate"] = this.state.input["clientrate"].trim(" ");
-        this.state.input["skills"] = this.state.input["skills"].trim(" ");
+        if(this.state.input["id"]!=null)
+        {
+            this.state.input["id"] = this.state.input["id"].trim();
+            this.state.input["id"] = this.state.input["id"].replaceAll("#", "%23")
+        }
 
-        this.state.input["id"] = this.state.input["id"].replaceAll("#", "%23")
-        this.state.input["jobTitle"] = this.state.input["jobTitle"].replaceAll("#", "%23")
-        this.state.input["location"] = this.state.input["location"].replaceAll("#", "%23")
-        this.state.input["clientrate"] = this.state.input["clientrate"].replaceAll("#", "%23")
-        this.state.input["skills"] = this.state.input["skills"].replaceAll("#", "%23")
+        if(this.state.input["jobTitle"]!=null)
+        {
+            this.state.input["jobTitle"] = this.state.input["jobTitle"].trim();
+            this.state.input["jobTitle"] = this.state.input["jobTitle"].replaceAll("#", "%23")
+        }
+
+        if(this.state.input["location"]!=null)
+        {
+            this.state.input["location"] = this.state.input["location"].trim();
+            this.state.input["location"] = this.state.input["location"].replaceAll("#", "%23")
+        }
+
+        if(this.state.input["clientrate"]!=null)
+        {
+            this.state.input["clientrate"] = this.state.input["clientrate"].trim();
+            this.state.input["clientrate"] = this.state.input["clientrate"].replaceAll("#", "%23")
+        }
+
+        if(this.state.input["skills"]!=null)
+        {
+            this.state.input["skills"] = this.state.input["skills"].trim();
+            this.state.input["skills"] = this.state.input["skills"].replaceAll("#", "%23")
+        }
+        
+       
         if (this.validate()) {
 
             let add_cls = this.state.input;
             add_cls[e.target.name] = e.target.value;
-
-            console.log("skills: " + this.state.input["skills"]);
             this.post_requisition(add_cls);
         }
         // 👇️ clear all input values in the form
         e.target.reset();
     }
-
+   
     post_requisition = (data) => {
         let recId = this.state.empID = localStorage.getItem("recruiterID");
       
@@ -215,10 +233,10 @@ class UpdateReq extends React.Component {
                 );
                 if (this.state.recruiterIDAdmin !== null) {
                     history.push("/viewReqForAdmin");
-                    window.location.reload();
+                    window.location.reload()
                 } else {
-                    history.push("/view_all_req");
-                    window.location.reload();
+                     history.push("/view_all_req");
+                   window.location.reload()
                 }
             },
             (error) => {
@@ -229,15 +247,15 @@ class UpdateReq extends React.Component {
         );
 
         let inputs = {};
-        inputs["req"] = undefined;
-        inputs["id"] = undefined;
-        inputs["client"] = undefined;
+        inputs["req"] = '';
+        inputs["id"] = '';
+        inputs["client"] = '';
         inputs["jobTitle"] = '';
-        inputs["duration"] = undefined;
-        inputs["clientrate"] = undefined;
+        inputs["duration"] = '';
+        inputs["clientrate"] = '';
         inputs["location"] = '';
-        inputs["positionType"] = undefined;
-        inputs["skills"] = undefined;
+        inputs["positionType"] = '';
+        inputs["skills"] = '';
 
         this.setState({ input: inputs });
 
@@ -324,7 +342,7 @@ class UpdateReq extends React.Component {
         }
         if ((input["location"]) != '') {
 
-            var pattern = new RegExp(/^[a-zA-Z,-\s]{2,50}$/);
+            var pattern = new RegExp(/^[a-zA-Z,-.]{2,50}$/);
 
             if (!pattern.test(input["location"])) {
                 isValid = false;
@@ -380,12 +398,13 @@ class UpdateReq extends React.Component {
                                     <div className="row" style={{ paddingTop: '2%' }}>
 
                                         <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '20px' }}>
+                                        <div class="form-group">
+                                            <label for="req"><b>Requisition From:</b><b style={{color:'red'}}>*</b></label><br />
 
-                                            <label for="req"><b>Requisition From:</b></label><br />
-
-                                            <select class="btn btn-secondary dropdown-toggle form-group"
+                                            <select class="btn btn-secondary dropdown-toggle"
                                                 ref={(input) => { this.refInput = input; }}
-                                                style={{ width: '100%' }} name="req" id="req"
+                                                style={{ width: '100%', textAlign:"left" }} 
+                                                name="req" id="req"
                                                 onChange={this.handleChange}                                                
                                                 value={this.state.input.req}
                                             >
@@ -400,13 +419,13 @@ class UpdateReq extends React.Component {
                                             </select>
 
                                             <div className="text-danger">{this.state.errors.req}</div>
-
+                                                </div>
 
                                             <div class="form-group">
-                                                <label for="id"><b>Job Posting ID:</b></label>
+                                                <label for="id"><b>Job Posting ID:</b><b style={{color:'red'}}>*</b></label>
                                                 <input
                                                     minLength={1}
-                                                    maxLength={10}
+                                                    maxLength={50}
                                                     type="String"
                                                     name="id"
                                                     value={this.state.input.id}
@@ -419,9 +438,9 @@ class UpdateReq extends React.Component {
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="client"><b>Client:</b></label><br />
+                                                <label for="client"><b>Client:</b><b style={{color:'red'}}>*</b></label><br />
                                                 <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '100%' }}
+                                                    style={{ width: '100%', textAlign:"left"}}
                                                     name="client" id="client"
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerReq}
@@ -446,7 +465,7 @@ class UpdateReq extends React.Component {
                                                 <div className="text-danger">{this.state.errors.client}</div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="jobTitle"><b>Job Title:</b></label>
+                                                <label for="jobTitle"><b>Job Title:</b><b style={{color:'red'}}>*</b></label>
                                                 <input
                                                     minLength={1}
                                                     maxLength={50}
@@ -461,9 +480,9 @@ class UpdateReq extends React.Component {
                                                 <div className="text-danger">{this.state.errors.jobTitle}</div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="duration"><b>Duration:</b></label><br />
+                                                <label for="duration"><b>Duration:</b><b style={{color:'red'}}>*</b></label><br />
                                                 <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '100%' }}
+                                                    style={{ width: '100%', textAlign:"left"}}
                                                     name="duration" id="duration"
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerReq}
@@ -484,9 +503,9 @@ class UpdateReq extends React.Component {
                                         </div>
                                         <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '30px' }}>
                                             <div class="form-group">
-                                                <label for="clientrate"><b>Client Rate:</b></label>
+                                                <label for="clientrate"><b>Client Rate:</b><b style={{color:'red'}}>*</b></label>
                                                 <input
-                                                    minLength={2}
+                                                    minLength={1}
                                                     maxLength={5}
                                                     type="text"
                                                     name="clientrate"
@@ -499,9 +518,9 @@ class UpdateReq extends React.Component {
                                                 <div className="text-danger">{this.state.errors.clientrate}</div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="location"><b>Location:</b></label>
+                                                <label for="location"><b>Location:</b><b style={{color:'red'}}>*</b></label>
                                                 <input
-                                                    minLength={2}
+                                                    minLength={1}
                                                     maxLength={50}
                                                     type="text"
                                                     name="location"
@@ -514,9 +533,9 @@ class UpdateReq extends React.Component {
                                                 <div className="text-danger">{this.state.errors.location}</div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="positionType"><b>Position Type:</b></label><br />
+                                                <label for="positionType"><b>Position Type:</b><b style={{color:'red'}}>*</b></label><br />
                                                 <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '100%' }}
+                                                    style={{ width: '100%', textAlign:"left"}}
                                                     name="positionType" id="positionType"
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerReq}
@@ -535,11 +554,11 @@ class UpdateReq extends React.Component {
                                                 <div className="text-danger">{this.state.errors.positionType}</div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="closure"><b>Skills:</b></label>
+                                                <label for="closure"><b>Skills:</b><b style={{color:'red'}}>*</b></label>
                                                 <textarea
 
                                                     minLength={1}
-                                                    maxLength={200}
+                                                    maxLength={400}
                                                     type="text"
                                                     name="skills"
                                                     id="skills"

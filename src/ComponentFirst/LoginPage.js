@@ -89,7 +89,7 @@ const Login1 = () => {
                     localStorage.setItem('recruiterIDAdmin', response.data.recruiter_id);
                     localStorage.setItem('recruiterEmail', response.data.recruiter_email);
                   
-                    navigate("/adminstatic");
+                    navigate("/adminstatic2");
                     toast.success("Login successfully!",
                         { position: "top-right",autoClose: 2000,
                         style: { position: "absolute", top: "5px", width: "300px" } })

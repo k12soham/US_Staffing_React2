@@ -30,8 +30,7 @@ function ViewCandidate() {
 
     let sessionreq = localStorage.getItem("requisitionID")
     let empID = localStorage.getItem("recruiterID")
-    console.log(sessionreq)
-    console.log(empID)
+
 
     const deleteBook = (candidateID) => {
 
