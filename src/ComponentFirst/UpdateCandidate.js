@@ -82,18 +82,17 @@ class UpdateCandidate extends React.Component {
 
     resetForm = () => {
 
-        
-        document.getElementById("candidateform").reset();
-        
-      /*  let inputs = {};
+        let inputs = {};
+        inputs["reqid"] = '';
         inputs["cad_name"] = '';
-        inputs["visa_type"] = undefined;
-        inputs["rate_term"] = undefined;
+        inputs["visa_type"] = '';
+        inputs["rate_term"] = '';
         inputs["submitted_rate"] = '';
-        inputs["phone"] = undefined;
-        inputs["email"] = undefined;
-        inputs["remark"] = undefined;
-        inputs["reason"] = undefined;
+        inputs["phone"] = '';
+        inputs["email"] = '';
+        inputs["remark"] = '';
+        inputs["reason"] = '';
+
 
         this.setState({ input: inputs });
 
@@ -107,7 +106,7 @@ class UpdateCandidate extends React.Component {
         errors1["location"] = "";
         errors1["remark"] = "";
         errors1["reason"] = "";
-        this.setState({ errors: errors1 });*/
+        this.setState({ errors: errors1 });
     }
 
 
@@ -123,38 +122,49 @@ class UpdateCandidate extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
+
+        if(this.state.input["cad_name"]!=null)
+        {
+            this.state.input["cad_name"] = this.state.input["cad_name"].trim();
+            this.state.input["cad_name"] = this.state.input["cad_name"].replaceAll("#", "%23")
+        }
+            
+        if(this.state.input["submitted_rate"]!=null)
+        {
+            this.state.input["submitted_rate"] = this.state.input["submitted_rate"].trim();
+            this.state.input["submitted_rate"] = this.state.input["submitted_rate"].replaceAll("#", "%23")
+        } 
         
-         // if(this.state.input["cad_name"]!=undefined){
-            this.state.input["cad_name"] = this.state.input["cad_name"].trim(");
+
+        if(this.state.input["phone"]!=null)
+        {
+            this.state.input["phone"] = this.state.input["phone"].trim();
+            this.state.input["phone"] = this.state.input["phone"].replaceAll("#", "%23")
+        }
             
-       // }
+        if(this.state.input["email"]!=null)
+        {
+            this.state.input["email"] = this.state.input["email"].trim();
+            this.state.input["email"] = this.state.input["email"].replaceAll("#", "%23")
+           
+        } 
             
-    //    if(this.state.input["submitted_rate"]!=undefined||){
-            this.state.input["submitted_rate"] = this.state.input["submitted_rate"].trim(" ");
-            
-     //   }
-      
+       
+    
 
-      /*  this.state.input["phone"] = this.state.input["phone"].trim(" ");
-        this.state.input["email"] = this.state.input["email"].trim(" ");
-
-       this.state.input["cad_name"] = this.state.input["cad_name"].replaceAll("#", "%23")
-       this.state.input["submitted_rate"] = this.state.input["submitted_rate"].replaceAll("#", "%23")
-        this.state.input["phone"] = this.state.input["phone"].replaceAll("#", "%23")
-        this.state.input["email"] = this.state.input["email"].replaceAll("#", "%23")
-
-
-        if (this.state.input["remark"] != null) {
+        if(  this.state.input["remark"]!=null)
+        {
             this.state.input["remark"] = this.state.input["remark"].trim(" ");
             this.state.input["remark"] = this.state.input["remark"].replaceAll("#", "%23")
         }
 
-        if (this.state.input["reason"] != null) {
+        if(  this.state.input["reason"]!=null)
+        {
             this.state.input["reason"] = this.state.input["reason"].trim(" ");
+
             this.state.input["reason"] = this.state.input["reason"].replaceAll("#", "%23")
 
-        }*/
-
+        }
 
 
         if (this.validate()) {
@@ -281,14 +291,14 @@ class UpdateCandidate extends React.Component {
             isValid = false;
             errors["phone"] = "This field is required";
         }
-        if ((input["phone"]) != undefined) {
+  
 
-            var pattern = new RegExp(/^[^\s][0-9 *()-\s]{4,15}$/);
-        
-
+        if ((input["phone"]) !== undefined) {
+            var pattern = /^(\([0-9]{3}\)|[0-9]{3})[\s\-]?[\0-9]{3}[\s\-]?[0-9]{4}$/
+           // var pattern = new RegExp(/^[^\s][0-9 *()-\s]{4,15}$/);
             if (!pattern.test(input["phone"])) {
                 isValid = false;
-                errors["phone"] = "Please enter only characters.";
+                errors["phone"] = "Please enter valid mobile number";
             }
         }
 
@@ -420,7 +430,7 @@ class UpdateCandidate extends React.Component {
                                             <div class="form-group">
                                                 <label for="phone"><b>Phone :</b></label>
                                                 <input
-                                                    minLength={10}
+                                                    minLength={1}
                                                     maxLength={20}
                                                     type="text"
                                                     name="phone"

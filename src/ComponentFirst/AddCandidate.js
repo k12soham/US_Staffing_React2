@@ -10,10 +10,7 @@ import { useNavigate } from "react-router-dom";
 class AddCandidate extends React.Component {
 
     componentDidMount() {
-        const button1 = document.getElementById("btn1");
-        button1.disabled = true;
-        const button2 = document.getElementById("btn2");
-        button2.disabled = true;
+ 
         axios.get(`${base_url}/getAllRateTerm`)
             .then(json =>
                 this.setState({ rateTerm_fd: json.data })
@@ -48,21 +45,21 @@ class AddCandidate extends React.Component {
 
     resetForm = () => {
       
-        let inputs = {};
-       // inputs["reqid"] = undefined;
-        inputs["cad_name"] = undefined;
-        inputs["visa_type"] = undefined;
-        inputs["rate_term"] = undefined;
-        inputs["submitted_rate"] = undefined;
-        inputs["phone"] = undefined;
-        inputs["email"] = undefined;
-        inputs["remark"] = undefined;
-        inputs["reason"] = undefined;
+        let inputs = this.state.input;
+        inputs["reqid"] = '';
+        inputs["cad_name"] = '';
+        inputs["visa_type"] = '';
+        inputs["rate_term"] = '';
+        inputs["submitted_rate"] = '';
+        inputs["phone"] = '';
+        inputs["email"] = '';
+        inputs["remark"] = '';
+        inputs["reason"] = '';
 
         this.setState({ input: inputs });
 
         let errors1 = {};
-       // inputs["reqid"] = "";
+     
         errors1["cad_name"] = "";
         errors1["visa_type"] = "";
         errors1["rate_term"] = "";
@@ -76,9 +73,11 @@ class AddCandidate extends React.Component {
     }
 
     handleChange(e) {
-
         let add_cls = this.state.input;
         add_cls[e.target.name] = e.target.value;
+        
+     
+        
         this.setState({
             input:add_cls
         });
@@ -120,21 +119,34 @@ class AddCandidate extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-   
-        if(this.state.input["cad_name"]!=''){
-            this.state.input["cad_name"] = this.state.input["cad_name"].trim(" ");
-            
-        }
-            
-        if(this.state.input["submitted_rate"]!=''){
-            this.state.input["submitted_rate"] = this.state.input["cad_name"].trim(" ");
-            
-        }
-        
        
-        this.state.input["phone"] = this.state.input["phone"].trim(" ");
-        this.state.input["email"] = this.state.input["email"].trim(" ");
+          if(this.state.input["cad_name"]!=null)
+        {
+            this.state.input["cad_name"] = this.state.input["cad_name"].trim();
+            this.state.input["cad_name"] = this.state.input["cad_name"].replaceAll("#", "%23")
+        }
+            
+        if(this.state.input["submitted_rate"]!=null)
+        {
+            this.state.input["submitted_rate"] = this.state.input["submitted_rate"].trim();
+            this.state.input["submitted_rate"] = this.state.input["submitted_rate"].replaceAll("#", "%23")
+        } 
+        
 
+        if(this.state.input["phone"]!=null)
+        {
+            this.state.input["phone"] = this.state.input["phone"].trim();
+            this.state.input["phone"] = this.state.input["phone"].replaceAll("#", "%23")
+        }
+            
+        if(this.state.input["email"]!=null)
+        {
+            this.state.input["email"] = this.state.input["email"].trim();
+            this.state.input["email"] = this.state.input["email"].replaceAll("#", "%23")
+           
+        } 
+            
+       
         if(  this.state.input["remark"]!=null)
         {
             this.state.input["remark"] = this.state.input["remark"].trim(" ");
@@ -149,16 +161,10 @@ class AddCandidate extends React.Component {
 
         }
 
-        this.state.input["cad_name"] = this.state.input["cad_name"].replaceAll("#", "%23")
-        this.state.input["submitted_rate"] = this.state.input["submitted_rate"].replaceAll("#", "%23")
-        this.state.input["phone"] = this.state.input["phone"].replaceAll("#", "%23")
-        this.state.input["email"] = this.state.input["email"].replaceAll("#", "%23")
-      
-
-        
         if (this.validate()) {
 
-            
+           
+
             let add_cls = this.state.input;
             add_cls[e.target.name] = e.target.value;
             this.postCandidate(add_cls);
@@ -215,12 +221,9 @@ class AddCandidate extends React.Component {
             }
         );
       
-         const button1 = document.getElementById("btn1");
-         button1.disabled = true;
-    //     const button2 = document.getElementById("btn2");
-    //     button2.disabled = true;
-
+      
         let inputs = {};
+       // inputs["reqid"]='';
         inputs["cad_name"] = '';
         inputs["visa_type"] = '';
         inputs["rate_term"] = '';
@@ -298,7 +301,7 @@ class AddCandidate extends React.Component {
            // var pattern = new RegExp(/^[^\s][0-9 *()-\s]{4,15}$/);
             if (!pattern.test(input["phone"])) {
                 isValid = false;
-                errors["phone"] = "Please enter valid mobile number.";
+                errors["phone"] = "Please enter valid mobile number";
             }
 
            

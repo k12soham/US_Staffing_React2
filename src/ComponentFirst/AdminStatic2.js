@@ -1147,13 +1147,13 @@ class AdminStatic2 extends React.Component {
             this.state.requisitor_fd.map((rq) => {
                 return (
                     <tr>
-                        <td></td>
+                        <td hidden></td>
                         <td>
                             {
                                 this.state.editstatus && this.state.editrowKey === rq.requisitor_id ? (
                                     <input required value={this.state.req1}
                                         onChange={this.handleupdate1}
-                                        style={{ width: "100px" }}
+                                        style={{ width: "200px" }}
 
                                     />
                                 ) : (
@@ -1257,13 +1257,13 @@ class AdminStatic2 extends React.Component {
                 return (
 
                     <tr>
-                        <td></td>
+                        <td hidden></td>
                         <td>
                             {
                                 this.state.editstatus2 && this.state.editrowKey2 === st.status_fd_id ? (
                                     <input required value={this.state.st1}
                                         onChange={this.handleupdate2}
-                                        style={{ width: "100px" }}
+                                        style={{ width: "200px" }}
                                     />
                                 ) : (
                                     st.status_fd
@@ -1333,13 +1333,13 @@ class AdminStatic2 extends React.Component {
             this.state.duration_fd.map((dr) => (
 
                 <tr>
-                    <td></td>
+                    <td hidden></td>
                     <td>
                         {
                             this.state.editstatus3 && this.state.editrowKey3 === dr.duration_id ? (
                                 <input required value={this.state.duration1}
                                     onChange={this.handleupdate3}
-                                    style={{ width: "100px" }}
+                                    style={{ width: "200px" }}
                                 />
                             ) : (
                                 dr.duration
@@ -1410,13 +1410,13 @@ class AdminStatic2 extends React.Component {
             this.state.client_fd.map((cl) => {
                 return (
                     <tr>
-                        <td></td>
+                        <td hidden></td>
                         <td>
                             {
                                 this.state.editstatus4 && this.state.editrowKey4 === cl.client_id ? (
                                     <input required value={this.state.client1}
                                         onChange={this.handleupdate4}
-                                        style={{ width: "100px" }}
+                                        style={{ width: "200px" }}
 
                                     />
                                 ) : (
@@ -1488,13 +1488,13 @@ class AdminStatic2 extends React.Component {
                 return (
 
                     <tr>
-                        <td></td>
+                        <td hidden></td>
                         <td>
                             {
                                 this.state.editstatus5 && this.state.editrowKey5 === pt.position_type_id ? (
                                     <input required value={this.state.position1}
                                         onChange={this.handleupdate5}
-                                        style={{ width: "100px" }}
+                                        style={{ width: "200px" }}
 
                                     />
                                 ) : (
@@ -1572,13 +1572,13 @@ class AdminStatic2 extends React.Component {
             this.state.visaType_fd.map((vt) => {
                 return (
                     <tr>
-                        <td></td>
+                        <td hidden></td>
                         <td>
                             {
                                 this.state.editstatus6 && this.state.editrowKey6 === vt.visa_type_id ? (
                                     <input required value={this.state.visatype1}
                                         onChange={this.handleupdate6}
-                                        style={{ width: "100px" }}
+                                        style={{ width: "200px" }}
 
                                     />
                                 ) : (
@@ -1654,13 +1654,13 @@ class AdminStatic2 extends React.Component {
                 return (
 
                     <tr>
-                        <td></td>
+                        <td hidden></td>
                         <td>
                             {
                                 this.state.editstatus7 && this.state.editrowKey7 === rt.rate_term_id ? (
                                     <input required value={this.state.rateterm1}
                                         onChange={this.handleupdate7}
-                                        style={{ width: "100px" }}
+                                        style={{ width: "200px" }}
 
                                     />
                                 ) : (
@@ -1750,9 +1750,9 @@ class AdminStatic2 extends React.Component {
                                     <Table bordered className="table table-sm table-striped">
                                         <thead>
                                             <tr>
-                                                <th style={{ width: "3%" }}>Sr.No.</th>
-                                                <th style={{ width: "49%" }}>Position Type</th>
-                                                <th style={{ width: "50%px" }}>Edit/Delete</th>
+                                            
+                                                <th style={{ width: "70%" }}>Position Type</th>
+                                                <th style={{ width: "30%px" }}>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -1762,7 +1762,7 @@ class AdminStatic2 extends React.Component {
                                     </Table>
                                 </div><br />
                                 <form onSubmit={this.handleSubmit4}>
-                                    <label>Add new position</label><br></br>
+                                    <label><b>Add new position</b></label><br></br>
                                     <input type="text" name="position" style={{ width: "80%" }} value={this.state.position} onChange={this.handleChange4}></input>
                                     <button class="btn btn-sm  btn-success" style={{ width: "20%" }}> <i class=" fa fa-save"></i>&nbsp;Add</button>
                                     <div className="text-danger">{this.state.positionerr}</div>
@@ -1776,9 +1776,9 @@ class AdminStatic2 extends React.Component {
                                     <Table bordered className="table table-sm table-striped">
                                         <thead>
                                             <tr>
-                                                <th style={{ width: "3%" }}>Sr.No.</th>
-                                                <th style={{ width: "48%" }}>Status</th>
-                                                <th style={{ width: "50%px" }}>Edit/Delete</th>
+                                             
+                                                <th style={{ width: "70%" }}>Status</th>
+                                                <th style={{ width: "30%px" }}>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -1802,9 +1802,9 @@ class AdminStatic2 extends React.Component {
                                     <Table bordered className="table table-sm table-striped">
                                         <thead>
                                             <tr>
-                                                <th style={{ width: "5%" }}>Sr.No.</th>
-                                                <th style={{ width: "49%" }}>Duration</th>
-                                                <th style={{ width: "50%px" }}>Edit/Delete</th>
+                                               
+                                                <th style={{ width: "70%" }}>Duration</th>
+                                                <th style={{ width: "30%px" }}>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -1813,11 +1813,11 @@ class AdminStatic2 extends React.Component {
                                     </Table>
                                 </div><br />
                                 <form onSubmit={this.handleSubmit5}>
-                                    <label>Add new duration</label><br></br>
+                                    <label><b>Add new duration</b></label><br></br>
                                     <input type="text" name="duration" style={{ width: "80%" }} value={this.state.duration} onChange={this.handleChange5}></input>
                                     <button class="btn btn-sm  btn-success" style={{ width: "20%" }}> <i class=" fa fa-save"></i>&nbsp;Add</button>
                                     <div className="text-danger">{this.state.durationerr}</div>
-                                </form><br></br><br></br>
+                                </form><br></br>
                             </div>
 
                         </div>
@@ -1830,9 +1830,9 @@ class AdminStatic2 extends React.Component {
                                     <Table bordered className="table table-sm table-striped">
                                         <thead>
                                             <tr>
-                                                <th style={{ width: "3%" }}>Sr.No.</th>
-                                                <th style={{ width: "53%" }}>Rate Term</th>
-                                                <th style={{ width: "47%px" }}>Edit/Delete</th>
+                                             
+                                                <th style={{ width: "70%" }}>Rate Term</th>
+                                                <th style={{ width: "30%px" }}>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -1842,7 +1842,7 @@ class AdminStatic2 extends React.Component {
                                     </Table>
                                 </div>
                                 <form onSubmit={this.handleSubmit7}>
-                                            <label>Add new rate term</label><br></br>
+                                            <label><b>Add new rate term</b></label><br></br>
                                             <input type="text" name="rateterm" style={{ width: "80%" }} value={this.state.rateterm} onChange={this.handleChange7}></input>
                                             <button class="btn btn-sm  btn-success" style={{ width: "20%" }}> <i class=" fa fa-save"></i>&nbsp;Add</button>
                                             <div className="text-danger">{this.state.ratetermerr}</div>
@@ -1856,9 +1856,9 @@ class AdminStatic2 extends React.Component {
                                     <Table bordered className="table table-sm table-striped">
                                         <thead>
                                             <tr>
-                                                <th style={{ width: "3%" }}>Sr.No.</th>
-                                                <th style={{ width: "48%" }}>Visa Type</th>
-                                                <th style={{ width: "50%px" }}>Edit/Delete</th>
+                                              
+                                                <th style={{ width: "70%" }}>Visa Type</th>
+                                                <th style={{ width: "30%px" }}>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -1869,7 +1869,7 @@ class AdminStatic2 extends React.Component {
                                     </Table>
                                 </div><br/>
                                 <form onSubmit={this.handleSubmit6}>
-                                    <label>Add new visa type</label><br></br>
+                                    <label><b>Add new visa type</b></label><br></br>
                                     <input type="text" name="visatype" style={{ width: "80%" }} value={this.state.visatype} onChange={this.handleChange6}></input>
                                     <button class="btn btn-sm  btn-success" style={{ width: "20%" }}> <i class=" fa fa-save"></i>&nbsp;Add</button>
                                     <div className="text-danger">{this.state.visatypeerr}</div>
@@ -1882,9 +1882,9 @@ class AdminStatic2 extends React.Component {
                                     <Table bordered className="table table-sm table-striped">
                                         <thead>
                                             <tr>
-                                                <th style={{ width: "5%" }}>Sr.No.</th>
-                                                <th style={{ width: "49%" }}>Requisitor Name</th>
-                                                <th style={{ width: "50%px" }}>Edit/Delete</th>
+                                           
+                                                <th style={{ width: "70%" }}>Requisitor Name</th>
+                                                <th style={{ width: "30%px" }}>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -1893,12 +1893,12 @@ class AdminStatic2 extends React.Component {
                                     </Table>
                                 </div><br />
                                 <form onSubmit={this.handleSubmit1}>
-                                    <label>Add new requisitor</label><br></br>
+                                    <label><b>Add new requisitor</b></label><br></br>
                                     <input type="text" name="req" style={{ width: "80%" }}
                                         value={this.state.req} onChange={this.handleChange1}></input>
                                     <button class="btn btn-sm  btn-success" style={{ width: "20%" }}> <i class=" fa fa-save"></i>&nbsp;Add</button>
                                     <div className="text-danger">{this.state.reqerr}</div>
-                                </form><br></br><br></br>
+                                </form><br></br>
                             </div>
 
                         </div>
@@ -1910,9 +1910,9 @@ class AdminStatic2 extends React.Component {
                                     <Table bordered className="table table-sm table-striped">
                                         <thead>
                                             <tr>
-                                                <th style={{ width: "5%" }}>Sr.No.</th>
-                                                <th style={{ width: "49%" }}>Client Name</th>
-                                                <th style={{ width: "50%px" }}>Edit/Delete</th>
+                                               
+                                                <th style={{ width: "70%" }}>Client Name</th>
+                                                <th style={{ width: "30%px" }}>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>

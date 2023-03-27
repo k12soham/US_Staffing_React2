@@ -75,14 +75,14 @@ class AddRequisition extends React.Component {
     resetForm = () => {
 
         let inputs = {};
-        inputs["req"] = undefined;
-        inputs["id"] = undefined;
-        inputs["client"] = undefined;
-        inputs["jobTitle"] = undefined;
-        inputs["duration"] = undefined;
-        inputs["clientrate"] = undefined;
-        inputs["location"] = undefined;
-        inputs["positionType"] = undefined;
+        inputs["req"] = '';
+        inputs["id"] = '';
+        inputs["client"] = '';
+        inputs["jobTitle"] = '';
+        inputs["duration"] = '';
+        inputs["clientrate"] = '';
+        inputs["location"] = '';
+        inputs["positionType"] = '';
         inputs["skills"] = '';
 
         this.setState({ input: inputs });
@@ -115,19 +115,38 @@ class AddRequisition extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        if(this.state.input["id"]!=null)
+        {
+            this.state.input["id"] = this.state.input["id"].trim();
+            this.state.input["id"] = this.state.input["id"].replaceAll("#", "%23")
+        }
 
+        if(this.state.input["jobTitle"]!=null)
+        {
+            this.state.input["jobTitle"] = this.state.input["jobTitle"].trim();
+            this.state.input["jobTitle"] = this.state.input["jobTitle"].replaceAll("#", "%23")
+        }
+
+        if(this.state.input["location"]!=null)
+        {
+            this.state.input["location"] = this.state.input["location"].trim();
+            this.state.input["location"] = this.state.input["location"].replaceAll("#", "%23")
+        }
+
+        if(this.state.input["clientrate"]!=null)
+        {
+            this.state.input["clientrate"] = this.state.input["clientrate"].trim();
+            this.state.input["clientrate"] = this.state.input["clientrate"].replaceAll("#", "%23")
+        }
+
+        if(this.state.input["skills"]!=null)
+        {
+            this.state.input["skills"] = this.state.input["skills"].trim();
+            this.state.input["skills"] = this.state.input["skills"].replaceAll("#", "%23")
+        }
         
-        this.state.input["id"] = this.state.input["id"].trim(" ");
-        this.state.input["jobTitle"] = this.state.input["jobTitle"].trim(" ");
-        this.state.input["location"] = this.state.input["location"].trim(" ");
-        this.state.input["clientrate"] = this.state.input["clientrate"].trim(" ");
-        this.state.input["skills"] = this.state.input["skills"].trim(" ");
-
-        this.state.input["id"] = this.state.input["id"].replaceAll("#", "%23")
-        this.state.input["jobTitle"] = this.state.input["jobTitle"].replaceAll("#", "%23")
-        this.state.input["location"] = this.state.input["location"].replaceAll("#", "%23")
-        this.state.input["clientrate"] = this.state.input["clientrate"].replaceAll("#", "%23")
-        this.state.input["skills"] = this.state.input["skills"].replaceAll("#", "%23")
+       
+     
 
 
         if (this.validate()) {
@@ -191,14 +210,14 @@ class AddRequisition extends React.Component {
         );
 
         let inputs = {};
-        inputs["req"] = undefined;
-        inputs["id"] = undefined;
-        inputs["client"] = undefined;
-        inputs["jobTitle"] = undefined;
-        inputs["duration"] = undefined;
-        inputs["clientrate"] = undefined;
-        inputs["location"] = undefined;
-        inputs["positionType"] = undefined;
+        inputs["req"] = '';
+        inputs["id"] = '';
+        inputs["client"] = '';
+        inputs["jobTitle"] = '';
+        inputs["duration"] = '';
+        inputs["clientrate"] = '';
+        inputs["location"] = '';
+        inputs["positionType"] = '';
         inputs["skills"] = '';
 
         this.setState({ input: inputs });
@@ -222,11 +241,11 @@ class AddRequisition extends React.Component {
             isValid = false;
             errors["id"] = "This field is required";
         }
-        let id1 = parseInt(input["id"]);
+   
         if ((input["id"]) != undefined) {
 
-            var pattern = new RegExp(/^(?=.*[a-zA-Z0-9\s]).{1,25}$/);
-            if (!pattern.test(id1)) {
+            var pattern = new RegExp(/^[a-zA-Z0-9\s]{2,50}$/);
+            if (!pattern.test(input["id"])) {
                 isValid = false;
                 errors["id"] = "Please enter valid Job Posting ID.";
             }
@@ -244,7 +263,7 @@ class AddRequisition extends React.Component {
             isValid = false;
             errors["jobTitle"] = "This field is required";
         }
-        if ((input["jobTitle"]) != undefined) {
+        if ((input["jobTitle"]) != '') {
 
             var pattern = new RegExp(/^[a-zA-Z !@#$%^&*()_+-= \s]{2,50}$/);
             if (!pattern.test(input["jobTitle"])) {
@@ -279,9 +298,9 @@ class AddRequisition extends React.Component {
             isValid = false;
             errors["location"] = "This field is required";
         }
-        if ((input["location"]) != undefined) {
+        if ((input["location"]) != '') {
 
-            var pattern = new RegExp(/^[a-zA-Z\s]{2,50}$/);
+            var pattern = new RegExp(/^[a-zA-Z,-.\s]{2,50}$/);
 
             if (!pattern.test(input["location"])) {
                 isValid = false;
@@ -409,7 +428,7 @@ class AddRequisition extends React.Component {
 
                                             <div class="form-group">
                                                 <label for="req"><b>Requisition From:</b></label><br />
-                                                <select class="btn btn-secondary dropdown-toggle form-group"
+                                                <select class="btn btn-secondary dropdown-toggle"
                                                     ref={(input) => { this.refInput = input; }}
                                                     style={{ width: '100%' }}
                                                     name="req" id="req"
@@ -424,9 +443,9 @@ class AddRequisition extends React.Component {
                                                     }
                                                 </select>
                                                 <div className="text-danger">{this.state.errors.req}</div>
-                                            </div>
+                                                </div>
 
-                                            <div class="form-group">
+                                                <div class="form-group">
                                                 <label for="id"><b>Job Posting ID:</b></label>
                                                 <input
                                                     minLength={1}
