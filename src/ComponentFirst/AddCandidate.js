@@ -86,8 +86,10 @@ class AddCandidate extends React.Component {
     CheckRequisiton = (e) => {
 
         let requisition_id = this.state.input;
+       
         requisition_id[e.target.name] = e.target.value;
         let a = this.state.input.reqid
+        alert(a)
       
 
         axios.get(`${base_url}/getRequisitionByID?ID=${a}`).then(
@@ -97,10 +99,6 @@ class AddCandidate extends React.Component {
               
                 let requid = response.data.requisition_id
                 localStorage.setItem('requisitionID', requid);
-                const button1 = document.getElementById("btn1");
-                button1.disabled = false;
-                const button2 = document.getElementById("btn2");
-                button2.disabled = false;
               
             },
             (error) => {
@@ -351,7 +349,7 @@ class AddCandidate extends React.Component {
                                     <div className="row" style={{ paddingTop: '20px' }}>
                                         <div className="col-12" style={{ paddingLeft: '35px', paddingRight: '20px' }}>
                                             <div class="form-group">
-                                                <label for="reqid"><b>Requisition ID:</b></label>
+                                                <label for="reqid"><b>Job Posting ID:</b></label>
                                                 <input
                                                     style={{ width: '30%' }}
                                                     ref={(input) => { this.refInput = input; }}
@@ -363,7 +361,7 @@ class AddCandidate extends React.Component {
 
                                                     onBlur={this.CheckRequisiton}
 
-                                                    placeholder="Requisition ID"
+                                                    placeholder="Job Posting ID"
                                                     class="form-control" />
 
                                                 <div className="text-danger">{this.state.errors.reqid}</div>
