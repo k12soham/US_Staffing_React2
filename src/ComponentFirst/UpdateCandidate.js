@@ -349,7 +349,7 @@ class UpdateCandidate extends React.Component {
                     <div className="col-12 master_backgroung_work scroll-bar">
 
                         <div className="row">
-                            <form onSubmit={this.handleSubmit}>
+                            <form onSubmit={this.handleSubmit} id="candidateform">
 
                                 <div className="col-12">
                                     <div className="row" style={{ paddingTop: '20px' }}>
