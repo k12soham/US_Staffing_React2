@@ -36,9 +36,9 @@ function App() {
         <Route path="/signup" element={<SignUp />}></Route>
         <Route path="/addRequisition" element={<AddRequisition />}></Route>
 
-        <Route path="/adminstatic" element={<AdminStatic />}></Route>
+        {/* <Route path="/adminstatic" element={<AdminStatic />}></Route> */}
         <Route path="/addCandidate" element={<AddCandidate />}></Route>
-
+        <Route path="/adminstatic2" element={<AdminStatic2/>}></Route>
         
         <Route path="/viewCandidate" element={<ViewCandidate />}></Route>
         <Route path="/view_all_req" element={<ViewAllReq />}></Route>
@@ -58,7 +58,7 @@ function App() {
         <Route path="/page" element={<Pageexample/>}></Route>
         <Route path="/pagination" element={<Pagination/>}></Route>
 
-        <Route path="/adminstatic2" element={<AdminStatic2/>}></Route>
+       
        
         </Routes>
       </Router>
