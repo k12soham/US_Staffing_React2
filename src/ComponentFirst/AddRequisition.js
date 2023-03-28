@@ -205,7 +205,7 @@ class AddRequisition extends React.Component {
             (error) => {
                 console.log(error);
                 console.log("Error");
-                alert("Please enter valid details or you already assigned for this requisition")
+                alert("Please enter valid details OR \nyou are already working on this requisition")
             }
         );
 
@@ -345,9 +345,9 @@ class AddRequisition extends React.Component {
     // -------------------------------------------- If Requisition Exist --------------------------------------
     keyUpHandlerID = (e) => {
 
-        this.setState({
-            requisitionId1: undefined
-        });
+        // this.setState({
+        //     requisitionId1: undefined
+        // });
         let reqID = e.target.value;
 
         axios.get(`${base_url}/getRequisitionByID?ID=${reqID}`).then(
@@ -386,18 +386,18 @@ class AddRequisition extends React.Component {
             (error) => {
                 console.log(error);
 
-                let inputs = {};
-                inputs["req"] = this.state.input.req;
-                inputs["id"] = this.state.input.id;
-                inputs["client"] = '';
-                inputs["jobTitle"] = '';
-                inputs["duration"] = '';
-                inputs["clientrate"] = '';
-                inputs["location"] = '';
-                inputs["positionType"] = '';
-                inputs["skills"] = '';
+                // let inputs = {};
+                // inputs["req"] = '';
+                // inputs["id"] = this.state.input.id;
+                // inputs["client"] = '';
+                // inputs["jobTitle"] = '';
+                // inputs["duration"] = '';
+                // inputs["clientrate"] = '';
+                // inputs["location"] = '';
+                // inputs["positionType"] = '';
+                // inputs["skills"] = '';
 
-                this.setState({ input: inputs });
+                // this.setState({ input: inputs });
             }
         );
     }
@@ -528,9 +528,9 @@ class AddRequisition extends React.Component {
                                         </div>
                                         <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '30px' }}>
                                             <div class="form-group">
-                                                <label for="clientrate"><b>Client Rate ($):</b></label>
+                                                <label for="clientrate"><b>Client Rate ($):</b><b style={{color:'red'}}>*</b></label>
                                                 <input
-                                                    minLength={2}
+                                                    minLength={1}
                                                     maxLength={5}
                                                     type="text"
                                                     name="clientrate"
