@@ -43,7 +43,7 @@ function ViewCandForAdmin() {
 
     const onEdit = ({ candidateID }) => {
         localStorage.setItem('candidateID', candidateID);
-        navigate("/updateCandidate");
+        navigate("/updateCandidateAdmin");
     }
 
     const getnewID = (e) => {

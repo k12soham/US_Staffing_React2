@@ -49,7 +49,7 @@ function ViewReqForAdmin() {
 
         localStorage.setItem('requisitionID', requisitionID);
 
-        navigate("/updateRequisition");
+        navigate("/updateRequisitionAdmin");
 
     }
 

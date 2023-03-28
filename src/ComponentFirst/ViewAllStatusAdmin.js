@@ -156,7 +156,7 @@ function ViewAllStatusAdmin() {
                                 inEditMode.status && inEditMode.rowKey === st.status_id ? (                                    
 
                                     <select class="btn btn-sm btn-secondary dropdown-toggle"
-                                        style={{ width: '200px' }}
+                                        style={{ width: '200px' ,  textAlign:"left" }}
                                         name="status" id="status"
                                         value={status1}
                                         

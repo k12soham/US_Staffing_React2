@@ -23,6 +23,8 @@ import ViewAllStatus from './ComponentFirst/ViewAllStatus';
 import Pagination from './ComponentFirst/PaginationDemo';
 import AdminStatic2 from './ComponentFirst/AdminStatic2';
 import PhoneDemo from './ComponentFirst/PhoneDemo';
+import UpdateCandidateAdmin from './ComponentFirst/UpdateCandidateAdmin';
+import UpdateReqAdmin from './ComponentFirst/UpdateReqAdmin';
 
 function App() {
 
@@ -47,6 +49,9 @@ function App() {
 
         <Route path="/updateRequisition" element={<UpdateReq />}></Route>
         <Route path="/updateCandidate" element={<UpdateCandidate />}></Route>
+
+        <Route path="/updateRequisitionAdmin" element={<UpdateReqAdmin />}></Route>
+        <Route path="/updateCandidateAdmin" element={<UpdateCandidateAdmin />}></Route>
 
         <Route path="/viewReqForAdmin" element={<ViewReqForAdmin />}></Route>
         <Route path="/viewCandForAdmin" element={<ViewCandForAdmin />}></Route>

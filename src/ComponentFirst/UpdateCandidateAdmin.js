@@ -9,7 +9,7 @@ import AdminHeader from './AdminHeader';
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 
-class UpdateCandidate extends React.Component {
+class UpdateCandidateAdmin extends React.Component {
 
     componentDidMount() {
         this.refInput.focus();
@@ -338,19 +338,19 @@ class UpdateCandidate extends React.Component {
 
     // -------------------------------------------- render ----------------------------------------------------
     render() {
-   
-        const isAuthenticated = localStorage.getItem('recruiterID');
+        const isAuthenticated = localStorage.getItem('recruiterIDAdmin');
+    
 
-        return isAuthenticated ? (
+        return isAuthenticated ?  (
 
             <div className="">
                 <div className="row">
 
                     <div className="col-12 h-100 master_backgroung_heder">
 
-                        
-                                <EmployeeHeader />
-                           
+                      
+                         <AdminHeader />
+                              
 
                     </div>
 
@@ -435,7 +435,7 @@ class UpdateCandidate extends React.Component {
 
                                         </div>
                                         <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '30px' }}>
-                                            <div class="form-group">
+                                            {/* <div class="form-group">
                                                 <label for="phone"><b>Phone :</b><b style={{color:'red'}}>*</b></label>
                                                 <input
                                                     minLength={1}
@@ -450,9 +450,9 @@ class UpdateCandidate extends React.Component {
                                                     class="form-control" />
 
                                                 <div className="text-danger">{this.state.errors.phone}</div>
-                                            </div>
+                                            </div> */}
 
-                                            {/* <div class="form-group">
+                                            <div class="form-group">
                                                 <label for="phone"><b>Phone :</b><b style={{color:'red'}}>*</b></label>
 
                                                     <PhoneInput 
@@ -472,7 +472,7 @@ class UpdateCandidate extends React.Component {
 
                                                     />
                                         <div className="text-danger">{this.state.errors.phone}</div>
-                                            </div> */}
+                                            </div>
 
                                             <div class="form-group">
                                                 <label for="email"><b>Email:</b><b style={{color:'red'}}>*</b></label>
@@ -571,4 +571,4 @@ class UpdateCandidate extends React.Component {
     }
 }
 
-export default UpdateCandidate;
+export default UpdateCandidateAdmin;

@@ -362,7 +362,7 @@ function ViewCandidate() {
                             <td>
                                 {
                                     <select className=" drop-down-style btn btn-sm btn-secondary dropdown-toggle"
-                                        style={{ width: '140px',fontFamily: 'arial', fontSize: '13px' }}
+                                        style={{ width: '140px',fontFamily: 'arial', fontSize: '13px', textAlign:"left" }}
                                         name="status" id="status"
 
                                         onChange={(evt) => handleChange({
@@ -383,10 +383,11 @@ function ViewCandidate() {
                                 {
                                     st.candidate == null ?
                                         (
-                                            <button onClick={handleSubmit} class="btn btn-sm btn-primary fa fa-save"></button>
+                                           
+                                            <button  onClick={handleSubmit} class="btn btn-sm  btn-success" style={{ width: "20%" }}> <i class=" fa fa-save"></i></button>
                                         ) :
                                         (
-                                            <button class="btn btn-sm btn-primary fa fa-save" onClick={() => handleSubmit2({ canid: st.candidate.candidate_id })}></button>
+                                            <button class="btn btn-sm  btn-success" style={{ width: "20%" }} onClick={() => handleSubmit2({ canid: st.candidate.candidate_id })}><i class=" fa fa-save"></i></button>
                                         )
                                 }
 
