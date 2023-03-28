@@ -427,10 +427,10 @@ class AddRequisition extends React.Component {
                                         <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '20px' }}>
 
                                             <div class="form-group">
-                                                <label for="req"><b>Requisition From:</b></label><br />
+                                                <label for="req"><b>Requisition From:</b><b style={{color:'red'}}>*</b></label><br />
                                                 <select class="btn btn-secondary dropdown-toggle"
                                                     ref={(input) => { this.refInput = input; }}
-                                                    style={{ width: '100%' }}
+                                                    style={{ width: '100%', textAlign:"left" }}
                                                     name="req" id="req"
                                                     onChange={this.handleChange}
                                                     value={this.state.input.req}>
@@ -446,7 +446,7 @@ class AddRequisition extends React.Component {
                                                 </div>
 
                                                 <div class="form-group">
-                                                <label for="id"><b>Job Posting ID:</b></label>
+                                                <label for="id"><b>Job Posting ID:</b><b style={{color:'red'}}>*</b></label>
                                                 <input
                                                    // minLength={1}
                                                     maxLength={25}
@@ -462,9 +462,9 @@ class AddRequisition extends React.Component {
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="client"><b>Client:</b></label><br />
+                                                <label for="client"><b>Client:</b><b style={{color:'red'}}>*</b></label><br />
                                                 <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '100%' }}
+                                                    style={{ width: '100%', textAlign:"left"  }}
                                                     name="client" id="client"
                                                     onChange={this.handleChange}
                                              
@@ -491,7 +491,7 @@ class AddRequisition extends React.Component {
                                                 <div className="text-danger">{this.state.errors.client}</div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="jobTitle"><b>Job Title:</b></label>
+                                                <label for="jobTitle"><b>Job Title:</b><b style={{color:'red'}}>*</b></label>
                                                 <input
                                                     minLength={1}
                                                     maxLength={50}
@@ -506,9 +506,9 @@ class AddRequisition extends React.Component {
                                                 <div className="text-danger">{this.state.errors.jobTitle}</div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="duration"><b>Duration:</b></label><br />
+                                                <label for="duration"><b>Duration:</b><b style={{color:'red'}}>*</b></label><br />
                                                 <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '100%' }}
+                                                    style={{ width: '100%', textAlign:"left"  }}
                                                     name="duration" id="duration"
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerReq}
@@ -544,7 +544,7 @@ class AddRequisition extends React.Component {
                                                 <div className="text-danger">{this.state.errors.clientrate}</div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="location"><b>Location:</b></label>
+                                                <label for="location"><b>Location:</b><b style={{color:'red'}}>*</b></label>
                                                 <input
                                                     minLength={1}
                                                     maxLength={50}
@@ -559,9 +559,9 @@ class AddRequisition extends React.Component {
                                                 <div className="text-danger">{this.state.errors.location}</div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="positionType"><b>Position Type:</b></label><br />
+                                                <label for="positionType"><b>Position Type:</b><b style={{color:'red'}}>*</b></label><br />
                                                 <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '100%' }}
+                                                    style={{ width: '100%', textAlign:"left"  }}
                                                     name="positionType" id="positionType"
                                                     onChange={this.handleChange}
                                                 
@@ -580,7 +580,7 @@ class AddRequisition extends React.Component {
                                                 <div className="text-danger">{this.state.errors.positionType}</div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="closure"><b>Skills:</b></label>
+                                                <label for="closure"><b>Skills:</b><b style={{color:'red'}}>*</b></label>
                                                 <textarea
 
                                                     minLength={1}

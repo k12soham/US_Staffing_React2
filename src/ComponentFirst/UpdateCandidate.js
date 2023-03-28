@@ -6,6 +6,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import history from './ResponseVal';
 import EmployeeHeader from './EmployeeHeader';
 import AdminHeader from './AdminHeader';
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 
 class UpdateCandidate extends React.Component {
 
@@ -72,6 +74,7 @@ class UpdateCandidate extends React.Component {
             candidateID: 0,
             rateTerm_fd: [],
             visaType_fd: [],
+            phone: '',
             recruiterIDAdmin: undefined
         };
 
@@ -323,6 +326,12 @@ class UpdateCandidate extends React.Component {
     }
     // -------------------------------------------- End Validation Code ----------------------------------------------------------
 
+    getPhone = (e) => {
+        let phn = this.state.phone;
+      
+        // let a = this.state.input.reqid
+        console.log(e);
+    }
 
     // -------------------------------------------- render ----------------------------------------------------
     render() {
@@ -356,7 +365,7 @@ class UpdateCandidate extends React.Component {
                                         <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '20px' }}>
 
                                             <div class="form-group">
-                                                <label for="cad_name"><b>Candidate Name:</b></label>
+                                                <label for="cad_name"><b>Candidate Name:</b><b style={{color:'red'}}>*</b></label>
                                                 <input
                                                     ref={(input) => { this.refInput = input; }}
                                                     minLength={1}
@@ -373,9 +382,9 @@ class UpdateCandidate extends React.Component {
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="visa_type"><b>Visa Type:</b></label><br />
+                                                <label for="visa_type"><b>Visa Type:</b><b style={{color:'red'}}>*</b></label><br />
                                                 <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '100%' }}
+                                                    style={{ width: '100%', textAlign:"left" }}
                                                     name="visa_type" id="visa_type"
                                                     onChange={this.handleChange}
                                                     value={this.state.input.visa_type}>
@@ -392,9 +401,9 @@ class UpdateCandidate extends React.Component {
 
                                             
                                             <div class="form-group">
-                                                <label for="rate_term"><b>Rate Term:</b></label><br />
+                                                <label for="rate_term"><b>Rate Term:</b><b style={{color:'red'}}>*</b></label><br />
                                                 <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '100%' }}
+                                                    style={{ width: '100%', textAlign:"left" }}
                                                     name="rate_term" id="rate_term"
                                                     onChange={this.handleChange}
                                                     value={this.state.input.rate_term}>
@@ -409,7 +418,7 @@ class UpdateCandidate extends React.Component {
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="submitted_rate"><b>Submitted Rate:</b></label>
+                                                <label for="submitted_rate"><b>Submitted Rate:</b><b style={{color:'red'}}>*</b></label>
                                                 <input
                                                     // minLength={2}
                                                     // maxLength={4}
@@ -428,7 +437,7 @@ class UpdateCandidate extends React.Component {
                                         </div>
                                         <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '30px' }}>
                                             <div class="form-group">
-                                                <label for="phone"><b>Phone :</b></label>
+                                                <label for="phone"><b>Phone :</b><b style={{color:'red'}}>*</b></label>
                                                 <input
                                                     minLength={1}
                                                     maxLength={20}
@@ -444,7 +453,7 @@ class UpdateCandidate extends React.Component {
                                                 <div className="text-danger">{this.state.errors.phone}</div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="email"><b>Email:</b></label>
+                                                <label for="email"><b>Email:</b><b style={{color:'red'}}>*</b></label>
                                                 <input
                                                     minLength={2}
                                                     maxLength={50}
@@ -488,6 +497,17 @@ class UpdateCandidate extends React.Component {
                                                     placeholder="Reason"
 
                                                     class="form-control" />
+
+                                                <div className="text-danger">{this.state.errors.reason}</div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="reason"><b>Reason:</b></label>
+                                                <PhoneInput
+                                                    country={'us'}
+                                                    value={this.state.input.phone}
+                                                    onChange={this.getPhone}
+                                                />
 
                                                 <div className="text-danger">{this.state.errors.reason}</div>
                                             </div>

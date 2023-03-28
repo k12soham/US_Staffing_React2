@@ -193,8 +193,6 @@ class UpdateReq extends React.Component {
        
         if (this.validate()) {
 
-           
-
             let add_cls = this.state.input;
             add_cls[e.target.name] = e.target.value;
             this.post_requisition(add_cls);
@@ -285,19 +283,13 @@ class UpdateReq extends React.Component {
             isValid = false;
             errors["id"] = "This field is required";
         }
-        let id1 = parseInt(input["id"]);
-        console.log(id1);
-        console.log("typeOf id1: " + typeof (id1));
+        
         if ((input["id"]) != undefined) {
 
             var pattern = new RegExp(/^(?=.*[a-zA-Z0-9]).{1,25}$/); 
-            if (!pattern.test(id1)) {
+            if (!pattern.test(input["id"])) {
                 isValid = false;
                 errors["id"] = "Please enter valid Job Posting ID.";
-            }
-            if (id1 < 0) {
-                isValid = false;
-                errors["id"] = "ID should be numeric data.";
             }
         }
 
@@ -407,11 +399,12 @@ class UpdateReq extends React.Component {
 
                                         <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '20px' }}>
                                         <div class="form-group">
-                                            <label for="req"><b>Requisition From:</b></label><br />
+                                            <label for="req"><b>Requisition From:</b><b style={{color:'red'}}>*</b></label><br />
 
                                             <select class="btn btn-secondary dropdown-toggle"
                                                 ref={(input) => { this.refInput = input; }}
-                                                style={{ width: '100%' }} name="req" id="req"
+                                                style={{ width: '100%', textAlign:"left" }} 
+                                                name="req" id="req"
                                                 onChange={this.handleChange}                                                
                                                 value={this.state.input.req}
                                             >
@@ -429,7 +422,7 @@ class UpdateReq extends React.Component {
                                                 </div>
 
                                             <div class="form-group">
-                                                <label for="id"><b>Job Posting ID:</b></label>
+                                                <label for="id"><b>Job Posting ID:</b><b style={{color:'red'}}>*</b></label>
                                                 <input
                                                     minLength={1}
                                                     maxLength={50}
@@ -445,9 +438,9 @@ class UpdateReq extends React.Component {
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="client"><b>Client:</b></label><br />
+                                                <label for="client"><b>Client:</b><b style={{color:'red'}}>*</b></label><br />
                                                 <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '100%' }}
+                                                    style={{ width: '100%', textAlign:"left"}}
                                                     name="client" id="client"
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerReq}
@@ -472,7 +465,7 @@ class UpdateReq extends React.Component {
                                                 <div className="text-danger">{this.state.errors.client}</div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="jobTitle"><b>Job Title:</b></label>
+                                                <label for="jobTitle"><b>Job Title:</b><b style={{color:'red'}}>*</b></label>
                                                 <input
                                                     minLength={1}
                                                     maxLength={50}
@@ -487,9 +480,9 @@ class UpdateReq extends React.Component {
                                                 <div className="text-danger">{this.state.errors.jobTitle}</div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="duration"><b>Duration:</b></label><br />
+                                                <label for="duration"><b>Duration:</b><b style={{color:'red'}}>*</b></label><br />
                                                 <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '100%' }}
+                                                    style={{ width: '100%', textAlign:"left"}}
                                                     name="duration" id="duration"
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerReq}
@@ -510,7 +503,7 @@ class UpdateReq extends React.Component {
                                         </div>
                                         <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '30px' }}>
                                             <div class="form-group">
-                                                <label for="clientrate"><b>Client Rate:</b></label>
+                                                <label for="clientrate"><b>Client Rate:</b><b style={{color:'red'}}>*</b></label>
                                                 <input
                                                     minLength={1}
                                                     maxLength={5}
@@ -525,7 +518,7 @@ class UpdateReq extends React.Component {
                                                 <div className="text-danger">{this.state.errors.clientrate}</div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="location"><b>Location:</b></label>
+                                                <label for="location"><b>Location:</b><b style={{color:'red'}}>*</b></label>
                                                 <input
                                                     minLength={1}
                                                     maxLength={50}
@@ -540,9 +533,9 @@ class UpdateReq extends React.Component {
                                                 <div className="text-danger">{this.state.errors.location}</div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="positionType"><b>Position Type:</b></label><br />
+                                                <label for="positionType"><b>Position Type:</b><b style={{color:'red'}}>*</b></label><br />
                                                 <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '100%' }}
+                                                    style={{ width: '100%', textAlign:"left"}}
                                                     name="positionType" id="positionType"
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerReq}
@@ -561,7 +554,7 @@ class UpdateReq extends React.Component {
                                                 <div className="text-danger">{this.state.errors.positionType}</div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="closure"><b>Skills:</b></label>
+                                                <label for="closure"><b>Skills:</b><b style={{color:'red'}}>*</b></label>
                                                 <textarea
 
                                                     minLength={1}

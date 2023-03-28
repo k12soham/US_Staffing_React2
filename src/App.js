@@ -22,6 +22,7 @@ import Pageexample from './ComponentFirst/Pageexample';
 import ViewAllStatus from './ComponentFirst/ViewAllStatus';
 import Pagination from './ComponentFirst/PaginationDemo';
 import AdminStatic2 from './ComponentFirst/AdminStatic2';
+import PhoneDemo from './ComponentFirst/PhoneDemo';
 
 function App() {
 
@@ -58,7 +59,7 @@ function App() {
         <Route path="/page" element={<Pageexample/>}></Route>
         <Route path="/pagination" element={<Pagination/>}></Route>
 
-       
+        <Route path="/phonedemo" element={<PhoneDemo/>}></Route>       
        
         </Routes>
       </Router>
