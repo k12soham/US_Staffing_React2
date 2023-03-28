@@ -448,7 +448,7 @@ class AddRequisition extends React.Component {
                                                 <div class="form-group">
                                                 <label for="id"><b>Job Posting ID:</b><b style={{color:'red'}}>*</b></label>
                                                 <input
-                                                    minLength={1}
+                                                   // minLength={1}
                                                     maxLength={25}
                                                     type="text"
                                                     name="id"
@@ -528,7 +528,7 @@ class AddRequisition extends React.Component {
                                         </div>
                                         <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '30px' }}>
                                             <div class="form-group">
-                                                <label for="clientrate"><b>Client Rate ($):</b><b style={{color:'red'}}>*</b></label>
+                                                <label for="clientrate"><b>Client Rate ($):</b></label>
                                                 <input
                                                     minLength={2}
                                                     maxLength={5}

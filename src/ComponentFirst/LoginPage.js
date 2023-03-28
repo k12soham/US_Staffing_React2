@@ -8,13 +8,13 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Login1 = () => {
 
-    const [username, setEmail] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [validate, setValidate] = useState({});
     const [showPassword, setShowPassword] = useState(false);
 
     let navigate = useNavigate();
-    localStorage.setItem("email",username)
+    localStorage.setItem("email",email)
     const inputRef = useRef();
  
     useEffect(() => {
@@ -25,8 +25,8 @@ const Login1 = () => {
         let isValid = true;
 
         let validator = Form.validator({
-            username: {
-                value: username,
+            email: {
+                value: email,
                 isRequired: true,
                 isEmail: true,
             },
@@ -55,7 +55,7 @@ const Login1 = () => {
 
         if (validate) {
 
-            const uname = username;
+            const uname = email;
             const pass = password;
 
             setValidate({});
@@ -145,13 +145,13 @@ const Login1 = () => {
                                 <div className="email mb-3">
                                     <input
                                         type="email"
-                                        className={`form-control ${validate.validate && validate.validate.username
+                                        className={`form-control ${validate.validate && validate.validate.email
                                             ? "is-invalid "
                                             : ""
                                             }`}
-                                        id="username"
-                                        name="username"
-                                        value={username}
+                                        id="email"
+                                        name="email"
+                                        value={email}
                                         minLength={11}
                                         maxLength={50}
                                         placeholder="Email"
@@ -160,13 +160,13 @@ const Login1 = () => {
                                     />
 
                                     <div
-                                        className={`invalid-feedback text-start ${validate.validate && validate.validate.username
+                                        className={`invalid-feedback text-start ${validate.validate && validate.validate.email
                                             ? "d-block"
                                             : "d-none"
                                             }`}
                                     >
-                                        {validate.validate && validate.validate.username
-                                            ? validate.validate.username[0]
+                                        {validate.validate && validate.validate.email
+                                            ? validate.validate.email[0]
                                             : ""}
                                     </div>
                                 </div>

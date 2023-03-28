@@ -15,10 +15,18 @@ class SignUp extends React.Component {
       input: {},
       errors: {},
       hover: false,
+      showNewPass: false,
+            showConfPass: false,
+            currentPassword: undefined,
+            newPassword: undefined,
+            confirmPassword: undefined,
+            passMatch: null,
+            passNotMatch: null,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.keyUpHandler = this.keyUpHandler.bind(this);
   
   }
 
@@ -26,20 +34,31 @@ class SignUp extends React.Component {
     let emp_reg = this.state.input;
     emp_reg[e.target.name] = e.target.value;
     this.setState({
-      emp_reg
+     input: emp_reg
     });
+    this.state.newPassword = this.state.input['newPass'];
+    this.state.confirmPassword = this.state.input['confirmPass'];
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    this.state.input["name"] = this.state.input["name"].trim(" ");
-    this.state.input["email"] = this.state.input["email"].trim(" ");
+
+
+    if(this.state.input["name"]!=null)
+    {
+      this.state.input["name"]=  this.state.input["name"].trim()
+    }
+
+    if(this.state.input["email"]!=null)
+    {
+      this.state.input["email"]=  this.state.input["email"].trim()
+    }
+
     if (this.validate()) {
 
       let emp_reg = this.state.input;
       emp_reg[e.target.name] = e.target.value;
-     
-     
+      
       this.postdata(emp_reg);
 
     }
@@ -47,10 +66,10 @@ class SignUp extends React.Component {
   }
 
   postdata = (data) => {
-   
+ 
     let d1 = data["name"];  
     let d2 = data["email"];
-     let d3 = data["password"];
+     let d3 = data["confirmPass"];
 
     axios.post(`${base_url}/addRecruiter?recruiter_name=${d1}&recruiter_email=${d2}&password=${d3}`)
     
@@ -80,13 +99,14 @@ class SignUp extends React.Component {
     let inputs = {};
     inputs["name"] = '';
     inputs["email"] = '';
-    inputs["password"] = '';
+    inputs["confirmPass"] = '';
 
     this.setState({ input: inputs });
 
   }
 
   validate() {
+ 
     let input = this.state.input;
     let errors = {};
     let isValid = true;
@@ -120,18 +140,33 @@ class SignUp extends React.Component {
       }
     }
 
-    if (!input["password"]) {
+    if (!input["newPass"]) {
       isValid = false;
-      errors["password"] = "Please enter password.";
+      errors["newPass"] = "Please enter password.";
     }
 
-    if (typeof input["password"] !== "undefined") {
+    if (typeof input["newPass"] !== "undefined") {
 
       var pattern = new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$%^&*,!? \b]).{6,15}$/);
 
-      if (!pattern.test(input["password"])) {
+      if (!pattern.test(input["newPass"])) {
         isValid = false;
-        errors["password"] = "Password must contain at least one number, one special character (?!,@#$), one upper and lower case letter, and at least 6 characters.";
+        errors["newPass"] = "Password must contain at least one number, one special character (?!,@#$), one upper and lower case letter, and at least 6 characters.";
+      }
+    }
+
+    if (!input["confirmPass"]) {
+      isValid = false;
+      errors["confirmPass"] = "Please enter confirm password.";
+    }
+
+    if (typeof input["confirmPass"] !== "confirmPass") {
+
+      var pattern = new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$%^&*,!? \b]).{6,15}$/);
+
+      if (!pattern.test(input["confirmPass"])) {
+        isValid = false;
+        errors["confirmPass"] = "Password must contain at least one number, one special character (?!,@#$), one upper and lower case letter, and at least 6 characters.";
       }
     }
 
@@ -141,6 +176,20 @@ class SignUp extends React.Component {
 
     return isValid;
   }
+
+  keyUpHandler(e) {
+    this.state.confirmPassword = this.state.input['confirmPass'];
+
+    if (((this.state.newPassword) == (this.state.confirmPassword)) && (this.state.newPassword !== undefined)) {
+
+        this.setState({ passNotMatch: '' });
+        this.setState({ passMatch: 'Password matched' });
+    }
+    else {
+        this.setState({ passMatch: '' });
+        this.setState({ passNotMatch: 'Password not matched' });
+    }
+}
 
   togglePassword = (e) => {
 
@@ -153,6 +202,25 @@ class SignUp extends React.Component {
     }
 
   };
+
+  togglePassword2 = (e) => {
+    // ----------------------------------------------------------------------------------------------------
+    if (this.state.showNewPass) {
+
+        this.setState({ showNewPass: false });
+    } else {
+
+        this.setState({ showNewPass: true });
+    }
+}
+
+  togglePassword3 = (e) => {
+    if (this.state.showConfPass) {
+        this.setState({ showConfPass: false });
+    } else {
+        this.setState({ showConfPass: true });
+    }
+};
 
   render() {
     return (
@@ -174,7 +242,7 @@ class SignUp extends React.Component {
               <form onSubmit={this.handleSubmit}>
 
                 <div class="form-group">
-                  <label for="name"><b>Enter Name:</b></label>
+                  <label for="name"><b>Enter Name:</b><b style={{color:'red'}}>*</b></label>
                   <input
                     type="text"
                     name="name"
@@ -190,7 +258,7 @@ class SignUp extends React.Component {
                 </div>
 
                 <div class="form-group">
-                  <label for="email"><b>Enter Email:</b></label>
+                  <label for="email"><b>Enter Email:</b><b style={{color:'red'}}>*</b></label>
                   <input
                     name="email"
                     value={this.state.input.email}
@@ -206,36 +274,72 @@ class SignUp extends React.Component {
                 </div>
 
                 {/* ---------------------------------------------------------------------- */}
-                <div className="password mb-3">
-                  <div className="form-group">
-                    <label for="password"><b>Enter Password:</b></label>
-                    <input
-                      type={(this.state.hover) ? "text" : "password"}
-                      name="password"
-                      id="password"
-                      value={this.state.input.password}
-                      onChange={this.handleChange}
-                      placeholder="Password"
-                      minLength={6}
-                      maxLength={15}
-                      style={{ width: '305px', height: '37px' }}
-                    />
+                <div className="password mb-3 " >
+                                    <div className="form-group">
+                                        <label for="password"><b>Enter New Password:</b><b style={{color:'red'}}>*</b></label>
+                                        <input
+                                            type={(this.state.showNewPass) ? "text" : "password"}
+                                            name="newPass"
+                                            id="newPass"
+                                        
+                                            onChange={this.handleChange}
+                                            onKeyUp={this.keyUpHandler}
+                                            placeholder="Password"
+                                            minLength={6}
+                                            maxLength={15}
+                                            style={{ width: '305px', height: '37px' }}
+                                        />
 
-                    <button
-                      type="button"
-                      className="btn btn-outline-primary theme-btn mx-auto"
-                      onClick={this.togglePassword}
-                    >
-                      <i
-                        className={
-                          (this.state.hover) ? "far fa-eye" : "far fa-eye-slash"
-                        }
-                      ></i>{" "}
-                    </button>
-                    <div className="text-danger">{this.state.errors.password}</div>
+                                        <button
+                                            type="button"
+                                            className="btn btn-outline-primary theme-btn mx-auto"
+                                            onClick={this.togglePassword2}
+                                        >
+                                            <i
+                                                className={
+                                                    (this.state.showNewPass) ? "far fa-eye" : "far fa-eye-slash"
+                                                }
+                                            ></i>{" "}
+                                        </button>
+                                        <div className="text-danger">{this.state.errors['newPass']}</div>
 
-                  </div>
-                </div>
+                                    </div>
+                                </div>
+
+
+                <div className="password mb-3 ">
+                                    <div className="form-group">
+                                        <label for="password"><b>Enter Confirm Password:</b><b style={{color:'red'}}>*</b></label>
+                                        <input
+                                            type={(this.state.showConfPass) ? "text" : "password"}
+                                            name="confirmPass"
+                                            id="confirmPass"
+                                            onChange={this.handleChange}
+                                            onKeyUp={this.keyUpHandler} 
+                                            placeholder="Confirm Password"
+                                            minLength={6}
+                                            maxLength={15}
+                                            style={{ width: '305px', height: '37px' }}
+                                        />
+
+                                        <button
+                                            type="button"
+                                            className="btn btn-outline-primary theme-btn mx-auto"
+                                            onClick={this.togglePassword3}
+                                        >
+                                            <i
+                                                className={
+                                                    (this.state.showConfPass) ? "far fa-eye" : "far fa-eye-slash"
+                                                }
+                                            ></i>{" "}
+                                        </button>
+                                        <div className="text-danger">{this.state.errors['confirmPass']}</div>
+                                        <div className="text-danger">{this.state.passNotMatch}</div>
+                                        <div className="text-success">{this.state.passMatch}</div>
+                                       
+
+                                    </div>
+                                </div>
 
                 <div className="text-center">
                   
