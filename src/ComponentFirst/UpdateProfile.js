@@ -53,13 +53,12 @@ class UpdateProfile extends React.Component {
         }
         else {
             this.setState({ passMatch: '' });
-            this.setState({ passNotMatch: 'Pass not matched' });
+            this.setState({ passNotMatch: 'Password not matched' });
         }
     }
 
     handleChange(e) {
 
-        console.log(this.state.hover);
         let emp_reg = this.state.input;
 
         emp_reg[e.target.name] = e.target.value;
@@ -76,15 +75,28 @@ class UpdateProfile extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-
+        if(this.state.input["recruiter_name"]!=null)
+        {
+            this.state.input = this.state.input["recruiter_name"].trim();
+        }
+        if(this.state.input["recruiter_email"]!=null)
+        {
+            this.state.input = this.state.input["recruiter_email"].trim();
+        }
+      
         if (this.validate()) {
+            let emp_reg = this.state.input;
+            emp_reg[e.target.name] = e.target.value;
 
-            if (this.state.passNotMatch != '') {
-                alert("Your new password doesn't match!");
+            if( this.state.input["currentPass"]==this.state.input["newPass"])
+            {
+                alert("New password must be different than current password");
+               
             }
+
+          
             else {
-                let emp_reg = this.state.input;
-                emp_reg[e.target.name] = e.target.value;
+               
 
                 this.state.input["recruiter_name"] = this.state.input["recruiter_name"].trim(" ");
 
@@ -93,20 +105,18 @@ class UpdateProfile extends React.Component {
             }
         }
         // 👇️ clear all input values in the form
-        e.target.reset();
-        this.setState({ passNotMatch: '' });
-        this.setState({ passMatch: '' });
+      
     }
 
     postdata = (data) => {
 
         let recruiter_id = data["recruiter_id"];
-        let recruiter_name = data["recruiter_name"].trim(" ");
+        let recruiter_name = data["recruiter_name"];
         let recruiter_email = data["recruiter_email"];
         let currentPass = data["currentPass"];
         let confirmPass = data["confirmPass"];
 
-        axios.put(`${base_url}/UpdateRecruiterProfileAdmin/?recruiterId=${recruiter_id}&recruiterName=${recruiter_name}&recruiterEmail=${recruiter_email}&currentPass=${currentPass}&newPass=${confirmPass}`).then(
+        axios.put(`${base_url}/UpdateRecruiterProfile/?recruiterId=${recruiter_id}&recruiterName=${recruiter_name}&recruiterEmail=${recruiter_email}&currentPass=${currentPass}&newPass=${confirmPass}`).then(
            
             (response) => {
                 toast.success("Profile updated successfully!",
@@ -280,7 +290,7 @@ class UpdateProfile extends React.Component {
 
                                 {/* -----------------------------------------------End editable code------------------------------------------------------------- */}
                                 <div class="form-group">
-                                    <label for="name"><b>Enter Name:</b></label>
+                                    <label for="name"><b>Enter Name:</b><b style={{color:'red'}}>*</b></label>
                                     <input
                                         type="text"
                                         name="recruiter_name"
@@ -297,7 +307,7 @@ class UpdateProfile extends React.Component {
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="email"><b>Enter Email:</b></label>
+                                    <label for="email"><b>Enter Email:</b><b style={{color:'red'}}>*</b></label>
                                     <input
                                       
                                         name='recruiter_email'
@@ -317,7 +327,7 @@ class UpdateProfile extends React.Component {
                                 {/* ---------------------------------------------------------------------- */}
                                 <div className="password mb-3 ">
                                     <div className="form-group">
-                                        <label for="password"><b>Enter Current Password:</b></label>
+                                        <label for="password"><b>Enter Current Password:</b><b style={{color:'red'}}>*</b></label>
                                         <input
                                             type={(this.state.hover) ? "text" : "password"}
                                             name="currentPass"
@@ -325,7 +335,7 @@ class UpdateProfile extends React.Component {
                                            
                                             value={this.currentPassword}
                                             onChange={this.handleChange}
-                                            placeholder="Password"
+                                            placeholder="Current Password"
                                             minLength={6}
                                             maxLength={15}
                                             style={{ width: '305px', height: '37px' }}
@@ -350,7 +360,7 @@ class UpdateProfile extends React.Component {
                                 {/* ---------------------------------------------------------------------- */}
                                 <div className="password mb-3 " >
                                     <div className="form-group">
-                                        <label for="password"><b>Enter New Password:</b></label>
+                                        <label for="password"><b>Enter New Password:</b><b style={{color:'red'}}>*</b></label>
                                         <input
                                             type={(this.state.showNewPass) ? "text" : "password"}
                                             name="newPass"
@@ -358,7 +368,7 @@ class UpdateProfile extends React.Component {
                                         
                                             onChange={this.handleChange}
                                             onKeyUp={this.keyUpHandler}
-                                            placeholder="Password"
+                                            placeholder="New Password"
                                             minLength={6}
                                             maxLength={15}
                                             style={{ width: '305px', height: '37px' }}
@@ -384,14 +394,14 @@ class UpdateProfile extends React.Component {
 
                                 <div className="password mb-3 ">
                                     <div className="form-group">
-                                        <label for="password"><b>Enter Confirm Password:</b></label>
+                                        <label for="password"><b>Enter Confirm Password:</b><b style={{color:'red'}}>*</b></label>
                                         <input
                                             type={(this.state.showConfPass) ? "text" : "password"}
                                             name="confirmPass"
                                             id="confirmPass"
                                             onChange={this.handleChange}
                                             onKeyUp={this.keyUpHandler} 
-                                            placeholder="Password"
+                                            placeholder="Confirm Password"
                                             minLength={6}
                                             maxLength={15}
                                             style={{ width: '305px', height: '37px' }}
