@@ -67,6 +67,8 @@ class AddRequisition extends React.Component {
             setReqList: [],
             requisitionId1: undefined,
 
+            reqval: '',
+
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -107,9 +109,12 @@ class AddRequisition extends React.Component {
 
         let add_cls = this.state.input;
         add_cls[e.target.name] = e.target.value;
-        console.log(add_cls);
+        let a = add_cls["req"]
+        if (this.state.reqval != a) {
+            add_cls["client"] = null
+        }
         this.setState({
-            input: add_cls,
+            input: add_cls,reqval: a
         });
     }
 
@@ -154,6 +159,8 @@ class AddRequisition extends React.Component {
           
             let add_cls = this.state.input;
             add_cls[e.target.name] = e.target.value;
+
+
 
             this.post_requisition(add_cls);
             
@@ -247,7 +254,7 @@ class AddRequisition extends React.Component {
             var pattern = new RegExp(/^[a-zA-Z0-9\s]{2,50}$/);
             if (!pattern.test(input["id"])) {
                 isValid = false;
-                errors["id"] = "Please enter valid Job Posting ID.";
+                errors["id"] = "This field is required";
             }
             
         }
@@ -298,15 +305,15 @@ class AddRequisition extends React.Component {
             isValid = false;
             errors["location"] = "This field is required";
         }
-        if ((input["location"]) != '') {
+        // if ((input["location"]) != '') {
 
-            var pattern = new RegExp(/^[a-zA-Z,-.\s]{2,50}$/);
+        //     var pattern = new RegExp(/^[a-zA-Z,-.\s]{2,50}$/);
 
-            if (!pattern.test(input["location"])) {
-                isValid = false;
-                errors["location"] = "Please enter valid location name.";
-            }
-        }
+        //     if (!pattern.test(input["location"])) {
+        //         isValid = false;
+        //         errors["location"] = "Please enter valid location name.";
+        //     }
+        // }
 
         // -------------positionType-----------------------------------------------------------------------------------------
         if ((!input["positionType"])) {
@@ -405,9 +412,9 @@ class AddRequisition extends React.Component {
     // -------------------------------------------- render ----------------------------------------------------
     render() {
 
-        const isAuthenticated = localStorage.getItem('recruiterID');
+        const isAuthenticated = localStorage.getItem('recruiterRole');
 
-        return isAuthenticated ? (
+        return isAuthenticated=="TM" ? (
 
             <div className="">
                 <div className="row">

@@ -54,13 +54,19 @@ function ViewReqForAdmin() {
     }
 
     const getnewID = (e) => {
+       
         let requisitionID = e.rq
+        let req = e.req
         localStorage.setItem("requisitionID", requisitionID)
+        localStorage.setItem("reqID", req)
+    
     }
 
     const renderTable = () => {
-        const isAuthenticated = localStorage.getItem('recruiterIDAdmin');
-        return isAuthenticated ? (
+        const isAuthenticated = localStorage.getItem('recruiterRole');
+
+
+        return isAuthenticated =="Admin"? (
    
 
             requisitionList.filter((cls) => {
@@ -105,7 +111,7 @@ function ViewReqForAdmin() {
                             <td>{cls.requisition_from}</td>
 
                             <td>{
-                                <a href="/viewCandForAdmin" onClick={(evt) => getnewID({ rq: cls.requisition_id })}>{cls.id}</a>
+                                <a href="/viewCandForAdmin" onClick={(evt) => getnewID({ rq: cls.requisition_id, req:cls.id })}>{cls.id}</a>
 
                             }</td>
                             <td>{cls.client}</td>

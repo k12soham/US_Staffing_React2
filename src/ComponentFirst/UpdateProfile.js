@@ -12,50 +12,50 @@ class UpdateProfile extends React.Component {
         this.state = {
             input: {},
             errors: {},
-            hover: false,
-            showNewPass: false,
-            showConfPass: false,
-            currentPassword: undefined,
-            newPassword: undefined,
-            confirmPassword: undefined,
-            passMatch: null,
-            passNotMatch: null,
+         
+          
 
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleFetchedData = this.handleFetchedData(this);
-        this.keyUpHandler = this.keyUpHandler.bind(this);
+        this.handleFetchedData2 = this.handleFetchedData2(this);
     }
 
     handleFetchedData() {
 
         let recruiterID = localStorage.getItem('recruiterID');
+
     
         axios.get(`${base_url}/getRecruiterbyID?recruiterID=${recruiterID}`).then((json) => {
             this.setState({
                 input: json.data
+             
             });
-            
+
+
+        })
+    }
+
+    handleFetchedData2() {
+
+        let recruiterID = localStorage.getItem('recruiterIDAdmin');
+
+    
+        axios.get(`${base_url}/getRecruiterbyID?recruiterID=${recruiterID}`).then((json) => {
+            this.setState({
+                input: json.data
+             
+            });
+
 
         })
     }
 
     // --------------------------------------------------Password match--------------------------------------------------
-    keyUpHandler(e) {
-        this.state.confirmPassword = this.state.input['confirmPass'];
-
-        if (((this.state.newPassword) == (this.state.confirmPassword)) && (this.state.newPassword !== undefined)) {
-
-            this.setState({ passNotMatch: '' });
-            this.setState({ passMatch: 'Password matched' });
-        }
-        else {
-            this.setState({ passMatch: '' });
-            this.setState({ passNotMatch: 'Password not matched' });
-        }
-    }
+  
+    
 
     handleChange(e) {
 
@@ -68,41 +68,32 @@ class UpdateProfile extends React.Component {
         });
       
 
-        this.state.currentPassword = this.state.input["currentPass"];
-        this.state.newPassword = this.state.input['newPass'];
-        this.state.confirmPassword = this.state.input['confirmPass'];
+
     }
 
     handleSubmit(e) {
         e.preventDefault();
-        if(this.state.input["recruiter_name"]!=null)
+ 
+       if(this.state.input["recruiter_name"]!=null)
         {
-            this.state.input = this.state.input["recruiter_name"].trim();
+            this.state.input["recruiter_name"] = this.state.input["recruiter_name"].trim();
+            this.state.input["recruiter_name"] = this.state.input["recruiter_name"].replaceAll("#", "%23");
         }
         if(this.state.input["recruiter_email"]!=null)
         {
-            this.state.input = this.state.input["recruiter_email"].trim();
+            this.state.input["recruiter_email"] = this.state.input["recruiter_email"].trim();
+            this.state.input["recruiter_email"] = this.state.input["recruiter_email"].replaceAll("#", "%23");
         }
       
         if (this.validate()) {
+       
             let emp_reg = this.state.input;
             emp_reg[e.target.name] = e.target.value;
 
-            if( this.state.input["currentPass"]==this.state.input["newPass"])
-            {
-                alert("New password must be different than current password");
-               
-            }
-
-          
-            else {
-               
-
-                this.state.input["recruiter_name"] = this.state.input["recruiter_name"].trim(" ");
-
+           
                 this.postdata(emp_reg);
 
-            }
+            
         }
         // 👇️ clear all input values in the form
       
@@ -113,11 +104,10 @@ class UpdateProfile extends React.Component {
         let recruiter_id = data["recruiter_id"];
         let recruiter_name = data["recruiter_name"];
         let recruiter_email = data["recruiter_email"];
-        let currentPass = data["currentPass"];
-        let confirmPass = data["confirmPass"];
+        const role = localStorage.getItem('recruiterRole');
 
-        axios.put(`${base_url}/UpdateRecruiterProfile/?recruiterId=${recruiter_id}&recruiterName=${recruiter_name}&recruiterEmail=${recruiter_email}&currentPass=${currentPass}&newPass=${confirmPass}`).then(
-           
+        axios.put(`${base_url}/UpdateRecruiterProfile?recruiterId=${recruiter_id}&recruiterName=${recruiter_name}&recruiterEmail=${recruiter_email}`).then(
+         
             (response) => {
                 toast.success("Profile updated successfully!",
                     { position: "top-right" }
@@ -125,8 +115,18 @@ class UpdateProfile extends React.Component {
 
                 localStorage.setItem("recruiterName",recruiter_name);
                 localStorage.setItem('recruiterEmail',recruiter_email);
-                history.push("/addRequisition");
-                window.location.reload();
+                if(role=="Admin")
+                {
+                    history.push("/viewReqForAdmin");
+                    window.location.reload();
+                  
+                }
+                else if(role=="TM")
+                {
+                    history.push("/addRequisition");
+                    window.location.reload();
+                }
+            
           
             },
             (error) => {
@@ -174,49 +174,6 @@ class UpdateProfile extends React.Component {
         }
 
         // -----------------------------------------handle currentPass error---------------------------------------------
-        if (this.state.currentPassword == undefined) {
-            isValid = false;
-            errors["currentPass"] = "Please enter current password.";
-        }
-
-       
-        // -----------------------------------------end pass error-----------------------------------------------
-        // -----------------------------------------handle newPass error---------------------------------------------
-        if (this.state.newPassword == undefined) {
-            isValid = false;
-            errors["newPass"] = "Please enter new password.";
-         
-        }
-
-        if ((this.state.newPassword) !== undefined) {
-
-            var pattern = new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$%^&*,!? \b]).{6,15}$/);
-
-            if (!pattern.test(this.state.newPassword)) {
-                isValid = false;
-                errors["newPass"] = "Password must contain at least one number, one special character (?!,@#$), one upper and lower case letter, and at least 6 characters.";
-
-            }
-        }
-        // -----------------------------------------end newPass error-----------------------------------------------
-
-        // -----------------------------------------handle confirmPass error---------------------------------------------
-        if (this.state.confirmPassword == undefined) {
-            isValid = false;
-            errors["confirmPass"] = "Please enter confirm password.";
-           
-        }
-
-        if ((this.state.confirmPassword) !== undefined) {
-
-            var pattern = new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$%^&*,!? \b]).{6,15}$/);
-
-            if (!pattern.test(this.state.confirmPassword)) {
-                isValid = false;
-                errors["confirmPass"] = "Password must contain at least one number, one special character (?!,@#$), one upper and lower case letter, and at least 6 characters.";
-            }
-        }
-        // -----------------------------------------end confirmPass error-----------------------------------------------
         this.setState({
             errors: errors
         });
@@ -224,36 +181,7 @@ class UpdateProfile extends React.Component {
     }
     // ------------------------------------- END VALIADATION CODE---------------------------------------------------------------
 
-    togglePassword1 = (e) => {
-
-        if (this.state.hover) {
-
-            this.setState({ hover: false });
-        } else {
-
-            this.setState({ hover: true });
-        }
-    }
-
-    togglePassword2 = (e) => {
-        // ----------------------------------------------------------------------------------------------------
-        if (this.state.showNewPass) {
-
-            this.setState({ showNewPass: false });
-        } else {
-
-            this.setState({ showNewPass: true });
-        }
-    }
-
-    togglePassword3 = (e) => {
-        if (this.state.showConfPass) {
-            this.setState({ showConfPass: false });
-        } else {
-            this.setState({ showConfPass: true });
-        }
-    };
-
+   
     resetForm = () => {
 
         let inputs = {};
@@ -261,15 +189,12 @@ class UpdateProfile extends React.Component {
 
         let errors1 = {};
         this.setState({ errors: errors1 });
-
-        this.setState({ passNotMatch: '' });
-        this.setState({ passMatch: '' });
     }
 
     render() {
-        const isAuthenticated = localStorage.getItem('recruiterID');
+        const isAuthenticated = localStorage.getItem('recruiterRole');
 
-        return isAuthenticated ?(
+        return isAuthenticated=="TM" || isAuthenticated=="Admin"  ? (
 
             <div className="row g-0 auth-wrapper">
                 <div className="col-12 col-md-5 col-lg-6 h-100 master_backgroung_login">
@@ -322,111 +247,7 @@ class UpdateProfile extends React.Component {
                                     <div className="text-danger">{this.state.errors.recruiter_email}</div>
                                 </div>
 
-                                <hr></hr>
-
-                                {/* ---------------------------------------------------------------------- */}
-                                <div className="password mb-3 ">
-                                    <div className="form-group">
-                                        <label for="password"><b>Enter Current Password:</b><b style={{color:'red'}}>*</b></label>
-                                        <input
-                                            type={(this.state.hover) ? "text" : "password"}
-                                            name="currentPass"
-                                            id="currentPass"
-                                           
-                                            value={this.currentPassword}
-                                            onChange={this.handleChange}
-                                            placeholder="Current Password"
-                                            minLength={6}
-                                            maxLength={15}
-                                            style={{ width: '305px', height: '37px' }}
-                                        />
-
-                                        <button
-                                            type="button"
-                                            className="btn btn-outline-primary theme-btn mx-auto"
-                                            onClick={this.togglePassword1}
-                                        >
-                                            <i
-                                                className={
-                                                    (this.state.hover) ? "far fa-eye" : "far fa-eye-slash"
-                                                }
-                                            ></i>{" "}
-                                        </button>
-                                        <div className="text-danger">{this.state.errors['currentPass']}</div>
-
-                                    </div>
-                                </div>
-
-                                {/* ---------------------------------------------------------------------- */}
-                                <div className="password mb-3 " >
-                                    <div className="form-group">
-                                        <label for="password"><b>Enter New Password:</b><b style={{color:'red'}}>*</b></label>
-                                        <input
-                                            type={(this.state.showNewPass) ? "text" : "password"}
-                                            name="newPass"
-                                            id="newPass"
-                                        
-                                            onChange={this.handleChange}
-                                            onKeyUp={this.keyUpHandler}
-                                            placeholder="New Password"
-                                            minLength={6}
-                                            maxLength={15}
-                                            style={{ width: '305px', height: '37px' }}
-                                        />
-
-                                        <button
-                                            type="button"
-                                            className="btn btn-outline-primary theme-btn mx-auto"
-                                            onClick={this.togglePassword2}
-                                        >
-                                            <i
-                                                className={
-                                                    (this.state.showNewPass) ? "far fa-eye" : "far fa-eye-slash"
-                                                }
-                                            ></i>{" "}
-                                        </button>
-                                        <div className="text-danger">{this.state.errors['newPass']}</div>
-
-                                    </div>
-                                </div>
-
-                                {/* ---------------------------------------------------------------------- */}
-
-                                <div className="password mb-3 ">
-                                    <div className="form-group">
-                                        <label for="password"><b>Enter Confirm Password:</b><b style={{color:'red'}}>*</b></label>
-                                        <input
-                                            type={(this.state.showConfPass) ? "text" : "password"}
-                                            name="confirmPass"
-                                            id="confirmPass"
-                                            onChange={this.handleChange}
-                                            onKeyUp={this.keyUpHandler} 
-                                            placeholder="Confirm Password"
-                                            minLength={6}
-                                            maxLength={15}
-                                            style={{ width: '305px', height: '37px' }}
-                                        />
-
-                                        <button
-                                            type="button"
-                                            className="btn btn-outline-primary theme-btn mx-auto"
-                                            onClick={this.togglePassword3}
-                                        >
-                                            <i
-                                                className={
-                                                    (this.state.showConfPass) ? "far fa-eye" : "far fa-eye-slash"
-                                                }
-                                            ></i>{" "}
-                                        </button>
-                                        <div className="text-danger">{this.state.errors['confirmPass']}</div>
-                                        <div className="text-danger">{this.state.passNotMatch}</div>
-                                        <div className="text-success">{this.state.passMatch}</div>
-                                       
-
-                                    </div>
-                                </div>
-                          
-
+                
 
                                 <div className="text-center">
 
@@ -455,7 +276,7 @@ class UpdateProfile extends React.Component {
                                 </div>
 
                             </form>
-                            <hr />
+                      
 
                         </div>
                     </div>

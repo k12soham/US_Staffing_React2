@@ -231,13 +231,10 @@ class UpdateReqAdmin extends React.Component {
                         style: { position: "absolute", top: "5px", width: "300px" }
                     }
                 );
-                if (this.state.recruiterIDAdmin !== null) {
+               
                     history.push("/viewReqForAdmin");
                     window.location.reload()
-                } else {
-                     history.push("/view_all_req");
-                   window.location.reload()
-                }
+             
             },
             (error) => {
                 console.log(error);
@@ -340,15 +337,7 @@ class UpdateReqAdmin extends React.Component {
             isValid = false;
             errors["location"] = "This field is required";
         }
-        if ((input["location"]) != '') {
-
-            var pattern = new RegExp(/^[a-zA-Z,-.]{2,50}$/);
-
-            if (!pattern.test(input["location"])) {
-                isValid = false;
-                errors["location"] = "Please enter valid location name.";
-            }
-        }
+       
 
         // -------------positionType-----------------------------------------------------------------------------------------
         if ((!input["positionType"])) {
@@ -371,9 +360,10 @@ class UpdateReqAdmin extends React.Component {
 
     // -------------------------------------------- render ----------------------------------------------------
     render() {
-        const isAuthenticated = localStorage.getItem('recruiterIDAdmin');
+        const isAuthenticated = localStorage.getItem('recruiterRole');
 
-        return isAuthenticated ? (
+
+        return isAuthenticated =="Admin" ?(
 
             <div className="">
                 <div className="row">

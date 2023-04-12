@@ -126,43 +126,37 @@ class UpdateCandidateAdmin extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
 
-        if(this.state.input["cad_name"]!=null)
-        {
+        if (this.state.input["cad_name"] != null) {
             this.state.input["cad_name"] = this.state.input["cad_name"].trim();
             this.state.input["cad_name"] = this.state.input["cad_name"].replaceAll("#", "%23")
         }
-            
-        if(this.state.input["submitted_rate"]!=null)
-        {
+
+        if (this.state.input["submitted_rate"] != null) {
             this.state.input["submitted_rate"] = this.state.input["submitted_rate"].trim();
             this.state.input["submitted_rate"] = this.state.input["submitted_rate"].replaceAll("#", "%23")
-        } 
-        
+        }
 
-        if(this.state.input["phone"]!=null)
-        {
+
+        if (this.state.input["phone"] != null) {
             this.state.input["phone"] = this.state.input["phone"].trim();
             this.state.input["phone"] = this.state.input["phone"].replaceAll("#", "%23")
         }
-            
-        if(this.state.input["email"]!=null)
-        {
+
+        if (this.state.input["email"] != null) {
             this.state.input["email"] = this.state.input["email"].trim();
             this.state.input["email"] = this.state.input["email"].replaceAll("#", "%23")
-           
-        } 
-            
-       
-    
 
-        if(  this.state.input["remark"]!=null)
-        {
+        }
+
+
+
+
+        if (this.state.input["remark"] != null) {
             this.state.input["remark"] = this.state.input["remark"].trim(" ");
             this.state.input["remark"] = this.state.input["remark"].replaceAll("#", "%23")
         }
 
-        if(  this.state.input["reason"]!=null)
-        {
+        if (this.state.input["reason"] != null) {
             this.state.input["reason"] = this.state.input["reason"].trim(" ");
 
             this.state.input["reason"] = this.state.input["reason"].replaceAll("#", "%23")
@@ -172,18 +166,18 @@ class UpdateCandidateAdmin extends React.Component {
 
         if (this.validate()) {
 
-           
+
             let add_cls = this.state.input;
             add_cls[e.target.name] = e.target.value;
 
             this.put_UpdateCandidate(add_cls);
 
         }
-       
+
     }
 
     put_UpdateCandidate = (data) => {
-       
+
         let d = this.state.requisitionId1;
         let cad_name = data["cad_name"];
         let visa_type = data["visa_type"];
@@ -210,15 +204,10 @@ class UpdateCandidateAdmin extends React.Component {
                     }
                 );
 
-                if (this.state.recruiterIDAdmin !== null) {
-                    
+                
                     history.push("/viewCandForAdmin");
                     window.location.reload();
-                } else {
-                    history.push("/viewCandidate");
-                    window.location.reload();
-                   
-                }
+                
             },
             (error) => {
                 console.log(error);
@@ -228,14 +217,14 @@ class UpdateCandidateAdmin extends React.Component {
         );
 
         let inputs = {};
-        inputs["cad_name"] = undefined;
-        inputs["visa_type"] = undefined;
-        inputs["rate_term"] = undefined;
-        inputs["submitted_rate"] = undefined;
-        inputs["phone"] = undefined;
-        inputs["email"] = undefined;
-        inputs["remark"] = undefined;
-        inputs["reason"] = undefined;
+        inputs["cad_name"] = '';
+        inputs["visa_type"] = '';
+        inputs["rate_term"] = '';
+        inputs["submitted_rate"] = '';
+        inputs["phone"] = '';
+        inputs["email"] = '';
+        inputs["remark"] = '';
+        inputs["reason"] = '';
 
         this.setState({ input: inputs });
 
@@ -247,7 +236,7 @@ class UpdateCandidateAdmin extends React.Component {
         let input = this.state.input;
         let errors = {};
         let isValid = true;
-      
+
 
         if ((!input["cad_name"])) {
             isValid = false;
@@ -255,8 +244,8 @@ class UpdateCandidateAdmin extends React.Component {
         }
         if ((input["cad_name"]) != undefined) {
 
-            var pattern = new RegExp(/^[^\s][a-zA-Z\s]{3,50}$/);
-          
+            var pattern = new RegExp(/^[^\s][a-zA-Z\s]{1,50}$/);
+
             if (!pattern.test(input["cad_name"])) {
                 isValid = false;
                 errors["cad_name"] = "Please enter only characters.";
@@ -290,20 +279,17 @@ class UpdateCandidateAdmin extends React.Component {
             }
         }
         // -------------phone-----------------------------------------------------------------------------------------
-        if ((!input["phone"])) {
+        if ((!input["phone"]) || (input["phone"] == '+1')) {
             isValid = false;
             errors["phone"] = "This field is required";
         }
-  
 
-        if ((input["phone"]) !== undefined) {
-            var pattern = /^(\([0-9]{3}\)|[0-9]{3})[\s\-]?[\0-9]{3}[\s\-]?[0-9]{4}$/
-           // var pattern = new RegExp(/^[^\s][0-9 *()-\s]{4,15}$/);
-            if (!pattern.test(input["phone"])) {
+    
+
+            if (((input["phone"]).length) != (this.state.FormatLen)) {
                 isValid = false;
-                errors["phone"] = "Please enter valid mobile number";
+                errors["phone"] = "Please enter valid phone number";
             }
-        }
 
         // -------------email-----------------------------------------------------------------------------------------
         if ((!input["email"])) {
@@ -318,7 +304,7 @@ class UpdateCandidateAdmin extends React.Component {
                 errors["email"] = "Please enter valid email address (e.g.: abc@gmail.com).";
             }
         }
-       
+
         this.setState({
             errors: errors
         });
@@ -326,31 +312,40 @@ class UpdateCandidateAdmin extends React.Component {
     }
     // -------------------------------------------- End Validation Code ----------------------------------------------------------
 
-    getPhone = (e) => {
-        let inputs = {};       
+    getPhone = (e, value, data) => {
+       
+
+        var string = value.format
+
+        var string_length = [...string].filter(x => x === '.').length
+        console.log(string_length)
+
+        console.log("entered No length = " + (value.format.length - value.dialCode.length))
+
+        let inputs = this.state.input;
         inputs["phone"] = e;
 
         this.setState({
-            input : inputs
+            input: inputs,
+            FormatLen: string_length,
         });
-
     }
 
     // -------------------------------------------- render ----------------------------------------------------
     render() {
-        const isAuthenticated = localStorage.getItem('recruiterIDAdmin');
-    
+        const isAuthenticated = localStorage.getItem('recruiterRole');
 
-        return isAuthenticated ?  (
+
+        return isAuthenticated =="Admin" ? (
 
             <div className="">
                 <div className="row">
 
                     <div className="col-12 h-100 master_backgroung_heder">
 
-                      
-                         <AdminHeader />
-                              
+
+                        <AdminHeader />
+
 
                     </div>
 
@@ -364,7 +359,7 @@ class UpdateCandidateAdmin extends React.Component {
                                         <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '20px' }}>
 
                                             <div class="form-group">
-                                                <label for="cad_name"><b>Candidate Name:</b><b style={{color:'red'}}>*</b></label>
+                                                <label for="cad_name"><b>Candidate Name:</b><b style={{ color: 'red' }}>*</b></label>
                                                 <input
                                                     ref={(input) => { this.refInput = input; }}
                                                     minLength={1}
@@ -381,9 +376,9 @@ class UpdateCandidateAdmin extends React.Component {
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="visa_type"><b>Visa Type:</b><b style={{color:'red'}}>*</b></label><br />
+                                                <label for="visa_type"><b>Visa Type:</b><b style={{ color: 'red' }}>*</b></label><br />
                                                 <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '100%', textAlign:"left" }}
+                                                    style={{ width: '100%', textAlign: "left" }}
                                                     name="visa_type" id="visa_type"
                                                     onChange={this.handleChange}
                                                     value={this.state.input.visa_type}>
@@ -398,11 +393,11 @@ class UpdateCandidateAdmin extends React.Component {
                                                 <div className="text-danger">{this.state.errors.visa_type}</div>
                                             </div>
 
-                                            
+
                                             <div class="form-group">
-                                                <label for="rate_term"><b>Rate Term:</b><b style={{color:'red'}}>*</b></label><br />
+                                                <label for="rate_term"><b>Rate Term:</b><b style={{ color: 'red' }}>*</b></label><br />
                                                 <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '100%', textAlign:"left" }}
+                                                    style={{ width: '100%', textAlign: "left" }}
                                                     name="rate_term" id="rate_term"
                                                     onChange={this.handleChange}
                                                     value={this.state.input.rate_term}>
@@ -417,7 +412,7 @@ class UpdateCandidateAdmin extends React.Component {
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="submitted_rate"><b>Submitted Rate:</b><b style={{color:'red'}}>*</b></label>
+                                                <label for="submitted_rate"><b>Submitted Rate:</b><b style={{ color: 'red' }}>*</b></label>
                                                 <input
                                                     // minLength={2}
                                                     // maxLength={4}
@@ -435,47 +430,32 @@ class UpdateCandidateAdmin extends React.Component {
 
                                         </div>
                                         <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '30px' }}>
-                                            {/* <div class="form-group">
-                                                <label for="phone"><b>Phone :</b><b style={{color:'red'}}>*</b></label>
-                                                <input
-                                                    minLength={1}
-                                                    maxLength={20}
-                                                    type="text"
-                                                    name="phone"
-                                                    value={this.state.input.phone}
-                                                    onChange={this.handleChange}
-                                                    onKeyUp={this.keyUpHandlerClosure}
-                                                    placeholder="Phone"
-
-                                                    class="form-control" />
-
-                                                <div className="text-danger">{this.state.errors.phone}</div>
-                                            </div> */}
+                                            
 
                                             <div class="form-group">
-                                                <label for="phone"><b>Phone :</b><b style={{color:'red'}}>*</b></label>
+                                                <label for="phone"><b>Phone :</b><b style={{ color: 'red' }}>*</b></label>
 
-                                                    <PhoneInput 
+                                                <PhoneInput
 
-                                                    inputStyle={{ color: 'black', width: '100%',height:'40px' }}
-                                                    name="phone"
-                                                    preferredCountries={['us','gb','in'] }   
-                                                    country={'us'}
-                                                    countryCodeEditable={false}
-                                                    value={this.state.input.phone}
-                                                    onChange={this.getPhone}
+                                                inputStyle={{ width: '100%' }}
+                                                preferredCountries={['us', 'in', 'gb']}
+                                                countryCodeEditable={false}
+                                                name="phone"
+                                                country={'us'}
+                                                placeholder='Phone'
+                                             
+                                                value={this.state.input.phone}
+                                                onChange={this.getPhone}
+                                                searchStyle={{ margin: "0", width: "97%", height: "30px" }}
+                                                enableSearch
+                                                disableSearchIcon
 
-                                                    searchStyle={{ margin: "0", width: "97%", height: "30px" }}
-                                                    enableSearch
-                                                    disableSearchIcon
-
-
-                                                    />
-                                        <div className="text-danger">{this.state.errors.phone}</div>
+                                                />
+                                                <div className="text-danger">{this.state.errors.phone}</div>
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="email"><b>Email:</b><b style={{color:'red'}}>*</b></label>
+                                                <label for="email"><b>Email:</b><b style={{ color: 'red' }}>*</b></label>
                                                 <input
                                                     minLength={2}
                                                     maxLength={50}
@@ -523,7 +503,7 @@ class UpdateCandidateAdmin extends React.Component {
                                                 <div className="text-danger">{this.state.errors.reason}</div>
                                             </div>
 
-                                           
+
                                         </div>
                                     </div>
                                 </div>
