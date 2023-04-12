@@ -25,6 +25,10 @@ import AdminStatic2 from './ComponentFirst/AdminStatic2';
 import PhoneDemo from './ComponentFirst/PhoneDemo';
 import UpdateCandidateAdmin from './ComponentFirst/UpdateCandidateAdmin';
 import UpdateReqAdmin from './ComponentFirst/UpdateReqAdmin';
+import GeneratePDF from './ComponentFirst/GeneratePDF';
+import Changepassword from './ComponentFirst/Changepassword';
+import ModalWithCSS from './ComponentFirst/ModalWithCSS';
+import UpdateCand2 from './ComponentFirst/UpdateCand2';
 
 function App() {
 
@@ -48,7 +52,8 @@ function App() {
 
 
         <Route path="/updateRequisition" element={<UpdateReq />}></Route>
-        <Route path="/updateCandidate" element={<UpdateCandidate />}></Route>
+        {/* <Route path="/updateCandidate" element={<UpdateCandidate />}></Route> */}
+        <Route path="/updateCandidate" element={<UpdateCand2 />}></Route>
 
         <Route path="/updateRequisitionAdmin" element={<UpdateReqAdmin />}></Route>
         <Route path="/updateCandidateAdmin" element={<UpdateCandidateAdmin />}></Route>
@@ -59,13 +64,16 @@ function App() {
         <Route path="/viewAllStatus" element={<ViewAllStatus />}></Route>
         
         <Route path="/update_profile" element={<UpdateProfile/>}></Route>
-        <Route path="/update_profile_Admin" element={<UpdateProfileAdmin/>}></Route>
+        <Route path="/change_password_recruiter" element={<UpdateProfileAdmin/>}></Route>
+
+        <Route path="/change_password" element={<Changepassword/>}></Route>
 
         <Route path="/page" element={<Pageexample/>}></Route>
         <Route path="/pagination" element={<Pagination/>}></Route>
 
         <Route path="/phonedemo" element={<PhoneDemo/>}></Route>       
-       
+        <Route path="/generatepdf" element={< GeneratePDF/>}></Route>
+        <Route path="/modal" element={<ModalWithCSS/>}></Route>      
         </Routes>
       </Router>
     </div>

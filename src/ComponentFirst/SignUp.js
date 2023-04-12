@@ -47,19 +47,39 @@ class SignUp extends React.Component {
     if(this.state.input["name"]!=null)
     {
       this.state.input["name"]=  this.state.input["name"].trim()
+      this.state.input["name"] = this.state.input["name"].replaceAll("#", "%23");
     }
 
     if(this.state.input["email"]!=null)
     {
       this.state.input["email"]=  this.state.input["email"].trim()
+      this.state.input["email"] = this.state.input["email"].replaceAll("#", "%23");
     }
 
+    if(this.state.input["newPass"]!=null)
+    {
+        this.state.input["newPass"] = this.state.input["newPass"].replaceAll("#", "%23");
+    }
+  
+    if(this.state.input["confirmPass"]!=null)
+    {
+        this.state.input["confirmPass"] = this.state.input["confirmPass"].replaceAll("#", "%23");
+    }
+ 
     if (this.validate()) {
 
-      let emp_reg = this.state.input;
-      emp_reg[e.target.name] = e.target.value;
-      
-      this.postdata(emp_reg);
+      if( this.state.input["newPass"]!== this.state.input["confirmPass"])
+      {
+        alert("Password not matched")
+      }
+      else{
+
+        let emp_reg = this.state.input;
+        emp_reg[e.target.name] = e.target.value;
+        
+        this.postdata(emp_reg);
+      }
+
 
     }
    
@@ -160,15 +180,7 @@ class SignUp extends React.Component {
       errors["confirmPass"] = "Please enter confirm password.";
     }
 
-    if (typeof input["confirmPass"] !== "confirmPass") {
-
-      var pattern = new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$%^&*,!? \b]).{6,15}$/);
-
-      if (!pattern.test(input["confirmPass"])) {
-        isValid = false;
-        errors["confirmPass"] = "Password must contain at least one number, one special character (?!,@#$), one upper and lower case letter, and at least 6 characters.";
-      }
-    }
+   
 
     this.setState({
       errors: errors
@@ -286,7 +298,7 @@ class SignUp extends React.Component {
                                             onKeyUp={this.keyUpHandler}
                                             placeholder="Password"
                                             minLength={6}
-                                            maxLength={15}
+                                            maxLength={30}
                                             style={{ width: '305px', height: '37px' }}
                                         />
 
@@ -318,7 +330,7 @@ class SignUp extends React.Component {
                                             onKeyUp={this.keyUpHandler} 
                                             placeholder="Confirm Password"
                                             minLength={6}
-                                            maxLength={15}
+                                            maxLength={30}
                                             style={{ width: '305px', height: '37px' }}
                                         />
 

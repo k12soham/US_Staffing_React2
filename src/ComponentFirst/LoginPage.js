@@ -8,8 +8,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Login1 = () => {
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    let [email, setEmail] = useState("");
+    let [password, setPassword] = useState("");
     const [validate, setValidate] = useState({});
     const [showPassword, setShowPassword] = useState(false);
 
@@ -52,7 +52,16 @@ const Login1 = () => {
       
         e.preventDefault();
         const validate = validateLogin();
+        if(email!=null)
+        {
+            email =email.trim();
+            email = email.replaceAll("#", "%23");
+        }
 
+        if(password!=null)
+        {
+            password = password.replaceAll("#", "%23");
+        }
         if (validate) {
 
             const uname = email;
@@ -88,8 +97,9 @@ const Login1 = () => {
                     localStorage.setItem('recruiterName', response.data.recruiter_name);
                     localStorage.setItem('recruiterIDAdmin', response.data.recruiter_id);
                     localStorage.setItem('recruiterEmail', response.data.recruiter_email);
+                    localStorage.setItem('recruiterRole', response.data.role);
                   
-                    navigate("/adminstatic2");
+                    navigate("/viewReqForAdmin");
                     toast.success("Login successfully!",
                         { position: "top-right",autoClose: 2000,
                         style: { position: "absolute", top: "5px", width: "300px" } })
@@ -99,7 +109,7 @@ const Login1 = () => {
                     localStorage.setItem('recruiterName', response.data.recruiter_name);
                     localStorage.setItem('recruiterID', response.data.recruiter_id);
                     localStorage.setItem('recruiterEmail', response.data.recruiter_email);
-             
+                    localStorage.setItem('recruiterRole', response.data.role);
                     navigate("/addRequisition");
                     toast.success("Login successfully!",
                         { position: "top-right" , autoClose: 2000,

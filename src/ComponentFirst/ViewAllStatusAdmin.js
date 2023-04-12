@@ -66,8 +66,7 @@ function ViewAllStatusAdmin() {
     
 
     const onEdit = ({ statusID, statusNew, statusDateNew }) => {
-        console.log('statusID : ' + statusID + ' statusNew :' + statusNew + ' statusDateNew: ' + statusDateNew)
-
+       
         setInEditMode({
             status: true,
             rowKey: statusID,
@@ -84,7 +83,11 @@ function ViewAllStatusAdmin() {
 
     const onSave = ({ statusID, newStatus, newStatusDate }) => {
 
-        if(currentstatus==newStatus)
+        // if(currentstatus==null)
+        // {
+        //     alert("Please select status")
+        // }
+         if(currentstatus==newStatus)
         {
             alert("This status is already saved")
         }
@@ -135,8 +138,11 @@ function ViewAllStatusAdmin() {
         let recruiter_id = localStorage.getItem("recruiterID")
 
 
-        const isAuthenticated = localStorage.getItem('recruiterIDAdmin');
-        return isAuthenticated ?statusList.map(st => {
+        const isAuthenticated = localStorage.getItem('recruiterRole');
+
+
+        return isAuthenticated =="Admin" ?statusList.map(st => {
+       
 
 
             var dd = new Date(st.status_date);

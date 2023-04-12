@@ -28,9 +28,9 @@ function ViewAllStatus() {
         let requisition_id = localStorage.getItem("requisitionID")
         let recruiter_id = localStorage.getItem("recruiterID")
 
-        const isAuthenticated = localStorage.getItem('recruiterID');
+        const isAuthenticated = localStorage.getItem('recruiterRole');
 
-        return isAuthenticated ?statusList.map(st => {
+        return isAuthenticated=="TM" ? statusList.map(st => {
 
 
 
