@@ -68,7 +68,13 @@ class UpdateProfileAdmin extends React.Component {
         },
         
         (error) =>{
-            alert("Email not found")
+            toast.error("Email not found",
+            {
+                position: "top-right", autoClose: 2000,
+                style: { position: "absolute", top: "5px", width: "300px" }
+            }
+        );
+            this.refInput.focus();
             
         }
         
@@ -193,20 +199,7 @@ class UpdateProfileAdmin extends React.Component {
         let isValid = true;
 
        
-        // --------------------------------------- emp_name validation-------------------------------------------------------
-        // if ((!input["recruiter_name"])) {
-        //     isValid = false;
-        //     errors["recruiter_name"] = "Please enter name.";
-        // }
-
-        // if (typeof input["recruiter_name"] !== undefined) {
-
-        //     var pattern = new RegExp(/^[^\s][a-zA-Z\s]+[^\s]$/);
-        //     if (!pattern.test(input["recruiter_name"])) {
-        //         isValid = false;
-        //         errors["recruiter_name"] = "Please enter only characters.";
-        //     }
-        // }
+       
         // -----------------------------------------Username/ email validation------------------------------------------------------------------
         if (!input["recruiter_email"]) {
             isValid = false;
@@ -221,11 +214,7 @@ class UpdateProfileAdmin extends React.Component {
                 errors["recruiter_email"] = "Please enter valid email address (e.g.: abc@gmail.com).";
             }
         }
-       
-        // if (this.state.currentPassword == undefined) {
-        //     isValid = false;
-        //     errors["currentPass"] = "Please enter current password.";
-        // }
+    
       
         // -----------------------------------------handle newPass error---------------------------------------------
         if (this.state.newPassword == undefined) {
@@ -350,8 +339,10 @@ class UpdateProfileAdmin extends React.Component {
                                     <input
                                        
                                         name='recruiter_email'
+                                        ref={(input) => { this.refInput = input; }}
                                         value={this.state.input.recruiter_email}
                                         onChange={this.handleChange}
+                                        onBlur={(evt)=> this.handleFetchedData2({email:this.state.input.recruiter_email})}
                                         placeholder="Email"
                                         minLength={11}
                                         maxLength={50}
@@ -361,7 +352,7 @@ class UpdateProfileAdmin extends React.Component {
                                     <div className="text-danger">{this.state.errors.recruiter_email}</div>
                                 </div>
 
-                                <Button onClick={(evt)=> this.handleFetchedData2({email:this.state.input.recruiter_email})}>Find Email</Button>
+                                {/* <Button onClick={(evt)=> this.handleFetchedData2({email:this.state.input.recruiter_email})}>Find Email</Button> */}
 
                                 <hr></hr>
 

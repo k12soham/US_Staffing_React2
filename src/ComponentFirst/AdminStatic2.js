@@ -9,6 +9,7 @@ import { Table } from "reactstrap";
 import { Link } from 'react-router-dom';
 import AdminHeader from './AdminHeader';
 import Popup from 'reactjs-popup';
+import AdminHeader5 from './AdminHeader5';
 
 class AdminStatic2 extends React.Component {
 
@@ -1775,11 +1776,11 @@ class AdminStatic2 extends React.Component {
         return isAuthenticated =="Admin" ?(
 
 
-            <div className="container-fluid">
+            <div >
                 <div className="row">
 
-                    <div className="col-12 h-100 master_backgroung_heder">
-                        <AdminHeader />
+                    <div className="col-12 h-100">
+                        <AdminHeader5 />
                     </div>
 
                     <div className="col-12 master_backgroung_work scroll-bar">

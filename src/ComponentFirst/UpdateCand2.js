@@ -241,14 +241,11 @@ class UpdateCand2 extends React.Component {
                     }
                 );
 
-                if (this.state.recruiterIDAdmin !== null) {
-
-                    history.push("/viewCandForAdmin");
-                    window.location.reload();
-                } else {
+              
+            
                     history.push("/viewCandidate");
                     window.location.reload();
-                }
+              
             },
             (error) => {
                 console.log(error);
@@ -328,11 +325,12 @@ class UpdateCand2 extends React.Component {
         }
 
     
-
+        
             if (((input["phone"]).length) != (this.state.FormatLen)) {
                 isValid = false;
                 errors["phone"] = "Please enter valid phone number";
             }
+        
         
 
         // -------------email-----------------------------------------------------------------------------------------
@@ -482,7 +480,8 @@ class UpdateCand2 extends React.Component {
                                                 <PhoneInput
 
                                                     inputStyle={{ width: '100%' }}
-                                                    preferredCountries={['us', 'in', 'gb']}
+                                                    preferredCountries={['us']}
+                                                    onlyCountries={['us','in','gb','sg','ae']}
                                                     countryCodeEditable={false}
                                                     name="phone"
                                                     country={'us'}

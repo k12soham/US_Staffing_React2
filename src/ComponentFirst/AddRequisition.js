@@ -456,7 +456,7 @@ class AddRequisition extends React.Component {
                                                 <label for="id"><b>Job Posting ID:</b><b style={{color:'red'}}>*</b></label>
                                                 <input
                                                    // minLength={1}
-                                                    maxLength={25}
+                                                    maxLength={50}
                                                     type="text"
                                                     name="id"
                                                     value={this.state.input.id}
