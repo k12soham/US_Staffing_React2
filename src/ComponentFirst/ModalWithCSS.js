@@ -67,7 +67,6 @@ class ModalWithCSS extends React.Component {
           <span>{empName}</span>
 
         </div>
-
       
         <div className="col-5 col-md-7 col-lg- auth-main-col text-center">
 
@@ -87,7 +86,6 @@ class ModalWithCSS extends React.Component {
               <span > <img src="https://img.icons8.com/ios/35/000000/user-male-circle--v2.png" /><b style={{ fontSize: '18px' }}> &nbsp;{empName}</b></span><br />
               <span ><h6>{empMail} </h6></span><hr></hr>
             </div>
-
 
             <div className="text-center">
               <div className='row'>

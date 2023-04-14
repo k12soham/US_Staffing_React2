@@ -23,6 +23,8 @@ import ViewAllStatus from './ComponentFirst/ViewAllStatus';
 import Pagination from './ComponentFirst/PaginationDemo';
 import AdminStatic2 from './ComponentFirst/AdminStatic2';
 import PhoneDemo from './ComponentFirst/PhoneDemo';
+import PhoneNumberInput from './ComponentFirst/PhoneNumberInput';
+import UpdateCand2 from './ComponentFirst/UpdateCand2';
 
 function App() {
 
@@ -44,9 +46,8 @@ function App() {
         <Route path="/viewCandidate" element={<ViewCandidate />}></Route>
         <Route path="/view_all_req" element={<ViewAllReq />}></Route>
 
-
         <Route path="/updateRequisition" element={<UpdateReq />}></Route>
-        <Route path="/updateCandidate" element={<UpdateCandidate />}></Route>
+        <Route path="/updateCandidate" element={<UpdateCand2 />}></Route>
 
         <Route path="/viewReqForAdmin" element={<ViewReqForAdmin />}></Route>
         <Route path="/viewCandForAdmin" element={<ViewCandForAdmin />}></Route>
@@ -60,6 +61,7 @@ function App() {
         <Route path="/pagination" element={<Pagination/>}></Route>
 
         <Route path="/phonedemo" element={<PhoneDemo/>}></Route>       
+        <Route path="/PhoneNumberInput" element={<PhoneNumberInput/>}></Route>    
        
         </Routes>
       </Router>
