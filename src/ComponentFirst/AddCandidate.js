@@ -47,7 +47,7 @@ class AddCandidate extends React.Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-
+        
     }
 
     resetForm = () => {
@@ -297,17 +297,23 @@ class AddCandidate extends React.Component {
             }
         }
         // -------------phone-----------------------------------------------------------------------------------------
-        if ((!input["phone"]) || (input["phone"] == '+1')) {
+        if ((!input["phone"]) || (input["phone"]=='+1')) {
             isValid = false;
             errors["phone"] = "This field is required";
         }
 
-    
+        if ((input["phone"])!=null && (input["phone"]!='+1'))
+        {
 
             if (((input["phone"]).length) != (this.state.FormatLen)) {
                 isValid = false;
                 errors["phone"] = "Please enter valid phone number";
             }
+        
+        }
+        
+       
+                
 
 
         // -------------email-----------------------------------------------------------------------------------------
@@ -475,7 +481,8 @@ class AddCandidate extends React.Component {
                                                     <PhoneInput
 
                                                     inputStyle={{ width: '100%' }}
-                                                    preferredCountries={['us', 'in', 'gb']}
+                                                   preferredCountries={['us']}
+                                                    onlyCountries={['us','in','gb','sg','ae']}
                                                     countryCodeEditable={false}
                                                     name="phone"
                                                     country={'us'}
@@ -483,8 +490,7 @@ class AddCandidate extends React.Component {
                                                     value={this.state.input.phone}
                                                     onChange={this.getPhone}
                                                     searchStyle={{ margin: "0", width: "97%", height: "30px" }}
-                                                    enableSearch
-                                                    disableSearchIcon
+                                                    
 
                                                     />
 

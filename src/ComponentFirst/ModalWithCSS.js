@@ -73,7 +73,7 @@ class ModalWithCSS extends React.Component {
     return (
 
       
-      <div style={{textAlign:'right'}}>
+      <div  style={{textAlign:'right'}}>
         <div onClick={this.handleOpenModal}>
 
           <img src="https://img.icons8.com/ios/35/000000/user-male-circle--v2.png" ></img>&nbsp;
@@ -89,7 +89,7 @@ class ModalWithCSS extends React.Component {
             isOpen={this.state.showModal}
             contentLabel="onRequestClose Example"
             onRequestClose={this.handleCloseModal}
-           className="Modals"
+           className="Modal"
          
 
           // overlayClassName="Overlay"
@@ -110,7 +110,7 @@ class ModalWithCSS extends React.Component {
                 <div className='col-5'>
                   <button
                     type="submit"
-                    className="btn btn-primary w-150 theme-btn mx-auto"
+                    className="btn btn-sm btn-primary w-150 theme-btn mx-auto"
                     onClick={this.handleUpdateProfile}
                   ><i class="fa fa-pencil"></i>&nbsp;
                     Update Profile
@@ -120,7 +120,7 @@ class ModalWithCSS extends React.Component {
                 <div className='col-5'>
                   <button
                     type="submit"
-                    className="btn btn-primary w-150 theme-btn mx-auto"
+                    className="btn btn-sm btn-primary w-150 theme-btn mx-auto"
                     onClick={this.handleUpdateProfile2}
                   ><i class="fa fa-pencil"></i>&nbsp;
                     Change Password
@@ -134,9 +134,9 @@ class ModalWithCSS extends React.Component {
                 <div className='col-5'>
                   <button
                     type="submit"
-                    className="btn btn-primary"
+                    className="btn btn-sm btn-warning"
                     onClick={this.handleUpdateProfile3}
-                    style={{width:"300px",marginLeft:"60px"}}
+                    style={{width:"298px",marginLeft:"20px"}}
                   ><i class="fa fa-pencil"></i>&nbsp;
                     Change recruiter password
                   </button>
@@ -152,7 +152,7 @@ class ModalWithCSS extends React.Component {
                     type="reset"
                    className="btn btn-secondary "
                    onClick={this.logout}
-                  style={{width:"300px",marginLeft:"70px"}}
+                  style={{width:"300px",marginLeft:"35px"}}
                   ><i class="fa fa-sign-out"></i>&nbsp;
                     Logout
                   </button>

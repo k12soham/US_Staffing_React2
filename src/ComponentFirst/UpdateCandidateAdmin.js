@@ -285,12 +285,12 @@ class UpdateCandidateAdmin extends React.Component {
         }
 
     
-
+      
             if (((input["phone"]).length) != (this.state.FormatLen)) {
                 isValid = false;
                 errors["phone"] = "Please enter valid phone number";
             }
-
+        
         // -------------email-----------------------------------------------------------------------------------------
         if ((!input["email"])) {
             isValid = false;
@@ -438,7 +438,8 @@ class UpdateCandidateAdmin extends React.Component {
                                                 <PhoneInput
 
                                                 inputStyle={{ width: '100%' }}
-                                                preferredCountries={['us', 'in', 'gb']}
+                                                preferredCountries={['us']}
+                                                onlyCountries={['us','in','gb','sg','ae']}
                                                 countryCodeEditable={false}
                                                 name="phone"
                                                 country={'us'}

@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import AdminHeader from "./AdminHeader";
 import history from './ResponseVal';
+import AdminHeader5 from "./AdminHeader5";
 
 let PageSize = 10;
 
@@ -157,11 +158,11 @@ function ViewReqForAdmin() {
 
     return (
         // return (
-        <div className="">
+        <div >
             <div className="row">
 
-                <div className="col-12 h-100 master_backgroung_heder">
-                    <AdminHeader />
+                <div className="col-12 h-100">
+                    <AdminHeader5 />
                 </div>
 
                 <div className="col-12 master_backgroung_work scroll-bar-horizontal" >

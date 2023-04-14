@@ -187,15 +187,27 @@ function ViewCandidate() {
 
     const handleDownload1= () => {
 
-
-        GeneratePDF1(statusList1);
+if(category==null)
+{
+    alert("please select category")
+}
+else{
+    GeneratePDF1(statusList1);
+}
+       
 
     }
 
     const handleDownload2 = (evt) => {
 
-
-        GenerateExcel1(statusList1);
+        if(category==null)
+        {
+            alert("please select category")
+        }
+        else{
+            GenerateExcel1(statusList1);
+        }
+      
 
 
 
@@ -687,14 +699,14 @@ function ViewCandidate() {
        <Button variant="success" className="btn btn-primary btn-sm fa fa-download" style={{marginLeft:"0px"}} onClick={modalShow}>  
        &nbsp;&nbsp; Download 
       </Button>  
-  <Modal  show={show} onHide={modalClose}>  
+  <Modal   show={show} onHide={modalClose}>  
   <Modal.Header closeButton>  
     <Modal.Title>Submission Report</Modal.Title>  
     
   </Modal.Header>  
   
   <Modal.Body> 
-  <select name="category1" onChange={(evt) => handleCate({ newCate: evt.target.value })} className="btn btn-success btn-sm dropdown-toggle" style={{ width: '150px' }}>
+  <select name="category1" value={category} onChange={(evt) => handleCate({ newCate: evt.target.value })} className="btn btn-success btn-sm dropdown-toggle" style={{ width: '150px' }}>
                                 {
                                     
                                     <>
