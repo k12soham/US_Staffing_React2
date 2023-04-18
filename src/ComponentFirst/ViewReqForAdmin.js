@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import AdminHeader from "./AdminHeader";
 import history from './ResponseVal';
+import AdminHeader5 from "./AdminHeader5";
 
 let PageSize = 10;
 
@@ -49,18 +50,24 @@ function ViewReqForAdmin() {
 
         localStorage.setItem('requisitionID', requisitionID);
 
-        navigate("/updateRequisition");
+        navigate("/updateRequisitionAdmin");
 
     }
 
     const getnewID = (e) => {
+       
         let requisitionID = e.rq
+        let req = e.req
         localStorage.setItem("requisitionID", requisitionID)
+        localStorage.setItem("reqID", req)
+    
     }
 
     const renderTable = () => {
-        const isAuthenticated = localStorage.getItem('recruiterIDAdmin');
-        return isAuthenticated ? (
+        const isAuthenticated = localStorage.getItem('recruiterRole');
+
+
+        return isAuthenticated =="Admin"? (
    
 
             requisitionList.filter((cls) => {
@@ -105,7 +112,7 @@ function ViewReqForAdmin() {
                             <td>{cls.requisition_from}</td>
 
                             <td>{
-                                <a href="/viewCandForAdmin" onClick={(evt) => getnewID({ rq: cls.requisition_id })}>{cls.id}</a>
+                                <a href="/viewCandForAdmin" onClick={(evt) => getnewID({ rq: cls.requisition_id, req:cls.id })}>{cls.id}</a>
 
                             }</td>
                             <td>{cls.client}</td>
@@ -151,11 +158,11 @@ function ViewReqForAdmin() {
 
     return (
         // return (
-        <div className="">
+        <div >
             <div className="row">
 
                 <div className="col-12 h-100 master_backgroung_heder">
-                    <AdminHeader />
+                    <AdminHeader5 />
                 </div>
 
                 <div className="col-12 master_backgroung_work scroll-bar-horizontal" >

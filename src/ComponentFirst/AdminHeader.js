@@ -18,7 +18,7 @@ function AdminHeader() {
             <lable className="navbar-brand" href="#" style={{ color: "GrayText" }}>US STAFFING APP</lable>
           </div>
           <div class='col-2' style={{alignItems:"end" }}>
-            <ModalWithCSS />
+            <ModalWithCSS/>
           </div>
         </div>
       </div>

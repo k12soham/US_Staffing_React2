@@ -9,6 +9,7 @@ import { Table } from "reactstrap";
 import { Link } from 'react-router-dom';
 import AdminHeader from './AdminHeader';
 import Popup from 'reactjs-popup';
+import AdminHeader5 from './AdminHeader5';
 
 class AdminStatic2 extends React.Component {
 
@@ -213,8 +214,12 @@ class AdminStatic2 extends React.Component {
                 autoClose: 1000,
                 style: { position: "absolute", top: "5px", width: "300px" }
             });
-        })
-
+        },
+        (error) =>
+        {
+            alert(error.response.data)
+        }
+        )
 
     }
 
@@ -295,7 +300,15 @@ class AdminStatic2 extends React.Component {
                 autoClose: 1000,
                 style: { position: "absolute", top: "5px", width: "300px" }
             });
-        })
+        }, (error) =>
+        {
+            alert(error.response.data)
+        }
+        
+        
+        
+        
+        )
 
 
     }
@@ -376,6 +389,10 @@ class AdminStatic2 extends React.Component {
                 autoClose: 1000,
                 style: { position: "absolute", top: "5px", width: "300px" }
             });
+        },
+        (error) =>
+        {
+            alert(error.response.data)
         })
 
 
@@ -457,6 +474,9 @@ class AdminStatic2 extends React.Component {
                 autoClose: 1000,
                 style: { position: "absolute", top: "5px", width: "300px" }
             });
+        }, (error) =>
+        {
+            alert(error.response.data)
         })
 
 
@@ -534,6 +554,9 @@ class AdminStatic2 extends React.Component {
                 autoClose: 1000,
                 style: { position: "absolute", top: "5px", width: "300px" }
             });
+        }, (error) =>
+        {
+            alert(error.response.data)
         })
 
 
@@ -609,6 +632,9 @@ class AdminStatic2 extends React.Component {
                 autoClose: 1000,
                 style: { position: "absolute", top: "5px", width: "300px" }
             });
+        }, (error) =>
+        {
+            alert(error.response.data)
         })
 
 
@@ -684,6 +710,9 @@ class AdminStatic2 extends React.Component {
                 autoClose: 1000,
                 style: { position: "absolute", top: "5px", width: "300px" }
             });
+        }, (error) =>
+        {
+            alert(error.response.data)
         })
 
 
@@ -739,7 +768,6 @@ class AdminStatic2 extends React.Component {
         let positionval = this.state.position
 
         if ((!positionval)) {
-            console.log("positionval : " + positionval)
             isValid = false;
             this.setState({ positionerr: "This field is required" });
 
@@ -760,15 +788,18 @@ class AdminStatic2 extends React.Component {
     handleSubmit1(e) {
         e.preventDefault();
 
+        if(this.state.req!=null)
+        {
+            this.state.req=this.state.req.trim() 
+        }
+
         if (this.validateReq()) {
 
             let a = this.state.req;
             this.postdata1(a)
 
         }
-        else {
-            alert("Enter Valid details")
-        }
+        
     }
 
 
@@ -787,6 +818,8 @@ class AdminStatic2 extends React.Component {
             },
             (error) => {
                 console.log(error);
+             
+                alert(error.response.data)
 
             }
         );
@@ -798,7 +831,6 @@ class AdminStatic2 extends React.Component {
         let reqval = this.state.req
 
         if ((!reqval)) {
-            console.log("reqval : " + reqval)
             isValid = false;
             this.setState({ reqerr: "This field is required" });
         }
@@ -817,6 +849,11 @@ class AdminStatic2 extends React.Component {
     handleSubmit2(e) {
         e.preventDefault();
 
+        if(this.state.client!=null)
+        {
+            this.state.client=this.state.client.trim() 
+        }
+
         let a = this.state.reqidclient
         let b = this.state.client;
 
@@ -825,10 +862,7 @@ class AdminStatic2 extends React.Component {
             this.postdata2(a, b)
 
         }
-        else {
-            console.log('error');
-
-        }
+       
     }
 
     getnewID = (e) => {
@@ -854,7 +888,7 @@ class AdminStatic2 extends React.Component {
             },
             (error) => {
                 console.log(error);
-
+                alert(error.response.data)
             }
         );
     }
@@ -883,21 +917,23 @@ class AdminStatic2 extends React.Component {
     handleSubmit3(e) {
         e.preventDefault();
 
+        if(this.state.status!=null)
+        {
+            this.state.status=this.state.status.trim() 
+        }
+
         if (this.validateStatus()) {
             let a = this.state.status;
             this.postdata3(a)
         }
-        else {
-            console.log('error');
-
-        }
+        
     }
 
     postdata3(d) {
-        console.log(d)
         axios.post(`${base_url}/AddStatusFd?status_fd=${d}`).then(
 
             (response) => {
+               
                 this.componentDidMount()
                 this.setState({ status: '' })
                 toast.success("Status added successfully!",
@@ -909,7 +945,8 @@ class AdminStatic2 extends React.Component {
             },
             (error) => {
                 console.log(error);
-                alert("Please enter valid details.")
+                alert(error.response.data)
+                //alert("Please enter valid details.")
             }
         );
     }
@@ -920,7 +957,6 @@ class AdminStatic2 extends React.Component {
         let statusval = this.state.status
 
         if ((!statusval)) {
-            console.log("statusval : " + statusval)
             isValid = false;
             this.setState({ statuserr: "This field is required" });
         }
@@ -938,15 +974,18 @@ class AdminStatic2 extends React.Component {
 
     handleSubmit4(e) {
         e.preventDefault();
+
+        if(this.state.position!=null)
+        {
+            this.state.position=this.state.position.trim() 
+        }
+
         if (this.validate1()) {
             let a = this.state.position;
             this.postdata4(a);
 
         }
-        else {
-
-            console.log('error');
-        }
+        
 
 
     }
@@ -965,7 +1004,7 @@ class AdminStatic2 extends React.Component {
                 );
             },
             (error) => {
-                alert("Please enter valid details.")
+                alert(error.response.data)
             }
         );
     }
@@ -980,15 +1019,16 @@ class AdminStatic2 extends React.Component {
 
     handleSubmit5(e) {
         e.preventDefault();
+        if(this.state.duration!=null)
+        {
+            this.state.duration=this.state.duration.trim() 
+        }
 
         if (this.validateDuration()) {
             let a = this.state.duration;
             this.postdata5(a)
         }
-        else {
-
-            console.log('error');
-        }
+        
 
     }
 
@@ -1007,7 +1047,7 @@ class AdminStatic2 extends React.Component {
             },
             (error) => {
                 console.log(error);
-                alert("Please enter valid details.")
+                alert(error.response.data)
             }
         );
     }
@@ -1037,14 +1077,16 @@ class AdminStatic2 extends React.Component {
 
     handleSubmit6(e) {
         e.preventDefault();
+        if(this.state.visatype!=null)
+        {
+            this.state.visatype=this.state.visatype.trim() 
+        }
+
         if (this.validateVisaType()) {
             let a = this.state.visatype;
             this.postdata6(a)
         }
-        else {
-
-            console.log('error');
-        }
+       
     }
 
     validateVisaType() {
@@ -1077,7 +1119,7 @@ class AdminStatic2 extends React.Component {
             },
             (error) => {
                 console.log(error);
-                alert("Please enter valid details.")
+                alert(error.response.data)
             }
         );
     }
@@ -1094,14 +1136,16 @@ class AdminStatic2 extends React.Component {
 
     handleSubmit7(e) {
         e.preventDefault();
+        if(this.state.rateterm!=null)
+        {
+            this.state.rateterm=this.state.rateterm.trim() 
+        }
+
         if (this.validateRateterm()) {
             let a = this.state.rateterm;
             this.postdata7(a)
         }
-        else {
-            alert("Enter valid details")
-
-        }
+        
 
     }
 
@@ -1120,7 +1164,7 @@ class AdminStatic2 extends React.Component {
             },
             (error) => {
                 console.log(error);
-                alert("Please enter valid details.")
+                alert(error.response.data)
             }
         );
     }
@@ -1728,18 +1772,18 @@ class AdminStatic2 extends React.Component {
     }
 
     render() {
-        const isAuthenticated = localStorage.getItem('recruiterIDAdmin');
-        return isAuthenticated ? (
+        const isAuthenticated = localStorage.getItem('recruiterRole');
+        return isAuthenticated =="Admin" ?(
 
 
-            <div className="container-fluid">
+            <div >
                 <div className="row">
 
-                    <div className="col-12 h-100 master_backgroung_heder">
-                        <AdminHeader />
+                    <div className="col-12 h-100">
+                        <AdminHeader5 />
                     </div>
 
-                    <div className="col-12 master_backgroung_work scroll-bar">
+                    <div className="col-12 master_backgroung_work scroll-bar-horizontal">
 
                         <div className="row" style={{ marginTop: "2%" }}>
 
@@ -1826,7 +1870,7 @@ class AdminStatic2 extends React.Component {
 
                             <div className="col-4">
                                 <label><b>Rate Term:</b></label>
-                                <div class="form-group" >
+                                <div className="static-tbl-form">
                                     <Table bordered className="table table-sm table-striped">
                                         <thead>
                                             <tr>
@@ -1840,7 +1884,7 @@ class AdminStatic2 extends React.Component {
                                             {this.ratelist()}
                                         </tbody>
                                     </Table>
-                                </div>
+                                </div><br/>
                                 <form onSubmit={this.handleSubmit7}>
                                             <label><b>Add new rate term</b></label><br></br>
                                             <input type="text" name="rateterm" style={{ width: "80%" }} value={this.state.rateterm} onChange={this.handleChange7}></input>

@@ -11,6 +11,8 @@ import PhoneInput, { CountryData, PhoneInputProps } from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 // import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
 // import "react-phone-number-input/style.css";
+import es from 'react-phone-input-2/lang/es.json'
+
 
 class AddCandidate extends React.Component {
 
@@ -47,20 +49,19 @@ class AddCandidate extends React.Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        // this.phoneInputRef = React.createRef();
-
+        
     }
 
     resetForm = () => {
 
         let inputs = this.state.input;
+
         inputs["reqid"] = '';
         inputs["cad_name"] = '';
         inputs["visa_type"] = '';
         inputs["rate_term"] = '';
         inputs["submitted_rate"] = '';
-        // inputs["phone"] = '+1';
-        inputs["phone"] = '';
+        inputs["phone"] = '+1';
         inputs["email"] = '';
         inputs["remark"] = '';
         inputs["reason"] = '';
@@ -99,13 +100,24 @@ class AddCandidate extends React.Component {
         requisition_id[e.target.name] = e.target.value;
         let a = this.state.input.reqid
 
+        e.preventDefault()
 
-        axios.get(`${base_url}/getRequisitionByID?ID=${a}`).then(
+        if (this.state.input["reqid"] != null) {
+            this.state.input["reqid"] = this.state.input["reqid"].trim();
+            this.state.input["reqid"] = this.state.input["reqid"].replaceAll("#", "%23")
+        }
+
+        let req_id = this.state.input;
+        let z = req_id.reqid
+
+        axios.get(`${base_url}/getRequisitionByID?ID=${z}`).then(
 
             (response) => {
 
                 let requid = response.data.requisition_id
                 localStorage.setItem('requisitionID', requid);
+                this.setState({ input: req_id })
+
 
             },
             (error) => {
@@ -119,11 +131,17 @@ class AddCandidate extends React.Component {
                 this.refInput.focus();
                 // focus(this.state.input.reqid)
             }
+
         );
     }
 
     handleSubmit(e) {
         e.preventDefault();
+
+        if (this.state.input["reqid"] != null) {
+            this.state.input["reqid"] = this.state.input["reqid"].trim();
+            this.state.input["reqid"] = this.state.input["reqid"].replaceAll("#", "%23")
+        }
 
         if (this.state.input["cad_name"] != null) {
             this.state.input["cad_name"] = this.state.input["cad_name"].trim();
@@ -206,12 +224,12 @@ class AddCandidate extends React.Component {
         );
 
         let inputs = {};
-        // inputs["reqid"]='';
+        inputs["reqid"]='';
         inputs["cad_name"] = '';
         inputs["visa_type"] = '';
         inputs["rate_term"] = '';
         inputs["submitted_rate"] = '';
-        inputs["phone"] = '';
+        inputs["phone"] = '+1';
         inputs["email"] = '';
         inputs["remark"] = '';
         inputs["reason"] = '';
@@ -236,8 +254,8 @@ class AddCandidate extends React.Component {
         }
         if ((input["cad_name"]) != undefined) {
 
-            // var pattern = new RegExp(/^[^\s][a-zA-Z\s]{1,50}$/);
-            var pattern = new RegExp("[a-zA-Z]");
+         var pattern = new RegExp(/^[^\s][a-zA-Z\s]{1,50}$/);
+          //  var pattern = new RegExp("[a-zA-Z]");
 
             if (!pattern.test(input["cad_name"])) {
                 isValid = false;
@@ -277,20 +295,19 @@ class AddCandidate extends React.Component {
             errors["phone"] = "This field is required";
         }
 
-        // console.log(input["phone"]);
-        // console.log("input['phone'] length : " + ((input["phone"]).length));
-        // console.log("FormatLength : " + this.state.FormatLen);
-
-        // if ((!input["phone"])) {
-
-        //     console.log("input['phone'] length : " + ((input["phone"]).length));
-        //     console.log("FormatLength : " + this.state.FormatLen);
+        if ((input["phone"])!=null && (input["phone"]!='+1'))
+        {
 
             if (((input["phone"]).length) != (this.state.FormatLen)) {
                 isValid = false;
                 errors["phone"] = "Please enter valid phone number";
             }
-        // }
+        
+        }
+        
+       
+                
+
 
         // -------------email-----------------------------------------------------------------------------------------
         if ((!input["email"])) {
@@ -315,12 +332,10 @@ class AddCandidate extends React.Component {
     // -------------------------------------------- End Validation Code ----------------------------------------------------------
 
     getPhone = (e, value, data) => {
-        let phn = this.state.phone;
-        console.log(value);
-        console.log(e);
-        console.log(e.length);
+       
 
         var string = value.format
+
         var string_length = [...string].filter(x => x === '.').length
         console.log(string_length)
 
@@ -336,9 +351,9 @@ class AddCandidate extends React.Component {
     }
 
     render() {
-        const isAuthenticated = localStorage.getItem('recruiterID');
+        const isAuthenticated = localStorage.getItem('recruiterRole');
 
-        return isAuthenticated ? (
+        return isAuthenticated=="TM" ? (
 
             <div className="">
                 <div className="row">
@@ -347,7 +362,7 @@ class AddCandidate extends React.Component {
                         <EmployeeHeader />
                     </div>
 
-                    <div className="col-12 master_backgroung_work scroll-bar">
+                    <div className="col-12 master_backgroung_work scroll-bar-horizontal">
 
                         <div className="row">
                             <form onSubmit={this.handleSubmit}>
@@ -365,7 +380,7 @@ class AddCandidate extends React.Component {
                                                     type="text"
                                                     name="reqid"
                                                     value={this.state.input.reqid}
-
+                                                    onChange={this.handleChange}
                                                     onBlur={this.CheckRequisiton}
 
                                                     placeholder="Job Posting ID"
@@ -455,32 +470,25 @@ class AddCandidate extends React.Component {
                                         <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '30px' }}>
                                             <div class="form-group">
                                                 <label for="phone"><b>Phone :</b><b style={{ color: 'red' }}>*</b></label>
-                                                {/* <input
-                                                    minLength={1}
-
-                                                    type="text"
-                                                    name="phone"
-                                                    value={this.state.input.phone}
-                                                    onChange={this.handleChange}
-                                                    placeholder="Phone"
-
-                                                    class="form-control" /> */}
-
-                                                <PhoneInput
+                                                
+                                                    <PhoneInput
 
                                                     inputStyle={{ width: '100%' }}
-                                                    preferredCountries={['us', 'in', 'gb']}
+                                                   preferredCountries={['us']}
+                                                    onlyCountries={['us','in','gb','sg','ae']}
                                                     countryCodeEditable={false}
                                                     name="phone"
                                                     country={'us'}
-                                                    // ref={this.phoneInputRef}
+                                                    placeholder='Phone'
                                                     value={this.state.input.phone}
                                                     onChange={this.getPhone}
                                                     searchStyle={{ margin: "0", width: "97%", height: "30px" }}
-                                                    enableSearch
-                                                    disableSearchIcon
+                                                    
 
-                                                />
+                                                    />
+
+
+
 
                                                 <div className="text-danger">{this.state.errors.phone}</div>
                                             </div>
@@ -529,17 +537,7 @@ class AddCandidate extends React.Component {
 
                                                 <div className="text-danger">{this.state.errors.reason}</div>
                                             </div>
-                                            {/* 
-                                            <div class="form-group">
-                                                <label for="reason"><b>Reason:</b></label>
-                                                <PhoneInput
-                                                    country={'us'}
-                                                    value={this.state.phone}
-                                                    onChange={this.getPhone}
-                                                />
-
-                                                <div className="text-danger">{this.state.errors.reason}</div>
-                                            </div> */}
+                                            
                                         </div>
                                     </div>
                                 </div>

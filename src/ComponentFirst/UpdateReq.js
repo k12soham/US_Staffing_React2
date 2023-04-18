@@ -231,13 +231,10 @@ class UpdateReq extends React.Component {
                         style: { position: "absolute", top: "5px", width: "300px" }
                     }
                 );
-                if (this.state.recruiterIDAdmin !== null) {
-                    history.push("/viewReqForAdmin");
-                    window.location.reload()
-                } else {
+                
                      history.push("/view_all_req");
                    window.location.reload()
-                }
+                
             },
             (error) => {
                 console.log(error);
@@ -340,15 +337,7 @@ class UpdateReq extends React.Component {
             isValid = false;
             errors["location"] = "This field is required";
         }
-        if ((input["location"]) != '') {
-
-            var pattern = new RegExp(/^[a-zA-Z,-.]{2,50}$/);
-
-            if (!pattern.test(input["location"])) {
-                isValid = false;
-                errors["location"] = "Please enter valid location name.";
-            }
-        }
+       
 
         // -------------positionType-----------------------------------------------------------------------------------------
         if ((!input["positionType"])) {
@@ -371,22 +360,19 @@ class UpdateReq extends React.Component {
 
     // -------------------------------------------- render ----------------------------------------------------
     render() {
-        const isAuthenticated = localStorage.getItem('recruiterIDAdmin');
-        const isAuthenticated2 = localStorage.getItem('recruiterID');
+   
+        const isAuthenticated = localStorage.getItem('recruiterRole');
 
-        return isAuthenticated || isAuthenticated2 ? (
+        return isAuthenticated=="TM" ? (
 
             <div className="">
                 <div className="row">
 
                     <div className="col-12 h-100 master_backgroung_heder">
-                        {
-                            isAuthenticated2 !== null ? (
+                        
                                 <EmployeeHeader />
-                            ) : (
-                                <AdminHeader />
-                            )
-                        }
+                           
+                        
                     </div>
 
                     <div className="col-12 master_backgroung_work scroll-bar">

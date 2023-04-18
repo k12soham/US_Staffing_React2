@@ -159,7 +159,8 @@ a {
 }
 
 .master_backgroung_heder {
-  background-color: rgb(80, 81, 82);
+  // background-color: rgb(126, 163, 199);
+  box-shadow: 0px 5px 10px 0px #aaa;
   width: 100%;
   height: 100%;
 }
@@ -194,15 +195,16 @@ a {
 // ---------------------------------Navbar CSS-----------------------------------------------------------------
 
 .master_backgroung_work {
-  margin-top: 7.9%;
+  margin-top: 0.5%;
   position: fixed;
   left: 0%;
   right: 0%;
   height: 10%;
   // background-color: rgb(226, 238, 241);
   background-color: white;
-  width: 100%;
-  height: 547px;
+  // width: 100%;
+  width: 300px;
+  height: 600px;
 }
 
 // ---------------------------------Navbar CSS-----------------------------------------------------------------
@@ -244,19 +246,23 @@ a {
   height: 100%;
 }
 
-.scroll-bar {
-  max-height: 587px;
-  max-width: 400px;
-  overflow-y: scroll;
-}
+// .scroll-bar {
+//   max-height: 100px;
+//   max-width: 380px;
+//   overflow-y: scroll;
+// }
 
 .scroll-bar-horizontal {
-  max-height: 580px;
-  // max-width: 1290px;
+  max-height: 570px;
+  max-width: 380px;
   // max-width: 100%;
   overflow-y: scroll;
   // overflow-x: scroll;
   // display: flex;
+}
+
+.no-outline:focus {
+  outline: none;
 }
 
 // .drop-down-style {
@@ -266,12 +272,26 @@ a {
 // }
 
 // ---------------------------------------Modal CSS----------------------------------------------------------------
+// .Modal {
+//   position: absolute;
+//   top: 10%;
+//   left: 70%;
+//   right: 2%;
+//   bottom: 60%;
+//   padding: 2%;
+//   background-color: rgb(209, 222, 247);
+//   border-radius: 5px !important;
+
+// }
+
 .Modal {
   position: absolute;
-  top: 10%;
-  left: 70%;
-  right: 2%;
-  bottom: 60%;
+  top: 14%;
+  left: 74%;
+  right: 1.5%;
+  height: 50%;
+  width: 25%;
+  // bottom: 60%;
   padding: 2%;
   background-color: rgb(209, 222, 247);
   border-radius: 5px !important;
@@ -454,4 +474,194 @@ tr:hover > td {
 
 // ------------------------------Modal profile responsive css----------------------------------
 
+// ------------------------Responsive CSS for Admin Header Navbar--------------------------------------
+*,
+*::after,
+*::before{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
 
+.html{
+    font-size: 62.5%;
+}
+
+.navbar input[type="checkbox"],
+.navbar .hamburger-lines{
+    display: none;
+}
+
+.container{
+    max-width: 1700px;
+    width: 90%;
+    margin: auto;
+}
+
+.navbar{
+    // box-shadow: 0px 5px 10px 0px #aaa;
+    position: fixed;
+    width: 100%;
+    // background: #b7cbe9;
+    background: white;
+    color: #000;
+    opacity: 0.85;
+    // z-index: 100;
+}
+
+.navbar-container{
+    display: flex;
+    justify-content: space-between;
+    height: 64px;
+    align-items: center;
+    width: 100%;
+}
+
+.menu-items{
+    order: 2;
+    display: flex;
+}
+.logo{
+    // order: 1;
+    // font-size: 2.3rem;
+    width: 2%;
+    // height: 1%;
+}
+
+.menu-items li{
+    list-style: none;
+    margin-left: 1.5rem;
+    font-size: 1.0rem;
+}
+
+.navbar a{
+    color: #444;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease-in-out;
+}
+
+.navbar a:hover{
+    color: #117964;
+}
+
+@media (max-width: 768px){
+    .navbar{
+        opacity: 0.95;
+    }
+
+    .navbar-container input[type="checkbox"],
+    .navbar-container .hamburger-lines{
+        display: block;
+    }
+
+    .navbar-container{
+        display: block;
+        position: relative;
+        height: 64px;
+    }
+
+    .navbar-container input[type="checkbox"]{
+        position: absolute;
+        display: block;
+        height: 32px;
+        width: 30px;
+        top: 20px;
+        left: 20px;
+        z-index: 5;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    .navbar-container .hamburger-lines{
+        display: block;
+        height: 28px;
+        width: 35px;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .navbar-container .hamburger-lines .line{
+        display: block;
+        height: 4px;
+        width: 100%;
+        border-radius: 10px;
+        background: #333;
+    }
+    
+    .navbar-container .hamburger-lines .line1{
+        transform-origin: 0% 0%;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .navbar-container .hamburger-lines .line2{
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .navbar-container .hamburger-lines .line3{
+      
+        transform-origin: 0% 100%;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .navbar .menu-items{
+        padding-top: 100px;
+        background: #fff;
+        height: 100vh;
+        max-width: 300px;
+        transform: translate(-150%);
+        display: flex;
+        flex-direction: column;
+        margin-left: -40px;
+        padding-left: 40px;
+        transition: transform 0.5s ease-in-out;
+        box-shadow:  5px 0px 10px 0px #aaa;
+        overflow: scroll;
+    }
+
+    .navbar .menu-items li{
+        margin-bottom: 1.8rem;
+        font-size: 1.1rem;
+        font-weight: 500;
+    }
+
+    .logo{
+        position: absolute;
+        font-size: 2.5rem;
+
+    }
+
+    .navbar-container input[type="checkbox"]:checked ~ .menu-items{
+        transform: translateX(0);
+    }
+
+    .navbar-container input[type="checkbox"]:checked ~ .hamburger-lines .line1{
+        transform: rotate(45deg);
+    }
+
+    .navbar-container input[type="checkbox"]:checked ~ .hamburger-lines .line2{
+        transform: scaleY(0);
+    }
+
+    .navbar-container input[type="checkbox"]:checked ~ .hamburger-lines .line3{
+        transform: rotate(-45deg);
+    }
+}
+
+@media (max-width: 500px){
+    .navbar-container input[type="checkbox"]:checked ~ .logo{
+        display: none;
+    }
+}
+
+// ----------------------------------box-shadow-----------------------------
+.shadow {
+  -webkit-box-shadow: 0 6px 4px -4px black;
+  -moz-box-shadow: 0 6px 4px -4px black;
+  box-shadow: 0 6px 4px -4px black;
+}

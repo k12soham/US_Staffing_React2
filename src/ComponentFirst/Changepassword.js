@@ -4,9 +4,9 @@ import base_url from '../api/bootapi';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import history from './ResponseVal';
-import { Button } from 'reactstrap';
+import is from 'date-fns/esm/locale/is/index.js';
 
-class UpdateProfileAdmin extends React.Component {
+class Changepassword extends React.Component {
 
     constructor(props) {
         super(props);
@@ -21,64 +21,42 @@ class UpdateProfileAdmin extends React.Component {
             confirmPassword: undefined,
             passMatch: null,
             passNotMatch: null,
-            role: null,
 
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleFetchedData = this.handleFetchedData(this);
+        this.handleFetchedData2 = this.handleFetchedData2(this);
         this.keyUpHandler = this.keyUpHandler.bind(this);
     }
 
     handleFetchedData() {
 
-        let recruiterIDAdmin = localStorage.getItem('recruiterIDAdmin');
-        
-
-        axios.get(`${base_url}/getRecruiterbyID?recruiterID=${recruiterIDAdmin}`).then((json) => {
-
+        let recruiterID = localStorage.getItem('recruiterID');
+    
+        axios.get(`${base_url}/getRecruiterbyID?recruiterID=${recruiterID}`).then((json) => {
             this.setState({
-               // input: json.data,
-                role: json.data.role,
+                input: json.data
             });
             
-          
+
         })
     }
 
-    handleFetchedData2(e) {
+    handleFetchedData2() {
 
-        
-        if(this.state.input["recruiter_email"]!=null)
-        {
-            this.state.input["recruiter_email"] = this.state.input["recruiter_email"].trim();
-        }
-        
-    let z= e.email
+        let recruiterID = localStorage.getItem('recruiterIDAdmin');
 
-     
-     axios.get(`${base_url}/getRecruiterbyEmail?recruiterEmail=${z}`).then((json) => {
-          
+    
+        axios.get(`${base_url}/getRecruiterbyID?recruiterID=${recruiterID}`).then((json) => {
             this.setState({
-                input: json.data,
-                role: json.data.role,
+                input: json.data
+             
             });
-           
-        },
-        
-        (error) =>{
-            toast.error("Email not found",
-            {
-                position: "top-right", autoClose: 2000,
-                style: { position: "absolute", top: "5px", width: "300px" }
-            }
-        );
-            this.refInput.focus();
-            
-        }
-        
-        )
+
+
+        })
     }
 
     // --------------------------------------------------Password match--------------------------------------------------
@@ -92,7 +70,7 @@ class UpdateProfileAdmin extends React.Component {
         }
         else {
             this.setState({ passMatch: '' });
-            this.setState({ passNotMatch: 'Pass not matched' });
+            this.setState({ passNotMatch: 'Password not matched' });
         }
     }
 
@@ -101,12 +79,13 @@ class UpdateProfileAdmin extends React.Component {
         let emp_reg = this.state.input;
 
         emp_reg[e.target.name] = e.target.value;
-    
+     
         this.setState({
             input: emp_reg,
         });
-       
+      
 
+        this.state.currentPassword = this.state.input["currentPass"];
         this.state.newPassword = this.state.input['newPass'];
         this.state.confirmPassword = this.state.input['confirmPass'];
     }
@@ -114,16 +93,7 @@ class UpdateProfileAdmin extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
 
-
-        if(this.state.input["recruiter_name"]==null)
-        {
-          alert("Please click Find Email button")
-        }
-        if(this.state.input["recruiter_email"]!=null)
-        {
-            this.state.input["recruiter_email"] = this.state.input["recruiter_email"].trim();
-            this.state.input["recruiter_email"] = this.state.input["recruiter_email"].replaceAll("#", "%23");
-        }
+       
 
         if(this.state.input["newPass"]!=null)
         {
@@ -135,10 +105,8 @@ class UpdateProfileAdmin extends React.Component {
             this.state.input["confirmPass"] = this.state.input["confirmPass"].replaceAll("#", "%23");
         }
      
-     
-
+       
         if (this.validate()) {
-
             let emp_reg = this.state.input;
             emp_reg[e.target.name] = e.target.value;
 
@@ -147,45 +115,57 @@ class UpdateProfileAdmin extends React.Component {
                 alert("Please enter correct passwords");
                
             }
+
+            else if( this.state.input["currentPass"]==this.state.input["newPass"])
+            {
+                alert("New password must be different than current password");
+               
+            }
+
+          
             else {
-              
-           
+            
+
                 this.postdata(emp_reg);
 
             }
         }
         // 👇️ clear all input values in the form
-       // e.target.reset();
-     
+      
     }
 
     postdata = (data) => {
 
-
-        let recruiter_id = data["recruiter_id"]
-        let recruiter_name = data["recruiter_name"]
-        let recruiter_email = data["recruiter_email"]
-       // let currentPass=data["currentPass"]
+        let recruiter_id = data["recruiter_id"];
+        let recruiter_name = data["recruiter_name"];
+        let recruiter_email = data["recruiter_email"];
+        let currentPass = data["currentPass"];
         let confirmPass = data["confirmPass"];
-
-
-
-        axios.put(`${base_url}/UpdateRecruiterProfileAdmin?recruiterId=${recruiter_id}&newPass=${confirmPass}`).then(
+        const role = localStorage.getItem('recruiterRole');
+        axios.put(`${base_url}/ChangePassword?recruiterId=${recruiter_id}&currentPass=${currentPass}&newPass=${confirmPass}`).then(
            
             (response) => {
-                toast.success("Profile updated successfully!",
+                toast.success("Password cahnged successfully!",
                     { position: "top-right" }
                 );
 
-                if((this.state.role) == "Admin"){
-                    localStorage.setItem("recruiterName",recruiter_name);
-                    localStorage.setItem('recruiterEmail',recruiter_email);
-                }              
-                history.push("/viewReqForAdmin");
-                window.location.reload();
+                localStorage.setItem("recruiterName",recruiter_name);
+                localStorage.setItem('recruiterEmail',recruiter_email);
+                if(role=="Admin")
+                {
+                    history.push("/viewReqForAdmin");
+                    window.location.reload();
+                  
+                }
+                else if(role=="TM")
+                {
+                    history.push("/addRequisition");
+                    window.location.reload();
+                }
+          
             },
             (error) => {
-                alert("Please enter correct details!");
+                alert("Please enter correct current password!");
                 window.location.reload();
             }
         )
@@ -199,28 +179,21 @@ class UpdateProfileAdmin extends React.Component {
         let isValid = true;
 
        
-       
-        // -----------------------------------------Username/ email validation------------------------------------------------------------------
-        if (!input["recruiter_email"]) {
+        // --------------------------------------- emp_name validation-------------------------------------------------------
+        
+        // -----------------------------------------handle currentPass error---------------------------------------------
+        if (this.state.currentPassword == undefined) {
             isValid = false;
-            errors["recruiter_email"] = "Please enter email address.";
+            errors["currentPass"] = "Please enter current password.";
         }
 
-        if (typeof input["recruiter_email"] !== undefined) {
-
-            var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
-            if (!pattern.test(input["recruiter_email"])) {
-                isValid = false;
-                errors["recruiter_email"] = "Please enter valid email address (e.g.: abc@gmail.com).";
-            }
-        }
-    
-      
+       
+        // -----------------------------------------end pass error-----------------------------------------------
         // -----------------------------------------handle newPass error---------------------------------------------
         if (this.state.newPassword == undefined) {
             isValid = false;
             errors["newPass"] = "Please enter new password.";
-          
+         
         }
 
         if ((this.state.newPassword) !== undefined) {
@@ -242,7 +215,7 @@ class UpdateProfileAdmin extends React.Component {
            
         }
 
-
+       
         // -----------------------------------------end confirmPass error-----------------------------------------------
         this.setState({
             errors: errors
@@ -296,8 +269,7 @@ class UpdateProfileAdmin extends React.Component {
     render() {
         const isAuthenticated = localStorage.getItem('recruiterRole');
 
-
-        return isAuthenticated =="Admin" ?(
+        return isAuthenticated=="TM" || isAuthenticated=="Admin" ? (
 
             <div className="row g-0 auth-wrapper">
                 <div className="col-12 col-md-5 col-lg-6 h-100 master_backgroung_login">
@@ -305,57 +277,52 @@ class UpdateProfileAdmin extends React.Component {
                 </div>
 
                 <div className="col-12 col-md-7 col-lg-6 auth-main-col ">
-                   
+               
                     <div className="d-flex flex-column align-content-end">
                         <div className="auth-body mx-auto">
 
                             <div className="auth-form-container text-center">
-                                <h5><b>Change Recruiter Password</b></h5>
+                                <h5><b>Change Password</b></h5>
                             </div>
                             <br></br>
 
                             <form onSubmit={this.handleSubmit}>
 
                                 {/* -----------------------------------------------End editable code------------------------------------------------------------- */}
-                                <div class="form-group">
-                                    <label for="name"><b>Name:</b><b style={{color:'red'}}>*</b></label>
-                                    <input
-                                        type="text"
-                                        name="recruiter_name"
-                                        disabled
-                                        value={this.state.input.recruiter_name}
-                                        onChange={this.handleChange}
-                                        style={{ width: '360px', height: '37px' }}
-                                        placeholder="Name"
-                                        minLength={3}
-                                        maxLength={50}
-                                        id="recruiter_name" />
+                            
 
-                                   
+                                {/* ---------------------------------------------------------------------- */}
+                                <div className="password mb-3 ">
+                                    <div className="form-group">
+                                        <label for="password"><b>Enter Current Password:</b><b style={{color:'red'}}>*</b></label>
+                                        <input
+                                            type={(this.state.hover) ? "text" : "password"}
+                                            name="currentPass"
+                                            id="currentPass"
+                                           
+                                            value={this.currentPassword}
+                                            onChange={this.handleChange}
+                                            placeholder="Current Password"
+                                            minLength={6}
+                                            maxLength={15}
+                                            style={{ width: '305px', height: '37px' }}
+                                        />
+
+                                        <button
+                                            type="button"
+                                            className="btn btn-outline-primary theme-btn mx-auto"
+                                            onClick={this.togglePassword1}
+                                        >
+                                            <i
+                                                className={
+                                                    (this.state.hover) ? "far fa-eye" : "far fa-eye-slash"
+                                                }
+                                            ></i>{" "}
+                                        </button>
+                                        <div className="text-danger">{this.state.errors['currentPass']}</div>
+
+                                    </div>
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="email"><b>Enter Email:</b><b style={{color:'red'}}>*</b></label>
-                                    <input
-                                       
-                                        name='recruiter_email'
-                                        ref={(input) => { this.refInput = input; }}
-                                        value={this.state.input.recruiter_email}
-                                        onChange={this.handleChange}
-                                        onBlur={(evt)=> this.handleFetchedData2({email:this.state.input.recruiter_email})}
-                                        placeholder="Email"
-                                        minLength={11}
-                                        maxLength={50}
-                                        style={{ width: '360px', height: '37px' }}
-                                    />
-
-                                    <div className="text-danger">{this.state.errors.recruiter_email}</div>
-                                </div>
-
-                                {/* <Button onClick={(evt)=> this.handleFetchedData2({email:this.state.input.recruiter_email})}>Find Email</Button> */}
-
-                                <hr></hr>
-
 
                                 {/* ---------------------------------------------------------------------- */}
                                 <div className="password mb-3 " >
@@ -365,7 +332,7 @@ class UpdateProfileAdmin extends React.Component {
                                             type={(this.state.showNewPass) ? "text" : "password"}
                                             name="newPass"
                                             id="newPass"
-                                           
+                                        
                                             onChange={this.handleChange}
                                             onKeyUp={this.keyUpHandler}
                                             placeholder="New Password"
@@ -425,7 +392,7 @@ class UpdateProfileAdmin extends React.Component {
 
                                     </div>
                                 </div>
-                               
+                          
 
 
                                 <div className="text-center">
@@ -449,7 +416,7 @@ class UpdateProfileAdmin extends React.Component {
                                             </button>
 
                                         </div>
-                                       
+                                      
                                     </div>
 
                                 </div>
@@ -461,11 +428,11 @@ class UpdateProfileAdmin extends React.Component {
                     </div>
                 </div>
             </div>
-        ) : (
-            history.push("/"),
-            window.location.reload()
-        );
+     ) : (
+        history.push("/"),
+        window.location.reload()
+    );
     }
 }
 
-export default UpdateProfileAdmin;
+export default Changepassword;

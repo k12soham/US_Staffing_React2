@@ -194,15 +194,11 @@ class UpdateCandidate extends React.Component {
                     }
                 );
 
-                if (this.state.recruiterIDAdmin !== null) {
-
-                    history.push("/viewCandForAdmin");
-                    window.location.reload();
-                } else {
+             
                     history.push("/viewCandidate");
                     window.location.reload();
-
-                }
+                   
+                
             },
             (error) => {
                 console.log(error);
@@ -212,14 +208,14 @@ class UpdateCandidate extends React.Component {
         );
 
         let inputs = {};
-        inputs["cad_name"] = undefined;
-        inputs["visa_type"] = undefined;
-        inputs["rate_term"] = undefined;
-        inputs["submitted_rate"] = undefined;
-        inputs["phone"] = "+1";
-        inputs["email"] = undefined;
-        inputs["remark"] = undefined;
-        inputs["reason"] = undefined;
+        inputs["cad_name"] = '';
+        inputs["visa_type"] = '';
+        inputs["rate_term"] = '';
+        inputs["submitted_rate"] = '';
+        inputs["phone"] = '';
+        inputs["email"] = '';
+        inputs["remark"] = '';
+        inputs["reason"] = '';
 
         this.setState({ input: inputs });
     }
@@ -237,8 +233,8 @@ class UpdateCandidate extends React.Component {
         }
         if ((input["cad_name"]) != undefined) {
 
-            var pattern = new RegExp(/^[^\s][a-zA-Z\s]{3,50}$/);
-
+            var pattern = new RegExp(/^[^\s][a-zA-Z\s]{1,50}$/);
+          
             if (!pattern.test(input["cad_name"])) {
                 isValid = false;
                 errors["cad_name"] = "Please enter only characters.";
@@ -276,20 +272,9 @@ class UpdateCandidate extends React.Component {
             isValid = false;
             errors["phone"] = "This field is required";
         }
+  
 
-        if (((input["phone"]).length) != (this.state.FormatLen)) {
-            isValid = false;
-            errors["phone"] = "Please enter valid phone number";
-        }
-
-        // if ((input["phone"]) !== undefined) {
-        //     var pattern = /^(\([0-9]{3}\)|[0-9]{3})[\s\-]?[\0-9]{3}[\s\-]?[0-9]{4}$/
-        //     // var pattern = new RegExp(/^[^\s][0-9 *()-\s]{4,15}$/);
-        //     if (!pattern.test(input["phone"])) {
-        //         isValid = false;
-        //         errors["phone"] = "Please enter valid mobile number";
-        //     }
-        // }
+       
 
         // -------------email-----------------------------------------------------------------------------------------
         if ((!input["email"])) {
@@ -312,57 +297,40 @@ class UpdateCandidate extends React.Component {
     }
     // -------------------------------------------- End Validation Code ----------------------------------------------------------
 
-    getPhone = (e, value, data) => {
-        console.log(this.state.input.phone)
-        // let inputs = this.state.input;
-        // inputs["phone"] = e;
-        // let add_cls = this.state.input;
-        // add_cls[e.target.name] = e.target.value;
-
-        // this.setState({
-        //     input: add_cls,
-        // });
 
 
-        // let phn = this.state.phone;
-        // console.log(value);
-        // console.log(e);
-        // console.log(e.length);
+    getPhone = (value, data, event, formattedValue) => {
 
-        // var string = value.format
+        let actualDigit = value.slice(data.dialCode.length).length
 
-        // var string_length = [...string].filter(x => x === '.').length
-        // console.log(string_length)
+        let dialCodeLen = (data.dialCode.length);
+        let inputLen = (value.length);
+       
+        let phoneDigit = inputLen - dialCodeLen;
 
-        // console.log("entered No length = " + (value.format.length - value.dialCode.length))
-
-      
-
-        // this.setState({
-        //     input: inputs,
-        //     FormatLen: string_length,
-        // });
+        let inputs = this.state.input;
+        inputs["phone"] = value;
+        this.setState({
+            input: inputs,
+           
+        });
     }
 
     // -------------------------------------------- render ----------------------------------------------------
     render() {
-        const isAuthenticated = localStorage.getItem('recruiterIDAdmin');
-        const isAuthenticated2 = localStorage.getItem('recruiterID');
+   
+        const isAuthenticated = localStorage.getItem('recruiterRole');
 
-        return isAuthenticated || isAuthenticated2 ? (
+        return isAuthenticated=="TM" ? (
 
             <div className="">
                 <div className="row">
 
                     <div className="col-12 h-100 master_backgroung_heder">
 
-                        {
-                            isAuthenticated2 !== null ? (
+                        
                                 <EmployeeHeader />
-                            ) : (
-                                <AdminHeader />
-                            )
-                        }
+                           
 
                     </div>
 
@@ -447,40 +415,30 @@ class UpdateCandidate extends React.Component {
 
                                         </div>
                                         <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '30px' }}>
+                                           
+
                                             <div class="form-group">
-                                                <label for="phone"><b>Phone :</b><b style={{ color: 'red' }}>*</b></label>
-                                                {/* <input
-                                                    minLength={1}
-                                                    maxLength={20}
-                                                    type="text"
-                                                    name="phone"
-                                                    value={this.state.input.phone}
-                                                    onChange={this.handleChange}
-                                                    onKeyUp={this.keyUpHandlerClosure}
-                                                    placeholder="Phone"
+                                                <label for="phone"><b>Phone :</b><b style={{color:'red'}}>*</b></label>
 
-                                                    class="form-control" /> */}
-
-                                                <PhoneInput
+                                                    <PhoneInput
 
                                                     inputStyle={{ width: '100%' }}
                                                     preferredCountries={['us', 'in', 'gb']}
                                                     countryCodeEditable={false}
+                                                    disableCountryGuess
                                                     name="phone"
                                                     country={'us'}
-
-                                                    // onChange={this.handleChange}
+                                                    value={this.state.input.phone}
                                                     onChange={this.getPhone}
-                                                    // value={this.state.input.phone}
-                                                    value={this.state.phoneNumber}
                                                     searchStyle={{ margin: "0", width: "97%", height: "30px" }}
                                                     enableSearch
                                                     disableSearchIcon
 
                                                 />
 
-                                                <div className="text-danger">{this.state.errors.phone}</div>
-                                            </div>
+                                        <div className="text-danger">{this.state.errors.phone}</div>
+                                            </div> 
+
                                             <div class="form-group">
                                                 <label for="email"><b>Email:</b><b style={{ color: 'red' }}>*</b></label>
                                                 <input
@@ -529,6 +487,7 @@ class UpdateCandidate extends React.Component {
                                                 <div className="text-danger">{this.state.errors.reason}</div>
                                             </div>
 
+                                           
                                         </div>
                                     </div>
                                 </div>

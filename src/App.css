@@ -133,3 +133,28 @@ tr > td:hover {
   overflow: visible;
   white-space: unset;
 }*/
+
+
+
+
+@media (min-width: 768px){
+
+.Modals {
+  position: absolute;
+  top: 40px;
+  bottom: 300px;
+  left: 950px;
+  /* background-color: rgb(149, 220, 241); */
+  width: 30%;
+  background-color: rgb(209, 222, 247);
+  border-radius: 5px !important;
+}
+
+
+
+
+
+}
+
+
+
