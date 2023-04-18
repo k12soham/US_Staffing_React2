@@ -1,13 +1,17 @@
 import { React, useState, useEffect } from "react";
 import axios from "axios";
 import base_url from "../api/bootapi";
-import { Table } from "reactstrap";
+import {Button, Table } from "reactstrap";
 import EmployeeHeader from "./EmployeeHeader";
 import { useNavigate } from "react-router-dom";
 import Pagination from "./Pagination";
 import ReactPaginate from 'react-paginate';
 import history from './ResponseVal';
 import GeneratePDF1 from "./GeneratePDF1";
+import {Modal} from 'react-bootstrap';  
+import { format } from 'date-fns'
+import DatePicker from "react-datepicker";
+import GenerateExcel1 from "./GenerateExcel1";
 function ViewAllReq() {
 
     const recruiterID = localStorage.getItem('recruiterID');
@@ -16,11 +20,23 @@ function ViewAllReq() {
     const [statusList, setstatusList] = useState([]);
     const [statusFD, setstatusFD] = useState([]);
     const [candidateList1, setcandidateList1] = useState([])
- 
+    const [statusList1, setstatusList1] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [category, setCategory] = useState();
     const [isDownload, setIsDownload] = useState(true);
+    const [isShown, setIsShown] = useState(false);
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
 
+    const [show, setShow] = useState(false);  
+  
+    const modalClose = () => setShow(false);  
+    const modalShow = () => setShow(true);
+
+    let date1 = format(startDate, "dd-MMM-yyyy");
+    let date2 = format(endDate, "dd-MMM-yyyy");
+    localStorage.setItem("startdate", date1);
+    localStorage.setItem("enddate", date2);
 
     const [inEditMode, setInEditMode,] = useState({
         status: true,
@@ -73,51 +89,133 @@ function ViewAllReq() {
     }
 
 
+    function Box() {
+        return (
+            <div className="d-inline-flex w-50" >
+                <span style={{ width: "270px" }}> Start Date:</span>
+                <DatePicker dateFormat="dd-MMM-yyyy" maxDate={new Date()} style={{ width: '100' }} className="btn btn-sm btn-primary" selected={startDate} onChange={(date) => handleDateChange1({ date1: date })} />
+
+                <span style={{ width: "270px" }}> End Date:</span>
+                <DatePicker dateFormat="dd-MMM-yyyy" maxDate={new Date()} selected={endDate} className="btn btn-sm btn-primary" onChange={(date) => handleDateChange2({ date2: date })} />
+            </div>
+        );
+    }
+
     const handleCate = (evt) => {
-      
+
+
+    //  document.getElementById('b1').disabled = false;
+  
         let cate = evt.newCate;
         setCategory(cate);
-       postGetDataByCate(empID, cate);
-        
+        localStorage.setItem("cate", cate);
+
+
+        let date1 = format(startDate, "yyyy-MM-dd");
+        let date2 = format(endDate, "yyyy-MM-dd");
+
+        if (cate == 'Customize') {
+            setIsShown(true);
+            postGetDataBetDates(empID, date1, date2);
+        }
+        else {
+            postGetDataByCate(empID, cate);
+            setIsShown(false);
+        }
+
     
+
+
+
     };
 
-    const postGetDataByCate = (d1, d2) => {
+
+    const handleDateChange1 = (date) => {
+
+        const d1 = date.date1;
+        let d2 = endDate;
+
+        let f1 = format(d1, 'yyyy-MM-dd');
+        let f2 = format(d2, 'yyyy-MM-dd');
+
+        if (f2 >= f1) {
+            setStartDate(d1);
+            postGetDataBetDates(empID, f1, f2);
+        } else {
+            alert("Enter valid date");
+        }
+    }
+
+    const handleDateChange2 = (date) => {
         
-        axios.get(`${base_url}/get_cls_by_Quarterly?empid=${d1}&category=${d2}`)
+        const d2 = date.date2;
+        let f = empID;
+        let f1 = format(startDate, 'yyyy-MM-dd');
+        let f2 = format(d2, 'yyyy-MM-dd');
+
+        if (f2 >= f1) {
+            setEndDate(d2);
+            postGetDataBetDates(empID, f1, f2);
+        } else {
+            alert("Enter valid date");
+        }
+    }
+    const postGetDataBetDates = (f, f1, f2) => {
+        // axios.get(`${base_url}/get_cls_byDate?empid=${f}&date1=${f1}&date2=${f2}`).then(json => setClosureList(json.data))
+        axios.get(`${base_url}/get_cls_byDate?empid=${f}&date1=${f1}&date2=${f2}`)
             .then(
-                json => setstatusList(json.data),
-            
-             
+                json => setstatusList1(json.data),
+                setIsDownload(true),
             )
             .catch(error => {
-               
+              
+                setstatusList1([]);
+                setIsDownload(false);
             })
-       
-    }
-
-    const handleDownload = (evt) => {
-
-        let d_cate = evt.DownloadOpt;
-
-
-
-        GeneratePDF1(candidateList1);
-
-
-
-        /* if (d_cate == "ExportToCSV") {
-             Excel2(closureList);
-             // setIsDownload(false);
- 
-         } else {
-             GeneratePDF1(closureList);
-         }*/
-        <option hidden value=""><button>Download</button></option>
-
 
     }
 
+    const postGetDataByCate = (d1, d2) => {
+
+        axios.get(`${base_url}/get_cls_by_Quarterly?empid=${d1}&category=${d2}`)
+            .then(
+                json => setstatusList1(json.data),
+
+
+            )
+            .catch(error => {
+
+            })
+
+    }
+    const handleDownload1= () => {
+
+        if(category==null)
+        {
+            alert("please select category")
+        }
+        else{
+            GeneratePDF1(statusList1);
+        }
+               
+        
+            }
+        
+            const handleDownload2 = (evt) => {
+        
+                if(category==null)
+                {
+                    alert("please select category")
+                }
+                else{
+                    GenerateExcel1(statusList1);
+                }
+              
+        
+        
+        
+        
+            }
    
     const renderTable = () => {
 
@@ -209,7 +307,7 @@ function ViewAllReq() {
                 <div className="col-12 master_backgroung_work scroll-bar-horizontal">
                     {/* ---------------------------SearchBar----------------------------- */}
                     <div className="row">
-                        <div className="col-12 input-icons"
+                        <div className="col-6 input-icons"
                             style={{ padding: '5px', margin: '10px' }}>
                             <i className="fa fa-search icon"></i>
               
@@ -223,7 +321,10 @@ function ViewAllReq() {
                             
 
                         </div>
-                        
+                        <div className="col-6"> <Button variant="success" className="btn btn-primary btn-sm fa fa-download" style={{marginLeft:"0px"}} onClick={modalShow}>  
+       &nbsp;&nbsp; Download 
+      </Button> </div>
+                       
                     </div>
 
                     <div>
@@ -248,13 +349,137 @@ function ViewAllReq() {
                                 {renderTable()}
                             </tbody>
                         </Table>
-{/* 
-                        <div className="row">
-                           
-                            <div className="col-2">
-                                {isDownload && <Download />}
-                            </div>
-                        </div> */}
+                        <div >  
+       
+  <Modal   show={show} onHide={modalClose}>  
+  <Modal.Header closeButton>  
+    <Modal.Title>Submission Report</Modal.Title>  
+    
+  </Modal.Header>  
+  
+  <Modal.Body> 
+  <select name="category1" value={category} onChange={(evt) => handleCate({ newCate: evt.target.value })} className="btn btn-success btn-sm dropdown-toggle" style={{ width: '150px' }}>
+                                {
+                                    
+                                    <>
+                                    
+                                        <option hidden value="">Select Category</option>
+
+                                        <option value="All">All Category</option>
+                                        <option value="Current">Current</option>
+                                        <option value="Last_Month">Last-month</option>
+                                         <option value="Quarterly">Quarterly</option>
+                                        <option value="Half_yearly">Half-yearly</option>
+                                        <option value="Yearly">Yearly</option>
+                                        <option value="Customize">Customize</option> 
+                                    </>
+                                    
+                                }
+                            </select> 
+
+                            
+<br></br><br></br>
+{isShown && <Box />}
+<Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px'}}>
+  <th style={{width:"150px"}}>Candidate</th>
+  <th style={{width:"90px"}}>Status</th>
+  <th style={{width:"100px"}}>Date</th>
+  <th style={{width:"70px"}}>Client Rate</th>
+  <th style={{width:"20px"}}>Submit Rate</th>
+    {
+       
+    statusList1.map((cl) =>
+    {
+    if (cl.recruiter.recruiter_id == empID  && cl.status=="Submitted" && (cl.candidate == null || cl.candidate.deleted == 1))
+        return (
+      <>
+   
+      <tr > 
+        <td hidden></td>
+    
+                    <td >
+                                {
+                                    cl.candidate == null ?
+                                        (
+                                            console.log("null")
+                                        ) :
+                                        (
+                                            cl.candidate.candidate_name
+
+                                        )
+                                }
+                            </td>
+
+                            <td >
+                        {
+                            cl.candidate == null ?
+                                (
+                                    console.log("null")
+                                ) :
+                                (
+                                    cl.status
+
+                                )
+                        }
+                        </td>
+                            
+                            <td >
+                        {
+                            cl.candidate == null ?
+                                (
+                                    console.log("null")
+                                ) :
+                                (
+                                    cl.status_date
+
+                                )
+                        }
+                        </td>
+
+                        <td >
+                        {
+                            cl.requisition == null ?
+                                (
+                                    console.log("null")
+                                ) :
+                                (
+                                    cl.requisition.client_rate
+
+                                )
+                        }
+                        </td>
+                
+                        <td >
+                        {
+                            cl.candidate == null ?
+                                (
+                                    console.log("null")
+                                ) :
+                                (
+                                    cl.candidate.submitted_rate
+
+                                )
+                        }
+                        </td><br></br>
+                        
+                        </tr>
+                        </>
+                                )
+    }
+        
+    )
+} 
+</Table>
+  </Modal.Body>  
+  
+  <Modal.Footer>  
+    <button  id="b1" onClick={handleDownload1}  className="btn btn-primary">PDF</button>  
+    <button  id="b2"  onClick={handleDownload2} className="btn btn-primary">Excel</button>  
+     
+  </Modal.Footer>  
+</Modal>  
+    </div>  
+
                         
                     </div>
                 </div>

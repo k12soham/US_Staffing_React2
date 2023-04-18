@@ -73,11 +73,11 @@ class ModalWithCSS extends React.Component {
     return (
 
       
-      <div  style={{textAlign:'right'}}>
+      <div  style={{textAlign:'right', marginTop:'15px'}}>
         <div onClick={this.handleOpenModal}>
 
-          <img src="https://img.icons8.com/ios/35/000000/user-male-circle--v2.png" ></img>&nbsp;
-          <span>{empName}</span>
+        <i class="fa fa-user-circle-o" style={{fontSize:'25px',color:'blue'}}></i>&nbsp;
+          <span style={{color:'brown', fontSize:'17px'}}>{empName}</span>
 
         </div>
 
@@ -100,8 +100,8 @@ class ModalWithCSS extends React.Component {
 
             </div>
             <div style={{ marginLeft: '70px' }}>
-              <span > <img src="https://img.icons8.com/ios/35/000000/user-male-circle--v2.png" /><b style={{ fontSize: '22px' }}> &nbsp; &nbsp;{empName}</b></span><br />
-              <span ><h6 style={{ marginLeft: '50px' }}>{empMail} </h6></span><hr></hr>
+              <span >   <i class="fa fa-user-circle-o" style={{fontSize:'30px',color:'blue'}}></i><b style={{ fontSize: '22px' }}> &nbsp;{empName}</b></span><br />
+              <span ><h6 style={{ marginLeft: '15px' }}>{empMail} </h6></span><hr></hr>
             </div>
             <div className="text-center">
               <div className='row'>

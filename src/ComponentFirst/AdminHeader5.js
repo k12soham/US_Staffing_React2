@@ -30,11 +30,11 @@ function AdminHeader5() {
     <div>
       <nav class="navbar">
         <div class="navbar-container container">
-        <ul class="menu-items">
-            <li><a  href="/adminstatic2" action className={splitLocation[1] == "adminstatic2" ? "list-group-item-info" : ""}>Add Data</a></li> 
-             <li><a href="/viewReqForAdmin" action className={splitLocation[1] == "viewReqForAdmin" ? "list-group-item-info" : ""}>View Requisition</a></li>
+        <ul class="menu-items" >
+        <li><a href="/viewReqForAdmin" action className={splitLocation[1] == "viewReqForAdmin" ? "text-info font-italic" : ""}>View Requisition</a></li>
+            <li><a  href="/adminstatic2" action className={splitLocation[1] == "adminstatic2" ? "text-info font-italic" : ""}>Add Data</a></li>  
          </ul>
-         <ul class="menu-items">
+         {/* <ul class="menu-items">
             <li></li> 
              <li></li>
          </ul>
@@ -42,13 +42,13 @@ function AdminHeader5() {
           <ul class="menu-items">
             <li></li> 
              <li></li>
-         </ul>
+         </ul> */}
              <ul class="menu-items">
          <li><ModalWithCSS/></li>
           </ul>
         
         
-          <h6 class="logo"><img src={tCogLogoImg} alt="tCogLogo" style={{ height: '50px', width: '150px' }} /></h6>
+          <img src={tCogLogoImg} alt="tCogLogo"  style={{ height: '50px', width: '200px' }} />
         </div>
       </nav>
     </div>
