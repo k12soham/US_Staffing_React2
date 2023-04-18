@@ -7,9 +7,10 @@ import history from './ResponseVal';
 
 import EmployeeHeader from './EmployeeHeader';
 import { useNavigate } from "react-router-dom";
-import PhoneInput from 'react-phone-input-2'
-
+import PhoneInput, { CountryData, PhoneInputProps } from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
+// import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
+// import "react-phone-number-input/style.css";
 import es from 'react-phone-input-2/lang/es.json'
 
 
@@ -43,7 +44,8 @@ class AddCandidate extends React.Component {
             empID: '',
             rateTerm_fd: [],
             visaType_fd: [],
-            phone: '',
+            //  phone: '',
+            FormatLen: 0,
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -63,6 +65,8 @@ class AddCandidate extends React.Component {
         inputs["email"] = '';
         inputs["remark"] = '';
         inputs["reason"] = '';
+
+        // this.phoneInputRef.current?.selectCountry('us');
 
         this.setState({ input: inputs });
 
@@ -91,6 +95,11 @@ class AddCandidate extends React.Component {
 
     CheckRequisiton = (e) => {
 
+        let requisition_id = this.state.input;
+
+        requisition_id[e.target.name] = e.target.value;
+        let a = this.state.input.reqid
+
         e.preventDefault()
 
         if (this.state.input["reqid"] != null) {
@@ -104,7 +113,6 @@ class AddCandidate extends React.Component {
         axios.get(`${base_url}/getRequisitionByID?ID=${z}`).then(
 
             (response) => {
-
 
                 let requid = response.data.requisition_id
                 localStorage.setItem('requisitionID', requid);
@@ -145,18 +153,11 @@ class AddCandidate extends React.Component {
             this.state.input["submitted_rate"] = this.state.input["submitted_rate"].replaceAll("#", "%23")
         }
 
-
-        if (this.state.input["phone"] != null) {
-            this.state.input["phone"] = this.state.input["phone"].trim();
-            this.state.input["phone"] = this.state.input["phone"].replaceAll("#", "%23")
-        }
-
         if (this.state.input["email"] != null) {
             this.state.input["email"] = this.state.input["email"].trim();
             this.state.input["email"] = this.state.input["email"].replaceAll("#", "%23")
 
         }
-
 
         if (this.state.input["remark"] != null) {
             this.state.input["remark"] = this.state.input["remark"].trim(" ");
@@ -172,13 +173,10 @@ class AddCandidate extends React.Component {
 
         if (this.validate()) {
 
-
-
             let add_cls = this.state.input;
             add_cls[e.target.name] = e.target.value;
             this.postCandidate(add_cls);
         }
-
 
     }
 
@@ -196,7 +194,6 @@ class AddCandidate extends React.Component {
         let d7 = data["remark"];
         let d8 = data["reason"];
 
-
         if (d7 == undefined) {
             d7 = ''
         }
@@ -204,11 +201,9 @@ class AddCandidate extends React.Component {
             d8 = ''
         }
 
-
         axios.post(`${base_url}/add_candidate?candidate_name=${d1}&visa_type=${d2}&rate_term=${d3}
         &submitted_rate=${d4}&phone=${d5}&email=${d6}&remark=${d7}
         &reason=${d8}&recruiter_id=${recruiterID}&requisition_id=${requisitionID}`).then(
-
 
             (response) => {
 
@@ -228,7 +223,6 @@ class AddCandidate extends React.Component {
             }
         );
 
-
         let inputs = {};
         inputs["reqid"]='';
         inputs["cad_name"] = '';
@@ -241,7 +235,6 @@ class AddCandidate extends React.Component {
         inputs["reason"] = '';
 
         this.setState({ input: inputs });
-
     }
     // --------------------------------------------Validation Code ----------------------------------------------------------
 
@@ -268,7 +261,6 @@ class AddCandidate extends React.Component {
                 isValid = false;
                 errors["cad_name"] = "Please enter only characters.";
             }
-
         }
         // -------------visa_type---------------------------------------------------------------------------------------------
         if ((!input["visa_type"])) {
@@ -287,6 +279,7 @@ class AddCandidate extends React.Component {
             isValid = false;
             errors["submitted_rate"] = "This field is required";
         }
+
         if ((input["submitted_rate"]) !== undefined) {
 
             var pattern = new RegExp(/^((?!(0))[0-9\s]{0,5})$/);
@@ -297,7 +290,7 @@ class AddCandidate extends React.Component {
             }
         }
         // -------------phone-----------------------------------------------------------------------------------------
-        if ((!input["phone"]) || (input["phone"]=='+1')) {
+        if ((!input["phone"]) || (input["phone"] == '+1')) {
             isValid = false;
             errors["phone"] = "This field is required";
         }
@@ -321,6 +314,7 @@ class AddCandidate extends React.Component {
             isValid = false;
             errors["email"] = "This field is required";
         }
+
         if (typeof input["email"] !== "undefined") {
 
             var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
@@ -368,7 +362,7 @@ class AddCandidate extends React.Component {
                         <EmployeeHeader />
                     </div>
 
-                    <div className="col-12 master_backgroung_work scroll-bar">
+                    <div className="col-12 master_backgroung_work scroll-bar-horizontal">
 
                         <div className="row">
                             <form onSubmit={this.handleSubmit}>
@@ -429,7 +423,6 @@ class AddCandidate extends React.Component {
 
                                                             <option value={vt.visa_type}>{vt.visa_type}</option>
                                                         ))
-
                                                     }
                                                 </select>
 
@@ -499,6 +492,7 @@ class AddCandidate extends React.Component {
 
                                                 <div className="text-danger">{this.state.errors.phone}</div>
                                             </div>
+
                                             <div class="form-group">
                                                 <label for="email"><b>Email:</b><b style={{ color: 'red' }}>*</b></label>
                                                 <input
@@ -509,7 +503,6 @@ class AddCandidate extends React.Component {
                                                     value={this.state.input.email}
                                                     onChange={this.handleChange}
                                                     placeholder="Email"
-
                                                     class="form-control" />
 
                                                 <div className="text-danger">{this.state.errors.email}</div>

@@ -202,7 +202,7 @@ function ViewAllReq() {
         <div className="">
             <div className="row">
 
-                <div className="col-12 h-100 master_backgroung_heder">
+                <div className="col-12 h-100 ">
                     <EmployeeHeader />
                 </div>
 

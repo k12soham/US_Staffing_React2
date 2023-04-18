@@ -1783,7 +1783,7 @@ class AdminStatic2 extends React.Component {
                         <AdminHeader5 />
                     </div>
 
-                    <div className="col-12 master_backgroung_work scroll-bar">
+                    <div className="col-12 master_backgroung_work scroll-bar-horizontal">
 
                         <div className="row" style={{ marginTop: "2%" }}>
 

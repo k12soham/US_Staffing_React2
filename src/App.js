@@ -34,7 +34,7 @@ function App() {
 
   let a= localStorage.getItem("recruiterIDAdmin")
   return (
-    <div className="container-fluid">
+    <div className="container">
       <Router>
         <ToastContainer />
 		
@@ -49,7 +49,6 @@ function App() {
         
         <Route path="/viewCandidate" element={<ViewCandidate />}></Route>
         <Route path="/view_all_req" element={<ViewAllReq />}></Route>
-
 
         <Route path="/updateRequisition" element={<UpdateReq />}></Route>
         {/* <Route path="/updateCandidate" element={<UpdateCandidate />}></Route> */}

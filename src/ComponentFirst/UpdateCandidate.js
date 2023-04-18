@@ -21,11 +21,9 @@ class UpdateCandidate extends React.Component {
         this.setState({ candidateID: candidateID2 });
         this.setState({ requisitionId1: requisitionID });
 
-
         axios.get(`${base_url}/getCandidateByID?candidateID=${candidateID2}`).then(
 
             (response) => {
-
 
                 let inputs = {};
                 inputs["cad_name"] = response.data.candidate_name;
@@ -36,9 +34,12 @@ class UpdateCandidate extends React.Component {
                 inputs["email"] = response.data.email;
                 inputs["remark"] = response.data.remark;
                 inputs["reason"] = response.data.reason;
+                this.state.phoneNumber = response.data.phone;
 
-                this.setState({ input: inputs });
-
+                this.setState({
+                    input: inputs,
+                    phone: inputs["phone"]
+                });
             },
             (error) => {
                 console.log(error);
@@ -63,8 +64,6 @@ class UpdateCandidate extends React.Component {
             })
     }
 
-
-
     constructor(props) {
         super(props);
 
@@ -74,13 +73,14 @@ class UpdateCandidate extends React.Component {
             candidateID: 0,
             rateTerm_fd: [],
             visaType_fd: [],
-            phone: '',
+            phoneNumber: '',
             recruiterIDAdmin: undefined
         };
 
         this.handleChange = this.handleChange.bind(this);
+        this.handleChange2 = this.handleChange2.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-
+        this.getPhone = this.getPhone.bind(this);
     }
 
     resetForm = () => {
@@ -92,27 +92,26 @@ class UpdateCandidate extends React.Component {
         inputs["rate_term"] = '';
         inputs["submitted_rate"] = '';
         inputs["phone"] = '';
+        // inputs["phone"] = '+1';
         inputs["email"] = '';
         inputs["remark"] = '';
         inputs["reason"] = '';
 
 
-        this.setState({ input: inputs });
+        this.setState({ input: inputs, phoneNumber:'' });
 
         let errors1 = {};
         errors1["cad_name"] = "";
         errors1["visa_type"] = "";
         errors1["rate_term"] = "";
         errors1["submitted_rate"] = "";
-        errors1["phone"] = "";
+        inputs["phone"] = '+1';
         errors1["email"] = "";
         errors1["location"] = "";
         errors1["remark"] = "";
         errors1["reason"] = "";
         this.setState({ errors: errors1 });
     }
-
-
 
     handleChange(e) {
         let add_cls = this.state.input;
@@ -123,67 +122,54 @@ class UpdateCandidate extends React.Component {
         });
     }
 
+    handleChange2(e, value) {
+        let add_cls = this.state.input;
+        add_cls["phone"] = value;
+        console.log("phone: " + add_cls["phone"]);
+
+        this.setState({
+            input: add_cls,
+        });
+    }
+
     handleSubmit(e) {
         e.preventDefault();
 
-        if(this.state.input["cad_name"]!=null)
-        {
+        if (this.state.input["cad_name"] != null) {
             this.state.input["cad_name"] = this.state.input["cad_name"].trim();
             this.state.input["cad_name"] = this.state.input["cad_name"].replaceAll("#", "%23")
         }
-            
-        if(this.state.input["submitted_rate"]!=null)
-        {
+
+        if (this.state.input["submitted_rate"] != null) {
             this.state.input["submitted_rate"] = this.state.input["submitted_rate"].trim();
             this.state.input["submitted_rate"] = this.state.input["submitted_rate"].replaceAll("#", "%23")
-        } 
-        
-
-        if(this.state.input["phone"]!=null)
-        {
-            this.state.input["phone"] = this.state.input["phone"].trim();
-            this.state.input["phone"] = this.state.input["phone"].replaceAll("#", "%23")
         }
-            
-        if(this.state.input["email"]!=null)
-        {
+
+        if (this.state.input["email"] != null) {
             this.state.input["email"] = this.state.input["email"].trim();
             this.state.input["email"] = this.state.input["email"].replaceAll("#", "%23")
-           
-        } 
-            
-       
-    
+        }
 
-        if(  this.state.input["remark"]!=null)
-        {
+        if (this.state.input["remark"] != null) {
             this.state.input["remark"] = this.state.input["remark"].trim(" ");
             this.state.input["remark"] = this.state.input["remark"].replaceAll("#", "%23")
         }
 
-        if(  this.state.input["reason"]!=null)
-        {
+        if (this.state.input["reason"] != null) {
             this.state.input["reason"] = this.state.input["reason"].trim(" ");
-
             this.state.input["reason"] = this.state.input["reason"].replaceAll("#", "%23")
-
         }
-
 
         if (this.validate()) {
 
-           
             let add_cls = this.state.input;
             add_cls[e.target.name] = e.target.value;
-
             this.put_UpdateCandidate(add_cls);
-
         }
-       
     }
 
     put_UpdateCandidate = (data) => {
-       
+
         let d = this.state.requisitionId1;
         let cad_name = data["cad_name"];
         let visa_type = data["visa_type"];
@@ -198,9 +184,7 @@ class UpdateCandidate extends React.Component {
         &visa_type=${visa_type}&rate_term=${rate_term}&submitted_rate=${submitted_rate}
         &phone=${phone}&email=${email}&remark=${remark}&reason=${reason}`).then(
 
-
             (response) => {
-
 
                 toast.success("Candidate updated successfully!",
                     {
@@ -234,7 +218,6 @@ class UpdateCandidate extends React.Component {
         inputs["reason"] = '';
 
         this.setState({ input: inputs });
-
     }
     // --------------------------------------------Validation Code ----------------------------------------------------------
 
@@ -243,7 +226,6 @@ class UpdateCandidate extends React.Component {
         let input = this.state.input;
         let errors = {};
         let isValid = true;
-      
 
         if ((!input["cad_name"])) {
             isValid = false;
@@ -286,7 +268,7 @@ class UpdateCandidate extends React.Component {
             }
         }
         // -------------phone-----------------------------------------------------------------------------------------
-        if ((!input["phone"])) {
+        if ((!input["phone"]) || (input["phone"] == '+1')) {
             isValid = false;
             errors["phone"] = "This field is required";
         }
@@ -307,7 +289,7 @@ class UpdateCandidate extends React.Component {
                 errors["email"] = "Please enter valid email address (e.g.: abc@gmail.com).";
             }
         }
-       
+
         this.setState({
             errors: errors
         });
@@ -362,7 +344,7 @@ class UpdateCandidate extends React.Component {
                                         <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '20px' }}>
 
                                             <div class="form-group">
-                                                <label for="cad_name"><b>Candidate Name:</b><b style={{color:'red'}}>*</b></label>
+                                                <label for="cad_name"><b>Candidate Name:</b><b style={{ color: 'red' }}>*</b></label>
                                                 <input
                                                     ref={(input) => { this.refInput = input; }}
                                                     minLength={1}
@@ -379,9 +361,9 @@ class UpdateCandidate extends React.Component {
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="visa_type"><b>Visa Type:</b><b style={{color:'red'}}>*</b></label><br />
+                                                <label for="visa_type"><b>Visa Type:</b><b style={{ color: 'red' }}>*</b></label><br />
                                                 <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '100%', textAlign:"left" }}
+                                                    style={{ width: '100%', textAlign: "left" }}
                                                     name="visa_type" id="visa_type"
                                                     onChange={this.handleChange}
                                                     value={this.state.input.visa_type}>
@@ -396,11 +378,11 @@ class UpdateCandidate extends React.Component {
                                                 <div className="text-danger">{this.state.errors.visa_type}</div>
                                             </div>
 
-                                            
+
                                             <div class="form-group">
-                                                <label for="rate_term"><b>Rate Term:</b><b style={{color:'red'}}>*</b></label><br />
+                                                <label for="rate_term"><b>Rate Term:</b><b style={{ color: 'red' }}>*</b></label><br />
                                                 <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '100%', textAlign:"left" }}
+                                                    style={{ width: '100%', textAlign: "left" }}
                                                     name="rate_term" id="rate_term"
                                                     onChange={this.handleChange}
                                                     value={this.state.input.rate_term}>
@@ -415,7 +397,7 @@ class UpdateCandidate extends React.Component {
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="submitted_rate"><b>Submitted Rate:</b><b style={{color:'red'}}>*</b></label>
+                                                <label for="submitted_rate"><b>Submitted Rate:</b><b style={{ color: 'red' }}>*</b></label>
                                                 <input
                                                     // minLength={2}
                                                     // maxLength={4}
@@ -458,7 +440,7 @@ class UpdateCandidate extends React.Component {
                                             </div> 
 
                                             <div class="form-group">
-                                                <label for="email"><b>Email:</b><b style={{color:'red'}}>*</b></label>
+                                                <label for="email"><b>Email:</b><b style={{ color: 'red' }}>*</b></label>
                                                 <input
                                                     minLength={2}
                                                     maxLength={50}
@@ -468,7 +450,6 @@ class UpdateCandidate extends React.Component {
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerClosure}
                                                     placeholder="Email"
-
                                                     class="form-control" />
 
                                                 <div className="text-danger">{this.state.errors.email}</div>

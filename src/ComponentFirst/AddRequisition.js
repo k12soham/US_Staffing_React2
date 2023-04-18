@@ -419,11 +419,11 @@ class AddRequisition extends React.Component {
             <div className="">
                 <div className="row">
 
-                    <div className="col-12 h-100 master_backgroung_heder">
+                    <div className="col ">
                         <EmployeeHeader />
                     </div>
 
-                    <div className="col-12 master_backgroung_work scroll-bar">
+                    <div className="col-12 master_backgroung_work scroll-bar-horizontal">
 
                         <div className="row">
                             <form onSubmit={this.handleSubmit}>
@@ -473,13 +473,11 @@ class AddRequisition extends React.Component {
                                                 <select class="btn btn-secondary dropdown-toggle"
                                                     style={{ width: '100%', textAlign:"left"  }}
                                                     name="client" id="client"
-                                                    onChange={this.handleChange}
-                                             
+                                                    onChange={this.handleChange}                                    
                                                     value={this.state.input.client}>
 
                                                     <option hidden value='' default selected> Select Client Name </option>
                                                     {
-
                                                         this.state.client_fd.map((cl) => (
 
                                                             cl.requisitor_fd.requisitor_fd == this.state.input.req ?
