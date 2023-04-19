@@ -20,7 +20,7 @@ console.log(tickets)
   let startdate = localStorage.getItem("startdate");
   let enddate = localStorage.getItem("enddate");
 
-
+let rec= localStorage.getItem("rec");
 
 
   let doc = new jsPDF();
@@ -43,9 +43,9 @@ console.log(tickets)
   const sstt = [];
   let index = 1;
   // for each ticket pass all its data into an array
-  console.log(tickets)
+
   tickets.map(st => {
-    if ( st.status=="Submitted" && (st.candidate == null || st.candidate.deleted == 1)) {
+    if ( st.status=="Submitted" && (st.candidate == null || st.candidate.deleted == 1)&&(st.recruiter.recruiter_id==rec||rec=="all")) {
 
     
 

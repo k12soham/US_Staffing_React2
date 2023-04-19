@@ -107,38 +107,38 @@ class ModalWithCSS extends React.Component {
               <div className='row'>
                 <div className='col-1'></div>
 
-                <div className='col-5'>
+                <div className="form-group">
                   <button
                     type="submit"
-                    className="btn btn-sm btn-primary w-150 theme-btn mx-auto"
+                    className="btn btn-sm btn-primary  form-control"
                     onClick={this.handleUpdateProfile}
                   ><i class="fa fa-pencil"></i>&nbsp;
                     Update Profile
                   </button>
                 </div>
 
-                <div className='col-5'>
+             <div className="form-group">
                   <button
                     type="submit"
-                    className="btn btn-sm btn-primary w-150 theme-btn mx-auto"
+                    className="btn btn-sm btn-primary  form-control"
                     onClick={this.handleUpdateProfile2}
                   ><i class="fa fa-pencil"></i>&nbsp;
                     Change Password
                   </button>
                 </div>
 
-        <div>&nbsp;&nbsp;&nbsp;&nbsp;
+        <div>
           {
               role=="Admin"?
               (
-                <div className='col-5'>
+                <div class="form-group">
                   <button
                     type="submit"
-                    className="btn btn-sm btn-warning"
+                    className="btn btn-sm btn-outline-danger w-150 theme-btn mx-auto form-control"
                     onClick={this.handleUpdateProfile3}
-                    style={{width:"298px",marginLeft:"20px"}}
+                   
                   ><i class="fa fa-pencil"></i>&nbsp;
-                    Change recruiter password
+                    Change Recruiter Password
                   </button>
                 </div>
               ):
@@ -147,12 +147,12 @@ class ModalWithCSS extends React.Component {
               )
             }
   </div>
-                <div className='col-5'><br></br>
+                <div class="form-group">
                   <button
                     type="reset"
-                   className="btn btn-secondary "
+                   className="btn btn-secondary form-control"
                    onClick={this.logout}
-                  style={{width:"300px",marginLeft:"35px"}}
+       
                   ><i class="fa fa-sign-out"></i>&nbsp;
                     Logout
                   </button>

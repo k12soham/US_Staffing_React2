@@ -300,7 +300,7 @@ function ViewAllReq() {
         <div className="">
             <div className="row">
 
-                <div className="col-12 h-100 master_backgroung_heder">
+                <div className="col-12 h-100 master_backgroung_heder ">
                     <EmployeeHeader />
                 </div>
 
@@ -321,7 +321,7 @@ function ViewAllReq() {
                             
 
                         </div>
-                        <div className="col-6"> <Button variant="success" className="btn btn-primary btn-sm fa fa-download" style={{marginLeft:"0px"}} onClick={modalShow}>  
+                        <div className="col-6"> <Button variant="success"  className="btn btn-primary btn-sm fa fa-download" style={{marginLeft:"0px"}} onClick={modalShow}>  
        &nbsp;&nbsp; Download 
       </Button> </div>
                        
@@ -351,14 +351,14 @@ function ViewAllReq() {
                         </Table>
                         <div >  
        
-  <Modal   show={show} onHide={modalClose}>  
+  <Modal   show={show} onHide={modalClose}  size="lg">  
   <Modal.Header closeButton>  
-    <Modal.Title>Submission Report</Modal.Title>  
+    <Modal.Title className="ms-auto">Submission Report</Modal.Title>  
     
   </Modal.Header>  
   
   <Modal.Body> 
-  <select name="category1" value={category} onChange={(evt) => handleCate({ newCate: evt.target.value })} className="btn btn-success btn-sm dropdown-toggle" style={{ width: '150px' }}>
+  <select name="category1" value={category} onChange={(evt) => handleCate({ newCate: evt.target.value })} className="btn btn-success btn-sm dropdown-toggle" style={{ width: '150px', marginLeft:'300px' }}>
                                 {
                                     
                                     <>
@@ -381,11 +381,12 @@ function ViewAllReq() {
 <br></br><br></br>
 {isShown && <Box />}
 <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px'}}>
-  <th style={{width:"150px"}}>Candidate</th>
-  <th style={{width:"90px"}}>Status</th>
-  <th style={{width:"100px"}}>Date</th>
-  <th style={{width:"70px"}}>Client Rate</th>
-  <th style={{width:"20px"}}>Submit Rate</th>
+<th style={{width:"150px"}}>Job Posting ID</th>
+  <th style={{width:"200px"}}>Candidate Name</th>
+  <th style={{width:"130px"}}>Status</th>
+  <th style={{width:"130px"}}>Date</th>
+  <th style={{width:"80px"}}>Client Rate</th>
+  <th style={{width:"80px"}}>Submitted Rate</th>
     {
        
     statusList1.map((cl) =>
@@ -396,6 +397,7 @@ function ViewAllReq() {
    
       <tr > 
         <td hidden></td>
+        <td>{cl.requisition.id}</td>
     
                     <td >
                                 {

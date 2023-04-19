@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import axios from "axios";
 import base_url from "../api/bootapi";
-import { Button,Table } from "reactstrap";
+import { Button, Table } from "reactstrap";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import AdminHeader from "./AdminHeader";
@@ -10,7 +10,7 @@ import history from './ResponseVal';
 import GeneratePDF1 from "./GeneratePDF1";
 import DatePicker from "react-datepicker";
 import { format } from 'date-fns'
-import {Modal} from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import GeneratePDF2 from "./GeneratePDF2";
 import GenerateExcel2 from "./GenerateExcel2";
 import AdminHeader5 from "./AdminHeader5";
@@ -21,8 +21,7 @@ function ViewCandForAdmin() {
 
     const [statusList, setstatusList] = useState([]);
     const [statusFD, setstatusFD] = useState([]);
-
-
+    const [searchTerm, setSearchTerm] = useState("");
     let navigate = useNavigate();
 
     useEffect(() => {
@@ -60,11 +59,8 @@ function ViewCandForAdmin() {
         localStorage.setItem("candidateID", candidate_id)
         localStorage.setItem("requisitionID", requisition_id)
         localStorage.setItem("recruiterID", recruiter_id)
-       
+
     }
-
- 
-
 
     const items = [1, 2, 3];
 
@@ -102,13 +98,61 @@ function ViewCandForAdmin() {
 
   
     const renderTable = () => {
+
         const isAuthenticated = localStorage.getItem('recruiterRole');
 
 
-        return isAuthenticated =="Admin" ?statusList.map(st => {
+        return isAuthenticated == "Admin" ? 
+        
+        
+        statusList.filter((st) => {
+
+              
+
+            if (searchTerm === "") {
+                return st;
+            }
+            else if (st.recruiter.recruiter_name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                return st;
+            }
+            else if (st.status_date.toLowerCase().includes(searchTerm.toLowerCase())) {
+                return st;
+            }
+            else if (st.candidate != null) {
+                if (st.candidate.candidate_name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return st;
+                }
+                if (st.candidate.visa_type.toString().toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return st;
+                }
+                if (st.candidate.rate_term.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return st;
+                }
+                if (st.requisition.client_rate.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return st;
+                }
+                if (st.candidate.phone.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return st;
+                }
+                if (st.candidate.email.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return st;
+                }
+                if (st.candidate.submitted_rate.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return st;
+                }
+            }
+
+            else if (st.candidate == null || st.candidate != null) {
+                if (st.status.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return st;
+                }
+            }
+        }
+
+        ).map(st => {
 
             if (st.requisition.requisition_id == requisitionID && st.flag == 1 && (st.candidate == null || st.candidate.deleted == 1))
-            
+
                 return (
 
                     <tr key={st.status_id}>
@@ -276,7 +320,7 @@ function ViewCandForAdmin() {
                     </tr >
                 );
         }
-        
+
         ) : (
             history.push("/"),
             window.location.reload()
@@ -292,9 +336,25 @@ function ViewCandForAdmin() {
                 </div>
 
                 <div className="col-12 master_backgroung_work scroll-bar-horizontal">
+                <div className="row">
+                        <div className="col-12 input-icons"
+                            style={{ padding: '5px', margin: '10px' }}>
+                            <i className="fa fa-search icon"></i>
+
+                            <input
+                                type="search"
+                                className="form-control"
+                                placeholder="Search"
+                                onChange={event => { setSearchTerm(event.target.value) }}
+                                style={{ width: '500px', borderRadius: '100px', paddingLeft: '30px' }}
+                            />
+                            
+
+                        </div>
+                    </div>
 
                     <div style={{ width: '' }}  >
-                        <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px' }}>
+                   <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px' }}>
                             <thead>
                                 <tr>
                                     <th style={{ width: '60px' }}>Sr No.</th>
@@ -322,11 +382,11 @@ function ViewCandForAdmin() {
                             </tbody>
                         </Table>
                         <div className="row">
-                        <div className="col-6">
-                          
-                        </div>
                             <div className="col-6">
- 
+
+                            </div>
+                            <div className="col-6">
+
 
  
                             </div>

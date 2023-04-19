@@ -19,8 +19,6 @@ function AdminHeader5() {
     setActiveLink(currentUrl);
   }, []);
 
-  console.log("current path: "+activeLink);
-
   const location = useLocation();
   const { pathname } = location;
   const splitLocation = pathname.split("/");

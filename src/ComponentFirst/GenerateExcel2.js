@@ -22,19 +22,19 @@ console.log(tickets)
   let cate = localStorage.getItem("cate");
   let startdate = localStorage.getItem("startdate");
   let enddate = localStorage.getItem("enddate");
-
+  let rec= localStorage.getItem("rec");
 
 
 
   // define the columns we want and their titles
-  const tableColumn =[ ["Sr No.","Recruiter Name", "Candidate Name", "Status", "Date", "Client Rate", "Submit Rate"]];
+  const tableColumn =[ ["Sr No.","Job Posting ID","Recruiter Name", "Candidate Name", "Status", "Date", "Client Rate", "Submit Rate"]];
   // define an empty array of rows
   const tableRows = [];
   const sstt = [];
   let index = 1;
   // for each ticket pass all its data into an array
   tickets.map(st => {
-    if ( st.status=="Submitted"&& (st.candidate == null || st.candidate.deleted == 1)) {
+    if ( st.status=="Submitted"&& (st.candidate == null || st.candidate.deleted == 1)&&(st.recruiter.recruiter_id==rec||rec=="all")) {
 
     
 

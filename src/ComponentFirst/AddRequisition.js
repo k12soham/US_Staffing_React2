@@ -40,7 +40,7 @@ class AddRequisition extends React.Component {
             )
             .catch(error => {
               
-                console.log("getAllRequisitorFd can't get")
+              
             })
 
         axios.get(`${base_url}/getAllClient`)
@@ -49,6 +49,14 @@ class AddRequisition extends React.Component {
             )
             .catch(error => {
                 
+            })
+
+            axios.get(`${base_url}/getRequisitionId`)
+            .then(json =>
+                this.setState({ RequisitionId: json.data })
+            )
+            .catch(error => {
+
             })
     }
 
@@ -66,6 +74,7 @@ class AddRequisition extends React.Component {
             client_fd: [],
             setReqList: [],
             requisitionId1: undefined,
+            RequisitionId:[],
 
             reqval: '',
 
@@ -305,15 +314,7 @@ class AddRequisition extends React.Component {
             isValid = false;
             errors["location"] = "This field is required";
         }
-        // if ((input["location"]) != '') {
-
-        //     var pattern = new RegExp(/^[a-zA-Z,-.\s]{2,50}$/);
-
-        //     if (!pattern.test(input["location"])) {
-        //         isValid = false;
-        //         errors["location"] = "Please enter valid location name.";
-        //     }
-        // }
+       
 
         // -------------positionType-----------------------------------------------------------------------------------------
         if ((!input["positionType"])) {
@@ -352,31 +353,29 @@ class AddRequisition extends React.Component {
     // -------------------------------------------- If Requisition Exist --------------------------------------
     keyUpHandlerID = (e) => {
 
-        // this.setState({
-        //     requisitionId1: undefined
-        // });
+    
         let reqID = e.target.value;
-
-        axios.get(`${base_url}/getRequisitionByID?ID=${reqID}`).then(
-
-            (response) => {
+        let object = this.state.RequisitionId.find(obj => obj.id == reqID);
+       
+        if(object!=null)
+        {
 
                 let inputs = this.state.input;
 
-                inputs["req"] = response.data.requisition_from;
-                inputs["id"] = response.data.id;
-                inputs["client"] = response.data.client;
-                inputs["jobTitle"] = response.data.job_title;
-                inputs["duration"] = response.data.duration;
-                inputs["clientrate"] = response.data.client_rate;
-                inputs["location"] = response.data.location;
-                inputs["positionType"] = response.data.position_type;
-                inputs["skills"] = response.data.skills;
+                inputs["req"] = object.requisition_from;
+                inputs["id"] = object.id;
+                inputs["client"] = object.client;
+                inputs["jobTitle"] = object.job_title;
+                inputs["duration"] = object.duration;
+                inputs["clientrate"] = object.client_rate;
+                inputs["location"] = object.location;
+                inputs["positionType"] = object.position_type;
+                inputs["skills"] = object.skills;
 
                 this.setState({ input: inputs });
 
-                let a3 = response.data.requisition_id;
-                let b = response.data.id;
+                let a3 = object.requisition_id;
+                let b = object.id;
 
                 this.setState({
                     requisitionId1: a3,
@@ -388,25 +387,15 @@ class AddRequisition extends React.Component {
                     add_cls[e.target.name] = e.target.value;
                     this.post_requisition(add_cls)
                 }
-
-            },
-            (error) => {
-                console.log(error);
-
-                // let inputs = {};
-                // inputs["req"] = '';
-                // inputs["id"] = this.state.input.id;
-                // inputs["client"] = '';
-                // inputs["jobTitle"] = '';
-                // inputs["duration"] = '';
-                // inputs["clientrate"] = '';
-                // inputs["location"] = '';
-                // inputs["positionType"] = '';
-                // inputs["skills"] = '';
-
-                // this.setState({ input: inputs });
             }
-        );
+            else{
+                console.log("error")
+            }
+    
+        
+                
+
+               
     }
 
     // -------------------------------------------- render ----------------------------------------------------
@@ -419,11 +408,11 @@ class AddRequisition extends React.Component {
             <div className="">
                 <div className="row">
 
-                    <div className="col-12 h-100 master_backgroung_heder">
+                    <div className="col-12  master_backgroung_heder">
                         <EmployeeHeader />
                     </div>
 
-                    <div className="col-12 master_backgroung_work scroll-bar">
+                    <div className="col-12 master_backgroung_work scroll-bar-horizontal">
 
                         <div className="row">
                             <form onSubmit={this.handleSubmit}>
@@ -473,13 +462,11 @@ class AddRequisition extends React.Component {
                                                 <select class="btn btn-secondary dropdown-toggle"
                                                     style={{ width: '100%', textAlign:"left"  }}
                                                     name="client" id="client"
-                                                    onChange={this.handleChange}
-                                             
+                                                    onChange={this.handleChange}                                    
                                                     value={this.state.input.client}>
 
                                                     <option hidden value='' default selected> Select Client Name </option>
                                                     {
-
                                                         this.state.client_fd.map((cl) => (
 
                                                             cl.requisitor_fd.requisitor_fd == this.state.input.req ?
