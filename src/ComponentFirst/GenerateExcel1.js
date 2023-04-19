@@ -15,8 +15,7 @@ console.log(tickets)
 
   let recruiterName = localStorage.getItem("recruiterName");
   let empID = localStorage.getItem("recruiterID")
-  let sessionreq = localStorage.getItem("requisitionID")
-  let  sessionreq2= localStorage.getItem("reqID");
+
   let a = new Date();
   let currentdate = format(a, "dd-MMM-yyyy");
   let cate = localStorage.getItem("cate");
@@ -30,18 +29,19 @@ console.log(tickets)
   const tableColumn =[ ["Sr No.", "Candidate Name", "Status", "Date", "Client Rate", "Submit Rate"]];
   // define an empty array of rows
   const tableRows = [];
-  const sstt = [];
+
   let index = 1;
   // for each ticket pass all its data into an array
   tickets.map(st => {
-    if (st.requisition.requisition_id == sessionreq
-      && st.recruiter.recruiter_id == empID && st.status=="Submitted") {
+    if (st.recruiter.recruiter_id == empID && st.status=="Submitted" && (st.candidate == null || st.candidate.deleted == 1)) {
 
     
 
       const ticketData = [
 
         index++,
+
+        st.requisition.id,
 
         st.candidate.candidate_id == null ?
           (
@@ -61,19 +61,12 @@ console.log(tickets)
 
       st.status,
         
-    
-
-        
-            
+       
   
             st.status_date,
 
   
-     
   
-
-
-
 
         st.candidate.candidate_id == null ?
           (
@@ -104,7 +97,7 @@ console.log(tickets)
 
       tableRows.push(ticketData);
     
-      // tableRows.push(sstt)
+   
     }
 
 
@@ -114,7 +107,7 @@ console.log(tickets)
 
   const date = Date().split(" ");
 
-  const dateStr = date[0] + date[1] + date[2] + date[3] + date[4];
+
 
 
 let title,title2;
@@ -124,43 +117,43 @@ let title,title2;
   {
     
     title=[[recruiterName+"'s current month submission report"]]
-    title2=[["Requisition ID: '"+ sessionreq2+"'"]]
+    
   }
   else if(cate=='Last_Month')
   {
     
     title=[[recruiterName+"'s last month submission report"]]
-    title2=[["Requisition ID: '"+ sessionreq2+"'"]]
+    
   }
   else if(cate=='Quarterly')
   {
  
     title=[[recruiterName+"'s quarterly submission report"]]
-    title2=[["Requisition ID: '"+ sessionreq2+"'"]]
+
   }
   else if(cate=='Half_yearly')
   {
   
     title=[[recruiterName+"'s half yearly submission report"]]
-    title2=[["Requisition ID: '"+ sessionreq2+"'"]]
+
   }
   else if(cate=='Yearly')
   {
   
     title =[[recruiterName+"'s yearly submission report"]]
-    title2=[["Requisition ID: '"+ sessionreq2+"'"]]
+   
   }
   else if(cate=='Customize')
   {
 
     title=[[recruiterName+"'s submission report From: " +startdate+ " To: "+enddate]]
-  title2=[["Requisition ID: '"+ sessionreq2+"'"]]
+
   }
   else
   {
     
      title=[[recruiterName+"'s " +cate+ " submission report"]]
-     title2=[["Requisition ID: '"+ sessionreq2+"'"]]
+
    
   }
 

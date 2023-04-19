@@ -7,6 +7,7 @@ import history from './ResponseVal';
 import EmployeeHeader from './EmployeeHeader';
 import AdminHeader from './AdminHeader';
 import { useNavigate } from "react-router-dom";
+import AdminHeader5 from './AdminHeader5';
 class UpdateReqAdmin extends React.Component {
 
     componentDidMount() {
@@ -370,7 +371,7 @@ class UpdateReqAdmin extends React.Component {
 
                     <div className="col-12 h-100 master_backgroung_heder">
                        
-                                <AdminHeader />
+                                <AdminHeader5 />
                      
                     </div>
 

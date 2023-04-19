@@ -1779,8 +1779,8 @@ class AdminStatic2 extends React.Component {
             <div >
                 <div className="row">
 
-                    <div className="col-12 h-100">
-                        <AdminHeader5 />
+                    <div className="col-12 h-100 master_backgroung_heder">
+                        <AdminHeader5 /> 
                     </div>
 
                     <div className="col-12 master_backgroung_work scroll-bar-horizontal">
