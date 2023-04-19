@@ -16,7 +16,7 @@ function ViewAllReq() {
     const [statusList, setstatusList] = useState([]);
     const [statusFD, setstatusFD] = useState([]);
     const [candidateList1, setcandidateList1] = useState([])
- 
+
     const [searchTerm, setSearchTerm] = useState("");
     const [category, setCategory] = useState();
     const [isDownload, setIsDownload] = useState(true);
@@ -38,9 +38,9 @@ function ViewAllReq() {
 
     }, []);
 
-    
 
-   
+
+
     // ----------------------------------------------------------------------------------------------------------
     const onEdit = ({ requisitionID }) => {
 
@@ -63,37 +63,37 @@ function ViewAllReq() {
         })
     }
 
-  
+
     const getnewID = (e) => {
         let rq = e.rq
         let req = e.req
         localStorage.setItem("requisitionID", rq)
         localStorage.setItem("reqID", req)
-     
+
     }
 
 
     const handleCate = (evt) => {
-      
+
         let cate = evt.newCate;
         setCategory(cate);
-       postGetDataByCate(empID, cate);
-        
-    
+        postGetDataByCate(empID, cate);
+
+
     };
 
     const postGetDataByCate = (d1, d2) => {
-        
+
         axios.get(`${base_url}/get_cls_by_Quarterly?empid=${d1}&category=${d2}`)
             .then(
                 json => setstatusList(json.data),
-            
-             
+
+
             )
             .catch(error => {
-               
+
             })
-       
+
     }
 
     const handleDownload = (evt) => {
@@ -118,7 +118,7 @@ function ViewAllReq() {
 
     }
 
-   
+
     const renderTable = () => {
 
         return (
@@ -156,7 +156,7 @@ function ViewAllReq() {
             }
             ).map(cls => {
 
-            if (cls.recruiter.recruiter_id == empID && cls.requisitionflag == 1 && cls.requisition.deleted == 1)
+                if (cls.recruiter.recruiter_id == empID && cls.requisitionflag == 1 && cls.requisition.deleted == 1)
 
                     return (
 
@@ -164,7 +164,7 @@ function ViewAllReq() {
                             <td></td>
                             <td hidden>{cls.requisition.requisition_id}</td>
                             <td>{cls.requisition.requisition_from}</td>
-                            <td>{<a href="/viewCandidate" onClick={(evt) => getnewID({ rq: cls.requisition.requisition_id , req:cls.requisition.id})}>{cls.requisition.id}</a>}</td>
+                            <td>{<a href="/viewCandidate" onClick={(evt) => getnewID({ rq: cls.requisition.requisition_id, req: cls.requisition.id })}>{cls.requisition.id}</a>}</td>
                             <td>{cls.requisition.client}</td>
                             <td>{cls.requisition.job_title}</td>
                             <td>{cls.requisition.duration}</td>
@@ -172,22 +172,22 @@ function ViewAllReq() {
                             <td>{cls.requisition.location}</td>
                             <td>{cls.requisition.position_type}</td>
                             <td>{cls.requisition.skills}</td>
-                           
-                        <td>
-                              
-                                        <button
-                                            className="btn btn-sm btn-outline-success"
-                                            style={{ marginLeft: "5px" }}
-                                            onClick={() => onEdit({
 
-                                                requisitionID: cls.requisition.requisition_id,
+                            <td>
 
-                                            })}
-                                        >
-                                            <i class="fa fa-edit"></i>
+                                <button
+                                    className="btn btn-sm btn-outline-success"
+                                    style={{ marginLeft: "5px" }}
+                                    onClick={() => onEdit({
 
-                                        </button>
-                                    
+                                        requisitionID: cls.requisition.requisition_id,
+
+                                    })}
+                                >
+                                    <i class="fa fa-edit"></i>
+
+                                </button>
+
                             </td>
                         </tr>
                     )
@@ -195,24 +195,23 @@ function ViewAllReq() {
     }
     const isAuthenticated = localStorage.getItem('recruiterRole');
 
-    return isAuthenticated=="TM" ? (
-   
-    
+    return isAuthenticated == "TM" ? (
+
+
 
         <div className="">
             <div className="row">
 
-                <div className="col-12 h-100 ">
+                <div className="col-12 h-100 master_backgroung_heder">
                     <EmployeeHeader />
                 </div>
-
-                <div className="col-12 master_backgroung_work scroll-bar-horizontal">
-                    {/* ---------------------------SearchBar----------------------------- */}
-                    <div className="row">
+                <div className="col-12">
+                      {/* ---------------------------SearchBar----------------------------- */}
+                      <div className="row">
                         <div className="col-12 input-icons"
-                            style={{ padding: '5px', margin: '10px' }}>
+                            style={{ padding: '5px', margin: '7px' }}>
                             <i className="fa fa-search icon"></i>
-              
+
                             <input
                                 type="search"
                                 className="form-control"
@@ -220,11 +219,15 @@ function ViewAllReq() {
                                 onChange={event => { setSearchTerm(event.target.value) }}
                                 style={{ width: '500px', borderRadius: '100px', paddingLeft: '30px' }}
                             />
-                            
+
 
                         </div>
-                        
+
                     </div>
+                </div>
+
+                <div className="col-12 master_backgroung_work scroll-bar-horizontal">
+                  
 
                     <div>
                         <Table bordered className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px', textOverflow: "ellipsis" }}>
@@ -248,22 +251,22 @@ function ViewAllReq() {
                                 {renderTable()}
                             </tbody>
                         </Table>
-{/* 
+                        {/* 
                         <div className="row">
                            
                             <div className="col-2">
                                 {isDownload && <Download />}
                             </div>
                         </div> */}
-                        
+
                     </div>
                 </div>
             </div>
         </div>
-       
-        ) : (
-            history.push("/"),
-            window.location.reload()
-        );
+
+    ) : (
+        history.push("/"),
+        window.location.reload()
+    );
 }
 export default ViewAllReq;

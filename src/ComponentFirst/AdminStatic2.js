@@ -1779,7 +1779,7 @@ class AdminStatic2 extends React.Component {
             <div >
                 <div className="row">
 
-                    <div className="col-12 h-100">
+                    <div className="col-12 h-100 master_backgroung_heder">
                         <AdminHeader5 />
                     </div>
 

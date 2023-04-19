@@ -13,6 +13,7 @@ import { format } from 'date-fns'
 import { Modal } from 'react-bootstrap';
 import GeneratePDF2 from "./GeneratePDF2";
 import GenerateExcel2 from "./GenerateExcel2";
+import AdminHeader5 from "./AdminHeader5";
 
 function ViewCandForAdmin() {
 
@@ -407,7 +408,7 @@ function ViewCandForAdmin() {
             <div className="row">
 
                 <div className="col-12 h-100 master_backgroung_heder">
-                    <AdminHeader />
+                    <AdminHeader5 />
                 </div>
 
                 <div className="col-12 master_backgroung_work scroll-bar-horizontal">

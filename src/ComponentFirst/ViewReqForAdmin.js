@@ -55,20 +55,20 @@ function ViewReqForAdmin() {
     }
 
     const getnewID = (e) => {
-       
+
         let requisitionID = e.rq
         let req = e.req
         localStorage.setItem("requisitionID", requisitionID)
         localStorage.setItem("reqID", req)
-    
+
     }
 
     const renderTable = () => {
         const isAuthenticated = localStorage.getItem('recruiterRole');
 
 
-        return isAuthenticated =="Admin"? (
-   
+        return isAuthenticated == "Admin" ? (
+
 
             requisitionList.filter((cls) => {
 
@@ -112,7 +112,7 @@ function ViewReqForAdmin() {
                             <td>{cls.requisition_from}</td>
 
                             <td>{
-                                <a href="/viewCandForAdmin" onClick={(evt) => getnewID({ rq: cls.requisition_id, req:cls.id })}>{cls.id}</a>
+                                <a href="/viewCandForAdmin" onClick={(evt) => getnewID({ rq: cls.requisition_id, req: cls.id })}>{cls.id}</a>
 
                             }</td>
                             <td>{cls.client}</td>
@@ -164,13 +164,12 @@ function ViewReqForAdmin() {
                 <div className="col-12 h-100 master_backgroung_heder">
                     <AdminHeader5 />
                 </div>
+                <div className="col-12">
 
-                <div className="col-12 master_backgroung_work scroll-bar-horizontal" >
-
-                    {/* -------------------------------------------------------- */}
+                    {/* --------------------------Search Bar------------------------------ */}
                     <div className="row">
                         <div className="col-12 input-icons"
-                            style={{ padding: '5px', margin: '10px' }}>
+                            style={{ padding: '5px', margin: '7px' }}>
                             <i className="fa fa-search icon"></i>
                             <input
                                 type="search"
@@ -181,8 +180,11 @@ function ViewReqForAdmin() {
                             />
                         </div>
                     </div>
+                </div>
 
-                    <div style={{ width: '' }}  >
+                <div className="col-12 master_backgroung_work scroll-bar-horizontal" >
+
+                    <div>
 
                         <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px' }}>
                             <thead>
@@ -247,8 +249,8 @@ function ViewReqForAdmin() {
 
         //)
 
-       
-        );
-   
+
+    );
+
 }
 export default ViewReqForAdmin;

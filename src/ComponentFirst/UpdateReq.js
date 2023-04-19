@@ -368,11 +368,8 @@ class UpdateReq extends React.Component {
             <div className="">
                 <div className="row">
 
-                    <div className="col-12 h-100 master_backgroung_heder">
-                        
-                                <EmployeeHeader />
-                           
-                        
+                    <div className="col-12 h-100 master_backgroung_heder">                        
+                                <EmployeeHeader />                                                   
                     </div>
 
                     <div className="col-12 master_backgroung_work scroll-bar">

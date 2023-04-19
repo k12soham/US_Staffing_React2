@@ -358,7 +358,7 @@ class AddCandidate extends React.Component {
             <div className="">
                 <div className="row">
 
-                    <div className="col-12">
+                    <div className="col-12 master_backgroung_heder">
                         <EmployeeHeader />
                     </div>
 

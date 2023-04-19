@@ -419,7 +419,7 @@ class AddRequisition extends React.Component {
             <div className="">
                 <div className="row">
 
-                    <div className="col ">
+                    <div className="col-12 master_backgroung_heder">
                         <EmployeeHeader />
                     </div>
 
