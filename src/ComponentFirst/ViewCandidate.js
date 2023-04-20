@@ -10,7 +10,7 @@ import DatePicker from "react-datepicker";
 import { format } from 'date-fns'
 import { Link } from 'react-router-dom';
 import Popup from 'reactjs-popup';
-import {Modal} from 'react-bootstrap';  
+import { Modal } from 'react-bootstrap';
 import $ from 'jquery';
 import GenerateExcel1 from "./GenerateExcel1";
 
@@ -27,8 +27,6 @@ function ViewCandidate() {
 
     let navigate = useNavigate();
 
-   
-
     const [inEditMode, setInEditMode,] = useState({
         status: true,
         rowKey: null
@@ -37,8 +35,6 @@ function ViewCandidate() {
     useEffect(() => {
         axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
         axios.get(`${base_url}/getAllStatusFd`).then(json => setstatusFD(json.data))
-        // axios.get(`${base_url}/getAllCandidate`).then(json => setcandidateList(json.data))
-       
 
     }, []);
 
@@ -84,7 +80,6 @@ function ViewCandidate() {
             alert("Please select status")
         }
 
-
         else if (b == c) {
             alert("This status is already saved")
         }
@@ -100,11 +95,10 @@ function ViewCandidate() {
         let c = e.canid
         let d = currentstatus;
 
-    
         if (d == null) {
             alert("Please select status")
         }
-       else if (b == d) {
+        else if (b == d) {
             alert("This status is already saved")
         }
         else {
@@ -134,7 +128,6 @@ function ViewCandidate() {
     }
 
     const postdata2 = (a, b, c) => {
-
 
         axios.post(`${base_url}/update_status2?recruiter_id=${empID}&requisition_id=${a}&candidate_id=${c}&status=${b}`).then(
 
@@ -190,10 +183,7 @@ function ViewCandidate() {
 
         return isAuthenticated == "TM" ? (
 
-
             statusList.filter((st) => {
-
-              
 
                 if (searchTerm === "") {
                     return st;
@@ -234,12 +224,11 @@ function ViewCandidate() {
             ).map(st => {
                 if (st.requisition.requisition_id == sessionreq
                     && st.recruiter.recruiter_id == empID && st.flag == 1 && (st.candidate == null || st.candidate.deleted == 1))
-                  
-                    
+
                     return (
                         <tr key={st.status_id}>
                             <td></td>
-                            
+
                             <td>
                                 {
                                     st.candidate == null ?
@@ -281,7 +270,6 @@ function ViewCandidate() {
                                         ) :
                                         (
                                             st.candidate.visa_type
-
                                         )
                                 }
 
@@ -307,12 +295,10 @@ function ViewCandidate() {
                                         ) :
                                         (
                                             st.requisition.client_rate
-
                                         )
                                 }
 
                             </td>
-
 
                             <td>
                                 {
@@ -322,10 +308,8 @@ function ViewCandidate() {
                                         ) :
                                         (
                                             st.candidate.submitted_rate
-
                                         )
                                 }
-
                             </td>
 
                             <td>
@@ -336,10 +320,8 @@ function ViewCandidate() {
                                         ) :
                                         (
                                             st.candidate.phone
-
                                         )
                                 }
-
                             </td>
 
                             <td>
@@ -350,10 +332,8 @@ function ViewCandidate() {
                                         ) :
                                         (
                                             st.candidate.email
-
                                         )
                                 }
-
                             </td>
 
                             <td>
@@ -366,7 +346,6 @@ function ViewCandidate() {
                                             st.candidate.remark
                                         )
                                 }
-
                             </td>
 
                             <td>
@@ -379,7 +358,6 @@ function ViewCandidate() {
                                             st.candidate.reason
                                         )
                                 }
-
                             </td>
 
                             <td>
@@ -413,7 +391,6 @@ function ViewCandidate() {
                                             <button class="btn btn-sm  btn-success" style={{ width: "20%" }} onClick={() => handleSubmit2({ canid: st.candidate.candidate_id })}><i class=" fa fa-save"></i></button>
                                         )
                                 }
-
                             </td>
 
                             <td>
@@ -458,11 +435,6 @@ function ViewCandidate() {
         );
     }
 
-
-  
-
-    
-
     return (
         <div className="">
             <div className="row">
@@ -471,23 +443,164 @@ function ViewCandidate() {
                     <EmployeeHeader />
                 </div>
 
+                <div className="col-12">
+                    {/* ---------------------------SearchBar----------------------------- */}
+                        <div class="row">
+                            <div class="col-md-6 block1">
+
+                                <div className="input-icons" style={{ paddingTop: '4px', margin: '8px' }}>
+                                    <i className="fa fa-search icon"></i>
+
+                                    <input
+                                        type="search"
+                                        className="form-control"
+                                        placeholder="Search"
+                                        onChange={event => { setSearchTerm(event.target.value) }}
+                                        style={{ width: '500px', borderRadius: '100px', paddingLeft: '30px' }}
+                                    />
+                                </div>
+
+                            </div>
+                            {/* <div class="col-md-6 block2" style={{textAlign:'right' }}>
+                                <div style={{ paddingTop: '4px', margin: '8px' }}>
+                                <button id="btn1" onClick={modalShow} className="btn btn-outline-info w-10 btn-sm">
+                                    <i className="fa fa-download"></i>
+                                    &nbsp; Report
+                                </button>
+                                    
+                                    <Modal show={show} onHide={modalClose}>
+                                        <Modal.Header closeButton>
+                                            <Modal.Title>Submission Report</Modal.Title>
+
+                                        </Modal.Header>
+
+                                        <Modal.Body>
+                                            <select name="category1" value={category} onChange={(evt) => handleCate({ newCate: evt.target.value })} className="btn btn-success btn-sm dropdown-toggle" style={{ width: '150px' }}>
+                                                {
+                                                    <>
+
+                                                        <option hidden value="">Select Category</option>
+
+                                                        <option value="All">All Category</option>
+                                                        <option value="Current">Current</option>
+                                                        <option value="Last_Month">Last-month</option>
+                                                        <option value="Quarterly">Quarterly</option>
+                                                        <option value="Half_yearly">Half-yearly</option>
+                                                        <option value="Yearly">Yearly</option>
+                                                        <option value="Customize">Customize</option>
+                                                    </>
+
+                                                }
+                                            </select>
+
+                                            <br></br><br></br>
+                                            {isShown && <Box />}
+                                            <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px' }}>
+                                                <th style={{ width: "150px" }}>Candidate</th>
+                                                <th style={{ width: "90px" }}>Status</th>
+                                                <th style={{ width: "100px" }}>Date</th>
+                                                <th style={{ width: "70px" }}>Client Rate</th>
+                                                <th style={{ width: "20px" }}>Submit Rate</th>
+                                                {
+
+                                                    statusList1.map((cl) => {
+                                                        if (cl.requisition.requisition_id == sessionreq
+                                                            && cl.recruiter.recruiter_id == empID && cl.status == "Submitted" && (cl.candidate == null || cl.candidate.deleted == 1))
+                                                            return (
+                                                                <>
+                                                                    <tr >
+                                                                        <td hidden></td>
+
+                                                                        <td >
+                                                                            {
+                                                                                cl.candidate == null ?
+                                                                                    (
+                                                                                        console.log("null")
+                                                                                    ) :
+                                                                                    (
+                                                                                        cl.candidate.candidate_name
+
+                                                                                    )
+                                                                            }
+                                                                        </td>
+
+                                                                        <td >
+                                                                            {
+                                                                                cl.candidate == null ?
+                                                                                    (
+                                                                                        console.log("null")
+                                                                                    ) :
+                                                                                    (
+                                                                                        cl.status
+
+                                                                                    )
+                                                                            }
+                                                                        </td>
+
+                                                                        <td >
+                                                                            {
+                                                                                cl.candidate == null ?
+                                                                                    (
+                                                                                        console.log("null")
+                                                                                    ) :
+                                                                                    (
+                                                                                        cl.status_date
+
+                                                                                    )
+                                                                            }
+                                                                        </td>
+
+                                                                        <td >
+                                                                            {
+                                                                                cl.requisition == null ?
+                                                                                    (
+                                                                                        console.log("null")
+                                                                                    ) :
+                                                                                    (
+                                                                                        cl.requisition.client_rate
+
+                                                                                    )
+                                                                            }
+                                                                        </td>
+
+                                                                        <td >
+                                                                            {
+                                                                                cl.candidate == null ?
+                                                                                    (
+                                                                                        console.log("null")
+                                                                                    ) :
+                                                                                    (
+                                                                                        cl.candidate.submitted_rate
+
+                                                                                    )
+                                                                            }
+                                                                        </td><br></br>
+
+                                                                    </tr>
+                                                                </>
+                                                            )
+                                                    }
+
+                                                    )
+                                                }
+                                            </Table>
+                                        </Modal.Body>
+
+                                        <Modal.Footer>
+                                            <button id="b1" onClick={handleDownload1} className="btn btn-primary">PDF</button>
+                                            <button id="b2" onClick={handleDownload2} className="btn btn-primary">Excel</button>
+
+                                        </Modal.Footer>
+                                    </Modal>
+                                </div>
+
+                            </div> */}
+
+                        </div>         
+                   
+                </div>
+
                 <div className="col-12 master_backgroung_work scroll-bar-horizontal">
-                    <div className="row">
-                        <div className="col-12 input-icons"
-                            style={{ padding: '5px', margin: '10px' }}>
-                            <i className="fa fa-search icon"></i>
-
-                            <input
-                                type="search"
-                                className="form-control"
-                                placeholder="Search"
-                                onChange={event => { setSearchTerm(event.target.value) }}
-                                style={{ width: '500px', borderRadius: '100px', paddingLeft: '30px' }}
-                            />
-                            
-
-                        </div>
-                    </div>
 
                     <div>
                         <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px' }}>
@@ -517,16 +630,7 @@ function ViewCandidate() {
 
                             </tbody>
                         </Table>
-                        <div className="row">
-                        <div className="col-5">
-                          
-                        </div>
-                            <div className="col-7">
- 
-
-  
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>

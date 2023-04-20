@@ -33,16 +33,14 @@ class UpdateProfileAdmin extends React.Component {
 
     handleFetchedData() {
 
-        let recruiterIDAdmin = localStorage.getItem('recruiterIDAdmin');
-        
+        let recruiterIDAdmin = localStorage.getItem('recruiterIDAdmin');        
 
         axios.get(`${base_url}/getRecruiterbyID?recruiterID=${recruiterIDAdmin}`).then((json) => {
 
             this.setState({
                // input: json.data,
                 role: json.data.role,
-            });
-            
+            });            
           
         })
     }
@@ -56,15 +54,13 @@ class UpdateProfileAdmin extends React.Component {
         }
         
     let z= e.email
-
      
      axios.get(`${base_url}/getRecruiterbyEmail?recruiterEmail=${z}`).then((json) => {
           
             this.setState({
                 input: json.data,
                 role: json.data.role,
-            });
-           
+            });           
         },
         
         (error) =>{
@@ -74,10 +70,8 @@ class UpdateProfileAdmin extends React.Component {
                 style: { position: "absolute", top: "5px", width: "300px" }
             }
         );
-            this.refInput.focus();
-            
-        }
-        
+            this.refInput.focus();            
+        }        
         )
     }
 
@@ -296,7 +290,6 @@ class UpdateProfileAdmin extends React.Component {
     render() {
         const isAuthenticated = localStorage.getItem('recruiterRole');
 
-
         return isAuthenticated =="Admin" ?(
 
             <div className="row g-0 auth-wrapper">
@@ -330,7 +323,6 @@ class UpdateProfileAdmin extends React.Component {
                                         minLength={3}
                                         maxLength={50}
                                         id="recruiter_name" />
-
                                    
                                 </div>
 
@@ -448,10 +440,8 @@ class UpdateProfileAdmin extends React.Component {
                                                 Reset
                                             </button>
 
-                                        </div>
-                                       
+                                        </div>                                       
                                     </div>
-
                                 </div>
 
                             </form>
