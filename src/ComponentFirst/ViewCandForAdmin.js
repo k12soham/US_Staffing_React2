@@ -21,26 +21,7 @@ function ViewCandForAdmin() {
 
     const [statusList, setstatusList] = useState([]);
     const [statusFD, setstatusFD] = useState([]);
-    const [reqid, setReqid] = useState(null);
-    const [statusList1, setstatusList1] = useState([]);
-    const [isShown, setIsShown] = useState(false);
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
-    const [isShownError, setIsShownError] = useState(false);
-    const [isDownload, setIsDownload] = useState(true);
-    const [show, setShow] = useState(false);
-    const [category, setCategory] = useState();
-    const modalClose = () => setShow(false);
-    const modalShow = () => setShow(true);
-
-    let date1 = format(startDate, "dd-MMM-yyyy");
-    let date2 = format(endDate, "dd-MMM-yyyy");
-    localStorage.setItem("startdate", date1);
-    localStorage.setItem("enddate", date2);
-
-    let sessionreq = localStorage.getItem("requisitionID")
-    let empID = localStorage.getItem("recruiterID")
-
+    const [searchTerm, setSearchTerm] = useState("");
     let navigate = useNavigate();
 
     useEffect(() => {
@@ -115,117 +96,60 @@ function ViewCandForAdmin() {
         );
     }
 
-    function Box() {
-        return (
-            <div className="d-inline-flex w-50" >
-                <span style={{ width: "270px" }}> Start Date:</span>
-                <DatePicker dateFormat="dd-MMM-yyyy" maxDate={new Date()} style={{ width: '100' }} className="btn btn-sm btn-primary" selected={startDate} onChange={(date) => handleDateChange1({ date1: date })} />
-
-                <span style={{ width: "270px" }}> End Date:</span>
-                <DatePicker dateFormat="dd-MMM-yyyy" maxDate={new Date()} selected={endDate} className="btn btn-sm btn-primary" onChange={(date) => handleDateChange2({ date2: date })} />
-            </div>
-        );
-    }
-
-    const handleDownload1 = () => {
-        console.log(statusList1)
-        GeneratePDF2(statusList1);
-    }
-
-    const handleDownload2 = (evt) => {
-        GenerateExcel2(statusList1);
-    }
-
-    const handleCate = (evt) => {
-
-        //  document.getElementById('b1').disabled = false;
-
-        let cate = evt.newCate;
-        setCategory(cate);
-        localStorage.setItem("cate", cate);
-
-        let date1 = format(startDate, "yyyy-MM-dd");
-        let date2 = format(endDate, "yyyy-MM-dd");
-
-        if (cate == 'Customize') {
-            setIsShown(true);
-            postGetDataBetDates(date1, date2, sessionreq);
-        }
-        else {
-            postGetDataByCate(cate, sessionreq);
-            setIsShown(false);
-        }
-
-    };
-
-
-    const handleDateChange1 = (date) => {
-        setIsShownError(false);
-        const d1 = date.date1;
-        let d2 = endDate;
-
-        let f1 = format(d1, 'yyyy-MM-dd');
-        let f2 = format(d2, 'yyyy-MM-dd');
-
-        if (f2 >= f1) {
-            setStartDate(d1);
-            postGetDataBetDates(f1, f2, sessionreq);
-        } else {
-            alert("Enter valid date");
-        }
-    }
-
-    const handleDateChange2 = (date) => {
-        setIsShownError(false);
-        const d2 = date.date2;
-        let f = empID;
-        let f1 = format(startDate, 'yyyy-MM-dd');
-        let f2 = format(d2, 'yyyy-MM-dd');
-
-        if (f2 >= f1) {
-            setEndDate(d2);
-            postGetDataBetDates(f1, f2, sessionreq);
-        } else {
-            alert("Enter valid date");
-        }
-    }
-    const postGetDataBetDates = (f1, f2, f3) => {
-        // axios.get(`${base_url}/get_cls_byDate?empid=${f}&date1=${f1}&date2=${f2}`).then(json => setClosureList(json.data))
-        axios.get(`${base_url}/get_cls_byDateAdmin?date1=${f1}&date2=${f2}&requisition_id=${f3}`)
-            .then(
-                json => setstatusList1(json.data),
-                setIsDownload(true),
-            )
-            .catch(error => {
-                setIsShownError(true);
-                setstatusList1([]);
-                setIsDownload(false);
-            })
-
-    }
-
-    const postGetDataByCate = (d2, d3) => {
-
-        axios.get(`${base_url}/get_cls_by_QuarterlyAdmin?category=${d2}&requisition_id=${d3}`)
-            .then(
-                json => setstatusList1(json.data),
-
-
-            )
-            .catch(error => {
-
-            })
-
-    }
-
-
-
+  
     const renderTable = () => {
 
         const isAuthenticated = localStorage.getItem('recruiterRole');
 
 
-        return isAuthenticated == "Admin" ? statusList.map(st => {
+        return isAuthenticated == "Admin" ? 
+        
+        
+        statusList.filter((st) => {
+
+              
+
+            if (searchTerm === "") {
+                return st;
+            }
+            else if (st.recruiter.recruiter_name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                return st;
+            }
+            else if (st.status_date.toLowerCase().includes(searchTerm.toLowerCase())) {
+                return st;
+            }
+            else if (st.candidate != null) {
+                if (st.candidate.candidate_name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return st;
+                }
+                if (st.candidate.visa_type.toString().toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return st;
+                }
+                if (st.candidate.rate_term.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return st;
+                }
+                if (st.requisition.client_rate.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return st;
+                }
+                if (st.candidate.phone.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return st;
+                }
+                if (st.candidate.email.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return st;
+                }
+                if (st.candidate.submitted_rate.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return st;
+                }
+            }
+
+            else if (st.candidate == null || st.candidate != null) {
+                if (st.status.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return st;
+                }
+            }
+        }
+
+        ).map(st => {
 
             if (st.requisition.requisition_id == requisitionID && st.flag == 1 && (st.candidate == null || st.candidate.deleted == 1))
 
@@ -412,9 +336,25 @@ function ViewCandForAdmin() {
                 </div>
 
                 <div className="col-12 master_backgroung_work scroll-bar-horizontal">
+                <div className="row">
+                        <div className="col-12 input-icons"
+                            style={{ padding: '5px', margin: '10px' }}>
+                            <i className="fa fa-search icon"></i>
+
+                            <input
+                                type="search"
+                                className="form-control"
+                                placeholder="Search"
+                                onChange={event => { setSearchTerm(event.target.value) }}
+                                style={{ width: '500px', borderRadius: '100px', paddingLeft: '30px' }}
+                            />
+                            
+
+                        </div>
+                    </div>
 
                     <div style={{ width: '' }}  >
-                        <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px' }}>
+                   <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px' }}>
                             <thead>
                                 <tr>
                                     <th style={{ width: '60px' }}>Sr No.</th>
@@ -448,152 +388,7 @@ function ViewCandForAdmin() {
                             <div className="col-6">
 
 
-                                <div >
-                                    <Button variant="success" className="btn btn-primary btn-sm fa fa-download" onClick={modalShow}>
-                                        Download
-                                    </Button>
-                                    <Modal show={show} onHide={modalClose}>
-                                        <Modal.Header closeButton>
-                                            <Modal.Title>Submission Report</Modal.Title>
-
-                                        </Modal.Header>
-
-                                        <Modal.Body>
-
-                                            <select name="category1" onChange={(evt) => handleCate({ newCate: evt.target.value })} className="btn btn-success btn-sm dropdown-toggle" style={{ width: '150px' }}>
-                                                {
-
-                                                    <>
-
-                                                        <option hidden value="">Select Category</option>
-
-                                                        <option value="All">All Category</option>
-                                                        <option value="Current">Current</option>
-                                                        <option value="Last_Month">Last-month</option>
-                                                        <option value="Quarterly">Quarterly</option>
-                                                        <option value="Half_yearly">Half-yearly</option>
-                                                        <option value="Yearly">Yearly</option>
-                                                        <option value="Customize">Customize</option>
-                                                    </>
-
-                                                }
-                                            </select>
-
-
-                                            <br></br><br></br>
-                                            {isShown && <Box />}
-                                            <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px' }}>
-                                                <th style={{ width: "150px" }}>Recruiter</th>
-                                                <th style={{ width: "150px" }}>Candidate</th>
-                                                <th style={{ width: "90px" }}>Status</th>
-                                                <th style={{ width: "100px" }}>Date</th>
-                                                <th style={{ width: "70px" }}>Client Rate</th>
-                                                <th style={{ width: "20px" }}>Submit Rate</th>
-
-                                                {
-
-                                                    statusList1.map((cl) => {
-                                                        if (cl.requisition.requisition_id == sessionreq
-                                                            && cl.recruiter.recruiter_id == empID && cl.status == "Submitted" && (cl.candidate == null || cl.candidate.deleted == 1))
-                                                            return (
-                                                                <>
-
-                                                                    <tr >
-                                                                        <td hidden></td>
-                                                                        <td >
-                                                                            {
-                                                                                cl.recruiter == null ?
-                                                                                    (
-                                                                                        console.log("null")
-                                                                                    ) :
-                                                                                    (
-                                                                                        cl.recruiter.recruiter_name
-
-                                                                                    )
-                                                                            }
-                                                                        </td>
-                                                                        <td >
-                                                                            {
-                                                                                cl.candidate == null ?
-                                                                                    (
-                                                                                        console.log("null")
-                                                                                    ) :
-                                                                                    (
-                                                                                        cl.candidate.candidate_name
-
-                                                                                    )
-                                                                            }
-                                                                        </td>
-
-                                                                        <td >
-                                                                            {
-                                                                                cl.candidate == null ?
-                                                                                    (
-                                                                                        console.log("null")
-                                                                                    ) :
-                                                                                    (
-                                                                                        cl.status
-
-                                                                                    )
-                                                                            }
-                                                                        </td>
-
-                                                                        <td >
-                                                                            {
-                                                                                cl.candidate == null ?
-                                                                                    (
-                                                                                        console.log("null")
-                                                                                    ) :
-                                                                                    (
-                                                                                        cl.status_date
-
-                                                                                    )
-                                                                            }
-                                                                        </td>
-
-                                                                        <td >
-                                                                            {
-                                                                                cl.requisition == null ?
-                                                                                    (
-                                                                                        console.log("null")
-                                                                                    ) :
-                                                                                    (
-                                                                                        cl.requisition.client_rate
-
-                                                                                    )
-                                                                            }
-                                                                        </td>
-
-                                                                        <td >
-                                                                            {
-                                                                                cl.candidate == null ?
-                                                                                    (
-                                                                                        console.log("null")
-                                                                                    ) :
-                                                                                    (
-                                                                                        cl.candidate.submitted_rate
-
-                                                                                    )
-                                                                            }
-                                                                        </td><br></br>
-
-                                                                    </tr>
-                                                                </>
-                                                            )
-                                                    }
-
-                                                    )
-                                                }
-                                            </Table>
-                                        </Modal.Body>
-
-                                        <Modal.Footer>
-                                            <button id="b1" onClick={handleDownload1} className="btn btn-primary">PDF</button>
-                                            <button id="b2" onClick={handleDownload2} className="btn btn-primary">Excel</button>
-
-                                        </Modal.Footer>
-                                    </Modal>
-                                </div>
+ 
                             </div>
                         </div>
                     </div>

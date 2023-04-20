@@ -238,7 +238,7 @@ class SignUp extends React.Component {
     return (
       <div className="row g-0 auth-wrapper">
         <div className="col-12 col-md-5 col-lg-6 h-100 master_backgroung_login">
-          <img src="usa.png" width="670" height="657" alt="US staffing app"></img>
+          <img src="usa.png" width="670" height="657"className="img-fluid"></img>
         </div>
 
         <div className="col-12 col-md-7 col-lg-6 auth-main-col ">

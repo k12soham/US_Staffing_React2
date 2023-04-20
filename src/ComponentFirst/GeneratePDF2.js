@@ -20,7 +20,7 @@ console.log(tickets)
   let startdate = localStorage.getItem("startdate");
   let enddate = localStorage.getItem("enddate");
 
-
+let rec= localStorage.getItem("rec");
 
 
   let doc = new jsPDF();
@@ -37,21 +37,22 @@ console.log(tickets)
 
 
   // define the columns we want and their titles
-  const tableColumn = ["Sr No.", "Recruiter Name","Candidate Name", "Status", "Date", "Client Rate", "Submit Rate"];
+  const tableColumn = ["Sr No.", "Job Posting ID","Recruiter Name","Candidate Name", "Status", "Date", "Client Rate", "Submit Rate"];
   // define an empty array of rows
   const tableRows = [];
   const sstt = [];
   let index = 1;
   // for each ticket pass all its data into an array
+
   tickets.map(st => {
-    if (st.requisition.requisition_id == sessionreq
-      && st.recruiter.recruiter_id == empID && st.status=="Submitted") {
+    if ( st.status=="Submitted" && (st.candidate == null || st.candidate.deleted == 1)&&(st.recruiter.recruiter_id==rec||rec=="all")) {
 
     
 
       const ticketData = [
 
         index++,
+        st.requisition.id,
 
         st.recruiter.recruiter_id == null ?
           (
@@ -80,19 +81,10 @@ console.log(tickets)
 
       st.status,
         
-    
-
-        
-            
   
             st.status_date,
 
   
-     
-  
-
-
-
 
         st.candidate.candidate_id == null ?
           (
@@ -153,51 +145,46 @@ console.log(tickets)
   {
     doc.autoTable(tableColumn, tableRows, { startY: 26  },);
     doc.text(recruiterName+"'s current month submission report", 14, 15);
-    doc.text("Requisition ID: '"+ sessionreq2+"'", 14, 23);
+   // doc.text("Requisition ID: '"+ sessionreq2+"'", 14, 23);
   }
   else if(cate=='Last_Month')
   {
     doc.autoTable(tableColumn, tableRows, { startY: 26  },);
     doc.text(recruiterName+"'s last month submission report", 14, 15);
-    doc.text("Requisition ID: '"+ sessionreq2+"'", 14, 23);
+    //doc.text("Requisition ID: '"+ sessionreq2+"'", 14, 23);
   }
   else if(cate=='Quarterly')
   {
     doc.autoTable(tableColumn, tableRows, { startY: 26  },);
     doc.text(recruiterName+"'s quarterly submission report", 14, 15);
-    doc.text("Requisition ID: '"+ sessionreq2+"'", 14, 23);
+    //doc.text("Requisition ID: '"+ sessionreq2+"'", 14, 23);
   }
   else if(cate=='Half_yearly')
   {
     doc.autoTable(tableColumn, tableRows, { startY: 26  },);
     doc.text(recruiterName+"'s half yearly submission report", 14, 15);
-    doc.text("Requisition ID: '"+ sessionreq2+"'", 14, 23);
+    //doc.text("Requisition ID: '"+ sessionreq2+"'", 14, 23);
   }
   else if(cate=='Yearly')
   {
     doc.autoTable(tableColumn, tableRows, { startY: 26  },);
     doc.text(recruiterName+"'s yearly submission report", 14, 15);
-    doc.text("Requisition ID: '"+ sessionreq2+"'", 14, 23);
+    //doc.text("Requisition ID: '"+ sessionreq2+"'", 14, 23);
   }
   else if(cate=='Customize')
   {
     doc.autoTable(tableColumn, tableRows, { startY: 32  },);
     doc.text(recruiterName+"'s submission report", 14, 15);
   doc.text("From: " +startdate+ " To: "+enddate, 14, 23);
-  doc.text("Requisition ID: '"+ sessionreq2+"'", 14, 30);
+  //doc.text("Requisition ID: '"+ sessionreq2+"'", 14, 30);
   }
   else{
     doc.autoTable(tableColumn, tableRows, { startY: 26  },);
     doc.text(recruiterName+"'s " +cate+ " submission report", 14, 15);
-    doc.text("Requisition ID: '"+ sessionreq2+"'", 14, 23);
+   // doc.text("Requisition ID: '"+ sessionreq2+"'", 14, 23);
   }
 
-
-
-
-
-  // we define the name of our PDF file.
-  doc.save(`report_${dateStr}.pdf`);
+  doc.save(`Submission report.pdf`);
 };
 
 export default GeneratePDF2;

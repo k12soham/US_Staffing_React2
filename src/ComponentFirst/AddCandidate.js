@@ -12,6 +12,7 @@ import 'react-phone-input-2/lib/style.css'
 // import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
 // import "react-phone-number-input/style.css";
 import es from 'react-phone-input-2/lang/es.json'
+import { id } from 'date-fns/locale';
 
 
 class AddCandidate extends React.Component {
@@ -33,6 +34,14 @@ class AddCandidate extends React.Component {
             .catch(error => {
 
             })
+
+            axios.get(`${base_url}/getRequisitionId`)
+            .then(json =>
+                this.setState({ RequisitionId: json.data })
+            )
+            .catch(error => {
+
+            })
     }
 
     constructor(props) {
@@ -44,8 +53,8 @@ class AddCandidate extends React.Component {
             empID: '',
             rateTerm_fd: [],
             visaType_fd: [],
-            //  phone: '',
             FormatLen: 0,
+            RequisitionId:[]
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -94,6 +103,7 @@ class AddCandidate extends React.Component {
     }
 
     CheckRequisiton = (e) => {
+        console.log(this.state.RequisitionId)
 
         let requisition_id = this.state.input;
 
@@ -108,19 +118,13 @@ class AddCandidate extends React.Component {
         }
 
         let req_id = this.state.input;
+     
         let z = req_id.reqid
-
-        axios.get(`${base_url}/getRequisitionByID?ID=${z}`).then(
-
-            (response) => {
-
-                let requid = response.data.requisition_id
-                localStorage.setItem('requisitionID', requid);
-                this.setState({ input: req_id })
-
-
-            },
-            (error) => {
+    
+        let object = this.state.RequisitionId.find(obj => obj.id == z);
+       
+            if(object==null)
+            {
                 toast.error("Requisiton not found of this ID",
                     {
                         position: "top-right", autoClose: 2000,
@@ -129,10 +133,15 @@ class AddCandidate extends React.Component {
                 );
 
                 this.refInput.focus();
-                // focus(this.state.input.reqid)
+
+            }
+            else{
+
+                localStorage.setItem('requisitionID', object.requisition_id);
+                this.setState({ input: req_id })
             }
 
-        );
+    
     }
 
     handleSubmit(e) {
@@ -473,7 +482,7 @@ class AddCandidate extends React.Component {
                                                 
                                                     <PhoneInput
 
-                                                    inputStyle={{ width: '100%' }}
+                                                    inputStyle={{ width: '100%',height:'37px' }}
                                                    preferredCountries={['us']}
                                                     onlyCountries={['us','in','gb','sg','ae']}
                                                     countryCodeEditable={false}

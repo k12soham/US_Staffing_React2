@@ -8,6 +8,7 @@ import AdminHeader from "./AdminHeader";
 import DatePicker from "react-datepicker";
 import { format } from 'date-fns';
 import history from './ResponseVal';
+import AdminHeader5 from "./AdminHeader5";
 function ViewAllStatusAdmin() {
 
     const recruiterIDAdmin = localStorage.getItem('recruiterIDAdmin');
@@ -276,18 +277,18 @@ function ViewAllStatusAdmin() {
     }
 
     return (
-       
+      
         <div className="">
-            <div className="row">
+            <div className="row"> 
 
             <div className="col-12 h-100 master_backgroung_heder">
-                <AdminHeader />
+                <AdminHeader5 />
             </div>
 
             <div className=" col-12 master_backgroung_work scroll-bar-horizontal">
 
                 <div style={{ width: '100%' }}  >
-                    <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px' }}>
+                <br></br><Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px' }}>
                         <thead>
                             <tr>
                             <th style={{ width: '10px' }}>Sr No.</th>

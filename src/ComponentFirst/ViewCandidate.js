@@ -15,31 +15,15 @@ import $ from 'jquery';
 import GenerateExcel1 from "./GenerateExcel1";
 
 function ViewCandidate() {
-    const [candidateList, setcandidateList] = useState([]);
-    const [candidateList1, setcandidateList1] = useState([]);
+  
     const [statusList, setstatusList] = useState([]);
-    const [statusList1, setstatusList1] = useState([]);
     const [statusFD, setstatusFD] = useState([]);
     const [updatestatus, setUpdateStatus] = useState(null);
     const [currentstatus, setCurrentStatus] = useState(null);
     const [reqid, setReqid] = useState(null);
-    const [category, setCategory] = useState();
     const [searchTerm, setSearchTerm] = useState("");
-    const [isShownError, setIsShownError] = useState(false);
-    const [isDownload, setIsDownload] = useState(true);
-    const [isShown, setIsShown] = useState(false);
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
 
-    const [show, setShow] = useState(false);
 
-    const modalClose = () => setShow(false);
-    const modalShow = () => setShow(true);
-
-    let date1 = format(startDate, "dd-MMM-yyyy");
-    let date2 = format(endDate, "dd-MMM-yyyy");
-    localStorage.setItem("startdate", date1);
-    localStorage.setItem("enddate", date2);
 
     let navigate = useNavigate();
 
@@ -177,26 +161,9 @@ function ViewCandidate() {
         })
     }
 
-    const handleDownload1 = () => {
+   
 
-        if (category == null) {
-            alert("please select category")
-        }
-        else {
-            GeneratePDF1(statusList1);
-        }
-    }
 
-    const handleDownload2 = (evt) => {
-
-        if (category == null) {
-            alert("please select category")
-        }
-        else {
-            GenerateExcel1(statusList1);
-        }
-
-    }
 
     const getnewID = (e) => {
         let candidate_id = e.canid
@@ -208,124 +175,10 @@ function ViewCandidate() {
 
     }
 
-    // function Download() {
-
-
-    //     return (
-    //         <div className="d-inline-flex w-50" >
-    //             <select name="category" onChange={(evt) => handleDownload({ DownloadOpt: evt.target.value })} className="btn btn-warning btn-sm dropdown-toggle" style={{ width: '135px' }}>
-    //                 <option hidden value=""><button>Download <i className="fa fa-download"></i></button></option>
-    //                 <option value="ExportToPDF">Export to pdf</option>
-    //                 <option value="ExportToCSV">Export to csv</option>
-    //             </select>
-    //         </div>
-    //     );
-    // }
-
-    function EmptyDataErrorMsg() {
-
-        return (
-            <div className="d-inline-flex w-50" >
-                <h5> No data found</h5>
-            </div>
-        );
-    }
-
-
-    function Box() {
-        return (
-            <div className="d-inline-flex w-50" >
-                <span style={{ width: "270px" }}> Start Date:</span>
-                <DatePicker dateFormat="dd-MMM-yyyy" maxDate={new Date()} style={{ width: '100' }} className="btn btn-sm btn-primary" selected={startDate} onChange={(date) => handleDateChange1({ date1: date })} />
-
-                <span style={{ width: "270px" }}> End Date:</span>
-                <DatePicker dateFormat="dd-MMM-yyyy" maxDate={new Date()} selected={endDate} className="btn btn-sm btn-primary" onChange={(date) => handleDateChange2({ date2: date })} />
-            </div>
-        );
-    }
-
-    const handleCate = (evt) => {
-
-        //  document.getElementById('b1').disabled = false;
-
-        let cate = evt.newCate;
-        setCategory(cate);
-        localStorage.setItem("cate", cate);
-
-        let date1 = format(startDate, "yyyy-MM-dd");
-        let date2 = format(endDate, "yyyy-MM-dd");
-
-        if (cate == 'Customize') {
-            setIsShown(true);
-            postGetDataBetDates(empID, date1, date2, sessionreq);
-        }
-        else {
-            postGetDataByCate(empID, cate, sessionreq);
-            setIsShown(false);
-        }
-
-    };
-
-    const handleDateChange1 = (date) => {
-        setIsShownError(false);
-        const d1 = date.date1;
-        let d2 = endDate;
-
-        let f1 = format(d1, 'yyyy-MM-dd');
-        let f2 = format(d2, 'yyyy-MM-dd');
-
-        if (f2 >= f1) {
-            setStartDate(d1);
-            postGetDataBetDates(empID, f1, f2, sessionreq);
-        } else {
-            alert("Enter valid date");
-        }
-    }
-
-    const handleDateChange2 = (date) => {
-        setIsShownError(false);
-        const d2 = date.date2;
-        let f = empID;
-        let f1 = format(startDate, 'yyyy-MM-dd');
-        let f2 = format(d2, 'yyyy-MM-dd');
-
-        if (f2 >= f1) {
-            setEndDate(d2);
-            postGetDataBetDates(empID, f1, f2, sessionreq);
-        } else {
-            alert("Enter valid date");
-        }
-    }
-    const postGetDataBetDates = (f, f1, f2, f3) => {
-        // axios.get(`${base_url}/get_cls_byDate?empid=${f}&date1=${f1}&date2=${f2}`).then(json => setClosureList(json.data))
-        axios.get(`${base_url}/get_cls_byDate?empid=${f}&date1=${f1}&date2=${f2}&requisition_id=${f3}`)
-            .then(
-                json => setstatusList1(json.data),
-                setIsDownload(true),
-            )
-            .catch(error => {
-                setIsShownError(true);
-                setstatusList1([]);
-                setIsDownload(false);
-            })
-
-    }
-
-    const postGetDataByCate = (d1, d2, d3) => {
-
-        axios.get(`${base_url}/get_cls_by_Quarterly?empid=${d1}&category=${d2}&requisition_id=${d3}`)
-            .then(
-                json => setstatusList1(json.data),
-            )
-            .catch(error => {
-
-            })
-    }
-
+    
     const renderTable = () => {
-
-        //const isAuthenticated = localStorage.getItem('recruiterID');
-        //  localStorage.setItem('recruiterID', isAuthenticated);
+      
+    
         const isAuthenticated = localStorage.getItem('recruiterRole');
 
         return isAuthenticated == "TM" ? (
@@ -608,15 +461,13 @@ function ViewCandidate() {
                                 </div>
 
                             </div>
-                            <div class="col-md-6 block2" style={{textAlign:'right' }}>
+                            {/* <div class="col-md-6 block2" style={{textAlign:'right' }}>
                                 <div style={{ paddingTop: '4px', margin: '8px' }}>
                                 <button id="btn1" onClick={modalShow} className="btn btn-outline-info w-10 btn-sm">
                                     <i className="fa fa-download"></i>
                                     &nbsp; Report
                                 </button>
-                                    {/* <Button variant="success" className="btn btn-outline-info btn-sm fa fa-download" onClick={modalShow}>
-                                    &nbsp;&nbsp; Report
-                                    </Button> */}
+                                    
                                     <Modal show={show} onHide={modalClose}>
                                         <Modal.Header closeButton>
                                             <Modal.Title>Submission Report</Modal.Title>
@@ -743,7 +594,7 @@ function ViewCandidate() {
                                     </Modal>
                                 </div>
 
-                            </div>
+                            </div> */}
 
                         </div>         
                    

@@ -81,7 +81,7 @@ function ViewAllStatus() {
                 <div className=" col-12 master_backgroung_work scroll-bar-horizontal">
 
                     <div style={{ width: '100%' }}  >
-                        <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px' }}>
+                    <br></br>  <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px' }}>
                             <thead>
                                 <tr>
                                     <th style={{ width: '10px' }}>Sr No.</th>

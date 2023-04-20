@@ -3,18 +3,18 @@ import React from 'react';
 import ReactModal from 'react-modal';
 import history from './ResponseVal';
 import { toast } from "react-toastify";
-import { Modal } from 'react-bootstrap';
+import {Modal} from 'react-bootstrap';  
 import { Button } from 'reactstrap';
 
 class ModalWithCSS extends React.Component {
-
+  
   constructor() {
     super();
     this.state = {
       showModal: false,
-
+      
     };
-
+  
     this.handleOpenModal = this.handleOpenModal.bind(this);
 
   }
@@ -22,54 +22,62 @@ class ModalWithCSS extends React.Component {
     this.setState({ showModal: true });
   }
 
-  handleUpdateProfile() {
+  handleUpdateProfile () {
 
     let recruiterRole = localStorage.getItem('recruiterRole');
 
-
-    history.push("/update_profile");
-    window.location.reload();
+    
+      history.push("/update_profile");
+      window.location.reload();
+    
+ 
   }
 
-  handleUpdateProfile2() {
+   handleUpdateProfile2 () {
 
-    history.push("/change_password");
-    window.location.reload();
-
+    
+      history.push("/change_password");
+      window.location.reload();
+    
   }
 
-  handleUpdateProfile3() {
+   handleUpdateProfile3 () {
 
+    
     history.push("/change_password_recruiter");
     window.location.reload();
+  
+}
 
-  }
 
-  handleClose() {
+
+ handleClose() {
     window.location.reload();
   }
 
-  logout = () => {
+   logout =()=>{
 
     localStorage.clear();
     history.push("/")
     window.location.reload();
     toast.success("Logout successfully!",
       { position: "top-right" })
+    
   }
 
   render() {
-    let role = localStorage.getItem('recruiterRole');
+    let  role = localStorage.getItem('recruiterRole');
     let empName = localStorage.getItem('recruiterName');
     let empMail = localStorage.getItem('recruiterEmail');
 
     return (
 
-      <div style={{ textAlign: 'right' }}>
+      
+      <div  style={{textAlign:'right', marginTop:'15px'}}>
         <div onClick={this.handleOpenModal}>
 
-          <img src="https://img.icons8.com/ios/35/000000/user-male-circle--v2.png" ></img>&nbsp;
-          <span>{empName}</span>
+        <i class="fa fa-user-circle-o" style={{fontSize:'25px',color:'lightslategrey'}}></i>&nbsp;
+          <span style={{color:'lightslategrey', fontSize:'17px'}}>{empName}</span>
 
         </div>
 
@@ -81,7 +89,8 @@ class ModalWithCSS extends React.Component {
             isOpen={this.state.showModal}
             contentLabel="onRequestClose Example"
             onRequestClose={this.handleCloseModal}
-            className="Modal"
+           className="Modal"
+         
 
           // overlayClassName="Overlay"
           >
@@ -90,63 +99,60 @@ class ModalWithCSS extends React.Component {
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={this.handleClose}></button>
 
             </div>
-            <div style={{ marginLeft: '0px',textAlign: "center" }}>
-              <span > <img src="https://img.icons8.com/ios/35/000000/user-male-circle--v2.png" /><b style={{ fontSize: '22px' }}> &nbsp; &nbsp;{empName}</b></span><br />
-              <span ><h6 style={{ marginLeft: '50px' }}>{empMail} </h6></span><hr></hr>
+            <div style={{ marginLeft: '70px' }}>
+              <span >   <i class="fa fa-user-circle-o" style={{fontSize:'30px',color:'lightslategrey'}}></i><b style={{ fontSize: '22px' }}> &nbsp;{empName}</b></span><br />
+              <span ><h6 style={{ marginLeft: '15px' }}>{empMail} </h6></span><hr></hr>
             </div>
             <div className="text-center">
               <div className='row'>
                 <div className='col-1'></div>
 
-                <div className='col-5'>
+                <div className="form-group">
                   <button
                     type="submit"
-                    className="btn btn-sm btn-primary w-100 theme-btn mx-auto"
+                    className="btn btn-sm btn-primary  form-control"
                     onClick={this.handleUpdateProfile}
                   ><i class="fa fa-pencil"></i>&nbsp;
                     Update Profile
                   </button>
                 </div>
 
-                <div className='col-5'>
+             <div className="form-group">
                   <button
                     type="submit"
-                    className="btn btn-sm btn-primary w-150 theme-btn mx-auto"
+                    className="btn btn-sm btn-primary  form-control"
                     onClick={this.handleUpdateProfile2}
                   ><i class="fa fa-pencil"></i>&nbsp;
                     Change Password
                   </button>
                 </div>
 
-                <div className='col-1'></div>
-                
-
-                <div>&nbsp;&nbsp;&nbsp;&nbsp;
-                  {
-                    role == "Admin" ?
-                      (
-                        <div className='col-5'>
-                          <button
-                            type="submit"
-                            className="btn btn-sm btn-warning"
-                            onClick={this.handleUpdateProfile3}
-                            style={{ width: "298px", marginLeft: "20px" }}
-                          ><i class="fa fa-pencil"></i>&nbsp;
-                            Change recruiter password
-                          </button>
-                        </div>
-                      ) :
-                      (
-                        console.log("")
-                      )
-                  }
+        <div>
+          {
+              role=="Admin"?
+              (
+                <div class="form-group">
+                  <button
+                    type="submit"
+                    className="btn btn-sm btn-outline-danger w-150 theme-btn mx-auto form-control"
+                    onClick={this.handleUpdateProfile3}
+                   
+                  ><i class="fa fa-pencil"></i>&nbsp;
+                    Change Recruiter Password
+                  </button>
                 </div>
-                <div className='col-5'><br></br>
+              ):
+              (
+                console.log("")
+              )
+            }
+  </div>
+                <div class="form-group">
                   <button
                     type="reset"
-                    className="btn btn-secondary "
-                    onClick={this.logout}
-                    style={{ width: "300px", marginLeft: "35px" }}
+                   className="btn btn-secondary form-control"
+                   onClick={this.logout}
+       
                   ><i class="fa fa-sign-out"></i>&nbsp;
                     Logout
                   </button>
@@ -155,11 +161,11 @@ class ModalWithCSS extends React.Component {
               </div>
             </div>
 
-          </ReactModal>
+        </ReactModal>
         </div>
       </div >
     );
-  }
+          }      
 }
 
 

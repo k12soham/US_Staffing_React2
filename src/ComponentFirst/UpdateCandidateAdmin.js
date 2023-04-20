@@ -8,6 +8,7 @@ import EmployeeHeader from './EmployeeHeader';
 import AdminHeader from './AdminHeader';
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
+import AdminHeader5 from './AdminHeader5';
 
 class UpdateCandidateAdmin extends React.Component {
 
@@ -91,7 +92,7 @@ class UpdateCandidateAdmin extends React.Component {
         inputs["visa_type"] = '';
         inputs["rate_term"] = '';
         inputs["submitted_rate"] = '';
-        inputs["phone"] = '';
+        inputs["phone"] = '+1';
         inputs["email"] = '';
         inputs["remark"] = '';
         inputs["reason"] = '';
@@ -221,7 +222,7 @@ class UpdateCandidateAdmin extends React.Component {
         inputs["visa_type"] = '';
         inputs["rate_term"] = '';
         inputs["submitted_rate"] = '';
-        inputs["phone"] = '';
+        inputs["phone"] = '+1';
         inputs["email"] = '';
         inputs["remark"] = '';
         inputs["reason"] = '';
@@ -318,9 +319,6 @@ class UpdateCandidateAdmin extends React.Component {
         var string = value.format
 
         var string_length = [...string].filter(x => x === '.').length
-        console.log(string_length)
-
-        console.log("entered No length = " + (value.format.length - value.dialCode.length))
 
         let inputs = this.state.input;
         inputs["phone"] = e;
@@ -344,7 +342,7 @@ class UpdateCandidateAdmin extends React.Component {
                     <div className="col-12 h-100 master_backgroung_heder">
 
 
-                        <AdminHeader />
+                        <AdminHeader5 />
 
 
                     </div>
@@ -437,7 +435,7 @@ class UpdateCandidateAdmin extends React.Component {
 
                                                 <PhoneInput
 
-                                                inputStyle={{ width: '100%' }}
+                                                inputStyle={{ width: '100%',height:'37px' }}
                                                 preferredCountries={['us']}
                                                 onlyCountries={['us','in','gb','sg','ae']}
                                                 countryCodeEditable={false}

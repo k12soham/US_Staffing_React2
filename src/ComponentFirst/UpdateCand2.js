@@ -379,7 +379,7 @@ class UpdateCand2 extends React.Component {
             <div className="">
                 <div className="row">
 
-                    <div className="col-12">
+                    <div className="col-12 master_backgroung_heder">
                         <EmployeeHeader />
                     </div>
 
@@ -476,7 +476,7 @@ class UpdateCand2 extends React.Component {
 
                                                 <PhoneInput
 
-                                                    inputStyle={{ width: '100%' }}
+                                                    inputStyle={{ width: '100%', height:'37px'}}
                                                     preferredCountries={['us']}
                                                     onlyCountries={['us','in','gb','sg','ae']}
                                                     countryCodeEditable={false}

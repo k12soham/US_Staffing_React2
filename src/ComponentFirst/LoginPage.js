@@ -136,7 +136,6 @@ const Login1 = () => {
             <div className="col-sm-12 col-md-6 col-lg-6 h-100 master_backgroung_login">
                 <img src="usa.png" width="670" height="657" className="img-fluid"></img>
               
-                <div className="auth-background-mask"></div>
             </div>
 
             <div className="col-sm-12 col-md-6 col-lg-6 auth-main-col text-center">

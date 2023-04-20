@@ -25,7 +25,6 @@ import AdminStatic2 from './ComponentFirst/AdminStatic2';
 import PhoneDemo from './ComponentFirst/PhoneDemo';
 import UpdateCandidateAdmin from './ComponentFirst/UpdateCandidateAdmin';
 import UpdateReqAdmin from './ComponentFirst/UpdateReqAdmin';
-import GeneratePDF from './ComponentFirst/GeneratePDF';
 import Changepassword from './ComponentFirst/Changepassword';
 import ModalWithCSS from './ComponentFirst/ModalWithCSS';
 import UpdateCand2 from './ComponentFirst/UpdateCand2';
@@ -70,8 +69,7 @@ function App() {
         <Route path="/page" element={<Pageexample/>}></Route>
         <Route path="/pagination" element={<Pagination/>}></Route>
 
-        <Route path="/phonedemo" element={<PhoneDemo/>}></Route>       
-        <Route path="/generatepdf" element={< GeneratePDF/>}></Route>
+        <Route path="/phonedemo" element={<PhoneDemo/>}></Route>      
         <Route path="/modal" element={<ModalWithCSS/>}></Route>      
         </Routes>
       </Router>
