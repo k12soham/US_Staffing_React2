@@ -43,7 +43,7 @@ console.log(tickets)
         index++,
         st.requisition.id,
 
-        st.recruiter.recruiter_id == null ?
+        st.recruiter == null ?
         (
           console.log("null")
         ) :
@@ -52,7 +52,7 @@ console.log(tickets)
 
         ),
 
-        st.candidate.candidate_id == null ?
+        st.candidate == null ?
           (
             console.log("null")
           ) :
@@ -73,7 +73,7 @@ console.log(tickets)
   
 
 
-        st.candidate.candidate_id == null ?
+        st.candidate == null ?
           (
             console.log("null")
           ) :
@@ -85,7 +85,7 @@ console.log(tickets)
 
 
 
-        st.candidate.candidate_id == null ?
+        st.candidate == null ?
           (
             console.log("null")
           ) :

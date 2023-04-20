@@ -358,7 +358,7 @@ function ViewAllReq() {
   </Modal.Header>  
   
   <Modal.Body> 
-  <select name="category1" value={category} onChange={(evt) => handleCate({ newCate: evt.target.value })} className="btn btn-success btn-sm dropdown-toggle" style={{ width: '150px', marginLeft:'300px' }}>
+  <select name="category1" value={category} onChange={(evt) => handleCate({ newCate: evt.target.value })} className="btn btn-success btn-sm dropdown-toggle" style={{ width: '150px', marginLeft:'300px',textAlign:"left" }}>
                                 {
                                     
                                     <>

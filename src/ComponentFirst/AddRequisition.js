@@ -258,15 +258,7 @@ class AddRequisition extends React.Component {
             errors["id"] = "This field is required";
         }
    
-        if ((input["id"]) != undefined) {
-
-            var pattern = new RegExp(/^[a-zA-Z0-9\s]{2,50}$/);
-            if (!pattern.test(input["id"])) {
-                isValid = false;
-                errors["id"] = "This field is required";
-            }
-            
-        }
+      
 
         // -------------client-----------------------------------------------------------------------------------------
         if ((!input["client"])) {

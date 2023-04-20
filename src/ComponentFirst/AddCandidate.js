@@ -420,7 +420,7 @@ class AddCandidate extends React.Component {
                                             <div class="form-group">
                                                 <label for="visa_type"><b>Visa Type:</b><b style={{ color: 'red' }}>*</b></label><br />
                                                 <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '100%', textAlign: "left" }}
+                                                    style={{ width: '100%', textAlign: "left" ,height:'38px'}}
                                                     name="visa_type" id="visa_type"
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerReq}
@@ -440,7 +440,7 @@ class AddCandidate extends React.Component {
                                             <div class="form-group">
                                                 <label for="rate_term"><b>Rate Term:</b><b style={{ color: 'red' }}>*</b></label><br />
                                                 <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '100%', textAlign: "left" }}
+                                                    style={{ width: '100%', textAlign: "left",height:'38px' }}
                                                     name="rate_term" id="rate_term"
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerReq}

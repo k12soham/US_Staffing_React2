@@ -371,7 +371,7 @@ function ViewReqForAdmin() {
   </Modal.Header>  
   
   <Modal.Body> 
-  <select name="category1"  value={category} onChange={(evt) => handleCate({ newCate: evt.target.value })} className="btn btn-success btn-sm dropdown-toggle" style={{ width: '150px', marginLeft:'200px' }}>
+  <select name="category1"  value={category} onChange={(evt) => handleCate({ newCate: evt.target.value })} className="btn btn-success btn-sm dropdown-toggle" style={{ width: '150px', marginLeft:'200px',textAlign:"left" }}>
                                 {
                                     
                                     <>
@@ -391,7 +391,7 @@ function ViewReqForAdmin() {
                             </select> 
 
                             
-<select name="recruiter" value={rec} onChange={(evt) => handleCate2({ rec: evt.target.value  })} className="btn btn-success btn-sm dropdown-toggle" style={{ width: '150px', marginLeft:'50px' }}>
+<select name="recruiter" value={rec} onChange={(evt) => handleCate2({ rec: evt.target.value  })} className="btn btn-success btn-sm dropdown-toggle" style={{ width: '150px', marginLeft:'50px',textAlign:"left" }}>
                                 {
                                     
                                     <>

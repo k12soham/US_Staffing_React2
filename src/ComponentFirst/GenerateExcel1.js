@@ -26,7 +26,7 @@ console.log(tickets)
 
 
   // define the columns we want and their titles
-  const tableColumn =[ ["Sr No.", "Candidate Name", "Status", "Date", "Client Rate", "Submit Rate"]];
+  const tableColumn =[ ["Sr No.","Job Posting ID", "Candidate Name", "Status", "Date", "Client Rate", "Submit Rate"]];
   // define an empty array of rows
   const tableRows = [];
 
@@ -43,7 +43,7 @@ console.log(tickets)
 
         st.requisition.id,
 
-        st.candidate.candidate_id == null ?
+        st.candidate == null ?
           (
             console.log("null")
           ) :
@@ -68,7 +68,7 @@ console.log(tickets)
   
   
 
-        st.candidate.candidate_id == null ?
+        st.candidate == null ?
           (
             console.log("null")
           ) :
@@ -80,7 +80,7 @@ console.log(tickets)
 
 
 
-        st.candidate.candidate_id == null ?
+        st.candidate == null ?
           (
             console.log("null")
           ) :

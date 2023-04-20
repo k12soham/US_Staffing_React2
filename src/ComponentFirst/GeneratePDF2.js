@@ -54,7 +54,7 @@ let rec= localStorage.getItem("rec");
         index++,
         st.requisition.id,
 
-        st.recruiter.recruiter_id == null ?
+        st.recruiter == null ?
           (
             console.log("null")
           ) :
@@ -63,7 +63,7 @@ let rec= localStorage.getItem("rec");
 
           ),
 
-        st.candidate.candidate_id == null ?
+        st.candidate == null ?
           (
             console.log("null")
           ) :
@@ -86,7 +86,7 @@ let rec= localStorage.getItem("rec");
 
   
 
-        st.candidate.candidate_id == null ?
+        st.candidate == null ?
           (
             console.log("null")
           ) :
@@ -98,7 +98,7 @@ let rec= localStorage.getItem("rec");
 
 
 
-        st.candidate.candidate_id == null ?
+        st.candidate == null ?
           (
             console.log("null")
           ) :
