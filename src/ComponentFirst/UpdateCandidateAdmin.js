@@ -4,8 +4,6 @@ import base_url from '../api/bootapi';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import history from './ResponseVal';
-import EmployeeHeader from './EmployeeHeader';
-import AdminHeader from './AdminHeader';
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import AdminHeader5 from './AdminHeader5';

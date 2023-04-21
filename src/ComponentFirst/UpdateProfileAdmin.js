@@ -4,7 +4,7 @@ import base_url from '../api/bootapi';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import history from './ResponseVal';
-import { Button } from 'reactstrap';
+import AdminHeader5 from './AdminHeader5';
 
 class UpdateProfileAdmin extends React.Component {
 
@@ -109,10 +109,7 @@ class UpdateProfileAdmin extends React.Component {
         e.preventDefault();
 
 
-        if(this.state.input["recruiter_name"]==null)
-        {
-          alert("Please click Find Email button")
-        }
+       
         if(this.state.input["recruiter_email"]!=null)
         {
             this.state.input["recruiter_email"] = this.state.input["recruiter_email"].trim();
@@ -278,10 +275,20 @@ class UpdateProfileAdmin extends React.Component {
     resetForm = () => {
 
         let inputs = {};
-        this.setState({ input: inputs });
+        let errors = {};
+        inputs["recruiter_email"]='';
+        inputs["newPass"]='';
+        inputs["confirmPass"]='';
 
-        let errors1 = {};
-        this.setState({ errors: errors1 });
+       
+
+       
+        errors["recruiter_email"]='';
+        errors["newPass"]='';
+        errors["confirmPass"]='';
+
+        this.setState({ input: inputs });
+        this.setState({ errors: errors });
 
         this.setState({ passNotMatch: '' });
         this.setState({ passMatch: '' });
@@ -292,18 +299,17 @@ class UpdateProfileAdmin extends React.Component {
 
         return isAuthenticated =="Admin" ?(
 
-            <div className="row g-0 auth-wrapper">
-                <div className="col-12 col-md-5 col-lg-6 h-100 master_backgroung_login">
-                    <img src="usa.png" width="670" height="657" alt="US staffing app"></img>
+            <div className="row">
+                <div className=" master_backgroung_heder">
+                <AdminHeader5/>
                 </div>
-
-                <div className="col-12 col-md-7 col-lg-6 auth-main-col ">
+                <div className="col-12 col-md-7 col-lg-6 mt-3 auth-main-col ">
                    
-                    <div className="d-flex flex-column align-content-end">
+                    <div className="d-flex flex-column align-content-end  border border-5">
                         <div className="auth-body mx-auto">
 
                             <div className="auth-form-container text-center">
-                                <h5><b>Change Recruiter Password</b></h5>
+                            <br></br>    <h5><b>Change Recruiter Password</b></h5>
                             </div>
                             <br></br>
 
@@ -311,7 +317,7 @@ class UpdateProfileAdmin extends React.Component {
 
                                 {/* -----------------------------------------------End editable code------------------------------------------------------------- */}
                                 <div class="form-group">
-                                    <label for="name"><b>Name:</b><b style={{color:'red'}}>*</b></label>
+                                    <label for="name"><b>Name:</b><b style={{color:'red'}}>*</b></label><br></br> 
                                     <input
                                         type="text"
                                         name="recruiter_name"
@@ -327,7 +333,7 @@ class UpdateProfileAdmin extends React.Component {
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="email"><b>Enter Email:</b><b style={{color:'red'}}>*</b></label>
+                                    <label for="email"><b>Enter Email:</b><b style={{color:'red'}}>*</b></label><br></br> 
                                     <input
                                        
                                         name='recruiter_email'
@@ -352,7 +358,7 @@ class UpdateProfileAdmin extends React.Component {
                                 {/* ---------------------------------------------------------------------- */}
                                 <div className="password mb-3 " >
                                     <div className="form-group">
-                                        <label for="password"><b>Enter New Password:</b><b style={{color:'red'}}>*</b></label>
+                                        <label for="password"><b>Enter New Password:</b><b style={{color:'red'}}>*</b></label><br></br> 
                                         <input
                                             type={(this.state.showNewPass) ? "text" : "password"}
                                             name="newPass"
@@ -386,7 +392,7 @@ class UpdateProfileAdmin extends React.Component {
 
                                 <div className="password mb-3 ">
                                     <div className="form-group">
-                                        <label for="password"><b>Enter Confirm Password:</b><b style={{color:'red'}}>*</b></label>
+                                        <label for="password"><b>Enter Confirm Password:</b><b style={{color:'red'}}>*</b></label><br></br> 
                                         <input
                                             type={(this.state.showConfPass) ? "text" : "password"}
                                             name="confirmPass"
@@ -416,7 +422,7 @@ class UpdateProfileAdmin extends React.Component {
                                        
 
                                     </div>
-                                </div>
+                                </div><br></br> 
                                
 
 

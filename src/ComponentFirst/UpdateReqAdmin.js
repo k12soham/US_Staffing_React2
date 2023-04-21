@@ -4,9 +4,6 @@ import base_url from '../api/bootapi';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import history from './ResponseVal';
-import EmployeeHeader from './EmployeeHeader';
-import AdminHeader from './AdminHeader';
-import { useNavigate } from "react-router-dom";
 import AdminHeader5 from './AdminHeader5';
 class UpdateReqAdmin extends React.Component {
 
@@ -282,14 +279,14 @@ class UpdateReqAdmin extends React.Component {
             errors["id"] = "This field is required";
         }
         
-        if ((input["id"]) != undefined) {
+        // if ((input["id"]) != undefined) {
 
-            var pattern = new RegExp(/^(?=.*[a-zA-Z0-9]).{1,25}$/); 
-            if (!pattern.test(input["id"])) {
-                isValid = false;
-                errors["id"] = "Please enter valid Job Posting ID.";
-            }
-        }
+        //     var pattern = new RegExp(/^(?=.*[a-zA-Z0-9]).{1,25}$/); 
+        //     if (!pattern.test(input["id"])) {
+        //         isValid = false;
+        //         errors["id"] = "Please enter valid Job Posting ID.";
+        //     }
+        // }
 
         // -------------client-----------------------------------------------------------------------------------------
         if ((!input["client"])) {
