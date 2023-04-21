@@ -4,6 +4,8 @@ import base_url from '../api/bootapi';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import history from './ResponseVal';
+import EmployeeHeader from './EmployeeHeader';
+import AdminHeader5 from './AdminHeader5';
 
 class UpdateProfile extends React.Component {
 
@@ -185,10 +187,16 @@ class UpdateProfile extends React.Component {
     resetForm = () => {
 
         let inputs = {};
+        let errors = {};
+        inputs["recruiter_name"]=undefined;
+        inputs["recruiter_email"]=undefined;
+  
+        errors["recruiter_name"]=undefined;
+        errors["recruiter_email"]=undefined;
         this.setState({ input: inputs });
+        this.setState({ errors: errors });
 
-        let errors1 = {};
-        this.setState({ errors: errors1 });
+     
     }
 
     render() {
@@ -196,17 +204,30 @@ class UpdateProfile extends React.Component {
 
         return isAuthenticated=="TM" || isAuthenticated=="Admin"  ? (
 
-            <div className="row g-0 auth-wrapper">
-                <div className="col-12 col-md-5 col-lg-6 h-100 master_backgroung_login">
-                    <img src="usa.png" width="670" height="657" alt="US staffing app"></img>
+            <div className="row">
+                <div className=" master_backgroung_heder">
+                {
+                    isAuthenticated=="TM" ?
+                     (
+                         <EmployeeHeader/>
+                    ):
+                    (
+                        <AdminHeader5/>
+                    )
+                 }
                 </div>
+                {/* <div className="col-12 col-md-5 col-lg-6 h-100 master_backgroung_login">
+                    
+                    <img src="usa.png" width="670" height="657" alt="US staffing app"></img>
+                </div> */}
 
-                <div className="col-12 col-md-7 col-lg-6 auth-main-col ">
+                <div className="col-12 col-md-7 col-lg-6 auth-main-col mt-5 ">
                
-                    <div className="d-flex flex-column align-content-end">
-                        <div className="auth-body mx-auto">
+                    <div className="d-flex flex-column align-content-end pt-2 pb-5 border border-5">
+                    
+                        <div className="auth-body mx-auto ">
 
-                            <div className="auth-form-container text-center">
+                            <div className="auth-form-container text-center" ><br></br>
                                 <h5><b>Update an account</b></h5>
                             </div>
                             <br></br>
@@ -215,7 +236,7 @@ class UpdateProfile extends React.Component {
 
                                 {/* -----------------------------------------------End editable code------------------------------------------------------------- */}
                                 <div class="form-group">
-                                    <label for="name"><b>Enter Name:</b><b style={{color:'red'}}>*</b></label>
+                                    <label for="name"><b>Enter Name:</b><b style={{color:'red'}}>*</b></label><br></br>
                                     <input
                                         type="text"
                                         name="recruiter_name"
@@ -232,7 +253,7 @@ class UpdateProfile extends React.Component {
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="email"><b>Enter Email:</b><b style={{color:'red'}}>*</b></label>
+                                    <label for="email"><b>Enter Email:</b><b style={{color:'red'}}>*</b></label><br></br>
                                     <input
                                       
                                         name='recruiter_email'
@@ -245,7 +266,7 @@ class UpdateProfile extends React.Component {
                                     />
 
                                     <div className="text-danger">{this.state.errors.recruiter_email}</div>
-                                </div>
+                                </div><br></br>
 
                 
 

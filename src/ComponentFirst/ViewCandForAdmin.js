@@ -1,18 +1,12 @@
 import { React, useState, useEffect } from "react";
 import axios from "axios";
 import base_url from "../api/bootapi";
-import { Button, Table } from "reactstrap";
+import {Table } from "reactstrap";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import AdminHeader from "./AdminHeader";
+
 import ReactPaginate from 'react-paginate';
 import history from './ResponseVal';
-import GeneratePDF1 from "./GeneratePDF1";
-import DatePicker from "react-datepicker";
-import { format } from 'date-fns'
-import { Modal } from 'react-bootstrap';
-import GeneratePDF2 from "./GeneratePDF2";
-import GenerateExcel2 from "./GenerateExcel2";
 import AdminHeader5 from "./AdminHeader5";
 
 function ViewCandForAdmin() {
@@ -335,7 +329,7 @@ function ViewCandForAdmin() {
                     <AdminHeader5 />
                 </div>
 
-                <div className="col-12 master_backgroung_work scroll-bar-horizontal">
+                <div className="col-12 master_backgroung_work2 scroll-bar-horizontal">
                 <div className="row">
                         <div className="col-12 input-icons"
                             style={{ padding: '5px', margin: '10px' }}>

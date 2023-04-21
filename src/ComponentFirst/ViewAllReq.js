@@ -177,7 +177,7 @@ function ViewAllReq() {
     const handleDownload1 = () => {
 
         if (category == null) {
-            alert("please select category")
+            alert("Please select category")
         }
         else {
             GeneratePDF1(statusList1);
@@ -187,7 +187,7 @@ function ViewAllReq() {
     const handleDownload2 = (evt) => {
 
         if (category == null) {
-            alert("please select category")
+            alert("Please select category")
         }
         else {
             GenerateExcel1(statusList1);
@@ -337,7 +337,7 @@ function ViewAllReq() {
                                     </Modal.Header>
 
                                     <Modal.Body>
-                                        <select name="category1" value={category} onChange={(evt) => handleCate({ newCate: evt.target.value })} className="btn btn-success btn-sm dropdown-toggle" style={{ width: '150px', marginLeft: '300px' }}>
+                                        <select name="category1" value={category} onChange={(evt) => handleCate({ newCate: evt.target.value })} className="btn btn-success btn-sm dropdown-toggle" style={{ width: '150px', marginLeft: '300px' ,textAlign:"left"}}>
                                             {
                                                 <>
                                                     <option hidden value="">Select Category</option>

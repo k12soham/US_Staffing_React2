@@ -4,10 +4,9 @@ import base_url from '../api/bootapi';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import history from './ResponseVal';
-import { List } from 'reactstrap';
 import { Table } from "reactstrap";
 import { Link } from 'react-router-dom';
-import AdminHeader from './AdminHeader';
+
 import Popup from 'reactjs-popup';
 import AdminHeader5 from './AdminHeader5';
 
@@ -1780,10 +1779,10 @@ class AdminStatic2 extends React.Component {
                 <div className="row">
 
                     <div className="col-12 h-100 master_backgroung_heder">
-                        <AdminHeader5 />
+                        <AdminHeader5/>
                     </div>
 
-                    <div className="col-12 master_backgroung_work scroll-bar-horizontal">
+                    <div className="col-12 master_backgroung_work2 scroll-bar-horizontal">
 
                         <div className="row" style={{ marginTop: "2%" }}>
 

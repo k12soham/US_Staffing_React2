@@ -199,11 +199,21 @@ a {
   position: fixed;
   left: 0%;
   right: 0%;
+  background-color: white;
+  width: 280px;
+  height: 500px;
+}
+
+.master_backgroung_work2 {
+  margin-top: 0.5%;
+  position: fixed;
+  left: 0%;
+  right: 0%;
   height: 10%;
   // background-color: rgb(226, 238, 241);
   background-color: white;
   width: 280px;
-  height: 490px;
+  height: 900px;
 }
 
 // ---------------------------------Navbar CSS-----------------------------------------------------------------
@@ -259,6 +269,9 @@ a {
   // overflow-x: scroll;
   // display: flex;
 }
+
+
+
 
 .no-outline:focus {
   outline: none;
