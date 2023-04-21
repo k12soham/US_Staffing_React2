@@ -76,8 +76,8 @@ class ModalWithCSS extends React.Component {
       <div  style={{textAlign:'right', marginTop:'15px'}}>
         <div onClick={this.handleOpenModal}>
 
-        <i class="fa fa-user-circle-o" style={{fontSize:'25px',color:'blue'}}></i>&nbsp;
-          <span style={{color:'brown', fontSize:'17px'}}>{empName}</span>
+        <i class="fa fa-user-circle-o" style={{fontSize:'25px',color:'lightslategrey'}}></i>&nbsp;
+          <span style={{color:'lightslategrey', fontSize:'17px'}}>{empName}</span>
 
         </div>
 
@@ -100,7 +100,7 @@ class ModalWithCSS extends React.Component {
 
             </div>
             <div style={{ marginLeft: '70px' }}>
-              <span >   <i class="fa fa-user-circle-o" style={{fontSize:'30px',color:'blue'}}></i><b style={{ fontSize: '22px' }}> &nbsp;{empName}</b></span><br />
+              <span >   <i class="fa fa-user-circle-o" style={{fontSize:'30px',color:'lightslategrey'}}></i><b style={{ fontSize: '22px' }}> &nbsp;{empName}</b></span><br />
               <span ><h6 style={{ marginLeft: '15px' }}>{empMail} </h6></span><hr></hr>
             </div>
             <div className="text-center">

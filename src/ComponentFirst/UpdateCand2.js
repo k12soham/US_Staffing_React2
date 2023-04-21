@@ -322,15 +322,12 @@ class UpdateCand2 extends React.Component {
         if ((!input["phone"]) || (input["phone"] == '+1')) {
             isValid = false;
             errors["phone"] = "This field is required";
-        }
-
-    
+        }    
         
             if (((input["phone"]).length) != (this.state.FormatLen)) {
                 isValid = false;
                 errors["phone"] = "Please enter valid phone number";
-            }
-        
+            }      
         
 
         // -------------email-----------------------------------------------------------------------------------------

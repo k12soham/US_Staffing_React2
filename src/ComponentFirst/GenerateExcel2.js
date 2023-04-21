@@ -14,11 +14,7 @@ const GenerateExcel2 = tickets => {
 console.log(tickets)
 
   let recruiterName = localStorage.getItem("recruiterName");
-  let empID = localStorage.getItem("recruiterID")
-  let sessionreq = localStorage.getItem("requisitionID")
-  let  sessionreq2= localStorage.getItem("reqID");
   let a = new Date();
-  let currentdate = format(a, "dd-MMM-yyyy");
   let cate = localStorage.getItem("cate");
   let startdate = localStorage.getItem("startdate");
   let enddate = localStorage.getItem("enddate");
@@ -30,7 +26,6 @@ console.log(tickets)
   const tableColumn =[ ["Sr No.","Job Posting ID","Recruiter Name", "Candidate Name", "Status", "Date", "Client Rate", "Submit Rate"]];
   // define an empty array of rows
   const tableRows = [];
-  const sstt = [];
   let index = 1;
   // for each ticket pass all its data into an array
   tickets.map(st => {

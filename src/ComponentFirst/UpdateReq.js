@@ -5,8 +5,6 @@ import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import history from './ResponseVal';
 import EmployeeHeader from './EmployeeHeader';
-import AdminHeader from './AdminHeader';
-import { useNavigate } from "react-router-dom";
 class UpdateReq extends React.Component {
 
     componentDidMount() {
@@ -361,11 +359,8 @@ class UpdateReq extends React.Component {
             <div className="">
                 <div className="row">
 
-                    <div className="col-12 h-100 master_backgroung_heder">
-                        
-                                <EmployeeHeader />
-                           
-                        
+                    <div className="col-12 h-100 master_backgroung_heder">                        
+                                <EmployeeHeader />                                                   
                     </div>
 
                     <div className="col-12 master_backgroung_work scroll-bar">

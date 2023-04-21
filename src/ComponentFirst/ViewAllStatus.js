@@ -78,7 +78,7 @@ function ViewAllStatus() {
                     <EmployeeHeader />
                 </div>
 
-                <div className=" col-12 master_backgroung_work scroll-bar-horizontal">
+                <div className=" col-12 master_backgroung_work2 scroll-bar-horizontal">
 
                     <div style={{ width: '100%' }}  >
                     <br></br>  <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px' }}>

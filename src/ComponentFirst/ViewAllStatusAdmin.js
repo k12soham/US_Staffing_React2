@@ -4,7 +4,6 @@ import base_url from "../api/bootapi";
 import { Table } from "reactstrap";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import AdminHeader from "./AdminHeader";
 import DatePicker from "react-datepicker";
 import { format } from 'date-fns';
 import history from './ResponseVal';
@@ -285,7 +284,7 @@ function ViewAllStatusAdmin() {
                 <AdminHeader5 />
             </div>
 
-            <div className=" col-12 master_backgroung_work scroll-bar-horizontal">
+            <div className=" col-12 master_backgroung_work2 scroll-bar-horizontal">
 
                 <div style={{ width: '100%' }}  >
                 <br></br><Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px' }}>

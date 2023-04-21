@@ -4,7 +4,6 @@ import base_url from "../api/bootapi";
 import { Button,Table } from "reactstrap";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import AdminHeader from "./AdminHeader";
 import history from './ResponseVal';
 import AdminHeader5 from "./AdminHeader5";
 import {Modal} from 'react-bootstrap';
@@ -42,7 +41,7 @@ function ViewReqForAdmin() {
         axios.get(`${base_url}/getAllRequisition`).then(json => setRequisitionList(json.data))
         axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
         axios.get(`${base_url}/getAllStatusFd`).then(json => setstatusFD(json.data))
-        axios.get(`${base_url}/getAllRcruiter`).then(json => setRecruiter(json.data))
+        axios.get(`${base_url}/getAllRcruiter2`).then(json => setRecruiter(json.data))
 
     }, []);
 
@@ -132,7 +131,7 @@ function ViewReqForAdmin() {
 
         if(category==null || rec==null)
         {
-            alert("please select Category & Employee")
+            alert("Please select Category & Recruiter")
         }
         else{
             GeneratePDF2(statusList1);
@@ -145,7 +144,7 @@ function ViewReqForAdmin() {
         
                 if(category==null || rec==null)
                 {
-                    alert("please select category & Employee")
+                    alert("Please select Category & Recruiter")
                 }
                 else{
                     GenerateExcel2(statusList1);
@@ -197,20 +196,20 @@ function ViewReqForAdmin() {
                 }
 
     const getnewID = (e) => {
-       
+
         let requisitionID = e.rq
         let req = e.req
         localStorage.setItem("requisitionID", requisitionID)
         localStorage.setItem("reqID", req)
-    
+
     }
 
     const renderTable = () => {
         const isAuthenticated = localStorage.getItem('recruiterRole');
 
 
-        return isAuthenticated =="Admin"? (
-   
+        return isAuthenticated == "Admin" ? (
+
 
             requisitionList.filter((cls) => {
 
@@ -254,7 +253,7 @@ function ViewReqForAdmin() {
                             <td>{cls.requisition_from}</td>
 
                             <td>{
-                                <a href="/viewCandForAdmin" onClick={(evt) => getnewID({ rq: cls.requisition_id, req:cls.id })}>{cls.id}</a>
+                                <a href="/viewCandForAdmin" onClick={(evt) => getnewID({ rq: cls.requisition_id, req: cls.id })}>{cls.id}</a>
 
                             }</td>
                             <td>{cls.client}</td>
@@ -306,12 +305,12 @@ function ViewReqForAdmin() {
                 <div className="col-12 h-100 master_backgroung_heder">
                     <AdminHeader5 />
                 </div>
+                <div className="col-12">
 
-                <div className="col-12 master_backgroung_work scroll-bar-horizontal" >
-
-                    {/* -------------------------------------------------------- */}
+                    {/* --------------------------Search Bar------------------------------ */}
                     <div className="row">
-                        <div className="col-6 input-icons"
+                    <div class="col-md-6 block1">
+                        <div className="input-icons"
                             style={{ padding: '5px', margin: '10px' }}>
                             <i className="fa fa-search icon"></i>
                             <input
@@ -323,14 +322,21 @@ function ViewReqForAdmin() {
                             />
                           
                         </div>
-                        <div className="col-6">
-                        <Button variant="success" className="btn btn-primary btn-sm fa fa-download" onClick={modalShow}>  
-       &nbsp; Download 
-      </Button>  
+                        </div>
+                        <div class="col-md-6 block2" style={{ textAlign: 'right' }}>
+                        <div style={{ paddingTop: '4px', margin: '8px' }}>
+                            <button id="btn1" onClick={modalShow} className="btn btn-outline-info w-10">
+                                <i className="fa fa-download"></i>
+                                &nbsp; Report
+                            </button>
                         </div>
                     </div>
+                    </div>
+                </div>
 
-                    <div style={{ width: '' }}  >
+                <div className="col-12 master_backgroung_work scroll-bar-horizontal" >
+
+                    <div>
 
                         <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px' }}>
                             <thead>
@@ -575,8 +581,8 @@ function ViewReqForAdmin() {
 
         //)
 
-       
-        );
-   
+
+    );
+
 }
 export default ViewReqForAdmin;

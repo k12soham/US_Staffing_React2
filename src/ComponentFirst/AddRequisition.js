@@ -404,7 +404,7 @@ class AddRequisition extends React.Component {
                         <EmployeeHeader />
                     </div>
 
-                    <div className="col-12 master_backgroung_work scroll-bar-horizontal">
+                    <div className="col-12 master_backgroung_work2 scroll-bar-horizontal">
 
                         <div className="row">
                             <form onSubmit={this.handleSubmit}>

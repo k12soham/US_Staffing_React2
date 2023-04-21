@@ -4,9 +4,6 @@ import base_url from '../api/bootapi';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import history from './ResponseVal';
-import EmployeeHeader from './EmployeeHeader';
-import AdminHeader from './AdminHeader';
-import { useNavigate } from "react-router-dom";
 import AdminHeader5 from './AdminHeader5';
 class UpdateReqAdmin extends React.Component {
 

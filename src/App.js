@@ -7,10 +7,8 @@ import Login1 from './ComponentFirst/LoginPage';
 import SignUp from './ComponentFirst/SignUp';
 import AddRequisition from './ComponentFirst/AddRequisition';
 import AddCandidate from './ComponentFirst/AddCandidate';
-import AdminStatic from './ComponentFirst/AdminStatic';
 import UpdateReq from './ComponentFirst/UpdateReq';
 import ViewAllReq from './ComponentFirst/ViewAllReq';
-import UpdateCandidate from './ComponentFirst/UpdateCandidate';
 import ViewReqForAdmin from './ComponentFirst/ViewReqForAdmin';
 import ViewCandForAdmin from './ComponentFirst/ViewCandForAdmin';
 import ViewAllStatusAdmin from './ComponentFirst/ViewAllStatusAdmin';
@@ -22,7 +20,6 @@ import Pageexample from './ComponentFirst/Pageexample';
 import ViewAllStatus from './ComponentFirst/ViewAllStatus';
 import Pagination from './ComponentFirst/PaginationDemo';
 import AdminStatic2 from './ComponentFirst/AdminStatic2';
-import PhoneDemo from './ComponentFirst/PhoneDemo';
 import UpdateCandidateAdmin from './ComponentFirst/UpdateCandidateAdmin';
 import UpdateReqAdmin from './ComponentFirst/UpdateReqAdmin';
 import Changepassword from './ComponentFirst/Changepassword';
@@ -69,7 +66,7 @@ function App() {
         <Route path="/page" element={<Pageexample/>}></Route>
         <Route path="/pagination" element={<Pagination/>}></Route>
 
-        <Route path="/phonedemo" element={<PhoneDemo/>}></Route>      
+  
         <Route path="/modal" element={<ModalWithCSS/>}></Route>      
         </Routes>
       </Router>

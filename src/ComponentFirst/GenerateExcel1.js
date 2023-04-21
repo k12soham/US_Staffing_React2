@@ -105,12 +105,12 @@ console.log(tickets)
 
 
 
-  const date = Date().split(" ");
 
 
 
 
-let title,title2;
+
+let title;
 
 
   if(cate=='Current')
@@ -160,8 +160,7 @@ let title,title2;
 
   const wb = utils.book_new();
   const ws = utils.json_to_sheet([]);
-  utils.sheet_add_aoa(ws, title, { origin: 'E4', skipHeader: true});   
-  utils.sheet_add_aoa(ws, title2, { origin: 'E5', skipHeader: true});     
+  utils.sheet_add_aoa(ws, title, { origin: 'E4', skipHeader: true});      
   utils.sheet_add_aoa(ws, tableColumn, { origin: 'D7'});
   utils.sheet_add_json(ws, tableRows, { origin: 'D8', skipHeader: true });
   utils.book_append_sheet(wb, ws, 'Report');
