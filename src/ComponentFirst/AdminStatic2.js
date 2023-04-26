@@ -1774,17 +1774,15 @@ class AdminStatic2 extends React.Component {
         const isAuthenticated = localStorage.getItem('recruiterRole');
         return isAuthenticated =="Admin" ?(
 
+            <div className='row'>
 
-            <div >
-                <div className="row">
-
-                    <div className="col-12 h-100 master_backgroung_heder">
+                    <div className="col-12 ">
                         <AdminHeader5/>
                     </div>
 
-                    <div className="col-12 master_backgroung_work2 scroll-bar-horizontal">
+                    <div className="col-12 pt-5 mt-5">
 
-                        <div className="row" style={{ marginTop: "2%" }}>
+                        <div className="row">
 
                             <div className="col-4">
                                 <label><b>Position type:</b></label>
@@ -1872,14 +1870,12 @@ class AdminStatic2 extends React.Component {
                                 <div className="static-tbl-form">
                                     <Table bordered className="table table-sm table-striped">
                                         <thead>
-                                            <tr>
-                                             
+                                            <tr>                                             
                                                 <th style={{ width: "70%" }}>Rate Term</th>
                                                 <th style={{ width: "30%px" }}>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-
                                             {this.ratelist()}
                                         </tbody>
                                     </Table>
@@ -1891,7 +1887,6 @@ class AdminStatic2 extends React.Component {
                                             <div className="text-danger">{this.state.ratetermerr}</div>
                                         </form>                               
                             </div>
-
 
                             <div className="col-4">
                                 <label><b>Visa Type:</b></label>
@@ -1967,7 +1962,7 @@ class AdminStatic2 extends React.Component {
                         </div>
 
                     </div>
-                </div>
+                {/* </div> */}
             </div>
         )
 

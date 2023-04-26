@@ -7,6 +7,8 @@ import history from './ResponseVal';
 import is from 'date-fns/esm/locale/is/index.js';
 import EmployeeHeader from './EmployeeHeader';
 import AdminHeader5 from './AdminHeader5';
+import { Link } from 'react-router-dom';
+
 class Changepassword extends React.Component {
 
     constructor(props) {
@@ -35,12 +37,12 @@ class Changepassword extends React.Component {
     handleFetchedData() {
 
         let recruiterID = localStorage.getItem('recruiterID');
-    
+
         axios.get(`${base_url}/getRecruiterbyID?recruiterID=${recruiterID}`).then((json) => {
             this.setState({
                 input: json.data
             });
-            
+
 
         })
     }
@@ -49,11 +51,11 @@ class Changepassword extends React.Component {
 
         let recruiterID = localStorage.getItem('recruiterIDAdmin');
 
-    
+
         axios.get(`${base_url}/getRecruiterbyID?recruiterID=${recruiterID}`).then((json) => {
             this.setState({
                 input: json.data
-             
+
             });
 
 
@@ -80,11 +82,10 @@ class Changepassword extends React.Component {
         let emp_reg = this.state.input;
 
         emp_reg[e.target.name] = e.target.value;
-     
+
         this.setState({
             input: emp_reg,
         });
-      
 
         this.state.currentPassword = this.state.input["currentPass"];
         this.state.newPassword = this.state.input['newPass'];
@@ -94,45 +95,41 @@ class Changepassword extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
 
-       
 
-        if(this.state.input["newPass"]!=null)
-        {
+
+        if (this.state.input["newPass"] != null) {
             this.state.input["newPass"] = this.state.input["newPass"].replaceAll("#", "%23");
         }
-      
-        if(this.state.input["confirmPass"]!=null)
-        {
+
+        if (this.state.input["confirmPass"] != null) {
             this.state.input["confirmPass"] = this.state.input["confirmPass"].replaceAll("#", "%23");
         }
-     
-       
+
+
         if (this.validate()) {
             let emp_reg = this.state.input;
             emp_reg[e.target.name] = e.target.value;
 
-            if( this.state.input["newPass"]!=this.state.input["confirmPass"])
-            {
+            if (this.state.input["newPass"] != this.state.input["confirmPass"]) {
                 alert("Please enter correct passwords");
-               
+
             }
 
-            else if( this.state.input["currentPass"]==this.state.input["newPass"])
-            {
+            else if (this.state.input["currentPass"] == this.state.input["newPass"]) {
                 alert("New password must be different than current password");
-               
+
             }
 
-          
+
             else {
-            
+
 
                 this.postdata(emp_reg);
 
             }
         }
         // 👇️ clear all input values in the form
-      
+
     }
 
     postdata = (data) => {
@@ -144,26 +141,24 @@ class Changepassword extends React.Component {
         let confirmPass = data["confirmPass"];
         const role = localStorage.getItem('recruiterRole');
         axios.put(`${base_url}/ChangePassword?recruiterId=${recruiter_id}&currentPass=${currentPass}&newPass=${confirmPass}`).then(
-           
+
             (response) => {
                 toast.success("Password cahnged successfully!",
                     { position: "top-right" }
                 );
 
-                localStorage.setItem("recruiterName",recruiter_name);
-                localStorage.setItem('recruiterEmail',recruiter_email);
-                if(role=="Admin")
-                {
+                localStorage.setItem("recruiterName", recruiter_name);
+                localStorage.setItem('recruiterEmail', recruiter_email);
+                if (role == "Admin") {
                     history.push("/viewReqForAdmin");
                     window.location.reload();
-                  
+
                 }
-                else if(role=="TM")
-                {
+                else if (role == "TM") {
                     history.push("/addRequisition");
                     window.location.reload();
                 }
-          
+
             },
             (error) => {
                 alert("Please enter correct current password!");
@@ -173,28 +168,27 @@ class Changepassword extends React.Component {
     }
     // ------------------------------------- VALIADATION CODE---------------------------------------------------------------
     validate() {
-      
+
 
         let input = this.state.input;
         let errors = {};
         let isValid = true;
 
-       
+
         // --------------------------------------- emp_name validation-------------------------------------------------------
-        
+
         // -----------------------------------------handle currentPass error---------------------------------------------
         if (this.state.currentPassword == undefined) {
             isValid = false;
             errors["currentPass"] = "Please enter current password.";
         }
 
-       
         // -----------------------------------------end pass error-----------------------------------------------
         // -----------------------------------------handle newPass error---------------------------------------------
         if (this.state.newPassword == undefined) {
             isValid = false;
             errors["newPass"] = "Please enter new password.";
-         
+
         }
 
         if ((this.state.newPassword) !== undefined) {
@@ -213,10 +207,9 @@ class Changepassword extends React.Component {
         if (this.state.confirmPassword == undefined) {
             isValid = false;
             errors["confirmPass"] = "Please enter confirm password.";
-           
+
         }
 
-       
         // -----------------------------------------end confirmPass error-----------------------------------------------
         this.setState({
             errors: errors
@@ -258,18 +251,15 @@ class Changepassword extends React.Component {
     resetForm = () => {
 
         let inputs = {};
-      let errors={}
+        let errors = {}
 
-      
-        inputs["currentPass"]='';
-        inputs["newPass"]='';
-        inputs["confirmPass"]='';
+        inputs["currentPass"] = '';
+        inputs["newPass"] = '';
+        inputs["confirmPass"] = '';
 
-      
-
-        errors["currentPass"]='';
-        errors["newPass"]='';
-        errors["confirmPass"]='';
+        errors["currentPass"] = '';
+        errors["newPass"] = '';
+        errors["confirmPass"] = '';
 
         this.setState({ input: inputs });
         this.setState({ errors: errors });
@@ -281,48 +271,44 @@ class Changepassword extends React.Component {
     render() {
         const isAuthenticated = localStorage.getItem('recruiterRole');
 
-        return isAuthenticated=="TM" || isAuthenticated=="Admin" ? (
+        return isAuthenticated == "TM" || isAuthenticated == "Admin" ? (
 
-            
-            <div className="row">
-                <div className=" master_backgroung_heder">
-                 {
-                    isAuthenticated=="TM" ?
-                     (
-                         <EmployeeHeader/>
-                    ):
-                    (
-                        <AdminHeader5/>
-                    )
-                 }
-                
-               
+            <div>
+                <div className="col-12 master_backgroung_heder">
+                    {
+                        isAuthenticated == "TM" ?
+                            (
+                                <EmployeeHeader />
+                            ) :
+                            (
+                                <AdminHeader5 />
+                            )
+                    }
                 </div>
 
-                <div className="col-12 col-md-7 col-lg-6 mt-5 auth-main-col ">
-               
-                    <div className="d-flex flex-column align-content-end pt-2 pb-3 border border-5">
-                        <div className="auth-body mx-auto">
+                {/* <div className='col-12 master_backgroung_work2 scroll-bar-horizontal'> */}
 
-                            <div className="auth-form-container text-center">
-                               <br></br> <h5><b>Change Password</b></h5>
-                            </div>
-                            <br></br>
+                <div className="auth-wrapper pt-5 mt-5" >
 
-                            <form onSubmit={this.handleSubmit}>
+                    <div className="col-12 col-md-7 col-lg-6 auth-main-col border border-5 ">
 
-                                {/* -----------------------------------------------End editable code------------------------------------------------------------- */}
-                            
+                        <div className="d-flex flex-column align-content-end">
+                            <div className="auth-body mx-auto">
 
-                                {/* ---------------------------------------------------------------------- */}
-                                <div className="password mb-3 ">
+                                <div className="auth-form-container text-center">
+                                    <br /><h5><b>Change Password</b></h5>
+                                </div>
+                                <br></br>
+
+                                <form onSubmit={this.handleSubmit}>
+
                                     <div className="form-group">
-                                        <label for="password"><b>Enter Current Password:</b><b style={{color:'red'}}>*</b></label> <br></br>
+                                        <label for="password"><b>Enter Current Password:</b><b style={{ color: 'red' }}>*</b></label> <br></br>
                                         <input
                                             type={(this.state.hover) ? "text" : "password"}
                                             name="currentPass"
                                             id="currentPass"
-                                           
+
                                             value={this.currentPassword}
                                             onChange={this.handleChange}
                                             placeholder="Current Password"
@@ -340,121 +326,117 @@ class Changepassword extends React.Component {
                                                 className={
                                                     (this.state.hover) ? "far fa-eye" : "far fa-eye-slash"
                                                 }
-                                            ></i>{" "}
+                                            ></i>
+                                            {" "}
                                         </button>
-                                        <div className="text-danger">{this.state.errors['currentPass']}</div>
+                                        <div className="text-danger" style={{ textAlign: 'justify' }}>{this.state.errors['currentPass']}</div>
 
                                     </div>
-                                </div>
 
-                                {/* ---------------------------------------------------------------------- */}
-                                <div className="password mb-3 " >
-                                    <div className="form-group">
-                                        <label for="password"><b>Enter New Password:</b><b style={{color:'red'}}>*</b></label> <br></br>
-                                        <input
-                                            type={(this.state.showNewPass) ? "text" : "password"}
-                                            name="newPass"
-                                            id="newPass"
-                                        
-                                            onChange={this.handleChange}
-                                            onKeyUp={this.keyUpHandler}
-                                            placeholder="New Password"
-                                            minLength={6}
-                                            maxLength={15}
-                                            style={{ width: '305px', height: '37px' }}
-                                        />
+                                    {/* ---------------------------------------------------------------------- */}
+                                    <div className="password mb-3 " >
+                                        <div className="form-group">
+                                            <label for="password"><b>Enter New Password:</b><b style={{ color: 'red' }}>*</b></label>
+                                            <input
+                                                type={(this.state.showNewPass) ? "text" : "password"}
+                                                name="newPass"
+                                                id="newPass"
 
-                                        <button
-                                            type="button"
-                                            className="btn btn-outline-primary theme-btn mx-auto"
-                                            onClick={this.togglePassword2}
-                                        >
-                                            <i
-                                                className={
-                                                    (this.state.showNewPass) ? "far fa-eye" : "far fa-eye-slash"
-                                                }
-                                            ></i>{" "}
-                                        </button>
-                                        <div className="text-danger">{this.state.errors['newPass']}</div>
+                                                onChange={this.handleChange}
+                                                onKeyUp={this.keyUpHandler}
+                                                placeholder="Password"
+                                                minLength={6}
+                                                maxLength={30}
+                                                style={{ width: '305px', height: '37px' }}
+                                            />
 
-                                    </div>
-                                </div>
-
-                                {/* ---------------------------------------------------------------------- */}
-
-                                <div className="password mb-3 ">
-                                    <div className="form-group">
-                                        <label for="password"><b>Enter Confirm Password:</b><b style={{color:'red'}}>*</b></label> <br></br>
-                                        <input
-                                            type={(this.state.showConfPass) ? "text" : "password"}
-                                            name="confirmPass"
-                                            id="confirmPass"
-                                            onChange={this.handleChange}
-                                            onKeyUp={this.keyUpHandler} 
-                                            placeholder="Confirm Password"
-                                            minLength={6}
-                                            maxLength={15}
-                                            style={{ width: '305px', height: '37px' }}
-                                        />
-
-                                        <button
-                                            type="button"
-                                            className="btn btn-outline-primary theme-btn mx-auto"
-                                            onClick={this.togglePassword3}
-                                        >
-                                            <i
-                                                className={
-                                                    (this.state.showConfPass) ? "far fa-eye" : "far fa-eye-slash"
-                                                }
-                                            ></i>{" "}
-                                        </button>
-                                        <div className="text-danger">{this.state.errors['confirmPass']}</div>
-                                        <div className="text-danger">{this.state.passNotMatch}</div>
-                                        <div className="text-success">{this.state.passMatch}</div>
-                                       
-
-                                    </div>
-                                </div> <br></br>
-                          
-
-
-                                <div className="text-center">
-
-                                    <div className='row'>
-                                        <div className='col-6'>
                                             <button
-                                                type="submit"
-                                                className="btn btn-primary w-100 theme-btn mx-auto"
+                                                type="button"
+                                                className="btn btn-outline-primary theme-btn mx-auto"
+                                                onClick={this.togglePassword2}
                                             >
-                                                Submit
+                                                <i
+                                                    className={
+                                                        (this.state.showNewPass) ? "far fa-eye" : "far fa-eye-slash"
+                                                    }
+                                                ></i>{" "}
                                             </button>
-                                        </div>
-                                        <div className='col-6'>
-                                            <button
-                                                type="reset"
-                                                className="btn btn-warning w-100 theme-btn mx-auto"
-                                                onClick={this.resetForm}
-                                            >
-                                                Reset
-                                            </button>
+                                            <div className="text-danger">{this.state.errors['newPass']}</div>
 
                                         </div>
-                                      
                                     </div>
 
-                                </div>
+                                    <div className="password mb-3 ">
+                                        <div className="form-group">
+                                            <label for="password"><b>Enter Confirm Password:</b><b style={{ color: 'red' }}>*</b></label>
+                                            <input
+                                                type={(this.state.showConfPass) ? "text" : "password"}
+                                                name="confirmPass"
+                                                id="confirmPass"
+                                                onChange={this.handleChange}
+                                                onKeyUp={this.keyUpHandler}
+                                                placeholder="Confirm Password"
+                                                minLength={6}
+                                                maxLength={30}
+                                                style={{ width: '305px', height: '37px' }}
+                                            />
 
-                            </form>
-                            <hr />
+                                            <button
+                                                type="button"
+                                                className="btn btn-outline-primary theme-btn mx-auto"
+                                                onClick={this.togglePassword3}
+                                            >
+                                                <i
+                                                    className={
+                                                        (this.state.showConfPass) ? "far fa-eye" : "far fa-eye-slash"
+                                                    }
+                                                ></i>{" "}
+                                            </button>
+                                            <div className="text-danger">{this.state.errors['confirmPass']}</div>
+                                            <div className="text-danger">{this.state.passNotMatch}</div>
+                                            <div className="text-success">{this.state.passMatch}</div>
 
+                                        </div>
+                                    </div>
+
+                                    <div className="text-center">
+                                        <div className='row'>
+                                            <div className='col-6'>
+                                                <button
+                                                    type="submit"
+                                                    className="btn btn-primary w-100 theme-btn mx-auto"
+                                                >
+                                                    Submit
+                                                </button>
+                                            </div>
+                                            <div className='col-6'>
+                                                <button
+                                                    type="reset"
+                                                    className="btn btn-warning w-100 theme-btn mx-auto"
+                                                    onClick={this.resetForm}
+                                                >
+                                                    Reset
+                                                </button>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </form>
+                                <hr />
+                            </div>
                         </div>
                     </div>
                 </div>
+                {/* </div> */}
+                {/* ------------------------change password------------------------------- */}
+
             </div>
-     ) : (
-        history.push("/"),
-        window.location.reload()
-    );
+        ) : (
+            history.push("/"),
+            window.location.reload()
+        );
     }
 }
 

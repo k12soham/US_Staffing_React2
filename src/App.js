@@ -30,7 +30,7 @@ function App() {
 
   let a= localStorage.getItem("recruiterIDAdmin")
   return (
-    <div className="container">
+    <div className="">
       <Router>
         <ToastContainer />
 		
@@ -65,7 +65,6 @@ function App() {
 
         <Route path="/page" element={<Pageexample/>}></Route>
         <Route path="/pagination" element={<Pagination/>}></Route>
-
   
         <Route path="/modal" element={<ModalWithCSS/>}></Route>      
         </Routes>

@@ -334,10 +334,9 @@ class UpdateCandidateAdmin extends React.Component {
 
         return isAuthenticated =="Admin" ? (
 
-            <div className="">
                 <div className="row">
 
-                    <div className="col-12 h-100 master_backgroung_heder">
+                    <div className="col-12 h-100">
 
 
                         <AdminHeader5 />
@@ -345,7 +344,7 @@ class UpdateCandidateAdmin extends React.Component {
 
                     </div>
 
-                    <div className="col-12 master_backgroung_work scroll-bar">
+                    <div className="col-12 pt-5 mt-5">
 
                         <div className="row">
                             <form onSubmit={this.handleSubmit} id="candidateform">
@@ -540,7 +539,6 @@ class UpdateCandidateAdmin extends React.Component {
                     </div>
 
                 </div >
-            </div >
         ) : (
             history.push("/"),
             window.location.reload()
