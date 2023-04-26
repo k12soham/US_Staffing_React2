@@ -35,7 +35,7 @@ class AddCandidate extends React.Component {
 
             })
 
-            axios.get(`${base_url}/getRequisitionId`)
+        axios.get(`${base_url}/getRequisitionId`)
             .then(json =>
                 this.setState({ RequisitionId: json.data })
             )
@@ -54,11 +54,10 @@ class AddCandidate extends React.Component {
             rateTerm_fd: [],
             visaType_fd: [],
             FormatLen: 0,
-            RequisitionId:[]
+            RequisitionId: []
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        
     }
 
     resetForm = () => {
@@ -74,11 +73,9 @@ class AddCandidate extends React.Component {
         inputs["email"] = '';
         inputs["remark"] = '';
         inputs["reason"] = '';
-
         // this.phoneInputRef.current?.selectCountry('us');
 
         this.setState({ input: inputs });
-
         let errors1 = {};
 
         errors1["cad_name"] = "";
@@ -118,30 +115,25 @@ class AddCandidate extends React.Component {
         }
 
         let req_id = this.state.input;
-     
         let z = req_id.reqid
-    
+
         let object = this.state.RequisitionId.find(obj => obj.id == z);
-       
-            if(object==null)
-            {
-                toast.error("Requisiton not found of this ID",
-                    {
-                        position: "top-right", autoClose: 2000,
-                        style: { position: "absolute", top: "5px", width: "300px" }
-                    }
-                );
 
-                this.refInput.focus();
+        if (object == null) {
+            toast.error("Requisiton not found of this ID",
+                {
+                    position: "top-right", autoClose: 2000,
+                    style: { position: "absolute", top: "5px", width: "300px" }
+                }
+            );
 
-            }
-            else{
+            this.refInput.focus();
+        }
+        else {
 
-                localStorage.setItem('requisitionID', object.requisition_id);
-                this.setState({ input: req_id })
-            }
-
-    
+            localStorage.setItem('requisitionID', object.requisition_id);
+            this.setState({ input: req_id })
+        }
     }
 
     handleSubmit(e) {
@@ -233,7 +225,7 @@ class AddCandidate extends React.Component {
         );
 
         let inputs = {};
-        inputs["reqid"]='';
+        inputs["reqid"] = '';
         inputs["cad_name"] = '';
         inputs["visa_type"] = '';
         inputs["rate_term"] = '';
@@ -263,8 +255,8 @@ class AddCandidate extends React.Component {
         }
         if ((input["cad_name"]) != undefined) {
 
-         var pattern = new RegExp(/^[^\s][a-zA-Z\s]{1,50}$/);
-          //  var pattern = new RegExp("[a-zA-Z]");
+            var pattern = new RegExp(/^[^\s][a-zA-Z\s]{1,50}$/);
+            //  var pattern = new RegExp("[a-zA-Z]");
 
             if (!pattern.test(input["cad_name"])) {
                 isValid = false;
@@ -304,19 +296,13 @@ class AddCandidate extends React.Component {
             errors["phone"] = "This field is required";
         }
 
-        if ((input["phone"])!=null && (input["phone"]!='+1'))
-        {
+        if ((input["phone"]) != null && (input["phone"] != '+1')) {
 
             if (((input["phone"]).length) != (this.state.FormatLen)) {
                 isValid = false;
                 errors["phone"] = "Please enter valid phone number";
             }
-        
         }
-        
-       
-                
-
 
         // -------------email-----------------------------------------------------------------------------------------
         if ((!input["email"])) {
@@ -341,7 +327,6 @@ class AddCandidate extends React.Component {
     // -------------------------------------------- End Validation Code ----------------------------------------------------------
 
     getPhone = (e, value, data) => {
-       
 
         var string = value.format
 
@@ -361,235 +346,219 @@ class AddCandidate extends React.Component {
 
     render() {
         const isAuthenticated = localStorage.getItem('recruiterRole');
+        return isAuthenticated == "TM" ? (
 
-        return isAuthenticated=="TM" ? (
+            <div className='row'>
+                <div className="col-12">
+                    <EmployeeHeader />
+                </div>
 
-            <div className="">
-                <div className="row">
+                <div>
+                    <div className="col-12 pt-5 mt-5">
+                        <form onSubmit={this.handleSubmit}>
 
-                    <div className="col-12 master_backgroung_heder">
-                        <EmployeeHeader />
-                    </div>
+                            <div className="col-lg-12">
+                                <div className="row ">
+                                    <div className="col-12" style={{ paddingLeft: '35px', paddingRight: '20px' }}>
+                                        <div class="form-group">
+                                            <label for="reqid"><b>Job Posting ID:</b><b style={{ color: 'red' }}>*</b></label>
+                                            <input
+                                                style={{ width: '30%' }}
+                                                ref={(input) => { this.refInput = input; }}
+                                                minLength={1}
+                                                maxLength={50}
+                                                type="text"
+                                                name="reqid"
+                                                value={this.state.input.reqid}
+                                                onChange={this.handleChange}
+                                                onBlur={this.CheckRequisiton}
 
-                    <div className="col-12 master_backgroung_work2 scroll-bar-horizontal">
+                                                placeholder="Job Posting ID"
+                                                class="form-control" />
 
-                        <div className="row">
-                            <form onSubmit={this.handleSubmit}>
-
-                                <div className="col-12">
-                                    <div className="row" style={{ paddingTop: '20px' }}>
-                                        <div className="col-12" style={{ paddingLeft: '35px', paddingRight: '20px' }}>
-                                            <div class="form-group">
-                                                <label for="reqid"><b>Job Posting ID:</b><b style={{ color: 'red' }}>*</b></label>
-                                                <input
-                                                    style={{ width: '30%' }}
-                                                    ref={(input) => { this.refInput = input; }}
-                                                    minLength={1}
-                                                    maxLength={50}
-                                                    type="text"
-                                                    name="reqid"
-                                                    value={this.state.input.reqid}
-                                                    onChange={this.handleChange}
-                                                    onBlur={this.CheckRequisiton}
-
-                                                    placeholder="Job Posting ID"
-                                                    class="form-control" />
-
-                                                <div className="text-danger">{this.state.errors.reqid}</div>
-                                            </div>
-                                        </div>
-                                        <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '20px' }}>
-
-                                            <div class="form-group">
-                                                <label for="cad_name"><b>Candidate Name:</b><b style={{ color: 'red' }}>*</b></label>
-                                                <input
-
-                                                    minLength={1}
-                                                    maxLength={50}
-                                                    type="text"
-                                                    name="cad_name"
-                                                    value={this.state.input.cad_name}
-                                                    onChange={this.handleChange}
-                                                    onKeyUp={this.keyUpHandlerSub}
-                                                    placeholder="Candidate Name"
-                                                    class="form-control" />
-
-                                                <div className="text-danger">{this.state.errors.cad_name}</div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="visa_type"><b>Visa Type:</b><b style={{ color: 'red' }}>*</b></label><br />
-                                                <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '100%', textAlign: "left" ,height:'38px'}}
-                                                    name="visa_type" id="visa_type"
-                                                    onChange={this.handleChange}
-                                                    onKeyUp={this.keyUpHandlerReq}
-                                                    value={this.state.input.visa_type}>
-
-                                                    <option value='' hidden> Select Visa Type </option>
-                                                    {
-                                                        this.state.visaType_fd.map((vt) => (
-
-                                                            <option value={vt.visa_type}>{vt.visa_type}</option>
-                                                        ))
-                                                    }
-                                                </select>
-
-                                                <div className="text-danger">{this.state.errors.visa_type}</div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="rate_term"><b>Rate Term:</b><b style={{ color: 'red' }}>*</b></label><br />
-                                                <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '100%', textAlign: "left",height:'38px' }}
-                                                    name="rate_term" id="rate_term"
-                                                    onChange={this.handleChange}
-                                                    onKeyUp={this.keyUpHandlerReq}
-                                                    value={this.state.input.rate_term}>
-
-                                                    <option value='' hidden> Select Rate Term </option>
-
-                                                    {
-                                                        this.state.rateTerm_fd.map((rt) => (
-
-                                                            <option value={rt.rate_term}>{rt.rate_term}</option>
-                                                        ))
-
-                                                    }
-                                                </select>
-
-                                                <div className="text-danger">{this.state.errors.rate_term}</div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="submitted_rate"><b>Submitted Rate ($):</b><b style={{ color: 'red' }}>*</b></label>
-                                                <input
-                                                    minLength={1}
-                                                    maxLength={4}
-                                                    type="text"
-                                                    name="submitted_rate"
-                                                    value={this.state.input.submitted_rate}
-                                                    onChange={this.handleChange}
-                                                    placeholder="Submitted Rate in $/hr"
-
-                                                    class="form-control" />
-
-                                                <div className="text-danger">{this.state.errors.submitted_rate}</div>
-                                            </div>
-
-                                        </div>
-                                        <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '30px' }}>
-                                            <div class="form-group">
-                                                <label for="phone"><b>Phone :</b><b style={{ color: 'red' }}>*</b></label>
-                                                
-                                                    <PhoneInput
-
-                                                    inputStyle={{ width: '100%',height:'37px' }}
-                                                   preferredCountries={['us']}
-                                                    onlyCountries={['us','in','gb','sg','ae']}
-                                                    countryCodeEditable={false}
-                                                    name="phone"
-                                                    country={'us'}
-                                                    placeholder='Phone'
-                                                    value={this.state.input.phone}
-                                                    onChange={this.getPhone}
-                                                    searchStyle={{ margin: "0", width: "97%", height: "30px" }}
-                                                    
-
-                                                    />
-
-
-
-
-                                                <div className="text-danger">{this.state.errors.phone}</div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="email"><b>Email:</b><b style={{ color: 'red' }}>*</b></label>
-                                                <input
-                                                    minLength={2}
-                                                    maxLength={50}
-                                                    type="text"
-                                                    name="email"
-                                                    value={this.state.input.email}
-                                                    onChange={this.handleChange}
-                                                    placeholder="Email"
-                                                    class="form-control" />
-
-                                                <div className="text-danger">{this.state.errors.email}</div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="remark"><b>Remark:</b></label>
-                                                <input
-                                                    minLength={1}
-                                                    maxLength={200}
-                                                    type="text"
-                                                    name="remark"
-                                                    value={this.state.input.remark}
-                                                    onChange={this.handleChange}
-                                                    placeholder="Remark"
-
-                                                    class="form-control" />
-
-                                                <div className="text-danger">{this.state.errors.remark}</div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="reason"><b>Reason:</b></label>
-                                                <input
-                                                    minLength={1}
-                                                    maxLength={200}
-                                                    type="text"
-                                                    name="reason"
-                                                    value={this.state.input.reason}
-                                                    onChange={this.handleChange}
-                                                    placeholder="Reason"
-
-                                                    class="form-control" />
-
-                                                <div className="text-danger">{this.state.errors.reason}</div>
-                                            </div>
-                                            
+                                            <div className="text-danger">{this.state.errors.reqid}</div>
                                         </div>
                                     </div>
-                                </div>
+                                    <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '20px' }}>
 
-                                <div className="col-11" style={{ padding: '0px', marginLeft: '0px' }}>
-                                    <br />
+                                        <div class="form-group">
+                                            <label for="cad_name"><b>Candidate Name:</b><b style={{ color: 'red' }}>*</b></label>
+                                            <input
 
-                                    <div className="text-center">
-                                        <div className='row'>
-                                            <div className='col-4'></div>
-                                            <div className='col-2'>
-                                                <button
-                                                    id="btn1"
-                                                    type="submit"
-                                                    className="btn btn-primary w-100 theme-btn mx-auto"
+                                                minLength={1}
+                                                maxLength={50}
+                                                type="text"
+                                                name="cad_name"
+                                                value={this.state.input.cad_name}
+                                                onChange={this.handleChange}
+                                                onKeyUp={this.keyUpHandlerSub}
+                                                placeholder="Candidate Name"
+                                                class="form-control" />
 
-                                                >
-                                                    Submit
-                                                </button>
-                                            </div>
-                                            <div className='col-2'>
-                                                <button
-                                                    id="btn2"
-                                                    type="reset"
-                                                    className="btn btn-warning w-100 theme-btn mx-auto"
-                                                    onClick={this.resetForm}
-                                                >
-                                                    Reset
-                                                </button>
-
-                                            </div>
-                                            <div className='col-4'></div>
+                                            <div className="text-danger">{this.state.errors.cad_name}</div>
                                         </div>
+
+                                        <div class="form-group">
+                                            <label for="visa_type"><b>Visa Type:</b><b style={{ color: 'red' }}>*</b></label><br />
+                                            <select class="btn btn-secondary dropdown-toggle"
+                                                style={{ width: '100%', textAlign: "left", height: '38px' }}
+                                                name="visa_type" id="visa_type"
+                                                onChange={this.handleChange}
+                                                onKeyUp={this.keyUpHandlerReq}
+                                                value={this.state.input.visa_type}>
+
+                                                <option value='' hidden> Select Visa Type </option>
+                                                {
+                                                    this.state.visaType_fd.map((vt) => (
+
+                                                        <option value={vt.visa_type}>{vt.visa_type}</option>
+                                                    ))
+                                                }
+                                            </select>
+
+                                            <div className="text-danger">{this.state.errors.visa_type}</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="rate_term"><b>Rate Term:</b><b style={{ color: 'red' }}>*</b></label><br />
+                                            <select class="btn btn-secondary dropdown-toggle"
+                                                style={{ width: '100%', textAlign: "left", height: '38px' }}
+                                                name="rate_term" id="rate_term"
+                                                onChange={this.handleChange}
+                                                onKeyUp={this.keyUpHandlerReq}
+                                                value={this.state.input.rate_term}>
+
+                                                <option value='' hidden> Select Rate Term </option>
+                                                {
+                                                    this.state.rateTerm_fd.map((rt) => (
+                                                        <option value={rt.rate_term}>{rt.rate_term}</option>
+                                                    ))
+                                                }
+                                            </select>
+
+                                            <div className="text-danger">{this.state.errors.rate_term}</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="submitted_rate"><b>Submitted Rate ($):</b><b style={{ color: 'red' }}>*</b></label>
+                                            <input
+                                                minLength={1}
+                                                maxLength={4}
+                                                type="text"
+                                                name="submitted_rate"
+                                                value={this.state.input.submitted_rate}
+                                                onChange={this.handleChange}
+                                                placeholder="Submitted Rate in $/hr"
+                                                class="form-control" />
+
+                                            <div className="text-danger">{this.state.errors.submitted_rate}</div>
+                                        </div>
+
+                                    </div>
+                                    <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '30px' }}>
+                                        <div class="form-group">
+                                            <label for="phone"><b>Phone :</b><b style={{ color: 'red' }}>*</b></label>
+
+                                            <PhoneInput
+                                                inputStyle={{ width: '100%', height: '37px' }}
+                                                preferredCountries={['us']}
+                                                onlyCountries={['us', 'in', 'gb', 'sg', 'ae']}
+                                                countryCodeEditable={false}
+                                                name="phone"
+                                                country={'us'}
+                                                placeholder='Phone'
+                                                value={this.state.input.phone}
+                                                onChange={this.getPhone}
+                                                searchStyle={{ margin: "0", width: "97%", height: "30px" }}
+                                            />
+
+                                            <div className="text-danger">{this.state.errors.phone}</div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="email"><b>Email:</b><b style={{ color: 'red' }}>*</b></label>
+                                            <input
+                                                minLength={2}
+                                                maxLength={50}
+                                                type="text"
+                                                name="email"
+                                                value={this.state.input.email}
+                                                onChange={this.handleChange}
+                                                placeholder="Email"
+                                                class="form-control" />
+
+                                            <div className="text-danger">{this.state.errors.email}</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="remark"><b>Remark:</b></label>
+                                            <input
+                                                minLength={1}
+                                                maxLength={200}
+                                                type="text"
+                                                name="remark"
+                                                value={this.state.input.remark}
+                                                onChange={this.handleChange}
+                                                placeholder="Remark"
+
+                                                class="form-control" />
+
+                                            <div className="text-danger">{this.state.errors.remark}</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="reason"><b>Reason:</b></label>
+                                            <input
+                                                minLength={1}
+                                                maxLength={200}
+                                                type="text"
+                                                name="reason"
+                                                value={this.state.input.reason}
+                                                onChange={this.handleChange}
+                                                placeholder="Reason"
+
+                                                class="form-control" />
+
+                                            <div className="text-danger">{this.state.errors.reason}</div>
+                                        </div>
+
                                     </div>
                                 </div>
-                                <div className="col-3"></div>
-                            </form>
-                        </div>
+                            </div>
 
+                            <div className="col-11" style={{ padding: '0px', marginLeft: '0px' }}>
+                                <br />
+
+                                <div className="text-center">
+                                    <div className='row'>
+                                        <div className='col-4'></div>
+                                        <div className='col-2'>
+                                            <button
+                                                id="btn1"
+                                                type="submit"
+                                                className="btn btn-primary w-100 theme-btn mx-auto"
+
+                                            >
+                                                Submit
+                                            </button>
+                                        </div>
+                                        <div className='col-2'>
+                                            <button
+                                                id="btn2"
+                                                type="reset"
+                                                className="btn btn-warning w-100 theme-btn mx-auto"
+                                                onClick={this.resetForm}
+                                            >
+                                                Reset
+                                            </button>
+
+                                        </div>
+                                        <div className='col-4'></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-3"></div>
+                        </form>
                     </div>
+                </div>
+            </div>
 
-                </div >
-            </div >
         ) : (
             history.push("/"),
             window.location.reload()

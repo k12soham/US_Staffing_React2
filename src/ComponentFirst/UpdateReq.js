@@ -356,14 +356,13 @@ class UpdateReq extends React.Component {
 
         return isAuthenticated=="TM" ? (
 
-            <div className="">
                 <div className="row">
 
-                    <div className="col-12 h-100 master_backgroung_heder">                        
+                    <div className="col-12">                        
                                 <EmployeeHeader />                                                   
                     </div>
 
-                    <div className="col-12 master_backgroung_work scroll-bar">
+                    <div className="col-12 pt-4 mt-5">
 
                         <div className="row">
                             <form onSubmit={this.handleSubmit}>
@@ -586,7 +585,6 @@ class UpdateReq extends React.Component {
                     </div>
 
                 </div >
-            </div >
         ) : (
             history.push("/"),
             window.location.reload()

@@ -90,6 +90,8 @@ class ModalWithCSS extends React.Component {
             contentLabel="onRequestClose Example"
             onRequestClose={this.handleCloseModal}
            className="Modal"
+         
+
           // overlayClassName="Overlay"
           >
             <div style={{ textAlign: "right" }}>

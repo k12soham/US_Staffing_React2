@@ -182,7 +182,6 @@ class UpdateProfile extends React.Component {
         return isValid;
     }
     // ------------------------------------- END VALIADATION CODE---------------------------------------------------------------
-
    
     resetForm = () => {
 
@@ -195,7 +194,6 @@ class UpdateProfile extends React.Component {
         errors["recruiter_email"]=undefined;
         this.setState({ input: inputs });
         this.setState({ errors: errors });
-
      
     }
 
@@ -204,8 +202,8 @@ class UpdateProfile extends React.Component {
 
         return isAuthenticated=="TM" || isAuthenticated=="Admin"  ? (
 
-            <div className="row">
-                <div className=" master_backgroung_heder">
+            <div>
+                <div className='col-12'>
                 {
                     isAuthenticated=="TM" ?
                      (
@@ -221,7 +219,7 @@ class UpdateProfile extends React.Component {
                     <img src="usa.png" width="670" height="657" alt="US staffing app"></img>
                 </div> */}
 
-                <div className="col-12 col-md-7 col-lg-6 auth-main-col mt-5 ">
+                <div className="col-12 col-md-7 col-lg-6 auth-main-col mt-5 pt-5">
                
                     <div className="d-flex flex-column align-content-end pt-2 pb-5 border border-5">
                     

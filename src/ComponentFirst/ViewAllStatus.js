@@ -71,16 +71,14 @@ function ViewAllStatus() {
     }
 
     return (
-        <div className="">
             <div className="row">
 
-                <div className="col-12 h-100 master_backgroung_heder">
+                <div className="col-12 h-100">
                     <EmployeeHeader />
                 </div>
 
-                <div className=" col-12 master_backgroung_work2 scroll-bar-horizontal">
+                <div className=" col-12 pt-5 mt-5">
 
-                    <div style={{ width: '100%' }}  >
                     <br></br>  <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px' }}>
                             <thead>
                                 <tr>
@@ -99,10 +97,9 @@ function ViewAllStatus() {
                             </tbody>
                         </Table>
 
-                    </div>
                 </div>
             </div>
-        </div>
+   
 
     );
 }

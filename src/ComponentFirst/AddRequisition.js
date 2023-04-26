@@ -23,7 +23,7 @@ class AddRequisition extends React.Component {
                 this.setState({ duration_fd: json.data })
             )
             .catch(error => {
-          
+
             })
 
         axios.get(`${base_url}/getAllPositionType`)
@@ -31,7 +31,7 @@ class AddRequisition extends React.Component {
                 this.setState({ positionType_fd: json.data })
             )
             .catch(error => {
-               
+
             })
 
         axios.get(`${base_url}/getAllRequisitorFd`)
@@ -39,8 +39,8 @@ class AddRequisition extends React.Component {
                 this.setState({ requisitor_fd: json.data })
             )
             .catch(error => {
-              
-              
+
+
             })
 
         axios.get(`${base_url}/getAllClient`)
@@ -48,10 +48,10 @@ class AddRequisition extends React.Component {
                 this.setState({ client_fd: json.data })
             )
             .catch(error => {
-                
+
             })
 
-            axios.get(`${base_url}/getRequisitionId`)
+        axios.get(`${base_url}/getRequisitionId`)
             .then(json =>
                 this.setState({ RequisitionId: json.data })
             )
@@ -74,7 +74,7 @@ class AddRequisition extends React.Component {
             client_fd: [],
             setReqList: [],
             requisitionId1: undefined,
-            RequisitionId:[],
+            RequisitionId: [],
 
             reqval: '',
 
@@ -112,7 +112,7 @@ class AddRequisition extends React.Component {
 
     }
 
-    
+
 
     handleChange(e) {
 
@@ -123,65 +123,60 @@ class AddRequisition extends React.Component {
             add_cls["client"] = null
         }
         this.setState({
-            input: add_cls,reqval: a
+            input: add_cls, reqval: a
         });
     }
 
     handleSubmit(e) {
         e.preventDefault();
-        if(this.state.input["id"]!=null)
-        {
+        if (this.state.input["id"] != null) {
             this.state.input["id"] = this.state.input["id"].trim();
             this.state.input["id"] = this.state.input["id"].replaceAll("#", "%23")
         }
 
-        if(this.state.input["jobTitle"]!=null)
-        {
+        if (this.state.input["jobTitle"] != null) {
             this.state.input["jobTitle"] = this.state.input["jobTitle"].trim();
             this.state.input["jobTitle"] = this.state.input["jobTitle"].replaceAll("#", "%23")
         }
 
-        if(this.state.input["location"]!=null)
-        {
+        if (this.state.input["location"] != null) {
             this.state.input["location"] = this.state.input["location"].trim();
             this.state.input["location"] = this.state.input["location"].replaceAll("#", "%23")
         }
 
-        if(this.state.input["clientrate"]!=null)
-        {
+        if (this.state.input["clientrate"] != null) {
             this.state.input["clientrate"] = this.state.input["clientrate"].trim();
             this.state.input["clientrate"] = this.state.input["clientrate"].replaceAll("#", "%23")
         }
 
-        if(this.state.input["skills"]!=null)
-        {
+        if (this.state.input["skills"] != null) {
             this.state.input["skills"] = this.state.input["skills"].trim();
             this.state.input["skills"] = this.state.input["skills"].replaceAll("#", "%23")
         }
-        
-       
-     
+
+
+
 
 
         if (this.validate()) {
 
-          
+
             let add_cls = this.state.input;
             add_cls[e.target.name] = e.target.value;
 
 
 
             this.post_requisition(add_cls);
-            
+
         }
         // 👇️ clear all input values in the form
         e.target.reset();
     }
 
     post_requisition = (data) => {
-      
+
         let recId = this.state.empID = localStorage.getItem("recruiterID");
-       let z=  parseInt(recId);
+        let z = parseInt(recId);
         let d1 = data["req"];
         let d2 = data["id"];
         let d3 = data["client"];
@@ -196,34 +191,35 @@ class AddRequisition extends React.Component {
         &duration=${d5}&client_rate=${d6}&location=${d7}&position_type=${d8}&skills=${d9}&recruiter_id=${z}`)
             .then(
 
-            (response) => {
-                       
-                
-                 let a = response.data.requisition_id;
+                (response) => {
 
-                if(a != undefined){
-                    localStorage.setItem("requisitionID", a);
-                    this.setState({ requisitionId1: a });
-                }              
 
-                toast.success("Requisition added successfully!",
-                    { position: "top-right" ,
-                    autoClose: 1000,
-                    style: { position: "absolute", top: "5px", width: "300px" }
+                    let a = response.data.requisition_id;
+
+                    if (a != undefined) {
+                        localStorage.setItem("requisitionID", a);
+                        this.setState({ requisitionId1: a });
+                    }
+
+                    toast.success("Requisition added successfully!",
+                        {
+                            position: "top-right",
+                            autoClose: 1000,
+                            style: { position: "absolute", top: "5px", width: "300px" }
+                        }
+                    );
+
+
+                    let navigate = useNavigate();
+                    navigate("/addRequisition");
+
+                },
+                (error) => {
+                    console.log(error);
+                    console.log("Error");
+                    alert("Please enter valid details OR \nyou are already working on this requisition")
                 }
-                );
-
-                
-                let navigate = useNavigate();
-                navigate("/addRequisition");
-               
-            },
-            (error) => {
-                console.log(error);
-                console.log("Error");
-                alert("Please enter valid details OR \nyou are already working on this requisition")
-            }
-        );
+            );
 
         let inputs = {};
         inputs["req"] = '';
@@ -245,20 +241,20 @@ class AddRequisition extends React.Component {
         let input = this.state.input;
         let errors = {};
         let isValid = true;
-       
+
         if ((!input["req"])) {
             isValid = false;
             errors["req"] = "This field is required";
         }
-       
+
 
         // -------------id---------------------------------------------------------------------------------------------
         if ((!input["id"])) {
             isValid = false;
             errors["id"] = "This field is required";
         }
-   
-      
+
+
 
         // -------------client-----------------------------------------------------------------------------------------
         if ((!input["client"])) {
@@ -306,7 +302,7 @@ class AddRequisition extends React.Component {
             isValid = false;
             errors["location"] = "This field is required";
         }
-       
+
 
         // -------------positionType-----------------------------------------------------------------------------------------
         if ((!input["positionType"])) {
@@ -322,7 +318,7 @@ class AddRequisition extends React.Component {
             if ((input["skills"]) != undefined) {
 
                 var pattern = new RegExp(/^(?=.{0,300}$)/);
-               
+
                 if (!pattern.test(input["skills"])) {
                     isValid = false;
                     errors["skills"] = "Please enter valid skills.";
@@ -345,49 +341,48 @@ class AddRequisition extends React.Component {
     // -------------------------------------------- If Requisition Exist --------------------------------------
     keyUpHandlerID = (e) => {
 
-    
+
         let reqID = e.target.value;
         let object = this.state.RequisitionId.find(obj => obj.id == reqID);
-       
-        if(object!=null)
-        {
 
-                let inputs = this.state.input;
+        if (object != null) {
 
-                inputs["req"] = object.requisition_from;
-                inputs["id"] = object.id;
-                inputs["client"] = object.client;
-                inputs["jobTitle"] = object.job_title;
-                inputs["duration"] = object.duration;
-                inputs["clientrate"] = object.client_rate;
-                inputs["location"] = object.location;
-                inputs["positionType"] = object.position_type;
-                inputs["skills"] = object.skills;
+            let inputs = this.state.input;
 
-                this.setState({ input: inputs });
+            inputs["req"] = object.requisition_from;
+            inputs["id"] = object.id;
+            inputs["client"] = object.client;
+            inputs["jobTitle"] = object.job_title;
+            inputs["duration"] = object.duration;
+            inputs["clientrate"] = object.client_rate;
+            inputs["location"] = object.location;
+            inputs["positionType"] = object.position_type;
+            inputs["skills"] = object.skills;
 
-                let a3 = object.requisition_id;
-                let b = object.id;
+            this.setState({ input: inputs });
 
-                this.setState({
-                    requisitionId1: a3,
-                    RID: b,
-                });
-                let text = "On this requisiton recruiters are already working. \nWould you like to add yourself for this requisition?"
-                if (window.confirm(text) == true) {
-                    let add_cls = this.state.input;
-                    add_cls[e.target.name] = e.target.value;
-                    this.post_requisition(add_cls)
-                }
+            let a3 = object.requisition_id;
+            let b = object.id;
+
+            this.setState({
+                requisitionId1: a3,
+                RID: b,
+            });
+            let text = "On this requisiton recruiters are already working. \nWould you like to add yourself for this requisition?"
+            if (window.confirm(text) == true) {
+                let add_cls = this.state.input;
+                add_cls[e.target.name] = e.target.value;
+                this.post_requisition(add_cls)
             }
-            else{
-                console.log("error")
-            }
-    
-        
-                
+        }
+        else {
+            console.log("error")
+        }
 
-               
+
+
+
+
     }
 
     // -------------------------------------------- render ----------------------------------------------------
@@ -395,235 +390,231 @@ class AddRequisition extends React.Component {
 
         const isAuthenticated = localStorage.getItem('recruiterRole');
 
-        return isAuthenticated=="TM" ? (
+        return isAuthenticated == "TM" ? (
 
-            <div className="">
-                <div className="row">
+            <div className='row'>
+                <div className='col-12'>
+                    <EmployeeHeader />
+                </div>
 
-                    <div className="col-12  master_backgroung_heder">
-                        <EmployeeHeader />
-                    </div>
+                <div className="col-12 pt-5 mt-5">
 
-                    <div className="col-12 master_backgroung_work2 scroll-bar-horizontal">
+                        <form onSubmit={this.handleSubmit}>
 
-                        <div className="row">
-                            <form onSubmit={this.handleSubmit}>
+                            <div className="col-12">
+                                <div className="row">
 
-                                <div className="col-12">
-                                    <div className="row" style={{ paddingTop: '2%' }}>
+                                    <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '20px' }}>
 
-                                        <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '20px' }}>
+                                        <div class="form-group">
+                                            <label for="req"><b>Requisition From:</b><b style={{ color: 'red' }}>*</b></label><br />
+                                            <select class="btn btn-secondary dropdown-toggle"
+                                                ref={(input) => { this.refInput = input; }}
+                                                style={{ width: '100%', textAlign: "left" }}
+                                                name="req" id="req"
+                                                onChange={this.handleChange}
+                                                value={this.state.input.req}>
 
-                                            <div class="form-group">
-                                                <label for="req"><b>Requisition From:</b><b style={{color:'red'}}>*</b></label><br />
-                                                <select class="btn btn-secondary dropdown-toggle"
-                                                    ref={(input) => { this.refInput = input; }}
-                                                    style={{ width: '100%', textAlign:"left" }}
-                                                    name="req" id="req"
-                                                    onChange={this.handleChange}
-                                                    value={this.state.input.req}>
-
-                                                    <option hidden value='' default selected> Select MSP/VMS/Commercial Client </option>
-                                                    {
-                                                        this.state.requisitor_fd.map((rq) => (
-                                                            <option value={rq.requisitor_fd}>{rq.requisitor_fd}</option>
-                                                        ))
-                                                    }
-                                                </select>
-                                                <div className="text-danger">{this.state.errors.req}</div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                <label for="id"><b>Job Posting ID:</b><b style={{color:'red'}}>*</b></label>
-                                                <input
-                                                   // minLength={1}
-                                                    maxLength={50}
-                                                    type="text"
-                                                    name="id"
-                                                    value={this.state.input.id}
-                                                    onChange={this.handleChange}
-                                                    onBlur={this.keyUpHandlerID}
-                                                    placeholder="Job Posting ID"
-                                                    class="form-control" />
-
-                                                <div className="text-danger">{this.state.errors.id}</div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="client"><b>Client:</b><b style={{color:'red'}}>*</b></label><br />
-                                                <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '100%', textAlign:"left"  }}
-                                                    name="client" id="client"
-                                                    onChange={this.handleChange}                                    
-                                                    value={this.state.input.client}>
-
-                                                    <option hidden value='' default selected> Select Client Name </option>
-                                                    {
-                                                        this.state.client_fd.map((cl) => (
-
-                                                            cl.requisitor_fd.requisitor_fd == this.state.input.req ?
-                                                                (
-                                                                    <option value={cl.client_name}>{cl.client_name}</option>
-                                                                )
-                                                                :
-                                                                (
-                                                                    null
-                                                                )
-                                                        ))
-                                                    }
-
-                                                </select>
-
-                                                <div className="text-danger">{this.state.errors.client}</div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="jobTitle"><b>Job Title:</b><b style={{color:'red'}}>*</b></label>
-                                                <input
-                                                    minLength={1}
-                                                    maxLength={50}
-                                                    type="text"
-                                                    name="jobTitle"
-                                                    value={this.state.input.jobTitle}
-                                                    onChange={this.handleChange}
-                                                  
-                                                    placeholder="Job Title"
-                                                    class="form-control" />
-
-                                                <div className="text-danger">{this.state.errors.jobTitle}</div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="duration"><b>Duration:</b><b style={{color:'red'}}>*</b></label><br />
-                                                <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '100%', textAlign:"left"  }}
-                                                    name="duration" id="duration"
-                                                    onChange={this.handleChange}
-                                                    onKeyUp={this.keyUpHandlerReq}
-                                                    value={this.state.input.duration}>
-
-                                                    <option hidden value=''>Select Duration</option>
-                                                    {
-                                                        this.state.duration_fd.map((dr) => (
-                                                            <option value={dr.duration}>{dr.duration}</option>
-                                                        ))
-                                                    }
-
-                                                </select>
-                                                <div className="text-danger">{this.state.errors.duration}</div>
-                                            </div>
-
+                                                <option hidden value='' default selected> Select MSP/VMS/Commercial Client </option>
+                                                {
+                                                    this.state.requisitor_fd.map((rq) => (
+                                                        <option value={rq.requisitor_fd}>{rq.requisitor_fd}</option>
+                                                    ))
+                                                }
+                                            </select>
+                                            <div className="text-danger">{this.state.errors.req}</div>
                                         </div>
-                                        <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '30px' }}>
-                                            <div class="form-group">
-                                                <label for="clientrate"><b>Client Rate ($):</b><b style={{color:'red'}}>*</b></label>
-                                                <input
-                                                    minLength={1}
-                                                    maxLength={5}
-                                                    type="text"
-                                                    name="clientrate"
-                                                    value={this.state.input.clientrate}
-                                                    onChange={this.handleChange}
-                                                 
-                                                    placeholder="Client Rate in $/hr"
 
-                                                    class="form-control" />
+                                        <div class="form-group">
+                                            <label for="id"><b>Job Posting ID:</b><b style={{ color: 'red' }}>*</b></label>
+                                            <input
+                                                // minLength={1}
+                                                maxLength={50}
+                                                type="text"
+                                                name="id"
+                                                value={this.state.input.id}
+                                                onChange={this.handleChange}
+                                                onBlur={this.keyUpHandlerID}
+                                                placeholder="Job Posting ID"
+                                                class="form-control" />
 
-                                                <div className="text-danger">{this.state.errors.clientrate}</div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="location"><b>Location:</b><b style={{color:'red'}}>*</b></label>
-                                                <input
-                                                    minLength={1}
-                                                    maxLength={50}
-                                                    type="text"
-                                                    name="location"
-                                                    value={this.state.input.location}
-                                                    onChange={this.handleChange}
-                                                  
-                                                    placeholder="Location"
-                                                    class="form-control" />
+                                            <div className="text-danger">{this.state.errors.id}</div>
+                                        </div>
 
-                                                <div className="text-danger">{this.state.errors.location}</div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="positionType"><b>Position Type:</b><b style={{color:'red'}}>*</b></label><br />
-                                                <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '100%', textAlign:"left"  }}
-                                                    name="positionType" id="positionType"
-                                                    onChange={this.handleChange}
-                                                
-                                                    value={this.state.input.positionType}>
+                                        <div class="form-group">
+                                            <label for="client"><b>Client:</b><b style={{ color: 'red' }}>*</b></label><br />
+                                            <select class="btn btn-secondary dropdown-toggle"
+                                                style={{ width: '100%', textAlign: "left" }}
+                                                name="client" id="client"
+                                                onChange={this.handleChange}
+                                                value={this.state.input.client}>
 
-                                                    <option hidden value='' default selected> Select Position Type </option>
-                                                    {
-                                                        this.state.positionType_fd.map((pt) => (
+                                                <option hidden value='' default selected> Select Client Name </option>
+                                                {
+                                                    this.state.client_fd.map((cl) => (
 
-                                                            <option value={pt.position_type}>{pt.position_type}</option>
-                                                        ))
-                                                    }
+                                                        cl.requisitor_fd.requisitor_fd == this.state.input.req ?
+                                                            (
+                                                                <option value={cl.client_name}>{cl.client_name}</option>
+                                                            )
+                                                            :
+                                                            (
+                                                                null
+                                                            )
+                                                    ))
+                                                }
 
-                                                </select>
+                                            </select>
 
-                                                <div className="text-danger">{this.state.errors.positionType}</div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="closure"><b>Skills:</b><b style={{color:'red'}}>*</b></label>
-                                                <textarea
+                                            <div className="text-danger">{this.state.errors.client}</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="jobTitle"><b>Job Title:</b><b style={{ color: 'red' }}>*</b></label>
+                                            <input
+                                                minLength={1}
+                                                maxLength={50}
+                                                type="text"
+                                                name="jobTitle"
+                                                value={this.state.input.jobTitle}
+                                                onChange={this.handleChange}
 
-                                                    minLength={1}
-                                                    maxLength={200}
-                                                    type="text"
-                                                    name="skills"
-                                                    value={this.state.input.skills}
-                                                    onChange={this.handleChange}
-                                               
-                                                    placeholder="Skills"
+                                                placeholder="Job Title"
+                                                class="form-control" />
 
-                                                    class="form-control"
-                                                    style={{ height: '130px' }} />
+                                            <div className="text-danger">{this.state.errors.jobTitle}</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="duration"><b>Duration:</b><b style={{ color: 'red' }}>*</b></label><br />
+                                            <select class="btn btn-secondary dropdown-toggle"
+                                                style={{ width: '100%', textAlign: "left" }}
+                                                name="duration" id="duration"
+                                                onChange={this.handleChange}
+                                                onKeyUp={this.keyUpHandlerReq}
+                                                value={this.state.input.duration}>
 
-                                                <div className="text-danger">{this.state.errors.skills}</div>
-                                            </div>
+                                                <option hidden value=''>Select Duration</option>
+                                                {
+                                                    this.state.duration_fd.map((dr) => (
+                                                        <option value={dr.duration}>{dr.duration}</option>
+                                                    ))
+                                                }
+
+                                            </select>
+                                            <div className="text-danger">{this.state.errors.duration}</div>
+                                        </div>
+
+                                    </div>
+                                    <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '30px' }}>
+                                        <div class="form-group">
+                                            <label for="clientrate"><b>Client Rate ($):</b><b style={{ color: 'red' }}>*</b></label>
+                                            <input
+                                                minLength={1}
+                                                maxLength={5}
+                                                type="text"
+                                                name="clientrate"
+                                                value={this.state.input.clientrate}
+                                                onChange={this.handleChange}
+
+                                                placeholder="Client Rate in $/hr"
+
+                                                class="form-control" />
+
+                                            <div className="text-danger">{this.state.errors.clientrate}</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="location"><b>Location:</b><b style={{ color: 'red' }}>*</b></label>
+                                            <input
+                                                minLength={1}
+                                                maxLength={50}
+                                                type="text"
+                                                name="location"
+                                                value={this.state.input.location}
+                                                onChange={this.handleChange}
+
+                                                placeholder="Location"
+                                                class="form-control" />
+
+                                            <div className="text-danger">{this.state.errors.location}</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="positionType"><b>Position Type:</b><b style={{ color: 'red' }}>*</b></label><br />
+                                            <select class="btn btn-secondary dropdown-toggle"
+                                                style={{ width: '100%', textAlign: "left" }}
+                                                name="positionType" id="positionType"
+                                                onChange={this.handleChange}
+
+                                                value={this.state.input.positionType}>
+
+                                                <option hidden value='' default selected> Select Position Type </option>
+                                                {
+                                                    this.state.positionType_fd.map((pt) => (
+
+                                                        <option value={pt.position_type}>{pt.position_type}</option>
+                                                    ))
+                                                }
+
+                                            </select>
+
+                                            <div className="text-danger">{this.state.errors.positionType}</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="closure"><b>Skills:</b><b style={{ color: 'red' }}>*</b></label>
+                                            <textarea
+
+                                                minLength={1}
+                                                maxLength={200}
+                                                type="text"
+                                                name="skills"
+                                                value={this.state.input.skills}
+                                                onChange={this.handleChange}
+
+                                                placeholder="Skills"
+
+                                                class="form-control"
+                                                style={{ height: '130px' }} />
+
+                                            <div className="text-danger">{this.state.errors.skills}</div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div className="col-11" style={{ padding: '0px', marginLeft: '0px' }}>
-                                    <br />
+                            <div className="col-11" style={{ padding: '0px', marginLeft: '0px' }}>
+                                <br />
 
-                                    <div className="text-center">
-                                        <div className='row'>
-                                            <div className='col-4'></div>
-                                            <div className='col-2'>
-                                                <button
-                                                    type="submit"
-                                                    className="btn btn-primary w-100 theme-btn mx-auto"
-                                                >
-                                                    Add
-                                                </button>
-                                            </div>
-                                            
-                                            <div className='col-2'>
-                                                <button
-                                                    type="reset"
-                                                    className="btn btn-warning w-100 theme-btn mx-auto"
-                                                    onClick={this.resetForm}
-                                                >
-                                                    Reset
-                                                </button>
-                                            </div>
-
-                                            <div className='col-2'></div>
+                                <div className="text-center">
+                                    <div className='row'>
+                                        <div className='col-4'></div>
+                                        <div className='col-2'>
+                                            <button
+                                                type="submit"
+                                                className="btn btn-primary w-100 theme-btn mx-auto"
+                                            >
+                                                Add
+                                            </button>
                                         </div>
+
+                                        <div className='col-2'>
+                                            <button
+                                                type="reset"
+                                                className="btn btn-warning w-100 theme-btn mx-auto"
+                                                onClick={this.resetForm}
+                                            >
+                                                Reset
+                                            </button>
+                                        </div>
+
+                                        <div className='col-2'></div>
                                     </div>
                                 </div>
-                                <div className="col-3"></div>
-                            </form>
-                        </div>
+                            </div>
+                            <div className="col-3"></div>
+                        </form>
 
-                    </div>
+                </div>
 
-                </div >
-            </div >
+            </div>
+
         ) : (
             history.push("/"),
             window.location.reload()
