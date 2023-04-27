@@ -15,8 +15,8 @@ function EmployeeHeader() {
   return (
 
     <div>
-      <nav class="navbar">
-        <div class="navbar-container container">
+      <nav class="navbar fixed-top navbar-dark bg-white  ">
+        <div class="navbar-container ">
           <ul class="menu-items">
             <li><a href="/addRequisition" action className={splitLocation[1] == "addRequisition" ? "text-info font-italic" : ""}>Add Requisition</a></li>
             <li><a href="/addCandidate" action className={splitLocation[1] == "addCandidate" ? "text-info font-italic" : ""}>Submit Candidate</a></li>

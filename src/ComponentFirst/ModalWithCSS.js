@@ -141,10 +141,10 @@ class ModalWithCSS extends React.Component {
                     Change Recruiter Password
                   </button>
                 </div>
-              ):
-              (
-                console.log("")
+              ):(
+                []
               )
+             
             }
   </div>
                 <div class="form-group">

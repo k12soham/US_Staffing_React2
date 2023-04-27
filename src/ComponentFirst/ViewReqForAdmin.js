@@ -449,7 +449,7 @@ function ViewReqForAdmin() {
                                 {
                                     cl.recruiter == null ?
                                         (
-                                            console.log("null")
+                                           {}
                                         ) :
                                         (
                                             cl.recruiter.recruiter_name
@@ -461,7 +461,7 @@ function ViewReqForAdmin() {
                                 {
                                     cl.candidate == null ?
                                         (
-                                            console.log("null")
+                                            {}
                                         ) :
                                         (
                                             cl.candidate.candidate_name
@@ -474,7 +474,7 @@ function ViewReqForAdmin() {
                         {
                             cl.candidate == null ?
                                 (
-                                    console.log("null")
+                                    {}
                                 ) :
                                 (
                                     cl.status
@@ -487,7 +487,7 @@ function ViewReqForAdmin() {
                         {
                             cl.candidate == null ?
                                 (
-                                    console.log("null")
+                                    {}
                                 ) :
                                 (
                                     cl.status_date
@@ -500,7 +500,7 @@ function ViewReqForAdmin() {
                         {
                             cl.requisition == null ?
                                 (
-                                    console.log("null")
+                                    {}
                                 ) :
                                 (
                                     cl.requisition.client_rate
@@ -513,7 +513,7 @@ function ViewReqForAdmin() {
                         {
                             cl.candidate == null ?
                                 (
-                                    console.log("null")
+                                    {}
                                 ) :
                                 (
                                     cl.candidate.submitted_rate

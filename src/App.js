@@ -30,7 +30,7 @@ function App() {
 
   let a= localStorage.getItem("recruiterIDAdmin")
   return (
-    <div className="container">
+    <div >
       <Router>
         <ToastContainer />
 		

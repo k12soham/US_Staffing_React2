@@ -398,19 +398,19 @@ class AddRequisition extends React.Component {
         return isAuthenticated=="TM" ? (
 
             <div className="">
-                <div className="row">
+                <div>
 
-                    <div className="col-12  master_backgroung_heder">
+                    <div >
                         <EmployeeHeader />
                     </div>
 
-                    <div className="col-12 master_backgroung_work2 scroll-bar-horizontal">
+                    <div className="col-12">
 
                         <div className="row">
                             <form onSubmit={this.handleSubmit}>
 
                                 <div className="col-12">
-                                    <div className="row" style={{ paddingTop: '2%' }}>
+                                    <div className="row" style={{ paddingTop: '8%' }}>
 
                                         <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '20px' }}>
 

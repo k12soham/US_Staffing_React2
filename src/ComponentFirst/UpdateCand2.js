@@ -324,10 +324,10 @@ class UpdateCand2 extends React.Component {
             errors["phone"] = "This field is required";
         }    
         
-            if (((input["phone"]).length) != (this.state.FormatLen)) {
-                isValid = false;
-                errors["phone"] = "Please enter valid phone number";
-            }      
+            // if ((input["phone"].length) !== (this.state.FormatLen)) {
+            //     isValid = false;
+            //     errors["phone"] = "Please enter valid phone number";
+            // }      
         
 
         // -------------email-----------------------------------------------------------------------------------------
@@ -379,11 +379,11 @@ class UpdateCand2 extends React.Component {
             <div className="">
                 <div className="row">
 
-                    <div className="col-12 master_backgroung_heder">
+                    <div>
                         <EmployeeHeader />
                     </div>
 
-                    <div className="col-12 master_backgroung_work scroll-bar">
+                    <div className="col-12 mt-5 pt-5">
 
                         <div className="row">
                             <form onSubmit={this.handleSubmit}>
@@ -438,7 +438,8 @@ class UpdateCand2 extends React.Component {
                                                     name="rate_term" id="rate_term"
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerReq}
-                                                    value={this.state.input.rate_term}>
+                                                    value={this.state.input.rate_term}
+                                                    >
 
                                                     <option value='' hidden> Select Rate Term </option>
 

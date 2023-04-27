@@ -173,7 +173,7 @@ function ViewCandForAdmin() {
                             {
                                 st.candidate == null ?
                                     (
-                                        console.log("null")
+                                        ([])
                                     ) :
                                     (
                                         st.candidate.candidate_name
@@ -188,7 +188,7 @@ function ViewCandForAdmin() {
                             {
                                 st.candidate == null ?
                                     (
-                                        console.log("null")
+                                        ([])
                                     ) :
                                     (
                                         st.candidate.visa_type
@@ -200,7 +200,7 @@ function ViewCandForAdmin() {
                             {
                                 st.candidate == null ?
                                     (
-                                        console.log("null")
+                                        ([])
                                     ) :
                                     (
                                         st.candidate.rate_term
@@ -212,7 +212,7 @@ function ViewCandForAdmin() {
                             {
                                 st.candidate == null ?
                                     (
-                                        console.log("null")
+                                        ([])
                                     ) :
                                     (
                                         st.requisition.client_rate
@@ -224,7 +224,7 @@ function ViewCandForAdmin() {
                             {
                                 st.candidate == null ?
                                     (
-                                        console.log("null")
+                                        ([])
                                     ) :
                                     (
                                         st.candidate.submitted_rate
@@ -236,7 +236,7 @@ function ViewCandForAdmin() {
                             {
                                 st.candidate == null ?
                                     (
-                                        console.log("null")
+                                        ([])
                                     ) :
                                     (
                                         st.candidate.phone
@@ -248,7 +248,7 @@ function ViewCandForAdmin() {
                             {
                                 st.candidate == null ?
                                     (
-                                        console.log("null")
+                                        ([])
                                     ) :
                                     (
                                         st.candidate.email
@@ -260,7 +260,7 @@ function ViewCandForAdmin() {
                             {
                                 st.candidate == null ?
                                     (
-                                        console.log("null")
+                                        ([])
                                     ) :
                                     (
                                         st.candidate.remark
@@ -273,7 +273,7 @@ function ViewCandForAdmin() {
                             {
                                 st.candidate == null ?
                                     (
-                                        console.log("null")
+                                        ([])
                                     ) :
                                     (
                                         st.candidate.reason
@@ -284,7 +284,7 @@ function ViewCandForAdmin() {
                             {
                                 st.candidate == null ?
                                     (
-                                        console.log("null")
+                                        ([])
                                     ) :
                                     (
                                         <>

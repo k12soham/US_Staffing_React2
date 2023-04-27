@@ -285,10 +285,10 @@ class UpdateCandidateAdmin extends React.Component {
 
     
       
-            if (((input["phone"]).length) != (this.state.FormatLen)) {
-                isValid = false;
-                errors["phone"] = "Please enter valid phone number";
-            }
+            // if (((input["phone"]).length) != (this.state.FormatLen)) {
+            //     isValid = false;
+            //     errors["phone"] = "Please enter valid phone number";
+            // }
         
         // -------------email-----------------------------------------------------------------------------------------
         if ((!input["email"])) {
