@@ -246,7 +246,7 @@ function ViewCandidate() {
                                 {
                                     st.candidate == null ?
                                         (
-                                            console.log("null")
+                                            ([])
                                         ) :
                                         (
                                             st.candidate.candidate_name
@@ -261,7 +261,7 @@ function ViewCandidate() {
                                 {
                                     st.candidate == null ?
                                         (
-                                            console.log("null")
+                                            ([])
                                         ) :
                                         (
                                             st.candidate.visa_type
@@ -273,7 +273,7 @@ function ViewCandidate() {
                                 {
                                     st.candidate == null ?
                                         (
-                                            console.log("null")
+                                            ([])
                                         ) :
                                         (
                                             st.candidate.rate_term
@@ -286,7 +286,7 @@ function ViewCandidate() {
                                 {
                                     st.candidate == null ?
                                         (
-                                            console.log("null")
+                                            ([])
                                         ) :
                                         (
                                             st.requisition.client_rate
@@ -299,7 +299,7 @@ function ViewCandidate() {
                                 {
                                     st.candidate == null ?
                                         (
-                                            console.log("null")
+                                            ([])
                                         ) :
                                         (
                                             st.candidate.submitted_rate
@@ -311,7 +311,7 @@ function ViewCandidate() {
                                 {
                                     st.candidate == null ?
                                         (
-                                            console.log("null")
+                                            ([])
                                         ) :
                                         (
                                             st.candidate.phone
@@ -323,7 +323,7 @@ function ViewCandidate() {
                                 {
                                     st.candidate == null ?
                                         (
-                                            console.log("null")
+                                            ([])
                                         ) :
                                         (
                                             st.candidate.email
@@ -335,7 +335,7 @@ function ViewCandidate() {
                                 {
                                     st.candidate == null ?
                                         (
-                                            console.log("null")
+                                            ([])
                                         ) :
                                         (
                                             st.candidate.remark
@@ -347,7 +347,7 @@ function ViewCandidate() {
                                 {
                                     st.candidate == null ?
                                         (
-                                            console.log("null")
+                                            ([])
                                         ) :
                                         (
                                             st.candidate.reason
@@ -392,7 +392,7 @@ function ViewCandidate() {
                                 {
                                     st.candidate == null ?
                                         (
-                                            console.log("null")
+                                            ([])
                                         ) :
                                         (
                                             <>

@@ -36,8 +36,8 @@ class UpdateCandidateAdmin extends React.Component {
                 inputs["remark"] = response.data.remark;
                 inputs["reason"] = response.data.reason;
 
-                this.setState({ input: inputs });
-
+                this.setState({ input: inputs ,});
+                this.state.defPL = response.data.phone.length;
             },
             (error) => {
                 console.log(error);
@@ -74,12 +74,13 @@ class UpdateCandidateAdmin extends React.Component {
             rateTerm_fd: [],
             visaType_fd: [],
             phone: '',
-            recruiterIDAdmin: undefined
+            recruiterIDAdmin: undefined,
+            defPL: 0,
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-
+        this.getPhone = this.getPhone.bind(this);
     }
 
     resetForm = () => {
@@ -281,15 +282,18 @@ class UpdateCandidateAdmin extends React.Component {
         if ((!input["phone"]) || (input["phone"] == '+1')) {
             isValid = false;
             errors["phone"] = "This field is required";
-        }
+        }    
+        
 
     
-      
+        if ((!input["phone"]) || ((this.state.defPL) == 0 )){
             if (((input["phone"]).length) != (this.state.FormatLen)) {
                 isValid = false;
                 errors["phone"] = "Please enter valid phone number";
             }
+        }  
         
+
         // -------------email-----------------------------------------------------------------------------------------
         if ((!input["email"])) {
             isValid = false;
@@ -324,8 +328,11 @@ class UpdateCandidateAdmin extends React.Component {
         this.setState({
             input: inputs,
             FormatLen: string_length,
+            defPL:0
         });
     }
+
+  
 
     // -------------------------------------------- render ----------------------------------------------------
     render() {

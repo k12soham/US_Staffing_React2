@@ -41,6 +41,7 @@ class UpdateCand2 extends React.Component {
                     input: inputs,
                     phone: inputs["phone"]
                 });
+                this.state.defPL = response.data.phone.length;
             },
             (error) => {
                 console.log(error);
@@ -76,6 +77,8 @@ class UpdateCand2 extends React.Component {
             visaType_fd: [],
             //  phone: '',
             FormatLen: 0,
+            defPL: 0,
+
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -158,61 +161,7 @@ class UpdateCand2 extends React.Component {
         }
     }
 
-    postCandidate = (data) => {
 
-        let recruiterID = localStorage.getItem('recruiterID');
-        let requisitionID = localStorage.getItem('requisitionID');
-
-        let d1 = data["cad_name"];
-        let d2 = data["visa_type"];
-        let d3 = data["rate_term"];
-        let d4 = data["submitted_rate"];
-        let d5 = data["phone"];
-        let d6 = data["email"];
-        let d7 = data["remark"];
-        let d8 = data["reason"];
-
-        if (d7 == undefined) {
-            d7 = ''
-        }
-        if (d8 == undefined) {
-            d8 = ''
-        }
-
-        axios.post(`${base_url}/add_candidate?candidate_name=${d1}&visa_type=${d2}&rate_term=${d3}
-        &submitted_rate=${d4}&phone=${d5}&email=${d6}&remark=${d7}
-        &reason=${d8}&recruiter_id=${recruiterID}&requisition_id=${requisitionID}`).then(
-
-            (response) => {
-                toast.success("Candidate added successfully!",
-                    {
-                        position: "top-right", autoClose: 2000,
-                        style: { position: "absolute", top: "5px", width: "300px" }
-                    }
-                );
-            },
-            (error) => {
-
-                console.log(error);
-                console.log("Error");
-                alert("Please enter valid details.")
-            }
-        );
-
-        let inputs = {};
-        // inputs["reqid"]='';
-        inputs["cad_name"] = '';
-        inputs["visa_type"] = '';
-        inputs["rate_term"] = '';
-        inputs["submitted_rate"] = '';
-        inputs["phone"] = '';
-        inputs["email"] = '';
-        inputs["remark"] = '';
-        inputs["reason"] = '';
-
-        this.setState({ input: inputs });
-
-    }
     // --------------------------------------------Validation Code ----------------------------------------------------------
 
     put_UpdateCandidate = (data) => {
@@ -324,10 +273,12 @@ class UpdateCand2 extends React.Component {
             errors["phone"] = "This field is required";
         }    
         
+        if ((!input["phone"]) || ((this.state.defPL) == 0 )){
             if (((input["phone"]).length) != (this.state.FormatLen)) {
                 isValid = false;
                 errors["phone"] = "Please enter valid phone number";
-            }      
+            }
+        }  
         
 
         // -------------email-----------------------------------------------------------------------------------------
@@ -358,9 +309,6 @@ class UpdateCand2 extends React.Component {
         var string = value.format
 
         var string_length = [...string].filter(x => x === '.').length
-        console.log(string_length)
-
-        console.log("entered No length = " + (value.format.length - value.dialCode.length))
 
         let inputs = this.state.input;
         inputs["phone"] = e;
@@ -368,6 +316,7 @@ class UpdateCand2 extends React.Component {
         this.setState({
             input: inputs,
             FormatLen: string_length,
+            defPL:0
         });
     }
 
@@ -437,7 +386,8 @@ class UpdateCand2 extends React.Component {
                                                     name="rate_term" id="rate_term"
                                                     onChange={this.handleChange}
                                                     onKeyUp={this.keyUpHandlerReq}
-                                                    value={this.state.input.rate_term}>
+                                                    value={this.state.input.rate_term}
+                                                    >
 
                                                     <option value='' hidden> Select Rate Term </option>
 

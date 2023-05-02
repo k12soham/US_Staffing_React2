@@ -28,7 +28,6 @@ function ViewAllStatusAdmin() {
 
     const [status1, setStatus1] = useState(null);
     const [statusDate, setStatusDate] = useState(new Date());
-    console.log(statusDate)
 
 
     let navigate = useNavigate();

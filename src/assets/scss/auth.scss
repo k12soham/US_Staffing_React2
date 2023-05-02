@@ -85,10 +85,56 @@ a {
   background: rgba(0, 0, 0, 0.1);
 }
 
+.img1{
+  background: url('../usimg.jpg');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  height: 100vh;
+ // opacity: 0.8;
+  filter: blur(1px);
+  -webkit-filter: blur(1px);
+}
+
+.bg-text {
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.5); /* Black w/opacity/see-through */
+  color: white;
+  border: 3px solid #f1f1f1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 60%;
+  height: 100%;
+  padding: 20px;
+  text-align: center;
+}
+
+.bg-text2 {
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+  color: white;
+  
+align-items: start;
+  border: 3px solid #f1f1f1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 60%;
+  height: 100%;
+  padding: 20px;
+  text-align: center;
+}
+
 .auth-wrapper2 {
   background: white;
   height: 100vh;
- 
+//  background-image: url('../img/usa.png');
+//  background-repeat: no-repeat;
+
 
   .auth-body {
     width: 360px;
@@ -200,7 +246,9 @@ a {
   // background-color: rgb(126, 163, 199);
   box-shadow: 0px 2px 10px 0px #8eb9d6;
   width: 100%;
-  height: 100%;
+  top: 0; 
+
+  overflow-y: scroll;
 }
 
 .master_backgroung_side {
@@ -217,7 +265,7 @@ a {
 
 // ---------------------------------Navbar CSS1-----------------------------------------------------------------
 .navbar-css-1 {
-  position: fixed;
+  position: sticky;
   top: 0%;
   left: 0%;
   right: 0%;
@@ -234,12 +282,12 @@ a {
 
 .master_backgroung_work {
   margin-top: 0.5%;
-  position: fixed;
+ // position: fixed;
   left: 0%;
   right: 0%;
   background-color: white;
-  width: 280px;
-  height: 500px;
+ // width: 280px;
+  //height: 500px;
 }
 
 .master_backgroung_work2 {
@@ -248,15 +296,16 @@ a {
   left: 0%;
   right: 0%;
   height: 10%;
-  // background-color: rgb(226, 238, 241);
   background-color: white;
-  width: 280px;
-  height: 900px;
+
+  max-height: none;
+
+  //height: unset;
 }
 
 // ---------------------------------Navbar CSS-----------------------------------------------------------------
 .navbar-css-2 {
-  position: fixed;
+  position: sticky;
   top: 0%;
   left: 0%;
   right: 0%;
@@ -560,21 +609,15 @@ tr:hover>td {
   box-shadow: 0px 2px 10px 0px #9fd4e9; 
 }
 
-// .navbar {
-//   position: sticky;
-//   width: 100%;
-//   background: white;
-//   color: #000;
-//   // opacity: 0.85;
-// }
 
-.navbar-container {
-  display: flex;
-  justify-content: space-between;
-  height: 64px;
-  align-items: center;
-  width: 100%;
-  position: sticky;
+
+
+.navbar-container{
+    display: flex;
+    justify-content: space-between;
+    height: 64px;
+    align-items: center;
+    width: 100%;
 }
 
 .menu-items {
@@ -727,6 +770,7 @@ tr:hover>td {
   -moz-box-shadow: 0 6px 4px -4px black;
   box-shadow: 0 6px 4px -4px black;
 }
+
 
 // -----------------------profile-background------------------------------
 .profile_background {

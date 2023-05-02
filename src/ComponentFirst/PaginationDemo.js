@@ -52,7 +52,7 @@ const Pagination = () => {
                     <tbody>
                         {currentPageData.map((card) => {
 
-                            console.log(currentPageData);
+                           
                             return (
                                 <tr>
                                     <td>{card.requisition_id}</td>

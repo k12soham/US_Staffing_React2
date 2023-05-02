@@ -8,8 +8,6 @@ import { format } from "date-fns";
 // define a generatePDF function that accepts a tickets argument
 const GeneratePDF2 = tickets => {
 
-console.log(tickets)
-
   let recruiterName = localStorage.getItem("recruiterName");
   let empID = localStorage.getItem("recruiterID")
   let sessionreq = localStorage.getItem("requisitionID")
@@ -45,7 +43,8 @@ let rec= localStorage.getItem("rec");
   // for each ticket pass all its data into an array
 
   tickets.map(st => {
-    if ( st.status=="Submitted" && (st.candidate == null || st.candidate.deleted == 1)&&(st.recruiter.recruiter_id==rec||rec=="all")) {
+    if ( st.status=="Submitted" && (st.candidate == null || st.candidate.deleted == 1)
+    &&(st.recruiter.recruiter_id==rec||rec=="all")&&st.requisition.deleted==1) {
 
     
 
@@ -56,7 +55,7 @@ let rec= localStorage.getItem("rec");
 
         st.recruiter == null ?
           (
-            console.log("null")
+            []
           ) :
           (
             st.recruiter.recruiter_name
@@ -65,7 +64,7 @@ let rec= localStorage.getItem("rec");
 
         st.candidate == null ?
           (
-            console.log("null")
+           []
           ) :
           (
             st.candidate.candidate_name
@@ -88,7 +87,7 @@ let rec= localStorage.getItem("rec");
 
         st.candidate == null ?
           (
-            console.log("null")
+            []
           ) :
           (
             st.requisition.client_rate
@@ -100,7 +99,7 @@ let rec= localStorage.getItem("rec");
 
         st.candidate == null ?
           (
-            console.log("null")
+           []
           ) :
           (
             st.candidate.submitted_rate
