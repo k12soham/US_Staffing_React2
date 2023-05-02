@@ -5,6 +5,7 @@ import base_url from "../api/bootapi";
 import axios from "axios";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import logo1 from '../assets/tcog_logo.png'
 
 const Login1 = () => {
 
@@ -77,7 +78,6 @@ const Login1 = () => {
     };
 
     const togglePassword = (e) => {
-        console.log("showPassword : "+showPassword);
         if (showPassword) {
             setShowPassword(false);
         } else {
@@ -132,27 +132,27 @@ const Login1 = () => {
 
 
     return (
-        <div className="row g-0 auth-wrapper">
-            <div className="col-sm-12 col-md-6 col-lg-6 h-100 master_backgroung_login">
-                <img src="usa.png" width="670" height="657" className="img-fluid"></img>
-              
-            </div>
-
-            <div className="col-sm-12 col-md-6 col-lg-6 auth-main-col text-center">
-
-                <div className="d-flex flex-column align-content-end">
-
-                    <div className="auth-body mx-auto">
-                        <h5><b>Sign in to your account</b></h5><br></br>
-                        <div className="auth-form-container text-start">
+        <>
+        <div className="img1">
+        
+        </div>
+      
+            <div className="bg-text">
+               <img src={logo1}></img>
+           
+                <h5 className=" text-light mt-5 pt-4"><b>Sign in to your account</b></h5><br></br>
+                    <div className="mx-auto ">
+                        <div style={{width:'350px',margin:'auto'}} className="auth-form-container text-start mt-2">
 
                             <form
-                                className="auth-form"
+                              
                                 method="POST"
                                 onSubmit={authenticate}
                                 autoComplete={"off"}
                             >
+                               
                                 <div className="email mb-3">
+                                {/* <label for="email"><b>Enter Email:</b><b style={{ color: 'red' }}>*</b></label><br/> */}
                                     <input
                                         type="email"
                                         className={`form-control ${validate.validate && validate.validate.email
@@ -162,7 +162,7 @@ const Login1 = () => {
                                         id="email"
                                         name="email"
                                         value={email}
-                                        minLength={11}
+                                        minLength={5}
                                         maxLength={50}
                                         placeholder="Email"
                                         onChange={(e) => setEmail(e.target.value)}
@@ -182,8 +182,10 @@ const Login1 = () => {
                                 </div>
 
                                 <div className="password mb-3">
+                                {/* <label for="password"><b>Enter Password:</b><b style={{ color: 'red' }}>*</b></label> <br/> */}
                                     <div className="input-group">
-                                        <input
+                                  
+                                   <input
                                             type={showPassword ? "text" : "password"}                                    
                                             className={`form-control ${validate.validate && validate.validate.password
                                                 ? "is-invalid "
@@ -194,13 +196,13 @@ const Login1 = () => {
                                             value={password}
                                             placeholder="Password"
                                             minLength={6}
-                                            maxLength={15}
+                                            maxLength={30}
                                             onChange={(e) => setPassword(e.target.value)}
                                         />
 
                                         <button
                                             type="button"
-                                            className="btn btn-outline-primary btn-sm"
+                                            className="btn btn-secondary btn-sm"
                                             onClick={(e) => togglePassword(e)}
                                         >
                                             <i
@@ -222,11 +224,11 @@ const Login1 = () => {
                                         </div>
                                     </div>
                                     
-                                </div>
+                                </div><br/>
                                 <div className="text-center">
                                     <button
                                         type="submit"
-                                        className="btn btn-primary w-100 theme-btn mx-auto"
+                                        className="btn btn-success w-100 theme-btn mx-auto"
                                     >
                                         Sign In
                                     </button>
@@ -234,17 +236,17 @@ const Login1 = () => {
                             </form>
 
                             <hr />
-                            <div className="auth-option text-center pt-2">
+                            <div className="auth-option text-center pt-2 text-light">
                                 Don't have an account?{" "}
-                                <Link className="text-link" to="/signup">
+                                <Link className="text-link text-success" to="/signup">
                                     Sign Up{" "}
                                 </Link>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+                </>
+        // </div>
         
     );
 }

@@ -26,11 +26,12 @@ import Changepassword from './ComponentFirst/Changepassword';
 import ModalWithCSS from './ComponentFirst/ModalWithCSS';
 import UpdateCand2 from './ComponentFirst/UpdateCand2';
 
+
 function App() {
 
   let a= localStorage.getItem("recruiterIDAdmin")
   return (
-    <div >
+    <div className="">
       <Router>
         <ToastContainer />
 		
@@ -65,7 +66,6 @@ function App() {
 
         <Route path="/page" element={<Pageexample/>}></Route>
         <Route path="/pagination" element={<Pagination/>}></Route>
-
   
         <Route path="/modal" element={<ModalWithCSS/>}></Route>      
         </Routes>

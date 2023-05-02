@@ -74,11 +74,9 @@ class AddCandidate extends React.Component {
         inputs["email"] = '';
         inputs["remark"] = '';
         inputs["reason"] = '';
-
         // this.phoneInputRef.current?.selectCountry('us');
 
         this.setState({ input: inputs });
-
         let errors1 = {};
 
         errors1["cad_name"] = "";
@@ -132,15 +130,12 @@ class AddCandidate extends React.Component {
             );
 
             this.refInput.focus();
-
         }
         else {
 
             localStorage.setItem('requisitionID', object.requisition_id);
             this.setState({ input: req_id })
         }
-
-
     }
 
     handleSubmit(e) {
@@ -344,9 +339,6 @@ class AddCandidate extends React.Component {
         var string = value.format
 
         var string_length = [...string].filter(x => x === '.').length
-        console.log(string_length)
-
-        console.log("entered No length = " + (value.format.length - value.dialCode.length))
 
         let inputs = this.state.input;
         inputs["phone"] = e;
@@ -359,43 +351,35 @@ class AddCandidate extends React.Component {
 
     render() {
         const isAuthenticated = localStorage.getItem('recruiterRole');
-
         return isAuthenticated == "TM" ? (
 
-            <>
-
-
-                <div >
+            <div className='row'>
+                <div className="col-12">
                     <EmployeeHeader />
                 </div>
 
-                {/* <div className="col-12 master_backgroung_work2 scroll-bar-horizontal"> */}
-                <div className="col-12 ">
-
-                    <div className="row">
+                <div>
+                    <div className="col-12 pt-5 mt-5">
                         <form onSubmit={this.handleSubmit}>
 
-                            <div className="col-12">
-                                <div className="row" style={{ paddingTop: '100px' }}>
+                            <div className="col-lg-12">
+                                <div className="row ">
                                     <div className="col-12" style={{ paddingLeft: '35px', paddingRight: '20px' }}>
                                         <div class="form-group">
                                             <label for="reqid"><b>Job Posting ID:</b><b style={{ color: 'red' }}>*</b></label>
                                             <input
-                                                    style={{ width: '30%' }}
-                                                    ref={(input) => { this.refInput = input; }}
-                                                    minLength={1}
-                                                    maxLength={50}
-                                                    type="text"
-                                                    name="reqid"
-                                                    value={this.state.input.reqid}
-                                                    onChange={this.handleChange}
-                                                    onBlur={this.CheckRequisiton}
+                                                style={{ width: '30%' }}
+                                                ref={(input) => { this.refInput = input; }}
+                                                minLength={1}
+                                                maxLength={50}
+                                                type="text"
+                                                name="reqid"
+                                                value={this.state.input.reqid}
+                                                onChange={this.handleChange}
+                                                onBlur={this.CheckRequisiton}
 
-                                                    placeholder="Job Posting ID"
-                                                    class="form-control" />
-
-                                           
-
+                                                placeholder="Job Posting ID"
+                                                class="form-control" />
 
                                             <div className="text-danger">{this.state.errors.reqid}</div>
                                         </div>
@@ -449,13 +433,10 @@ class AddCandidate extends React.Component {
                                                 value={this.state.input.rate_term}>
 
                                                 <option value='' hidden> Select Rate Term </option>
-
                                                 {
                                                     this.state.rateTerm_fd.map((rt) => (
-
                                                         <option value={rt.rate_term}>{rt.rate_term}</option>
                                                     ))
-
                                                 }
                                             </select>
 
@@ -471,7 +452,6 @@ class AddCandidate extends React.Component {
                                                 value={this.state.input.submitted_rate}
                                                 onChange={this.handleChange}
                                                 placeholder="Submitted Rate in $/hr"
-
                                                 class="form-control" />
 
                                             <div className="text-danger">{this.state.errors.submitted_rate}</div>
@@ -483,7 +463,6 @@ class AddCandidate extends React.Component {
                                             <label for="phone"><b>Phone :</b><b style={{ color: 'red' }}>*</b></label>
 
                                             <PhoneInput
-
                                                 inputStyle={{ width: '100%', height: '37px' }}
                                                 preferredCountries={['us']}
                                                 onlyCountries={['us', 'in', 'gb', 'sg', 'ae']}
@@ -494,12 +473,7 @@ class AddCandidate extends React.Component {
                                                 value={this.state.input.phone}
                                                 onChange={this.getPhone}
                                                 searchStyle={{ margin: "0", width: "97%", height: "30px" }}
-
-
                                             />
-
-
-
 
                                             <div className="text-danger">{this.state.errors.phone}</div>
                                         </div>
@@ -587,10 +561,9 @@ class AddCandidate extends React.Component {
                             <div className="col-3"></div>
                         </form>
                     </div>
-
                 </div>
+            </div>
 
-            </>
         ) : (
             history.push("/"),
             window.location.reload()

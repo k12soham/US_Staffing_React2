@@ -10,12 +10,7 @@ function ViewAllStatus() {
     const [statusList, setstatusList] = useState([]);
     const [statusFD, setstatusFD] = useState([]);
  
-    const [statusDate, setStatusDate] = useState(new Date());
-    console.log(statusDate)
-
-
-  
-
+    
     useEffect(() => {
         axios.get(`${base_url}/getAllRequisition`).then(json => setRequisitionList(json.data))
         axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
@@ -52,7 +47,7 @@ function ViewAllStatus() {
                             {
                                 st.candidate == null ?
                                     (
-                                        console.log("null")
+                                        []
                                     ) :
                                     (
                                         st.candidate.candidate_name
@@ -71,16 +66,14 @@ function ViewAllStatus() {
     }
 
     return (
-        <div className="">
             <div className="row">
 
-                <div className="col-12 h-100 master_backgroung_heder">
+                <div className="col-12 h-100">
                     <EmployeeHeader />
                 </div>
 
-                <div className=" col-12 master_backgroung_work2 scroll-bar-horizontal">
+                <div className=" col-12 pt-5 mt-5">
 
-                    <div style={{ width: '100%' }}  >
                     <br></br>  <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px' }}>
                             <thead>
                                 <tr>
@@ -99,10 +92,9 @@ function ViewAllStatus() {
                             </tbody>
                         </Table>
 
-                    </div>
                 </div>
             </div>
-        </div>
+   
 
     );
 }

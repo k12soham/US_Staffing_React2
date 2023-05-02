@@ -36,8 +36,8 @@ class UpdateCandidateAdmin extends React.Component {
                 inputs["remark"] = response.data.remark;
                 inputs["reason"] = response.data.reason;
 
-                this.setState({ input: inputs });
-
+                this.setState({ input: inputs ,});
+                this.state.defPL = response.data.phone.length;
             },
             (error) => {
                 console.log(error);
@@ -74,12 +74,13 @@ class UpdateCandidateAdmin extends React.Component {
             rateTerm_fd: [],
             visaType_fd: [],
             phone: '',
-            recruiterIDAdmin: undefined
+            recruiterIDAdmin: undefined,
+            defPL: 0,
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-
+        this.getPhone = this.getPhone.bind(this);
     }
 
     resetForm = () => {
@@ -281,15 +282,18 @@ class UpdateCandidateAdmin extends React.Component {
         if ((!input["phone"]) || (input["phone"] == '+1')) {
             isValid = false;
             errors["phone"] = "This field is required";
-        }
+        }    
+        
 
     
-      
-            // if (((input["phone"]).length) != (this.state.FormatLen)) {
-            //     isValid = false;
-            //     errors["phone"] = "Please enter valid phone number";
-            // }
+        if ((!input["phone"]) || ((this.state.defPL) == 0 )){
+            if (((input["phone"]).length) != (this.state.FormatLen)) {
+                isValid = false;
+                errors["phone"] = "Please enter valid phone number";
+            }
+        }  
         
+
         // -------------email-----------------------------------------------------------------------------------------
         if ((!input["email"])) {
             isValid = false;
@@ -324,8 +328,11 @@ class UpdateCandidateAdmin extends React.Component {
         this.setState({
             input: inputs,
             FormatLen: string_length,
+            defPL:0
         });
     }
+
+  
 
     // -------------------------------------------- render ----------------------------------------------------
     render() {
@@ -334,10 +341,9 @@ class UpdateCandidateAdmin extends React.Component {
 
         return isAuthenticated =="Admin" ? (
 
-            <div className="">
                 <div className="row">
 
-                    <div className="col-12 h-100 master_backgroung_heder">
+                    <div className="col-12 h-100">
 
 
                         <AdminHeader5 />
@@ -345,7 +351,7 @@ class UpdateCandidateAdmin extends React.Component {
 
                     </div>
 
-                    <div className="col-12 master_backgroung_work scroll-bar">
+                    <div className="col-12 pt-5 mt-5">
 
                         <div className="row">
                             <form onSubmit={this.handleSubmit} id="candidateform">
@@ -540,7 +546,6 @@ class UpdateCandidateAdmin extends React.Component {
                     </div>
 
                 </div >
-            </div >
         ) : (
             history.push("/"),
             window.location.reload()

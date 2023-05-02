@@ -62,15 +62,12 @@ function ViewCandForAdmin() {
 
         const [itemOffset, setItemOffset] = useState(0);
         const endOffset = itemOffset + itemsPerPage;
-        console.log(`Loading items from ${itemOffset} to ${endOffset}`);
         const currentItems = items.slice(itemOffset, endOffset);
         const pageCount = Math.ceil(items.length / itemsPerPage);
 
         const handlePageClick = (event) => {
             const newOffset = (event.selected * itemsPerPage) % items.length;
-            console.log(
-                `User requested page number ${event.selected}, which is offset ${newOffset}`
-            );
+           
             setItemOffset(newOffset);
         };
 
@@ -322,14 +319,13 @@ function ViewCandForAdmin() {
     }
 
     return (
-        <div className="">
-            <div className="row">
+        <div className="row">
 
-                <div className="col-12 h-100 master_backgroung_heder">
+                <div className="col-12">
                     <AdminHeader5 />
                 </div>
 
-                <div className="col-12 master_backgroung_work2 scroll-bar-horizontal">
+                <div className="col-12 pt-5 mt-5">
                 <div className="row">
                         <div className="col-12 input-icons"
                             style={{ padding: '5px', margin: '10px' }}>
@@ -342,7 +338,6 @@ function ViewCandForAdmin() {
                                 onChange={event => { setSearchTerm(event.target.value) }}
                                 style={{ width: '500px', borderRadius: '100px', paddingLeft: '30px' }}
                             />
-                            
 
                         </div>
                     </div>
@@ -375,19 +370,10 @@ function ViewCandForAdmin() {
 
                             </tbody>
                         </Table>
-                        <div className="row">
-                            <div className="col-6">
-
-                            </div>
-                            <div className="col-6">
-
-
- 
-                            </div>
-                        </div>
+                       
                     </div>
                 </div>
-            </div>
+           
         </div>
     );
 }

@@ -30,7 +30,8 @@ const GeneratePDF1 = tickets => {
   let index = 1;
   // for each ticket pass all its data into an array
   tickets.map(st => {
-    if (st.recruiter.recruiter_id == empID && st.status=="Submitted" &&(st.candidate == null || st.candidate.deleted == 1)) {
+    if (st.recruiter.recruiter_id == empID && st.status=="Submitted" 
+    &&(st.candidate == null || st.candidate.deleted == 1) &&st.requisition.deleted==1) {
 
     
 
@@ -42,7 +43,7 @@ const GeneratePDF1 = tickets => {
 
         st.candidate == null ?
           (
-            console.log("null")
+           []
           ) :
           (
             st.candidate.candidate_name
@@ -64,7 +65,7 @@ const GeneratePDF1 = tickets => {
     
         st.candidate == null ?
           (
-            console.log("null")
+           []
           ) :
           (
             st.requisition.client_rate
@@ -76,7 +77,7 @@ const GeneratePDF1 = tickets => {
 
         st.candidate == null ?
           (
-            console.log("null")
+           []
           ) :
           (
             st.candidate.submitted_rate

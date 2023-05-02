@@ -161,10 +161,6 @@ function ViewCandidate() {
         })
     }
 
-   
-
-
-
     const getnewID = (e) => {
         let candidate_id = e.canid
         let requisition_id = e.reqid;
@@ -176,8 +172,7 @@ function ViewCandidate() {
     }
 
     
-    const renderTable = () => {
-      
+    const renderTable = () => {      
     
         const isAuthenticated = localStorage.getItem('recruiterRole');
 
@@ -428,7 +423,6 @@ function ViewCandidate() {
                     )
             })
 
-
         ) : (
             navigate("/")
 
@@ -439,14 +433,12 @@ function ViewCandidate() {
         <div className="">
             <div className="row">
 
-                <div className="col-12 h-100 master_backgroung_heder">
+                <div className="col-12">
                     <EmployeeHeader />
                 </div>
 
-                <div className="col-12">
+                <div className="col-12 pt-5 mt-5">
                     {/* ---------------------------SearchBar----------------------------- */}
-                        <div class="row">
-                            <div class="col-md-6 block1">
 
                                 <div className="input-icons" style={{ paddingTop: '4px', margin: '8px' }}>
                                     <i className="fa fa-search icon"></i>
@@ -459,14 +451,10 @@ function ViewCandidate() {
                                         style={{ width: '500px', borderRadius: '100px', paddingLeft: '30px' }}
                                     />
                                 </div>
-
-                            </div>
-                            
-                        </div>         
                    
                 </div>
 
-                <div className="col-12 master_backgroung_work scroll-bar-horizontal">
+                <div className="col-12 mt-2">
 
                     <div>
                         <Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px' }}>

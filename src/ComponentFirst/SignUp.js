@@ -2,11 +2,11 @@ import React from 'react';
 import axios from 'axios';
 import base_url from '../api/bootapi';
 import { toast } from "react-toastify";
-import {  Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
- import history from './ResponseVal';
+import history from './ResponseVal';
 import { useNavigate } from "react-router-dom";
-
+import logo1 from '../assets/tcog_logo.png'
 class SignUp extends React.Component {
 
   constructor(props) {
@@ -16,25 +16,25 @@ class SignUp extends React.Component {
       errors: {},
       hover: false,
       showNewPass: false,
-            showConfPass: false,
-            currentPassword: undefined,
-            newPassword: undefined,
-            confirmPassword: undefined,
-            passMatch: null,
-            passNotMatch: null,
+      showConfPass: false,
+      currentPassword: undefined,
+      newPassword: undefined,
+      confirmPassword: undefined,
+      passMatch: null,
+      passNotMatch: null,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.keyUpHandler = this.keyUpHandler.bind(this);
-  
+
   }
 
   handleChange(e) {
     let emp_reg = this.state.input;
     emp_reg[e.target.name] = e.target.value;
     this.setState({
-     input: emp_reg
+      input: emp_reg
     });
     this.state.newPassword = this.state.input['newPass'];
     this.state.confirmPassword = this.state.input['confirmPass'];
@@ -44,77 +44,73 @@ class SignUp extends React.Component {
     e.preventDefault();
 
 
-    if(this.state.input["name"]!=null)
-    {
-      this.state.input["name"]=  this.state.input["name"].trim()
+    if (this.state.input["name"] != null) {
+      this.state.input["name"] = this.state.input["name"].trim()
       this.state.input["name"] = this.state.input["name"].replaceAll("#", "%23");
     }
 
-    if(this.state.input["email"]!=null)
-    {
-      this.state.input["email"]=  this.state.input["email"].trim()
+    if (this.state.input["email"] != null) {
+      this.state.input["email"] = this.state.input["email"].trim()
       this.state.input["email"] = this.state.input["email"].replaceAll("#", "%23");
     }
 
-    if(this.state.input["newPass"]!=null)
-    {
-        this.state.input["newPass"] = this.state.input["newPass"].replaceAll("#", "%23");
+    if (this.state.input["newPass"] != null) {
+      this.state.input["newPass"] = this.state.input["newPass"].replaceAll("#", "%23");
     }
-  
-    if(this.state.input["confirmPass"]!=null)
-    {
-        this.state.input["confirmPass"] = this.state.input["confirmPass"].replaceAll("#", "%23");
+
+    if (this.state.input["confirmPass"] != null) {
+      this.state.input["confirmPass"] = this.state.input["confirmPass"].replaceAll("#", "%23");
     }
- 
+
     if (this.validate()) {
 
-      if( this.state.input["newPass"]!== this.state.input["confirmPass"])
-      {
+      if (this.state.input["newPass"] !== this.state.input["confirmPass"]) {
         alert("Password not matched")
       }
-      else{
+      else {
 
         let emp_reg = this.state.input;
         emp_reg[e.target.name] = e.target.value;
-        
+
         this.postdata(emp_reg);
       }
 
 
     }
-   
+
   }
 
   postdata = (data) => {
- 
-    let d1 = data["name"];  
+
+    let d1 = data["name"];
     let d2 = data["email"];
-     let d3 = data["confirmPass"];
+    let d3 = data["confirmPass"];
 
     axios.post(`${base_url}/addRecruiter?recruiter_name=${d1}&recruiter_email=${d2}&password=${d3}`)
-    
-    .then(
-   
-      (response) => {
-        toast.success("Recruiter registered successfully!",
-          { position: "top-right" ,
-          autoClose: 1000,
-          style: { position: "absolute", top: "5px", width: "300px" }
-      }
-        );
 
-     
-      history.push('/');    
-     window.location.reload()
+      .then(
 
-   
- 
-      },
-      (error) => {
-        alert("This account is already exist.")
-        
-      }
-    )
+        (response) => {
+          toast.success("Recruiter registered successfully!",
+            {
+              position: "top-right",
+              autoClose: 1000,
+              style: { position: "absolute", top: "5px", width: "300px" }
+            }
+          );
+
+
+          history.push('/');
+          window.location.reload()
+
+
+
+        },
+        (error) => {
+          alert("This account is already exist.")
+
+        }
+      )
 
     let inputs = {};
     inputs["name"] = '';
@@ -126,7 +122,7 @@ class SignUp extends React.Component {
   }
 
   validate() {
- 
+
     let input = this.state.input;
     let errors = {};
     let isValid = true;
@@ -138,7 +134,7 @@ class SignUp extends React.Component {
 
     if (typeof input["name"] !== "undefined") {
 
-     
+
       var pattern = new RegExp(/^[^\s][a-zA-Z\s]+[^\s]$/);
       if (!pattern.test(input["name"])) {
         isValid = false;
@@ -180,7 +176,7 @@ class SignUp extends React.Component {
       errors["confirmPass"] = "Please enter confirm password.";
     }
 
-   
+
 
     this.setState({
       errors: errors
@@ -194,14 +190,14 @@ class SignUp extends React.Component {
 
     if (((this.state.newPassword) == (this.state.confirmPassword)) && (this.state.newPassword !== undefined)) {
 
-        this.setState({ passNotMatch: '' });
-        this.setState({ passMatch: 'Password matched' });
+      this.setState({ passNotMatch: '' });
+      this.setState({ passMatch: 'Password matched' });
     }
     else {
-        this.setState({ passMatch: '' });
-        this.setState({ passNotMatch: 'Password not matched' });
+      this.setState({ passMatch: '' });
+      this.setState({ passNotMatch: 'Password not matched' });
     }
-}
+  }
 
   togglePassword = (e) => {
 
@@ -219,42 +215,39 @@ class SignUp extends React.Component {
     // ----------------------------------------------------------------------------------------------------
     if (this.state.showNewPass) {
 
-        this.setState({ showNewPass: false });
+      this.setState({ showNewPass: false });
     } else {
 
-        this.setState({ showNewPass: true });
+      this.setState({ showNewPass: true });
     }
-}
+  }
 
   togglePassword3 = (e) => {
     if (this.state.showConfPass) {
-        this.setState({ showConfPass: false });
+      this.setState({ showConfPass: false });
     } else {
-        this.setState({ showConfPass: true });
+      this.setState({ showConfPass: true });
     }
-};
+  };
 
   render() {
     return (
-      <div className="row g-0 auth-wrapper">
-        <div className="col-12 col-md-5 col-lg-6 h-100 master_backgroung_login">
-          <img src="usa.png" width="670" height="657"className="img-fluid"></img>
+
+      <>
+       <div className="img1">
         </div>
-
-        <div className="col-12 col-md-7 col-lg-6 auth-main-col ">
-      
-          <div className="d-flex flex-column align-content-end">
-            <div className="auth-body mx-auto">
-
-              <div className="auth-form-container text-center">
-                <h5><b>Create an account</b></h5>
+    
+            <div className="bg-text">
+            <img src={logo1}></img>
+              <div >
+            <h5><b>Create an account</b></h5> <br/> 
               </div>
-              <br></br>
+      
 
-              <form onSubmit={this.handleSubmit}>
+              <form onSubmit={this.handleSubmit} classname="auth-form-container">
 
-                <div class="form-group">
-                  <label for="name"><b>Enter Name:</b><b style={{color:'red'}}>*</b></label>
+                <div class="form-group ">
+                  {/* <label for="name" ><b>Enter Name:</b><b style={{ color: 'red' }}>*</b></label><br/> */}
                   <input
                     type="text"
                     name="name"
@@ -270,14 +263,14 @@ class SignUp extends React.Component {
                 </div>
 
                 <div class="form-group">
-                  <label for="email"><b>Enter Email:</b><b style={{color:'red'}}>*</b></label>
+                  {/* <label for="email"><b>Enter Email:</b><b style={{ color: 'red' }}>*</b></label><br/> */}
                   <input
                     name="email"
                     value={this.state.input.email}
 
                     onChange={this.handleChange}
                     placeholder="Email"
-                    minLength={11}
+                    minLength={5}
                     maxLength={50}
                     style={{ width: '360px', height: '37px' }}
                   />
@@ -287,78 +280,76 @@ class SignUp extends React.Component {
 
                 {/* ---------------------------------------------------------------------- */}
                 <div className="password mb-3 " >
-                                    <div className="form-group">
-                                        <label for="password"><b>Enter New Password:</b><b style={{color:'red'}}>*</b></label>
-                                        <input
-                                            type={(this.state.showNewPass) ? "text" : "password"}
-                                            name="newPass"
-                                            id="newPass"
-                                        
-                                            onChange={this.handleChange}
-                                            onKeyUp={this.keyUpHandler}
-                                            placeholder="Password"
-                                            minLength={6}
-                                            maxLength={30}
-                                            style={{ width: '305px', height: '37px' }}
-                                        />
+                  <div className="form-group">
+                    {/* <label for="password"><b>Enter New Password:</b><b style={{ color: 'red' }}>*</b></label><br/> */}
+                    <input
+                      type={(this.state.showNewPass) ? "text" : "password"}
+                      name="newPass"
+                      id="newPass"
 
-                                        <button
-                                            type="button"
-                                            className="btn btn-outline-primary theme-btn mx-auto"
-                                            onClick={this.togglePassword2}
-                                        >
-                                            <i
-                                                className={
-                                                    (this.state.showNewPass) ? "far fa-eye" : "far fa-eye-slash"
-                                                }
-                                            ></i>{" "}
-                                        </button>
-                                        <div className="text-danger">{this.state.errors['newPass']}</div>
+                      onChange={this.handleChange}
+                      onKeyUp={this.keyUpHandler}
+                      placeholder="Password"
+                      minLength={6}
+                      maxLength={30}
+                      style={{ width: '305px', height: '37px' }}
+                    />
 
-                                    </div>
-                                </div>
+                    <button
+                      type="button"
+                      className="btn btn-secondary theme-btn mx-auto"
+                      onClick={this.togglePassword2}
+                    >
+                      <i
+                        className={
+                          (this.state.showNewPass) ? "far fa-eye" : "far fa-eye-slash"
+                        }
+                      ></i>{" "}
+                    </button>
+                    <div className="text-danger">{this.state.errors['newPass']}</div>
 
+                  </div>
+                </div>
 
                 <div className="password mb-3 ">
-                                    <div className="form-group">
-                                        <label for="password"><b>Enter Confirm Password:</b><b style={{color:'red'}}>*</b></label>
-                                        <input
-                                            type={(this.state.showConfPass) ? "text" : "password"}
-                                            name="confirmPass"
-                                            id="confirmPass"
-                                            onChange={this.handleChange}
-                                            onKeyUp={this.keyUpHandler} 
-                                            placeholder="Confirm Password"
-                                            minLength={6}
-                                            maxLength={30}
-                                            style={{ width: '305px', height: '37px' }}
-                                        />
+                  <div className="form-group">
+                    {/* <label for="password"><b>Enter Confirm Password:</b><b style={{ color: 'red' }}>*</b></label><br/>   */}
+                    <input
+                      type={(this.state.showConfPass) ? "text" : "password"}
+                      name="confirmPass"
+                      id="confirmPass"
+                      onChange={this.handleChange}
+                      onKeyUp={this.keyUpHandler}
+                      placeholder="Confirm Password"
+                      minLength={6}
+                      maxLength={30}
+                      style={{ width: '305px', height: '37px' }}
+                    />
 
-                                        <button
-                                            type="button"
-                                            className="btn btn-outline-primary theme-btn mx-auto"
-                                            onClick={this.togglePassword3}
-                                        >
-                                            <i
-                                                className={
-                                                    (this.state.showConfPass) ? "far fa-eye" : "far fa-eye-slash"
-                                                }
-                                            ></i>{" "}
-                                        </button>
-                                        <div className="text-danger">{this.state.errors['confirmPass']}</div>
-                                        <div className="text-danger">{this.state.passNotMatch}</div>
-                                        <div className="text-success">{this.state.passMatch}</div>
-                                       
+                    <button
+                      type="button"
+                      className="btn btn-secondary theme-btn mx-auto"
+                      onClick={this.togglePassword3}
+                    >
+                      <i
+                        className={
+                          (this.state.showConfPass) ? "far fa-eye" : "far fa-eye-slash"
+                        }
+                      ></i>{" "}
+                    </button>
+                    <div className="text-danger">{this.state.errors['confirmPass']}</div>
+                    <div className="text-danger">{this.state.passNotMatch}</div>
+                    <div className="text-success">{this.state.passMatch}</div>
 
-                                    </div>
-                                </div>
+                  </div>
+                </div><br/>
 
                 <div className="text-center">
-                  
+
 
                   <button
-                    type="submit"
-                    className="btn btn-primary w-100 theme-btn mx-auto"
+                    type="submit" style={{width:'360px'}}
+                    className="btn btn-success theme-btn mx-auto"
                   >
                     Sign Up
                   </button>
@@ -369,14 +360,12 @@ class SignUp extends React.Component {
               <hr />
               <div className="auth-option text-center pt-2">
                 Already have an account?{" "}
-                <Link className="text-link" to="/">
+                <Link className="text-link text-success" to="/">
                   Sign In
                 </Link>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
+       </>
     );
   }
 }

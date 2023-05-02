@@ -28,7 +28,6 @@ function ViewAllStatusAdmin() {
 
     const [status1, setStatus1] = useState(null);
     const [statusDate, setStatusDate] = useState(new Date());
-    console.log(statusDate)
 
 
     let navigate = useNavigate();
@@ -61,12 +60,12 @@ function ViewAllStatusAdmin() {
                 (error) => {
                     console.log(error);
                 });
-     }
+    }
 
-    
+
 
     const onEdit = ({ statusID, statusNew, statusDateNew }) => {
-       
+
         setInEditMode({
             status: true,
             rowKey: statusID,
@@ -87,13 +86,12 @@ function ViewAllStatusAdmin() {
         // {
         //     alert("Please select status")
         // }
-         if(currentstatus==newStatus)
-        {
+        if (currentstatus == newStatus) {
             alert("This status is already saved")
         }
-        else{
+        else {
             UpdateStatusByAdmin({ statusID, newStatus, newStatusDate });
-        }       
+        }
     }
 
     const UpdateStatusByAdmin = ({ statusID, newStatus, newStatusDate }) => {
@@ -114,11 +112,11 @@ function ViewAllStatusAdmin() {
                 (error) => {
                     alert("Enter valid data");
                 }
-            )     
+            )
     }
 
     const onCancel = () => {
-   
+
         setInEditMode({
             status: false,
             rowKey: null
@@ -129,7 +127,7 @@ function ViewAllStatusAdmin() {
         let a = e.d;
         let z = format(a, "yyyy-MM-dd");
         setStatusDate(z);
-  
+
     }
 
     const renderTable = () => {
@@ -141,8 +139,8 @@ function ViewAllStatusAdmin() {
         const isAuthenticated = localStorage.getItem('recruiterRole');
 
 
-        return isAuthenticated =="Admin" ?statusList.map(st => {
-       
+        return isAuthenticated == "Admin" ? statusList.map(st => {
+
 
 
             var dd = new Date(st.status_date);
@@ -150,25 +148,27 @@ function ViewAllStatusAdmin() {
             if (st.requisition.requisition_id == requisition_id &&
                 (st.candidate == null || st.candidate.candidate_id == candidate_id)
                 && st.recruiter.recruiter_id == recruiter_id)
-                  
+
                 return (
-                    
+
                     <tr key={st.status_id}>
                         <td></td>
                         <td>{st.requisition.id}</td>
                         <td>{st.recruiter.recruiter_name}</td>
                         <td>
                             {
-                                inEditMode.status && inEditMode.rowKey === st.status_id ? (                                    
+                                inEditMode.status && inEditMode.rowKey === st.status_id ? (
 
                                     <select class="btn btn-sm btn-secondary dropdown-toggle"
-                                        style={{ width: '200px' ,  textAlign:"left" }}
+                                        style={{ width: '200px', textAlign: "left" }}
                                         name="status" id="status"
                                         value={status1}
-                                        
-                                        onChange={(event) => {setStatus1(event.target.value)
-                                            setCurrentStatus(st.status)}}
-                                            
+
+                                        onChange={(event) => {
+                                            setStatus1(event.target.value)
+                                            setCurrentStatus(st.status)
+                                        }}
+
                                     >
                                         <option hidden default select> Select Status</option>
 
@@ -268,7 +268,7 @@ function ViewAllStatusAdmin() {
                     </tr >
                 );
         }
-        
+
         ) : (
             history.push("/"),
             window.location.reload()
@@ -276,40 +276,38 @@ function ViewAllStatusAdmin() {
     }
 
     return (
-      
-        <div className="">
-            <div className="row"> 
 
-            <div className="col-12 h-100 master_backgroung_heder">
-                <AdminHeader5 />
-            </div>
+        <div>
 
-            <div className=" col-12 master_backgroung_work2 scroll-bar-horizontal">
+                <div>
+                    <AdminHeader5 />
+                </div>
 
-                <div style={{ width: '100%' }}  >
-                <br></br><Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px' }}>
-                        <thead>
-                            <tr>
-                            <th style={{ width: '10px' }}>Sr No.</th>
+                <div className=" col-12 pt-5 mt-5">
+
+                    <div style={{ width: '100%' }}  >
+                        <br></br><Table className="table table-sm table-striped table-bordered" style={{ fontFamily: 'arial', fontSize: '14px' }}>
+                            <thead>
+                                <tr>
+                                    <th style={{ width: '10px' }}>Sr No.</th>
                                     <th style={{ width: '10px' }}>Job Position ID</th>
                                     <th style={{ width: '80px' }}>Recruiter Name</th>
                                     <th style={{ width: '120px' }}>Status</th>
                                     <th style={{ width: '80px' }}>Status Date</th>
                                     <th style={{ width: '100px' }}>Candidate Name</th>
                                     <th style={{ width: '20px' }}>Action</th>
-                               
-                            </tr>
-                        </thead>
-                        <tbody>
 
-                            {renderTable()}
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                        </tbody>
-                    </Table>
+                                {renderTable()}
 
+                            </tbody>
+                        </Table>
+
+                    </div>
                 </div>
-            </div>
-            </div>
         </div>
         //)
     );
