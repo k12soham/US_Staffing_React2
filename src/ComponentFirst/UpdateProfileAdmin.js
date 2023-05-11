@@ -69,7 +69,9 @@ class UpdateProfileAdmin extends React.Component {
                         position: "top-right", autoClose: 2000,
                         style: { position: "absolute", top: "5px", width: "300px" }
                     }
+
                 );
+
                 this.refInput.focus();
             }
         )
@@ -145,8 +147,8 @@ class UpdateProfileAdmin extends React.Component {
         // e.target.reset();
 
     }
-   
-     
+
+
     postdata = (data) => {
 
 
@@ -169,8 +171,8 @@ class UpdateProfileAdmin extends React.Component {
                     localStorage.setItem("recruiterName", recruiter_name);
                     localStorage.setItem('recruiterEmail', recruiter_email);
                 }
-             
-            
+
+
 
                 history.push("/viewReqForAdmin");
                 window.location.reload();
@@ -294,6 +296,10 @@ class UpdateProfileAdmin extends React.Component {
         this.setState({ passMatch: '' });
     }
 
+    handleClose() {
+        history.push("/adminstatic2")
+        window.location.reload();
+    }
     render() {
         const isAuthenticated = localStorage.getItem('recruiterRole');
 
@@ -308,15 +314,22 @@ class UpdateProfileAdmin extends React.Component {
                 <div className="col-12 col-md-7 col-lg-6 mt-3 auth-main-col mt-5 pt-5">
 
                     <div className="d-flex flex-column align-content-end  border border-5">
+                        <div style={{ textAlign: "left", paddingLeft: '20px', paddingTop: '10px' }}>
+
+                            <button type="button" class="fa fa-arrow-left" data-bs-dismiss="modal" aria-label="Close" onClick={this.handleClose}></button>
+
+                        </div>
                         <div className="auth-body mx-auto">
 
                             <div className="auth-form-container text-center">
                                 <br></br>    <h5><b>Change Recruiter Password</b></h5>
+
                             </div>
                             <br></br>
 
+
                             <form onSubmit={this.handleSubmit}>
-                            <div class="form-group">
+                                <div class="form-group">
                                     <label for="email"><b>Enter Email:</b><b style={{ color: 'red' }}>*</b></label><br></br>
                                     <input
 
@@ -351,8 +364,8 @@ class UpdateProfileAdmin extends React.Component {
 
                                 </div>
 
-                                
-                              
+
+
 
 
 

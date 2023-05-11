@@ -66,15 +66,23 @@ function ViewCandidate() {
         let b = e.sstt
         let c = e.currentst;
 
+
+
         setReqid(a)
         setUpdateStatus(b)
         setCurrentStatus(c)
     }
 
     const handleSubmit = (e) => {
+        
         let a = reqid;
         let b = updatestatus;
         let c = currentstatus;
+
+        // if(b=='First Interview'||)
+        // {
+        //     alert("Please add candidate")
+        // }
 
         if (c == null) {
             alert("Please select status")
@@ -85,6 +93,7 @@ function ViewCandidate() {
         }
         else {
             postdata(a, b);
+            setCurrentStatus(null)
         }
     }
 
@@ -95,6 +104,7 @@ function ViewCandidate() {
         let c = e.canid
         let d = currentstatus;
 
+        
         if (d == null) {
             alert("Please select status")
         }
@@ -103,6 +113,7 @@ function ViewCandidate() {
         }
         else {
             postdata2(a, b, c);
+            setCurrentStatus(null)
         }
     }
 

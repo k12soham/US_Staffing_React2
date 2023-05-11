@@ -230,8 +230,8 @@ class UpdateCand2 extends React.Component {
 
         if ((input["cad_name"]) != undefined) {
 
-            // var pattern = new RegExp(/^[^\s][a-zA-Z\s]{1,50}$/);
-            var pattern = new RegExp("[a-zA-Z]");
+            var pattern = new RegExp(/^[^\s][a-zA-Z\s]{1,50}$/);
+            //  var pattern = new RegExp("[a-zA-Z]");
 
             if (!pattern.test(input["cad_name"])) {
                 isValid = false;
@@ -304,7 +304,7 @@ class UpdateCand2 extends React.Component {
     // -------------------------------------------- End Validation Code ----------------------------------------------------------
 
     getPhone = (e, value, data) => {
-       
+    
 
         var string = value.format
 
@@ -321,6 +321,7 @@ class UpdateCand2 extends React.Component {
     }
 
     render() {
+        console.log(this.state.input)
         const isAuthenticated = localStorage.getItem('recruiterID');
 
         return isAuthenticated ? (
@@ -432,7 +433,7 @@ class UpdateCand2 extends React.Component {
                                                     name="phone"
                                                     country={'us'}
                                                     placeholder='Phone'
-                                                 
+                                                         
                                                     value={this.state.input.phone}
                                                     onChange={this.getPhone}
                                                     searchStyle={{ margin: "0", width: "97%", height: "30px" }}

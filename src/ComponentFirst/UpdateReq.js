@@ -230,8 +230,11 @@ class UpdateReq extends React.Component {
                     }
                 );
                 
-                     history.push("/view_all_req");
-                   window.location.reload()
+
+
+//window.history.replaceState("", "", "/view_all_req");
+                    history.push("/view_all_req");
+                  window.location.reload()
                 
             },
             (error) => {
@@ -292,15 +295,7 @@ class UpdateReq extends React.Component {
             isValid = false;
             errors["jobTitle"] = "This field is required";
         }
-        if ((input["jobTitle"]) != '') {
-
-            var pattern = new RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]+[^\s]{2,50}$/);
-
-            if (!pattern.test(input["jobTitle"])) {
-                isValid = false;
-                errors["jobTitle"] = "Please enter only characters.";
-            }
-        }
+ 
 
         // -------------duration-----------------------------------------------------------------------------------------
         if ((!input["duration"])) {

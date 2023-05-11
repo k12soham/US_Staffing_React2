@@ -40,7 +40,6 @@ function App() {
         <Route path="/signup" element={<SignUp />}></Route>
         <Route path="/addRequisition" element={<AddRequisition />}></Route>
 
-        {/* <Route path="/adminstatic" element={<AdminStatic />}></Route> */}
         <Route path="/addCandidate" element={<AddCandidate />}></Route>
         <Route path="/adminstatic2" element={<AdminStatic2/>}></Route>
         
@@ -48,7 +47,6 @@ function App() {
         <Route path="/view_all_req" element={<ViewAllReq />}></Route>
 
         <Route path="/updateRequisition" element={<UpdateReq />}></Route>
-        {/* <Route path="/updateCandidate" element={<UpdateCandidate />}></Route> */}
         <Route path="/updateCandidate" element={<UpdateCand2 />}></Route>
 
         <Route path="/updateRequisitionAdmin" element={<UpdateReqAdmin />}></Route>

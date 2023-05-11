@@ -267,14 +267,14 @@ class AddRequisition extends React.Component {
             isValid = false;
             errors["jobTitle"] = "This field is required";
         }
-        if ((input["jobTitle"]) != '') {
+        // if ((input["jobTitle"]) != '') {
 
-            var pattern = new RegExp(/^[a-zA-Z !@#$%^&*()_+-= \s]{2,50}$/);
-            if (!pattern.test(input["jobTitle"])) {
-                isValid = false;
-                errors["jobTitle"] = "Please enter valid Job Title.";
-            }
-        }
+        //     var pattern = new RegExp(/^[a-zA-Z !@#$%^&*()_+-= \s]{2,50}$/);
+        //     if (!pattern.test(input["jobTitle"])) {
+        //         isValid = false;
+        //         errors["jobTitle"] = "Please enter valid Job Title.";
+        //     }
+        // }
 
         // -------------duration-----------------------------------------------------------------------------------------
         if ((!input["duration"])) {

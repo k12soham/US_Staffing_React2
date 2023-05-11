@@ -294,15 +294,7 @@ class UpdateReqAdmin extends React.Component {
             isValid = false;
             errors["jobTitle"] = "This field is required";
         }
-        if ((input["jobTitle"]) != '') {
-
-            var pattern = new RegExp(/^[^\s][a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]+[^\s]{2,50}$/);
-
-            if (!pattern.test(input["jobTitle"])) {
-                isValid = false;
-                errors["jobTitle"] = "Please enter only characters.";
-            }
-        }
+   
 
         // -------------duration-----------------------------------------------------------------------------------------
         if ((!input["duration"])) {

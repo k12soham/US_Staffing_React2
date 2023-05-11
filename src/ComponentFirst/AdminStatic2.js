@@ -224,7 +224,7 @@ class AdminStatic2 extends React.Component {
 
 
     onSave1 = ({ reqid, newReq }) => {
-
+        newReq=newReq.trim()
         if (!newReq) {
             alert("Enter valid details")
 
@@ -314,6 +314,7 @@ class AdminStatic2 extends React.Component {
 
 
     onSave2 = ({ stid, newst }) => {
+        newst=newst.trim()
         if (!newst) {
             alert("Enter valid details")
         }
@@ -399,6 +400,7 @@ class AdminStatic2 extends React.Component {
 
 
     onSave3 = ({ durationid, newduration }) => {
+        newduration=newduration.trim()
         if (!newduration) {
             alert("Enter valid details")
 
@@ -483,6 +485,7 @@ class AdminStatic2 extends React.Component {
 
 
     onSave4 = ({ clientid, newclient }) => {
+        newclient=newclient.trim()
         if (!newclient) {
             alert("Enter valid details")
 
@@ -563,12 +566,13 @@ class AdminStatic2 extends React.Component {
 
 
     onSave5 = ({ positionid, newposition }) => {
+        newposition=newposition.trim()
         if (!newposition) {
             alert("Enter valid details")
 
         }
         else {
-
+          
             this.updateInventory5({ positionid, newposition });
         }
     }
@@ -641,6 +645,7 @@ class AdminStatic2 extends React.Component {
 
 
     onSave6 = ({ visatypeid, newvisatype }) => {
+        newvisatype=newvisatype.trim()
         if (!newvisatype) {
             alert("Enter valid details")
 
@@ -719,6 +724,7 @@ class AdminStatic2 extends React.Component {
 
 
     onSave7 = ({ ratetermid, newrateterm }) => {
+        newrateterm=newrateterm.trim()
         if (!newrateterm) {
             alert("Enter valid details")
 
