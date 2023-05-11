@@ -36,9 +36,8 @@ class UpdateCandidateAdmin extends React.Component {
                 inputs["remark"] = response.data.remark;
                 inputs["reason"] = response.data.reason;
 
-                this.setState({ input: inputs });
+                this.setState({ input: inputs ,});
                 this.state.defPL = response.data.phone.length;
-
             },
             (error) => {
                 console.log(error);
@@ -81,7 +80,7 @@ class UpdateCandidateAdmin extends React.Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-
+        this.getPhone = this.getPhone.bind(this);
     }
 
     resetForm = () => {
@@ -322,9 +321,11 @@ class UpdateCandidateAdmin extends React.Component {
         this.setState({
             input: inputs,
             FormatLen: string_length,
-            defPL:0,
+            defPL:0
         });
     }
+
+  
 
     // -------------------------------------------- render ----------------------------------------------------
     render() {

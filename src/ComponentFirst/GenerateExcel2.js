@@ -11,8 +11,6 @@ import { read, utils, writeFile } from 'xlsx';
 // define a generatePDF function that accepts a tickets argument
 const GenerateExcel2 = tickets => {
 
-console.log(tickets)
-
   let recruiterName = localStorage.getItem("recruiterName");
   let a = new Date();
   let cate = localStorage.getItem("cate");
@@ -29,7 +27,8 @@ console.log(tickets)
   let index = 1;
   // for each ticket pass all its data into an array
   tickets.map(st => {
-    if ( st.status=="Submitted"&& (st.candidate == null || st.candidate.deleted == 1)&&(st.recruiter.recruiter_id==rec||rec=="all")) {
+    if ( st.status=="Submitted"&& (st.candidate == null || st.candidate.deleted == 1)
+    &&(st.recruiter.recruiter_id==rec||rec=="all")&&st.requisition.deleted==1) {
 
     
 
@@ -40,7 +39,7 @@ console.log(tickets)
 
         st.recruiter == null ?
         (
-          console.log("null")
+        []
         ) :
         (
           st.recruiter.recruiter_name
@@ -49,7 +48,7 @@ console.log(tickets)
 
         st.candidate == null ?
           (
-            console.log("null")
+           []
           ) :
           (
             st.candidate.candidate_name
@@ -70,7 +69,7 @@ console.log(tickets)
 
         st.candidate == null ?
           (
-            console.log("null")
+            []
           ) :
           (
             st.requisition.client_rate
@@ -82,7 +81,7 @@ console.log(tickets)
 
         st.candidate == null ?
           (
-            console.log("null")
+           []
           ) :
           (
             st.candidate.submitted_rate

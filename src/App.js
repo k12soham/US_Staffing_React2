@@ -26,6 +26,7 @@ import Changepassword from './ComponentFirst/Changepassword';
 import ModalWithCSS from './ComponentFirst/ModalWithCSS';
 import UpdateCand2 from './ComponentFirst/UpdateCand2';
 
+
 function App() {
 
   let a= localStorage.getItem("recruiterIDAdmin")

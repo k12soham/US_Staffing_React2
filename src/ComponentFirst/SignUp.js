@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import history from './ResponseVal';
 import { useNavigate } from "react-router-dom";
-
+import logo1 from '../assets/tcog_logo.png'
 class SignUp extends React.Component {
 
   constructor(props) {
@@ -232,25 +232,22 @@ class SignUp extends React.Component {
 
   render() {
     return (
-      <div className="row g-0 auth-wrapper2">
-        <div className="col-12 col-md-5 col-lg-6 h-100 master_backgroung_login">
-          <img src="usa.png" width="670" height="657" className="img-fluid"></img>
+
+      <>
+       <div className="img1">
         </div>
-
-        <div className="col-12 col-md-7 col-lg-6 auth-main-col ">
-
-          <div className="d-flex flex-column align-content-end">
-            <div className="auth-body mx-auto">
-
-              <div className="auth-form-container text-center">
-                <h5><b>Create an account</b></h5>
+    
+            <div className="bg-text">
+            <img src={logo1}></img>
+              <div >
+            <h5><b>Create an account</b></h5> <br/> 
               </div>
-              <br></br>
+      
 
-              <form onSubmit={this.handleSubmit}>
+              <form onSubmit={this.handleSubmit} classname="auth-form-container">
 
-                <div class="form-group">
-                  <label for="name"><b>Enter Name:</b><b style={{ color: 'red' }}>*</b></label>
+                <div class="form-group ">
+                  {/* <label for="name" ><b>Enter Name:</b><b style={{ color: 'red' }}>*</b></label><br/> */}
                   <input
                     type="text"
                     name="name"
@@ -266,14 +263,14 @@ class SignUp extends React.Component {
                 </div>
 
                 <div class="form-group">
-                  <label for="email"><b>Enter Email:</b><b style={{ color: 'red' }}>*</b></label>
+                  {/* <label for="email"><b>Enter Email:</b><b style={{ color: 'red' }}>*</b></label><br/> */}
                   <input
                     name="email"
                     value={this.state.input.email}
 
                     onChange={this.handleChange}
                     placeholder="Email"
-                    minLength={11}
+                    minLength={5}
                     maxLength={50}
                     style={{ width: '360px', height: '37px' }}
                   />
@@ -284,7 +281,7 @@ class SignUp extends React.Component {
                 {/* ---------------------------------------------------------------------- */}
                 <div className="password mb-3 " >
                   <div className="form-group">
-                    <label for="password"><b>Enter New Password:</b><b style={{ color: 'red' }}>*</b></label>
+                    {/* <label for="password"><b>Enter New Password:</b><b style={{ color: 'red' }}>*</b></label><br/> */}
                     <input
                       type={(this.state.showNewPass) ? "text" : "password"}
                       name="newPass"
@@ -300,7 +297,7 @@ class SignUp extends React.Component {
 
                     <button
                       type="button"
-                      className="btn btn-outline-primary theme-btn mx-auto"
+                      className="btn btn-secondary theme-btn mx-auto"
                       onClick={this.togglePassword2}
                     >
                       <i
@@ -316,7 +313,7 @@ class SignUp extends React.Component {
 
                 <div className="password mb-3 ">
                   <div className="form-group">
-                    <label for="password"><b>Enter Confirm Password:</b><b style={{ color: 'red' }}>*</b></label>
+                    {/* <label for="password"><b>Enter Confirm Password:</b><b style={{ color: 'red' }}>*</b></label><br/>   */}
                     <input
                       type={(this.state.showConfPass) ? "text" : "password"}
                       name="confirmPass"
@@ -331,7 +328,7 @@ class SignUp extends React.Component {
 
                     <button
                       type="button"
-                      className="btn btn-outline-primary theme-btn mx-auto"
+                      className="btn btn-secondary theme-btn mx-auto"
                       onClick={this.togglePassword3}
                     >
                       <i
@@ -345,14 +342,14 @@ class SignUp extends React.Component {
                     <div className="text-success">{this.state.passMatch}</div>
 
                   </div>
-                </div>
+                </div><br/>
 
                 <div className="text-center">
 
 
                   <button
-                    type="submit"
-                    className="btn btn-primary w-100 theme-btn mx-auto"
+                    type="submit" style={{width:'360px'}}
+                    className="btn btn-success theme-btn mx-auto"
                   >
                     Sign Up
                   </button>
@@ -363,14 +360,12 @@ class SignUp extends React.Component {
               <hr />
               <div className="auth-option text-center pt-2">
                 Already have an account?{" "}
-                <Link className="text-link" to="/">
+                <Link className="text-link text-success" to="/">
                   Sign In
                 </Link>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
+       </>
     );
   }
 }

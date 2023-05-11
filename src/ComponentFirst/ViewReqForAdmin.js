@@ -46,7 +46,6 @@ function ViewReqForAdmin() {
     }, []);
 
     const deleteBook = (requisitionID) => {
-        console.log(requisitionID);
         axios.delete(`${base_url}/deleteRequisitionByAdmin?requisition_id=${requisitionID}`)
             .then(response => {
 
@@ -413,7 +412,8 @@ function ViewReqForAdmin() {
                                                 statusList1.map((cl) => {
 
                                                     if (
-                                                        cl.status == "Submitted" && (cl.candidate == null || cl.candidate.deleted == 1) && (cl.recruiter.recruiter_id == rec || rec == 'all'))
+                                                        cl.status == "Submitted" && (cl.candidate == null || cl.candidate.deleted == 1)
+                                                         && (cl.recruiter.recruiter_id == rec || rec == 'all')&&cl.requisition.deleted==1)
 
                                                         return (
                                                             <>
@@ -425,7 +425,7 @@ function ViewReqForAdmin() {
                                                                         {
                                                                             cl.recruiter == null ?
                                                                                 (
-                                                                                    console.log("null")
+                                                                                   []
                                                                                 ) :
                                                                                 (
                                                                                     cl.recruiter.recruiter_name
@@ -437,7 +437,7 @@ function ViewReqForAdmin() {
                                                                         {
                                                                             cl.candidate == null ?
                                                                                 (
-                                                                                    console.log("null")
+                                                                                    []
                                                                                 ) :
                                                                                 (
                                                                                     cl.candidate.candidate_name
@@ -450,7 +450,7 @@ function ViewReqForAdmin() {
                                                                         {
                                                                             cl.candidate == null ?
                                                                                 (
-                                                                                    console.log("null")
+                                                                                    []
                                                                                 ) :
                                                                                 (
                                                                                     cl.status
@@ -463,7 +463,7 @@ function ViewReqForAdmin() {
                                                                         {
                                                                             cl.candidate == null ?
                                                                                 (
-                                                                                    console.log("null")
+                                                                                    []
                                                                                 ) :
                                                                                 (
                                                                                     cl.status_date
@@ -476,7 +476,7 @@ function ViewReqForAdmin() {
                                                                         {
                                                                             cl.requisition == null ?
                                                                                 (
-                                                                                    console.log("null")
+                                                                                    []
                                                                                 ) :
                                                                                 (
                                                                                     cl.requisition.client_rate
@@ -489,7 +489,7 @@ function ViewReqForAdmin() {
                                                                         {
                                                                             cl.candidate == null ?
                                                                                 (
-                                                                                    console.log("null")
+                                                                                    []
                                                                                 ) :
                                                                                 (
                                                                                     cl.candidate.submitted_rate

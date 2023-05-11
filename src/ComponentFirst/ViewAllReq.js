@@ -12,6 +12,7 @@ import { Modal } from 'react-bootstrap';
 import { format } from 'date-fns'
 import DatePicker from "react-datepicker";
 import GenerateExcel1 from "./GenerateExcel1";
+
 function ViewAllReq() {
 
     const recruiterID = localStorage.getItem('recruiterID');
@@ -57,7 +58,7 @@ function ViewAllReq() {
     // ----------------------------------------------------------------------------------------------------------
     const onEdit = ({ requisitionID }) => {
 
-        console.log(requisitionID);
+
         localStorage.setItem('recruiterID', recruiterID);
         localStorage.setItem('requisitionID', requisitionID);
 
@@ -150,7 +151,6 @@ function ViewAllReq() {
         }
     }
     const postGetDataBetDates = (f, f1, f2) => {
-        // axios.get(`${base_url}/get_cls_byDate?empid=${f}&date1=${f1}&date2=${f2}`).then(json => setClosureList(json.data))
         axios.get(`${base_url}/get_cls_byDate?empid=${f}&date1=${f1}&date2=${f2}`)
             .then(
                 json => setstatusList1(json.data),
@@ -364,7 +364,7 @@ function ViewAllReq() {
                                     {
 
                                         statusList1.map((cl) => {
-                                            if (cl.recruiter.recruiter_id == empID && cl.status == "Submitted" && (cl.candidate == null || cl.candidate.deleted == 1))
+                                            if (cl.recruiter.recruiter_id == empID && cl.status == "Submitted" && (cl.candidate == null || cl.candidate.deleted == 1)&& cl.requisition.deleted==1)
                                                 return (
                                                     <>
                                                         <tr >
@@ -375,7 +375,7 @@ function ViewAllReq() {
                                                                 {
                                                                     cl.candidate == null ?
                                                                         (
-                                                                            console.log("null")
+                                                                            []
                                                                         ) :
                                                                         (
                                                                             cl.candidate.candidate_name
@@ -388,7 +388,7 @@ function ViewAllReq() {
                                                                 {
                                                                     cl.candidate == null ?
                                                                         (
-                                                                            console.log("null")
+                                                                            []
                                                                         ) :
                                                                         (
                                                                             cl.status
@@ -400,7 +400,7 @@ function ViewAllReq() {
                                                                 {
                                                                     cl.candidate == null ?
                                                                         (
-                                                                            console.log("null")
+                                                                            []
                                                                         ) :
                                                                         (
                                                                             cl.status_date
@@ -413,7 +413,7 @@ function ViewAllReq() {
                                                                 {
                                                                     cl.requisition == null ?
                                                                         (
-                                                                            console.log("null")
+                                                                            []
                                                                         ) :
                                                                         (
                                                                             cl.requisition.client_rate
@@ -426,7 +426,7 @@ function ViewAllReq() {
                                                                 {
                                                                     cl.candidate == null ?
                                                                         (
-                                                                            console.log("null")
+                                                                            []
                                                                         ) :
                                                                         (
                                                                             cl.candidate.submitted_rate

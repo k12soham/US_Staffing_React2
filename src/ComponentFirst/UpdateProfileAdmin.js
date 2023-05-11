@@ -5,7 +5,8 @@ import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import history from './ResponseVal';
 import AdminHeader5 from './AdminHeader5';
-
+import { Router } from 'react-router';
+import { Route } from 'react-router-dom';
 class UpdateProfileAdmin extends React.Component {
 
     constructor(props) {
@@ -144,7 +145,8 @@ class UpdateProfileAdmin extends React.Component {
         // e.target.reset();
 
     }
-
+   
+     
     postdata = (data) => {
 
 
@@ -167,6 +169,9 @@ class UpdateProfileAdmin extends React.Component {
                     localStorage.setItem("recruiterName", recruiter_name);
                     localStorage.setItem('recruiterEmail', recruiter_email);
                 }
+             
+            
+
                 history.push("/viewReqForAdmin");
                 window.location.reload();
             },
@@ -311,6 +316,23 @@ class UpdateProfileAdmin extends React.Component {
                             <br></br>
 
                             <form onSubmit={this.handleSubmit}>
+                            <div class="form-group">
+                                    <label for="email"><b>Enter Email:</b><b style={{ color: 'red' }}>*</b></label><br></br>
+                                    <input
+
+                                        name='recruiter_email'
+                                        ref={(input) => { this.refInput = input; }}
+                                        value={this.state.input.recruiter_email}
+                                        onChange={this.handleChange}
+                                        onBlur={(evt) => this.handleFetchedData2({ email: this.state.input.recruiter_email })}
+                                        placeholder="Email"
+                                        minLength={11}
+                                        maxLength={50}
+                                        style={{ width: '360px', height: '37px' }}
+                                    />
+
+                                    <div className="text-danger">{this.state.errors.recruiter_email}</div>
+                                </div>
 
                                 {/* -----------------------------------------------End editable code------------------------------------------------------------- */}
                                 <div class="form-group">
@@ -329,26 +351,8 @@ class UpdateProfileAdmin extends React.Component {
 
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="email"><b>Enter Email:</b><b style={{ color: 'red' }}>*</b></label><br></br>
-                                    <input
-
-                                        name='recruiter_email'
-                                        ref={(input) => { this.refInput = input; }}
-                                        value={this.state.input.recruiter_email}
-                                        onChange={this.handleChange}
-                                        onBlur={(evt) => this.handleFetchedData2({ email: this.state.input.recruiter_email })}
-                                        placeholder="Email"
-                                        minLength={11}
-                                        maxLength={50}
-                                        style={{ width: '360px', height: '37px' }}
-                                    />
-
-                                    <div className="text-danger">{this.state.errors.recruiter_email}</div>
-                                </div>
-
-                                {/* <Button onClick={(evt)=> this.handleFetchedData2({email:this.state.input.recruiter_email})}>Find Email</Button> */}
-
+                                
+                              
 
 
 

@@ -4,7 +4,6 @@ import base_url from '../api/bootapi';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import history from './ResponseVal';
-
 import EmployeeHeader from './EmployeeHeader';
 import { useNavigate } from "react-router-dom";
 import PhoneInput, { CountryData, PhoneInputProps } from 'react-phone-input-2'
@@ -13,8 +12,8 @@ import 'react-phone-input-2/lib/style.css'
 // import "react-phone-number-input/style.css";
 import es from 'react-phone-input-2/lang/es.json'
 import { id } from 'date-fns/locale';
-
-
+import TextInput from 'react-autocomplete-input';
+import 'react-autocomplete-input/dist/bundle.css';
 class AddCandidate extends React.Component {
 
     componentDidMount() {
@@ -54,10 +53,12 @@ class AddCandidate extends React.Component {
             rateTerm_fd: [],
             visaType_fd: [],
             FormatLen: 0,
-            RequisitionId: []
+            RequisitionId: [],
+
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+
     }
 
     resetForm = () => {
@@ -91,16 +92,16 @@ class AddCandidate extends React.Component {
     }
 
     handleChange(e) {
-        let add_cls = this.state.input;
-        add_cls[e.target.name] = e.target.value;
 
+        let add_cls = this.state.input;
+
+        add_cls[e.target.name] = e.target.value
         this.setState({
             input: add_cls
         });
     }
 
     CheckRequisiton = (e) => {
-        console.log(this.state.RequisitionId)
 
         let requisition_id = this.state.input;
 
@@ -115,6 +116,7 @@ class AddCandidate extends React.Component {
         }
 
         let req_id = this.state.input;
+
         let z = req_id.reqid
 
         let object = this.state.RequisitionId.find(obj => obj.id == z);
@@ -302,7 +304,12 @@ class AddCandidate extends React.Component {
                 isValid = false;
                 errors["phone"] = "Please enter valid phone number";
             }
+
         }
+
+
+
+
 
         // -------------email-----------------------------------------------------------------------------------------
         if ((!input["email"])) {
@@ -328,13 +335,10 @@ class AddCandidate extends React.Component {
 
     getPhone = (e, value, data) => {
 
-        console.log(e)
+
         var string = value.format
 
         var string_length = [...string].filter(x => x === '.').length
-        console.log(string_length)
-
-        console.log("entered No length = " + (value.format.length - value.dialCode.length))
 
         let inputs = this.state.input;
         inputs["phone"] = e;

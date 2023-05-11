@@ -10,12 +10,7 @@ function ViewAllStatus() {
     const [statusList, setstatusList] = useState([]);
     const [statusFD, setstatusFD] = useState([]);
  
-    const [statusDate, setStatusDate] = useState(new Date());
-    console.log(statusDate)
-
-
-  
-
+    
     useEffect(() => {
         axios.get(`${base_url}/getAllRequisition`).then(json => setRequisitionList(json.data))
         axios.get(`${base_url}/getAllStatus`).then(json => setstatusList(json.data))
@@ -52,7 +47,7 @@ function ViewAllStatus() {
                             {
                                 st.candidate == null ?
                                     (
-                                        console.log("null")
+                                        []
                                     ) :
                                     (
                                         st.candidate.candidate_name
