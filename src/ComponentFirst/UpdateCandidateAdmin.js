@@ -76,6 +76,7 @@ class UpdateCandidateAdmin extends React.Component {
             phone: '',
             recruiterIDAdmin: undefined,
             defPL: 0,
+            countryCodeFlag:'us'
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -145,11 +146,7 @@ class UpdateCandidateAdmin extends React.Component {
         if (this.state.input["email"] != null) {
             this.state.input["email"] = this.state.input["email"].trim();
             this.state.input["email"] = this.state.input["email"].replaceAll("#", "%23")
-
         }
-
-
-
 
         if (this.state.input["remark"] != null) {
             this.state.input["remark"] = this.state.input["remark"].trim(" ");
@@ -282,18 +279,15 @@ class UpdateCandidateAdmin extends React.Component {
         if ((!input["phone"]) || (input["phone"] == '+1')) {
             isValid = false;
             errors["phone"] = "This field is required";
-        }    
-        
+        }
 
-    
         if ((!input["phone"]) || ((this.state.defPL) == 0 )){
             if (((input["phone"]).length) != (this.state.FormatLen)) {
                 isValid = false;
                 errors["phone"] = "Please enter valid phone number";
             }
-        }  
+        }
         
-
         // -------------email-----------------------------------------------------------------------------------------
         if ((!input["email"])) {
             isValid = false;
@@ -315,20 +309,40 @@ class UpdateCandidateAdmin extends React.Component {
     }
     // -------------------------------------------- End Validation Code ----------------------------------------------------------
 
-    getPhone = (e, value, data) => {
-       
+ getPhone = (e, value, data, country) => {
 
+    
         var string = value.format
-
+        
         var string_length = [...string].filter(x => x === '.').length
 
         let inputs = this.state.input;
         inputs["phone"] = e;
 
+        //if ((this.state.countryCodeFlag != null)) {
+            if (this.state.countryCodeFlag != value.countryCode) {
+
+                let str = country;
+                let str_1 = str.split(/\s(.+)/)[0];  //everything before the first space
+                inputs["phone"] = str_1;
+            }
+            else {
+               
+                inputs["phone"] = e;
+            }
+       /* }
+        else{
+      alert(country)
+                let str = country;
+                let str_1 = str.split(/\s(.+)/)[0];  //everything before the first space
+                inputs["phone"] = str_1;
+        }*/
+
         this.setState({
             input: inputs,
             FormatLen: string_length,
-            defPL:0
+            defPL: 0,
+            countryCodeFlag: value.countryCode,
         });
     }
 
@@ -338,17 +352,12 @@ class UpdateCandidateAdmin extends React.Component {
     render() {
         const isAuthenticated = localStorage.getItem('recruiterRole');
 
-
         return isAuthenticated =="Admin" ? (
 
                 <div className="row">
 
                     <div className="col-12 h-100">
-
-
                         <AdminHeader5 />
-
-
                     </div>
 
                     <div className="col-12 pt-5 mt-5">
@@ -416,8 +425,6 @@ class UpdateCandidateAdmin extends React.Component {
                                             <div class="form-group">
                                                 <label for="submitted_rate"><b>Submitted Rate:</b><b style={{ color: 'red' }}>*</b></label>
                                                 <input
-                                                    // minLength={2}
-                                                    // maxLength={4}
                                                     type="text"
                                                     name="submitted_rate"
                                                     value={this.state.input.submitted_rate}

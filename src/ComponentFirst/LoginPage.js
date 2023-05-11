@@ -90,8 +90,7 @@ const Login1 = () => {
         axios.post(`${base_url}/login?Username=${uname}&Password=${pass}`).then(
             (response) => {
 
-                localStorage.setItem('uuid', response.data);
-              
+                localStorage.setItem('uuid', response.data);              
 
                 if (response.data.role == "Admin") {
                     localStorage.setItem('recruiterName', response.data.recruiter_name);
@@ -129,7 +128,6 @@ const Login1 = () => {
             }
         )
     }
-
 
     return (
         <>
