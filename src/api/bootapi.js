@@ -1,5 +1,5 @@
 
-const base_url = "http://10.33.2.179:8085"
+const base_url = "http://10.33.2.149:8085"
 
 //const base_url = process.env.REACT_APP_API_KEY
 

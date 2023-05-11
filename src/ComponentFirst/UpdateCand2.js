@@ -8,6 +8,7 @@ import EmployeeHeader from './EmployeeHeader';
 import { useNavigate } from "react-router-dom";
 import PhoneInput, { CountryData, PhoneInputProps } from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
+import { countryPhoneData } from 'phone';
 
 class UpdateCand2 extends React.Component {
 
@@ -35,12 +36,15 @@ class UpdateCand2 extends React.Component {
                 inputs["email"] = response.data.email;
                 inputs["remark"] = response.data.remark;
                 inputs["reason"] = response.data.reason;
-                this.state.phoneNumber = response.data.phone;
 
                 this.setState({
                     input: inputs,
                     phone: inputs["phone"]
                 });
+                // this.state.phoneNumber = response.data.phone;
+                this.state.defPL = response.data.phone.length;
+                this.state.countryCode = null;
+
             },
             (error) => {
                 console.log(error);
@@ -74,8 +78,9 @@ class UpdateCand2 extends React.Component {
             empID: '',
             rateTerm_fd: [],
             visaType_fd: [],
-            //  phone: '',
             FormatLen: 0,
+            defPL: 0,
+            countryCodeFlag: null,
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -91,7 +96,6 @@ class UpdateCand2 extends React.Component {
         inputs["rate_term"] = '';
         inputs["submitted_rate"] = '';
         inputs["phone"] = '+1';
-        //inputs["phone"] = '';
         inputs["email"] = '';
         inputs["remark"] = '';
         inputs["reason"] = '';
@@ -123,6 +127,13 @@ class UpdateCand2 extends React.Component {
 
     handleSubmit(e) {
 
+        console.log("Hello");
+        let add_cls = this.state.input;
+        add_cls[e.target.name] = e.target.value;
+
+        console.log(e);
+        console.log(add_cls);
+
         e.preventDefault();
 
         if (this.state.input["cad_name"] != null) {
@@ -151,7 +162,6 @@ class UpdateCand2 extends React.Component {
         }
 
         if (this.validate()) {
-            // if (true) {
             let add_cls = this.state.input;
             add_cls[e.target.name] = e.target.value;
             this.put_UpdateCandidate(add_cls);
@@ -241,11 +251,9 @@ class UpdateCand2 extends React.Component {
                     }
                 );
 
-              
-            
-                    history.push("/viewCandidate");
-                    window.location.reload();
-              
+                history.push("/viewCandidate");
+                window.location.reload();
+
             },
             (error) => {
                 console.log(error);
@@ -260,7 +268,6 @@ class UpdateCand2 extends React.Component {
         inputs["rate_term"] = undefined;
         inputs["submitted_rate"] = undefined;
         inputs["phone"] = "+1";
-        //inputs["phone"] = "";
         inputs["email"] = undefined;
         inputs["remark"] = undefined;
         inputs["reason"] = undefined;
@@ -322,13 +329,14 @@ class UpdateCand2 extends React.Component {
         if ((!input["phone"]) || (input["phone"] == '+1')) {
             isValid = false;
             errors["phone"] = "This field is required";
-        }    
-        
+        }
+
+        if ((!input["phone"]) || ((this.state.defPL) == 0)) {
             if (((input["phone"]).length) != (this.state.FormatLen)) {
                 isValid = false;
                 errors["phone"] = "Please enter valid phone number";
-            }      
-        
+            }
+        }
 
         // -------------email-----------------------------------------------------------------------------------------
         if ((!input["email"])) {
@@ -352,22 +360,40 @@ class UpdateCand2 extends React.Component {
     }
     // -------------------------------------------- End Validation Code ----------------------------------------------------------
 
-    getPhone = (e, value, data) => {
-       
+    getPhone = (e, value, data, country) => {
 
+        // console.log(e + " " + value.format + "  " + value.countryCode + " " + country)
         var string = value.format
 
         var string_length = [...string].filter(x => x === '.').length
-        console.log(string_length)
-
-        console.log("entered No length = " + (value.format.length - value.dialCode.length))
+        // console.log(string_length)
+        // console.log("entered No length = " + (value.format.length - value.dialCode.length))
 
         let inputs = this.state.input;
         inputs["phone"] = e;
 
+        if ((this.state.countryCodeFlag != null)) {
+            if (this.state.countryCodeFlag != value.countryCode) {
+
+                let str = country;
+                let str_1 = str.split(/\s(.+)/)[0];  //everything before the first space
+                inputs["phone"] = str_1;
+            }
+            else {
+                inputs["phone"] = e;
+            }
+        }
+        else{
+                let str = country;
+                let str_1 = str.split(/\s(.+)/)[0];  //everything before the first space
+                inputs["phone"] = str_1;
+        }
+
         this.setState({
             input: inputs,
             FormatLen: string_length,
+            defPL: 0,
+            countryCodeFlag: value.countryCode,
         });
     }
 
@@ -376,212 +402,210 @@ class UpdateCand2 extends React.Component {
 
         return isAuthenticated ? (
 
-                <div className="row">
+            <div className="row">
 
-                    <div className="col-12">
-                        <EmployeeHeader />
-                    </div>
+                <div className="col-12">
+                    <EmployeeHeader />
+                </div>
 
-                    <div className="col-12 pt-5 mt-5">
+                <div className="col-12 pt-5 mt-5">
 
-                        <div className="row">
-                            <form onSubmit={this.handleSubmit}>
+                    <div className="row">
+                        <form onSubmit={this.handleSubmit}>
 
-                                <div className="col-12">
-                                    <div className="row" style={{ paddingTop: '20px' }}>
-                                       
-                                        <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '20px' }}>
+                            <div className="col-12">
+                                <div className="row" style={{ paddingTop: '20px' }}>
 
-                                            <div class="form-group">
-                                                <label for="cad_name"><b>Candidate Name:</b><b style={{ color: 'red' }}>*</b></label>
-                                                <input
+                                    <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '20px' }}>
 
-                                                    minLength={1}
-                                                    maxLength={50}
-                                                    type="text"
-                                                    name="cad_name"
-                                                    ref={(input) => { this.refInput = input; }}
-                                                    value={this.state.input.cad_name}
-                                                    onChange={this.handleChange}
-                                                    onKeyUp={this.keyUpHandlerSub}
-                                                    placeholder="Candidate Name"
-                                                    class="form-control" />
+                                        <div class="form-group">
+                                            <label for="cad_name"><b>Candidate Name:</b><b style={{ color: 'red' }}>*</b></label>
+                                            <input
 
-                                                <div className="text-danger">{this.state.errors.cad_name}</div>
-                                            </div>
+                                                minLength={1}
+                                                maxLength={50}
+                                                type="text"
+                                                name="cad_name"
+                                                ref={(input) => { this.refInput = input; }}
+                                                value={this.state.input.cad_name}
+                                                onChange={this.handleChange}
+                                                onKeyUp={this.keyUpHandlerSub}
+                                                placeholder="Candidate Name"
+                                                class="form-control" />
 
-                                            <div class="form-group">
-                                                <label for="visa_type"><b>Visa Type:</b><b style={{ color: 'red' }}>*</b></label><br />
-                                                <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '100%', textAlign: "left" }}
-                                                    name="visa_type" id="visa_type"
-                                                    onChange={this.handleChange}
-                                                    onKeyUp={this.keyUpHandlerReq}
-                                                    value={this.state.input.visa_type}>
-
-                                                    <option value='' hidden> Select Visa Type </option>
-                                                    {
-                                                        this.state.visaType_fd.map((vt) => (
-
-                                                            <option value={vt.visa_type}>{vt.visa_type}</option>
-                                                        ))
-                                                    }
-                                                </select>
-
-                                                <div className="text-danger">{this.state.errors.visa_type}</div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="rate_term"><b>Rate Term:</b><b style={{ color: 'red' }}>*</b></label><br />
-                                                <select class="btn btn-secondary dropdown-toggle"
-                                                    style={{ width: '100%', textAlign: "left" }}
-                                                    name="rate_term" id="rate_term"
-                                                    onChange={this.handleChange}
-                                                    onKeyUp={this.keyUpHandlerReq}
-                                                    value={this.state.input.rate_term}>
-
-                                                    <option value='' hidden> Select Rate Term </option>
-
-                                                    {
-                                                        this.state.rateTerm_fd.map((rt) => (
-
-                                                            <option value={rt.rate_term}>{rt.rate_term}</option>
-                                                        ))
-
-                                                    }
-                                                </select>
-
-                                                <div className="text-danger">{this.state.errors.rate_term}</div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="submitted_rate"><b>Submitted Rate ($):</b><b style={{ color: 'red' }}>*</b></label>
-                                                <input
-                                                    minLength={1}
-                                                    maxLength={4}
-                                                    type="text"
-                                                    name="submitted_rate"
-                                                    value={this.state.input.submitted_rate}
-                                                    onChange={this.handleChange}
-                                                    placeholder="Submitted Rate in $/hr"
-
-                                                    class="form-control" />
-
-                                                <div className="text-danger">{this.state.errors.submitted_rate}</div>
-                                            </div>
-
+                                            <div className="text-danger">{this.state.errors.cad_name}</div>
                                         </div>
-                                        <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '30px' }}>
-                                            <div class="form-group">
-                                                <label for="phone"><b>Phone :</b><b style={{ color: 'red' }}>*</b></label>
 
-                                                <PhoneInput
+                                        <div class="form-group">
+                                            <label for="visa_type"><b>Visa Type:</b><b style={{ color: 'red' }}>*</b></label><br />
+                                            <select class="btn btn-secondary dropdown-toggle"
+                                                style={{ width: '100%', textAlign: "left" }}
+                                                name="visa_type" id="visa_type"
+                                                onChange={this.handleChange}
+                                                onKeyUp={this.keyUpHandlerReq}
+                                                value={this.state.input.visa_type}>
 
-                                                    inputStyle={{ width: '100%', height:'37px'}}
-                                                    preferredCountries={['us']}
-                                                    onlyCountries={['us','in','gb','sg','ae']}
-                                                    countryCodeEditable={false}
-                                                    name="phone"
-                                                    country={'us'}
-                                                    placeholder='Phone'
-                                                 
-                                                    value={this.state.input.phone}
-                                                    onChange={this.getPhone}
-                                                    searchStyle={{ margin: "0", width: "97%", height: "30px" }}
-                                                    enableSearch
-                                                    disableSearchIcon
+                                                <option value='' hidden> Select Visa Type </option>
+                                                {
+                                                    this.state.visaType_fd.map((vt) => (
 
-                                                />
+                                                        <option value={vt.visa_type}>{vt.visa_type}</option>
+                                                    ))
+                                                }
+                                            </select>
 
-                                                <div className="text-danger">{this.state.errors.phone}</div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="email"><b>Email:</b><b style={{ color: 'red' }}>*</b></label>
-                                                <input
-                                                    minLength={2}
-                                                    maxLength={50}
-                                                    type="text"
-                                                    name="email"
-                                                    value={this.state.input.email}
-                                                    onChange={this.handleChange}
-                                                    placeholder="Email"
-                                                    class="form-control" />
-
-                                                <div className="text-danger">{this.state.errors.email}</div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="remark"><b>Remark:</b></label>
-                                                <input
-                                                    minLength={1}
-                                                    maxLength={200}
-                                                    type="text"
-                                                    name="remark"
-                                                    value={this.state.input.remark}
-                                                    onChange={this.handleChange}
-                                                    placeholder="Remark"
-
-                                                    class="form-control" />
-
-                                                <div className="text-danger">{this.state.errors.remark}</div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="reason"><b>Reason:</b></label>
-                                                <input
-                                                    minLength={1}
-                                                    maxLength={200}
-                                                    type="text"
-                                                    name="reason"
-                                                    value={this.state.input.reason}
-                                                    onChange={this.handleChange}
-                                                    placeholder="Reason"
-
-                                                    class="form-control" />
-
-                                                <div className="text-danger">{this.state.errors.reason}</div>
-                                            </div>
-
+                                            <div className="text-danger">{this.state.errors.visa_type}</div>
                                         </div>
+                                        <div class="form-group">
+                                            <label for="rate_term"><b>Rate Term:</b><b style={{ color: 'red' }}>*</b></label><br />
+                                            <select class="btn btn-secondary dropdown-toggle"
+                                                style={{ width: '100%', textAlign: "left" }}
+                                                name="rate_term" id="rate_term"
+                                                onChange={this.handleChange}
+                                                onKeyUp={this.keyUpHandlerReq}
+                                                value={this.state.input.rate_term}>
+
+                                                <option value='' hidden> Select Rate Term </option>
+                                                {
+                                                    this.state.rateTerm_fd.map((rt) => (
+
+                                                        <option value={rt.rate_term}>{rt.rate_term}</option>
+                                                    ))
+                                                }
+                                            </select>
+
+                                            <div className="text-danger">{this.state.errors.rate_term}</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="submitted_rate"><b>Submitted Rate ($):</b><b style={{ color: 'red' }}>*</b></label>
+                                            <input
+                                                minLength={1}
+                                                maxLength={4}
+                                                type="text"
+                                                name="submitted_rate"
+                                                value={this.state.input.submitted_rate}
+                                                onChange={this.handleChange}
+                                                placeholder="Submitted Rate in $/hr"
+
+                                                class="form-control" />
+
+                                            <div className="text-danger">{this.state.errors.submitted_rate}</div>
+                                        </div>
+
+                                    </div>
+                                    <div className="col-6" style={{ paddingLeft: '35px', paddingRight: '30px' }}>
+                                        <div class="form-group">
+                                            <label for="phone"><b>Phone :</b><b style={{ color: 'red' }}>*</b></label>
+
+                                            <PhoneInput
+
+                                                inputStyle={{ width: '100%', height: '37px' }}
+                                                preferredCountries={['us']}
+                                                onlyCountries={['us', 'in', 'gb', 'sg', 'ae']}
+                                                countryCodeEditable={false}
+                                                name="phone"
+                                                country={'us'}
+                                                placeholder='Phone'
+
+                                                value={this.state.input.phone}
+                                                onChange={this.getPhone}
+                                                searchStyle={{ margin: "0", width: "97%", height: "30px" }}
+                                                enableSearch
+                                                disableSearchIcon
+
+                                            />
+
+                                            <div className="text-danger">{this.state.errors.phone}</div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="email"><b>Email:</b><b style={{ color: 'red' }}>*</b></label>
+                                            <input
+                                                minLength={2}
+                                                maxLength={50}
+                                                type="text"
+                                                name="email"
+                                                value={this.state.input.email}
+                                                onChange={this.handleChange}
+                                                placeholder="Email"
+                                                class="form-control" />
+
+                                            <div className="text-danger">{this.state.errors.email}</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="remark"><b>Remark:</b></label>
+                                            <input
+                                                minLength={1}
+                                                maxLength={200}
+                                                type="text"
+                                                name="remark"
+                                                value={this.state.input.remark}
+                                                onChange={this.handleChange}
+                                                placeholder="Remark"
+
+                                                class="form-control" />
+
+                                            <div className="text-danger">{this.state.errors.remark}</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="reason"><b>Reason:</b></label>
+                                            <input
+                                                minLength={1}
+                                                maxLength={200}
+                                                type="text"
+                                                name="reason"
+                                                value={this.state.input.reason}
+                                                onChange={this.handleChange}
+                                                placeholder="Reason"
+
+                                                class="form-control" />
+
+                                            <div className="text-danger">{this.state.errors.reason}</div>
+                                        </div>
+
                                     </div>
                                 </div>
+                            </div>
 
-                                <div className="col-11" style={{ padding: '0px', marginLeft: '0px' }}>
-                                    <br />
+                            <div className="col-11" style={{ padding: '0px', marginLeft: '0px' }}>
+                                <br />
 
-                                    <div className="text-center">
-                                        <div className='row'>
-                                            <div className='col-4'></div>
-                                            <div className='col-2'>
-                                                <button
-                                                    id="btn1"
-                                                    type="submit"
-                                                    className="btn btn-primary w-100 theme-btn mx-auto"
+                                <div className="text-center">
+                                    <div className='row'>
+                                        <div className='col-4'></div>
+                                        <div className='col-2'>
+                                            <button
+                                                id="btn1"
+                                                type="submit"
+                                                className="btn btn-primary w-100 theme-btn mx-auto"
 
-                                                >
-                                                    Submit
-                                                </button>
-                                            </div>
-                                            <div className='col-2'>
-                                                <button
-                                                    id="btn2"
-                                                    type="reset"
-                                                    className="btn btn-warning w-100 theme-btn mx-auto"
-                                                    onClick={this.resetForm}
-                                                >
-                                                    Reset
-                                                </button>
-
-                                            </div>
-                                            <div className='col-4'></div>
+                                            >
+                                                Submit
+                                            </button>
                                         </div>
+                                        <div className='col-2'>
+                                            <button
+                                                id="btn2"
+                                                type="reset"
+                                                className="btn btn-warning w-100 theme-btn mx-auto"
+                                                onClick={this.resetForm}
+                                            >
+                                                Reset
+                                            </button>
+
+                                        </div>
+                                        <div className='col-4'></div>
                                     </div>
                                 </div>
-                                <div className="col-3"></div>
-                            </form>
-                        </div>
-
+                            </div>
+                            <div className="col-3"></div>
+                        </form>
                     </div>
 
-                </div >
-         
+                </div>
+
+            </div >
+
         ) : (
             history.push("/"),
             window.location.reload()

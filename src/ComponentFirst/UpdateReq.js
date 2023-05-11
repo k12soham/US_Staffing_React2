@@ -157,7 +157,13 @@ class UpdateReq extends React.Component {
    
 
     handleSubmit(e) {
+
+        console.log("hellloooo");
         e.preventDefault();
+        let add_cls = this.state.input;
+        add_cls[e.target.name] = e.target.value;
+        console.log(add_cls);
+
         if(this.state.input["id"]!=null)
         {
             this.state.input["id"] = this.state.input["id"].trim();
@@ -193,7 +199,7 @@ class UpdateReq extends React.Component {
 
             let add_cls = this.state.input;
             add_cls[e.target.name] = e.target.value;
-            this.post_requisition(add_cls);
+            // this.post_requisition(add_cls);
         }
         // 👇️ clear all input values in the form
         e.target.reset();

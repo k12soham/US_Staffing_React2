@@ -328,6 +328,7 @@ class AddCandidate extends React.Component {
 
     getPhone = (e, value, data) => {
 
+        console.log(e)
         var string = value.format
 
         var string_length = [...string].filter(x => x === '.').length

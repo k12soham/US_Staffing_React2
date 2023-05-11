@@ -37,6 +37,7 @@ class UpdateCandidateAdmin extends React.Component {
                 inputs["reason"] = response.data.reason;
 
                 this.setState({ input: inputs });
+                this.state.defPL = response.data.phone.length;
 
             },
             (error) => {
@@ -74,7 +75,8 @@ class UpdateCandidateAdmin extends React.Component {
             rateTerm_fd: [],
             visaType_fd: [],
             phone: '',
-            recruiterIDAdmin: undefined
+            recruiterIDAdmin: undefined,
+            defPL: 0,
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -144,11 +146,7 @@ class UpdateCandidateAdmin extends React.Component {
         if (this.state.input["email"] != null) {
             this.state.input["email"] = this.state.input["email"].trim();
             this.state.input["email"] = this.state.input["email"].replaceAll("#", "%23")
-
         }
-
-
-
 
         if (this.state.input["remark"] != null) {
             this.state.input["remark"] = this.state.input["remark"].trim(" ");
@@ -283,12 +281,12 @@ class UpdateCandidateAdmin extends React.Component {
             errors["phone"] = "This field is required";
         }
 
-    
-      
+        if ((!input["phone"]) || ((this.state.defPL) == 0 )){
             if (((input["phone"]).length) != (this.state.FormatLen)) {
                 isValid = false;
                 errors["phone"] = "Please enter valid phone number";
             }
+        }
         
         // -------------email-----------------------------------------------------------------------------------------
         if ((!input["email"])) {
@@ -324,6 +322,7 @@ class UpdateCandidateAdmin extends React.Component {
         this.setState({
             input: inputs,
             FormatLen: string_length,
+            defPL:0,
         });
     }
 
@@ -331,17 +330,12 @@ class UpdateCandidateAdmin extends React.Component {
     render() {
         const isAuthenticated = localStorage.getItem('recruiterRole');
 
-
         return isAuthenticated =="Admin" ? (
 
                 <div className="row">
 
                     <div className="col-12 h-100">
-
-
                         <AdminHeader5 />
-
-
                     </div>
 
                     <div className="col-12 pt-5 mt-5">
@@ -409,8 +403,6 @@ class UpdateCandidateAdmin extends React.Component {
                                             <div class="form-group">
                                                 <label for="submitted_rate"><b>Submitted Rate:</b><b style={{ color: 'red' }}>*</b></label>
                                                 <input
-                                                    // minLength={2}
-                                                    // maxLength={4}
                                                     type="text"
                                                     name="submitted_rate"
                                                     value={this.state.input.submitted_rate}
