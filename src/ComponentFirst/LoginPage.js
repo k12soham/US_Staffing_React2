@@ -136,9 +136,9 @@ const Login1 = () => {
         </div>
       
             <div className="bg-text">
-               <img src={logo1}></img>
+               <img width='250px' src={logo1}></img>
            
-                <h5 className=" text-light mt-5 pt-4"><b>Sign in to your account</b></h5><br></br>
+                <h5 className=" text-light mt-3"><b>Sign in to your account</b></h5><br></br>
                     <div className="mx-auto ">
                         <div style={{width:'350px',margin:'auto'}} className="auth-form-container text-start mt-2">
 
@@ -157,12 +157,14 @@ const Login1 = () => {
                                             ? "is-invalid "
                                             : ""
                                             }`}
+                                          
                                         id="email"
                                         name="email"
                                         value={email}
                                         minLength={5}
                                         maxLength={50}
                                         placeholder="Email"
+                                     
                                         onChange={(e) => setEmail(e.target.value)}
                                         ref={inputRef}
                                     />
@@ -222,7 +224,7 @@ const Login1 = () => {
                                         </div>
                                     </div>
                                     
-                                </div><br/>
+                                </div>
                                 <div className="text-center">
                                     <button
                                         type="submit"
@@ -233,7 +235,7 @@ const Login1 = () => {
                                 </div>
                             </form>
 
-                            <hr />
+                        <br/>
                             <div className="auth-option text-center pt-2 text-light">
                                 Don't have an account?{" "}
                                 <Link className="text-link text-success" to="/signup">

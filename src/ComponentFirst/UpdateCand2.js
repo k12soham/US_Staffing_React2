@@ -80,7 +80,7 @@ class UpdateCand2 extends React.Component {
             visaType_fd: [],
             FormatLen: 0,
             defPL: 0,
-            countryCodeFlag: null,
+            countryCodeFlag: 'us',
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -234,8 +234,8 @@ class UpdateCand2 extends React.Component {
 
         if ((input["cad_name"]) != undefined) {
 
-            // var pattern = new RegExp(/^[^\s][a-zA-Z\s]{1,50}$/);
-            var pattern = new RegExp("[a-zA-Z]");
+            var pattern = new RegExp(/^[^\s][a-zA-Z\s]{1,50}$/);
+            //  var pattern = new RegExp("[a-zA-Z]");
 
             if (!pattern.test(input["cad_name"])) {
                 isValid = false;
@@ -308,15 +308,15 @@ class UpdateCand2 extends React.Component {
 
     getPhone = (e, value, data, country) => {
 
-        // console.log(e + " " + value.format + "  " + value.countryCode + " " + country)
+    
         var string = value.format
-
+        
         var string_length = [...string].filter(x => x === '.').length
 
         let inputs = this.state.input;
         inputs["phone"] = e;
 
-        if ((this.state.countryCodeFlag != null)) {
+        //if ((this.state.countryCodeFlag != null)) {
             if (this.state.countryCodeFlag != value.countryCode) {
 
                 let str = country;
@@ -324,14 +324,16 @@ class UpdateCand2 extends React.Component {
                 inputs["phone"] = str_1;
             }
             else {
+               
                 inputs["phone"] = e;
             }
-        }
+       /* }
         else{
+      alert(country)
                 let str = country;
                 let str_1 = str.split(/\s(.+)/)[0];  //everything before the first space
                 inputs["phone"] = str_1;
-        }
+        }*/
 
         this.setState({
             input: inputs,
@@ -342,6 +344,7 @@ class UpdateCand2 extends React.Component {
     }
 
     render() {
+     
         const isAuthenticated = localStorage.getItem('recruiterID');
 
         return isAuthenticated ? (
@@ -386,7 +389,7 @@ class UpdateCand2 extends React.Component {
                                                 style={{ width: '100%', textAlign: "left" }}
                                                 name="visa_type" id="visa_type"
                                                 onChange={this.handleChange}
-                                                onKeyUp={this.keyUpHandlerReq}
+                                                
                                                 value={this.state.input.visa_type}>
 
                                                 <option value='' hidden> Select Visa Type </option>
@@ -406,7 +409,7 @@ class UpdateCand2 extends React.Component {
                                                 style={{ width: '100%', textAlign: "left" }}
                                                 name="rate_term" id="rate_term"
                                                 onChange={this.handleChange}
-                                                onKeyUp={this.keyUpHandlerReq}
+                                             
                                                 value={this.state.input.rate_term}>
 
                                                 <option value='' hidden> Select Rate Term </option>

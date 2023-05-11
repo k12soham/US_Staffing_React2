@@ -5,7 +5,7 @@ import history from './ResponseVal';
 import { toast } from "react-toastify";
 import {Modal} from 'react-bootstrap';  
 import { Button } from 'reactstrap';
-
+import { Link } from 'react-router-dom';
 class ModalWithCSS extends React.Component {
   
   constructor() {
@@ -77,7 +77,7 @@ class ModalWithCSS extends React.Component {
         <div onClick={this.handleOpenModal}>
 
         <i class="fa fa-user-circle-o" style={{fontSize:'25px',color:'lightslategrey'}}></i>&nbsp;
-          <span style={{color:'lightslategrey', fontSize:'17px'}}>{empName}</span>
+          <Link style={{color:'lightslategrey', fontSize:'17px'}}>{empName}</Link>
 
         </div>
 

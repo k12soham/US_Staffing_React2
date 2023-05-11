@@ -237,8 +237,8 @@ class SignUp extends React.Component {
        <div className="img1">
         </div>
     
-            <div className="bg-text">
-            <img src={logo1}></img>
+            <div className="bg-text2">
+            <img width='250px'  src={logo1}></img>
               <div >
             <h5><b>Create an account</b></h5> <br/> 
               </div>
@@ -342,7 +342,7 @@ class SignUp extends React.Component {
                     <div className="text-success">{this.state.passMatch}</div>
 
                   </div>
-                </div><br/>
+                </div>
 
                 <div className="text-center">
 
@@ -357,7 +357,7 @@ class SignUp extends React.Component {
                 </div>
 
               </form>
-              <hr />
+              <br />
               <div className="auth-option text-center pt-2">
                 Already have an account?{" "}
                 <Link className="text-link text-success" to="/">

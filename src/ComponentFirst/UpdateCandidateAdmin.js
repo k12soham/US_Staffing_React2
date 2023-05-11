@@ -76,6 +76,7 @@ class UpdateCandidateAdmin extends React.Component {
             phone: '',
             recruiterIDAdmin: undefined,
             defPL: 0,
+            countryCodeFlag:'us'
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -308,20 +309,40 @@ class UpdateCandidateAdmin extends React.Component {
     }
     // -------------------------------------------- End Validation Code ----------------------------------------------------------
 
-    getPhone = (e, value, data) => {
-       
+ getPhone = (e, value, data, country) => {
 
+    
         var string = value.format
-
+        
         var string_length = [...string].filter(x => x === '.').length
 
         let inputs = this.state.input;
         inputs["phone"] = e;
 
+        //if ((this.state.countryCodeFlag != null)) {
+            if (this.state.countryCodeFlag != value.countryCode) {
+
+                let str = country;
+                let str_1 = str.split(/\s(.+)/)[0];  //everything before the first space
+                inputs["phone"] = str_1;
+            }
+            else {
+               
+                inputs["phone"] = e;
+            }
+       /* }
+        else{
+      alert(country)
+                let str = country;
+                let str_1 = str.split(/\s(.+)/)[0];  //everything before the first space
+                inputs["phone"] = str_1;
+        }*/
+
         this.setState({
             input: inputs,
             FormatLen: string_length,
-            defPL:0
+            defPL: 0,
+            countryCodeFlag: value.countryCode,
         });
     }
 

@@ -15,7 +15,6 @@ function EmployeeHeader() {
   return (
 
     <div>
-      {/* <nav  class="navbar"> */}
       <nav class="navbar fixed-top navbar-dark bg-white  ">
         <div class="navbar-container container-fluid">
           <ul class="menu-items">

@@ -108,43 +108,46 @@ const GeneratePDF1 = tickets => {
 
   if(cate=='Current')
   {
-    doc.autoTable(tableColumn, tableRows, { startY: 26  },);
     doc.text(recruiterName+"'s current month submission report", 14, 15);
-
+    doc.autoTable(tableColumn, tableRows, { startY: 26  },);
+  
   }
   else if(cate=='Last_Month')
   {
-    doc.autoTable(tableColumn, tableRows, { startY: 26  },);
     doc.text(recruiterName+"'s last month submission report", 14, 15);
+    doc.autoTable(tableColumn, tableRows, { startY: 26  },);
    
   }
   else if(cate=='Quarterly')
   {
-    doc.autoTable(tableColumn, tableRows, { startY: 26  },);
     doc.text(recruiterName+"'s quarterly submission report", 14, 15);
+    doc.autoTable(tableColumn, tableRows, { startY: 26  },);
 
   }
   else if(cate=='Half_yearly')
   {
-    doc.autoTable(tableColumn, tableRows, { startY: 26  },);
     doc.text(recruiterName+"'s half yearly submission report", 14, 15);
-    doc.text("Requisition ID: '"+ sessionreq2+"'", 14, 23);
+    doc.autoTable(tableColumn, tableRows, { startY: 26  },);
+  
   }
   else if(cate=='Yearly')
   {
+    doc.text(recruiterName+"'s Yearly submission report", 14, 15);
     doc.autoTable(tableColumn, tableRows, { startY: 26  },);
    
   }
   else if(cate=='Customize')
   {
-    doc.autoTable(tableColumn, tableRows, { startY: 32  },);
     doc.text(recruiterName+"'s submission report", 14, 15);
-  doc.text("From: " +startdate+ " To: "+enddate, 14, 23);
+    doc.text("From: " +startdate+ " To: "+enddate, 14, 23);
+    doc.autoTable(tableColumn, tableRows, { startY: 32  },);
+ 
 
   }
   else{
-    doc.autoTable(tableColumn, tableRows, { startY: 26  },);
     doc.text(recruiterName+"'s " +cate+ " submission report", 14, 15);
+    doc.autoTable(tableColumn, tableRows, { startY: 26  },);
+   
 
   }
 
